@@ -18,6 +18,15 @@ All colors MUST be HSL.
     --cta: 224 100% 55%;
     --cta-foreground: 0 0% 100%;
 
+    /* Light page surface for specific pages */
+    --page-light: 0 0% 100%;
+    --page-light-foreground: 0 0% 7%;
+    --page-light-grid: 0 0% 90%;
+    --tag-yellow: 54 100% 88%;
+    --tag-blue: 200 90% 88%;
+    --tag-purple: 270 80% 88%;
+    --tag-green: 140 70% 85%;
+
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
 
