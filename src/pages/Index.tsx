@@ -30,7 +30,7 @@ const Index = () => {
         </nav>
 
         {/* Hero */}
-        <section className="grid lg:grid-cols-2 gap-12 items-center flex-1 py-16 px-8 max-w-[1400px] mx-auto w-full">
+        <section className="grid lg:grid-cols-2 gap-12 items-center flex-1 px-8 max-w-[1400px] mx-auto w-full py-[22px]">
           <div className="space-y-8">
             <h1 className="font-medium tracking-tight leading-[1.05] text-[82px]">
               Learn Lighting,<br />
