@@ -1,0 +1,105 @@
+import { Link } from "react-router-dom";
+import logo from "@/assets/logo.png";
+import thumb from "@/assets/article-thumb.png";
+
+type Article = {
+  title: string;
+  date: string;
+  tags: string[];
+  image: string;
+};
+
+const articles: Article[] = [
+  {
+    title: "Softbox vs Umbrella: Which should I buy first?",
+    date: "May 9, 2026",
+    tags: ["Comparison"],
+    image: thumb,
+  },
+  {
+    title: "How to Light a Small Room for Video With Just 2 Lights.",
+    date: "May 30, 2026",
+    tags: ["Comparison", "How-to"],
+    image: thumb,
+  },
+  {
+    title: "Softbox vs Umbrella: Which should I buy first?",
+    date: "May 9, 2026",
+    tags: ["Comparison"],
+    image: thumb,
+  },
+];
+
+const Articles = () => {
+  return (
+    <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
+      {/* Grid background */}
+      <div
+        className="absolute inset-0 opacity-25 pointer-events-none"
+        style={{
+          backgroundImage:
+            "linear-gradient(hsl(var(--grid-line)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--grid-line)) 1px, transparent 1px)",
+          backgroundSize: "120px 120px",
+        }}
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 flex flex-col min-h-screen">
+        {/* Nav */}
+        <nav className="flex items-center justify-between bg-[hsl(var(--surface))] px-8 py-4">
+          <Link to="/" className="flex items-center gap-2 font-semibold">
+            <img src={logo} alt="EveryoneCanLight logo" className="w-8 h-8 rounded-md object-contain" />
+            <span>EveryoneCanLight</span>
+          </Link>
+          <ul className="hidden md:flex items-center gap-12 text-sm">
+            <li><Link to="/articles" className="text-foreground">Articles</Link></li>
+            <li><a href="/#equipment" className="text-foreground/60 hover:text-foreground">Lighting Equipment</a></li>
+            <li><a href="/#courses" className="text-foreground/60 hover:text-foreground">Courses</a></li>
+          </ul>
+        </nav>
+
+        {/* Content */}
+        <main className="flex-1 px-8 max-w-[1400px] mx-auto w-full py-16">
+          <header className="mb-12">
+            <h1 className="text-5xl md:text-6xl font-medium tracking-tight">Useful Information</h1>
+            <p className="mt-3 text-xs tracking-[0.2em] text-foreground/60 uppercase">For all creators</p>
+          </header>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {articles.map((a, i) => (
+              <article key={i} className="space-y-4">
+                <div className="rounded-xl overflow-hidden aspect-[16/9] bg-[hsl(var(--surface))]">
+                  <img src={a.image} alt={a.title} className="w-full h-full object-cover" />
+                </div>
+                <div className="flex items-center gap-3 text-sm text-foreground/80">
+                  {a.tags.map((t) => (
+                    <span key={t}>{t}</span>
+                  ))}
+                </div>
+                <h2 className="text-2xl font-medium leading-snug">{a.title}</h2>
+                <p className="text-sm text-foreground/60">{a.date}</p>
+              </article>
+            ))}
+          </div>
+        </main>
+
+        {/* Footer */}
+        <footer className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 py-6 px-8 border-t border-foreground/10 text-sm bg-[hsl(var(--surface))]">
+          <div className="flex items-center gap-3 text-foreground/70">
+            <img src={logo} alt="EveryoneCanLight logo" className="w-6 h-6 rounded object-contain" />
+            © 2026 Everyone Can Light Technologies
+          </div>
+          <div className="flex items-center gap-6">
+            <span className="text-foreground/50">Social</span>
+            <a href="https://www.instagram.com/everyonecanlight" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Instagram</a>
+            <a href="https://www.youtube.com/@everyonecanlight" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">YouTube</a>
+            <a href="https://www.tiktok.com/@everyonecanlight" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">TikTok</a>
+            <a href="https://www.linkedin.com/company/everyone-can-light/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">LinkedIn</a>
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
+};
+
+export default Articles;

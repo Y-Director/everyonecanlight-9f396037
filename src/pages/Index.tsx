@@ -23,7 +23,7 @@ const Index = () => {
             <span>EveryoneCanLight</span>
           </a>
           <ul className="hidden md:flex items-center gap-12 text-sm text-foreground/80">
-            <li><a href="#articles" className="hover:text-foreground">Articles</a></li>
+            <li><a href="/articles" className="hover:text-foreground">Articles</a></li>
             <li><a href="#equipment" className="hover:text-foreground">Lighting Equipment</a></li>
             <li><a href="#courses" className="hover:text-foreground">Courses</a></li>
           </ul>
