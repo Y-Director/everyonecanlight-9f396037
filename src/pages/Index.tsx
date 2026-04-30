@@ -32,7 +32,7 @@ const Index = () => {
         {/* Hero */}
         <section className="grid lg:grid-cols-2 gap-12 items-center flex-1 py-16 px-8 max-w-[1400px] mx-auto w-full">
           <div className="space-y-8">
-            <h1 className="text-5xl md:text-6xl lg:text-8xl font-medium tracking-tight leading-[1.05]">
+            <h1 className="text-5xl md:text-6xl font-medium tracking-tight leading-[1.05] lg:text-xl">
               Learn Lighting,<br />
               Create <span className="text-[hsl(var(--accent-lime))]">better</span> stories.
             </h1>
