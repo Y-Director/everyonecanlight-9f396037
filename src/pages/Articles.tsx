@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
 import thumb from "@/assets/article-thumb.png";
+import SiteNav from "@/components/SiteNav";
 
 type Article = {
   title: string;
@@ -45,18 +46,7 @@ const Articles = () => {
       />
 
       <div className="relative z-10 flex flex-col min-h-screen">
-        {/* Nav */}
-        <nav className="flex items-center justify-between bg-[hsl(var(--surface))] px-8 py-4">
-          <Link to="/" className="flex items-center gap-2 font-semibold">
-            <img src={logo} alt="EveryoneCanLight logo" className="w-8 h-8 rounded-md object-contain" />
-            <span>EveryoneCanLight</span>
-          </Link>
-          <ul className="hidden md:flex items-center gap-12 text-sm">
-            <li><Link to="/articles" className="text-foreground">Articles</Link></li>
-            <li><Link to="/lighting-equipment" className="text-foreground/60 hover:text-foreground">Lighting Equipment</Link></li>
-            <li><Link to="/courses" className="text-foreground/60 hover:text-foreground">Courses</Link></li>
-          </ul>
-        </nav>
+        <SiteNav />
 
         {/* Content */}
         <main className="flex-1 px-8 max-w-[1400px] mx-auto w-full py-16">
