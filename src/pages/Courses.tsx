@@ -84,12 +84,12 @@ const Courses = () => {
           {/* Coming soon CTA */}
           <section className="mt-20 flex items-center justify-center gap-6">
             <p className="text-xl md:text-2xl font-medium">Coming Soon To You</p>
-            <button
-              type="button"
+            <Link
+              to="/#notify"
               className="rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-6 py-3 text-sm font-medium hover:opacity-90 transition"
             >
               Notify me
-            </button>
+            </Link>
           </section>
         </main>
 

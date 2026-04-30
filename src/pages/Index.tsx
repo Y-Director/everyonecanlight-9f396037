@@ -1,8 +1,23 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import collage from "@/assets/collage.png";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
 
 const Index = () => {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (hash === "#notify") {
+      const el = document.getElementById("notify");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        const input = el.querySelector("input[type=email]") as HTMLInputElement | null;
+        input?.focus({ preventScroll: true });
+      }
+    }
+  }, [hash]);
+
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       {/* Grid background */}
@@ -44,7 +59,7 @@ const Index = () => {
             </div>
 
             {/* Email form */}
-            <div className="order-3 pt-4 lg:pt-12 space-y-4 max-w-md">
+            <div id="notify" className="order-3 pt-4 lg:pt-12 space-y-4 max-w-md scroll-mt-24">
               <p className="text-foreground/80">
                 Be the first to know when courses and lighting gear resources are accessible
               </p>
