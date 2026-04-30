@@ -21,20 +21,34 @@ const Index = () => {
 
         {/* Hero */}
         <section className="grid lg:grid-cols-2 gap-12 items-center flex-1 px-8 max-w-[1400px] mx-auto w-full py-[22px]">
-          <div className="space-y-8">
-            <h1 className="font-medium tracking-tight leading-[1.05] text-[82px]">
-              Learn Lighting,<br />
-              Create <span className="text-[hsl(var(--accent-lime))]">better</span> stories.
-            </h1>
-            <p className="text-lg text-foreground/70">
-              Access hundreds of Videos and Lighting Gear Resources
-            </p>
+          {/* Left column — uses flex on mobile/tablet so the image can be reordered between headline and form */}
+          <div className="flex flex-col gap-8 lg:space-y-8 lg:gap-0">
+            {/* Headline */}
+            <div className="order-1 space-y-6">
+              <h1 className="font-medium tracking-tight leading-[1.05] text-5xl sm:text-6xl lg:text-[82px]">
+                Learn Lighting,<br />
+                Create <span className="text-[hsl(var(--accent-lime))]">better</span> stories.
+              </h1>
+              <p className="text-lg text-foreground/70">
+                Access hundreds of Videos and Lighting Gear Resources
+              </p>
+            </div>
 
-            <div className="pt-12 space-y-4 max-w-md">
+            {/* Visual collage — shown between headline and form on mobile/tablet, hidden on lg (rendered in right column) */}
+            <div className="order-2 lg:hidden">
+              <img
+                src={collage}
+                alt="Creator learning lighting with stats and Amaran Ray equipment"
+                className="w-full h-auto object-contain"
+              />
+            </div>
+
+            {/* Email form */}
+            <div className="order-3 pt-4 lg:pt-12 space-y-4 max-w-md">
               <p className="text-foreground/80">
                 Be the first to know when courses and lighting gear resources are accessible
               </p>
-              <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
+              <form className="flex flex-col sm:flex-row gap-2" onSubmit={(e) => e.preventDefault()}>
                 <input
                   type="email"
                   placeholder="Enter Your Email Address"
@@ -50,8 +64,8 @@ const Index = () => {
             </div>
           </div>
 
-          {/* Visual collage */}
-          <div className="relative">
+          {/* Visual collage — right column on large screens only */}
+          <div className="relative hidden lg:block">
             <img
               src={collage}
               alt="Creator learning lighting with stats and Amaran Ray equipment"
