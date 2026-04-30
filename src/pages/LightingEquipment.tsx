@@ -26,7 +26,7 @@ const LightingEquipment = () => {
           <ul className="hidden md:flex items-center gap-12 text-sm">
             <li><Link to="/articles" className="text-foreground/60 hover:text-foreground">Articles</Link></li>
             <li><Link to="/lighting-equipment" className="text-foreground">Lighting Equipment</Link></li>
-            <li><a href="/#courses" className="text-foreground/60 hover:text-foreground">Courses</a></li>
+            <li><Link to="/courses" className="text-foreground/60 hover:text-foreground">Courses</Link></li>
           </ul>
         </nav>
 
@@ -47,11 +47,20 @@ const LightingEquipment = () => {
           </div>
 
           {/* Coming soon */}
-          <div className="mt-24 space-y-2">
+          <div className="mt-24">
             <p className="text-3xl md:text-4xl font-medium">
               More than <span className="font-semibold">210+</span> Lighting equipment explained
             </p>
-            <p className="text-2xl md:text-3xl font-medium text-[hsl(var(--cta))]">Coming soon to You</p>
+          </div>
+
+          <div className="mt-20 flex items-center justify-center gap-6">
+            <p className="text-xl md:text-2xl font-medium">Coming Soon To You</p>
+            <button
+              type="button"
+              className="rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-6 py-3 text-sm font-medium hover:opacity-90 transition"
+            >
+              Notify me
+            </button>
           </div>
         </main>
 
