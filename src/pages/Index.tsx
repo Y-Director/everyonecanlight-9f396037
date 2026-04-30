@@ -1,5 +1,4 @@
-import creator from "@/assets/creator.png";
-import light from "@/assets/light.webp";
+import collage from "@/assets/collage.png";
 
 const Index = () => {
   return (
@@ -61,34 +60,12 @@ const Index = () => {
           </div>
 
           {/* Visual collage */}
-          <div className="relative h-[520px]">
+          <div className="relative">
             <img
-              src={creator}
-              alt="Creator learning lighting"
-              width={1024}
-              height={1024}
-              className="absolute left-4 top-16 w-[55%] rounded-2xl object-cover aspect-square shadow-2xl"
+              src={collage}
+              alt="Creator learning lighting with stats and Amaran Ray equipment"
+              className="w-full h-auto object-contain"
             />
-            <div className="absolute right-4 top-0 w-[48%] rounded-2xl bg-[hsl(var(--card-mint))] text-black p-6 aspect-[5/3] shadow-xl">
-              <div className="text-3xl font-bold">50+</div>
-              <div className="mt-10 text-xs font-semibold tracking-widest uppercase">
-                Easy learning videos<br />& Materials
-              </div>
-            </div>
-            <img
-              src={light}
-              alt="Amaran Ray lighting equipment"
-              width={1024}
-              height={1024}
-              loading="lazy"
-              className="absolute -right-8 top-16 w-56 object-contain z-10"
-            />
-            <div className="absolute right-4 bottom-0 w-[48%] rounded-2xl bg-[hsl(var(--card-sky))] text-black p-6 aspect-[5/3] shadow-xl">
-              <div className="text-3xl font-bold">210+</div>
-              <div className="mt-10 text-xs font-semibold tracking-widest uppercase">
-                Lighting Equipment<br />Explained
-              </div>
-            </div>
           </div>
         </section>
 
