@@ -6,7 +6,7 @@ const Index = () => {
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       {/* Grid background */}
       <div
-        className="absolute inset-0 opacity-10 pointer-events-none"
+        className="absolute inset-0 opacity-25 pointer-events-none"
         style={{
           backgroundImage:
             "linear-gradient(hsl(var(--grid-line)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--grid-line)) 1px, transparent 1px)",
