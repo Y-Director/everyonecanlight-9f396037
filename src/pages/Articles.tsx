@@ -53,8 +53,8 @@ const Articles = () => {
           </Link>
           <ul className="hidden md:flex items-center gap-12 text-sm">
             <li><Link to="/articles" className="text-foreground">Articles</Link></li>
-            <li><a href="/#equipment" className="text-foreground/60 hover:text-foreground">Lighting Equipment</a></li>
-            <li><a href="/#courses" className="text-foreground/60 hover:text-foreground">Courses</a></li>
+            <li><Link to="/lighting-equipment" className="text-foreground/60 hover:text-foreground">Lighting Equipment</Link></li>
+            <li><Link to="/courses" className="text-foreground/60 hover:text-foreground">Courses</Link></li>
           </ul>
         </nav>
 
