@@ -1,5 +1,5 @@
-import creator from "@/assets/creator.jpg";
-import light from "@/assets/light.png";
+import creator from "@/assets/creator.png";
+import light from "@/assets/light.webp";
 
 const Index = () => {
   return (
