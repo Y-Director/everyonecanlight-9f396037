@@ -10,6 +10,7 @@ All colors MUST be HSL.
   :root {
     --background: 0 0% 7%;
     --foreground: 0 0% 100%;
+    --surface: 0 0% 10%;
     --grid-line: 0 0% 14%;
     --accent-lime: 75 95% 60%;
     --card-mint: 140 60% 88%;
