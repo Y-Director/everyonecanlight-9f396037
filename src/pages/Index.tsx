@@ -1,4 +1,5 @@
 import collage from "@/assets/collage.png";
+import logo from "@/assets/logo.png";
 
 const Index = () => {
   return (
@@ -18,7 +19,7 @@ const Index = () => {
         {/* Nav */}
         <nav className="flex items-center justify-between">
           <a href="/" className="flex items-center gap-2 font-semibold">
-            <span className="w-8 h-8 rounded-md bg-[hsl(var(--cta))] flex items-center justify-center text-white font-bold">E</span>
+            <img src={logo} alt="EveryoneCanLight logo" className="w-8 h-8 rounded-md object-contain" />
             <span>EveryoneCanLight</span>
           </a>
           <ul className="hidden md:flex items-center gap-12 text-sm text-foreground/80">
@@ -72,7 +73,7 @@ const Index = () => {
         {/* Footer */}
         <footer className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pt-10 border-t border-foreground/10 text-sm">
           <div className="flex items-center gap-3 text-foreground/70">
-            <span className="w-6 h-6 rounded bg-[hsl(var(--cta))] flex items-center justify-center text-white text-xs font-bold">E</span>
+            <img src={logo} alt="EveryoneCanLight logo" className="w-6 h-6 rounded object-contain" />
             © 2026 Everyone Can Light Technologies
           </div>
           <div className="flex items-center gap-6">
