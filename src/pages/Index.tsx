@@ -48,7 +48,7 @@ const Index = () => {
                 <input
                   type="email"
                   placeholder="Enter Your Email Address"
-                  className="flex-1 rounded-md bg-transparent border border-foreground/20 px-4 py-3 text-sm placeholder:text-foreground/40 focus:outline-none focus:border-foreground/50"
+                  className="flex-1 rounded-md bg-[#414141] border border-[#6B6B6B] text-[#888888] px-4 py-3 text-sm placeholder:text-[#888888] focus:outline-none focus:border-foreground/50"
                 />
                 <button
                   type="submit"
