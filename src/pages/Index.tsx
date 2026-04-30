@@ -78,10 +78,10 @@ const Index = () => {
           </div>
           <div className="flex items-center gap-6">
             <span className="text-foreground/50">Social</span>
-            <a href="#" className="hover:text-foreground">Instagram</a>
-            <a href="#" className="hover:text-foreground">YouTube</a>
-            <a href="#" className="hover:text-foreground">TikTok</a>
-            <a href="#" className="hover:text-foreground">LinkedIn</a>
+            <a href="https://www.instagram.com/everyonecanlight" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Instagram</a>
+            <a href="https://www.youtube.com/@everyonecanlight" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">YouTube</a>
+            <a href="https://www.tiktok.com/@everyonecanlight" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">TikTok</a>
+            <a href="https://www.linkedin.com/company/everyone-can-light/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">LinkedIn</a>
           </div>
         </footer>
       </div>
