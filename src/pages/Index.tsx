@@ -1,5 +1,6 @@
 import collage from "@/assets/collage.png";
 import logo from "@/assets/logo.png";
+import SiteNav from "@/components/SiteNav";
 
 const Index = () => {
   return (
@@ -16,18 +17,7 @@ const Index = () => {
       />
 
       <div className="relative z-10 flex flex-col min-h-screen">
-        {/* Nav */}
-        <nav className="flex items-center justify-between bg-[hsl(var(--surface))] px-8 py-4">
-          <a href="/" className="flex items-center gap-2 font-semibold">
-            <img src={logo} alt="EveryoneCanLight logo" className="w-8 h-8 rounded-md object-contain" />
-            <span>EveryoneCanLight</span>
-          </a>
-          <ul className="hidden md:flex items-center gap-12 text-sm text-foreground/80">
-            <li><a href="/articles" className="hover:text-foreground">Articles</a></li>
-            <li><a href="/lighting-equipment" className="hover:text-foreground">Lighting Equipment</a></li>
-            <li><a href="/courses" className="hover:text-foreground">Courses</a></li>
-          </ul>
-        </nav>
+        <SiteNav />
 
         {/* Hero */}
         <section className="grid lg:grid-cols-2 gap-12 items-center flex-1 px-8 max-w-[1400px] mx-auto w-full py-[22px]">
