@@ -15,9 +15,9 @@ const Index = () => {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 max-w-[1400px] mx-auto px-8 py-8 flex flex-col min-h-screen">
+      <div className="relative z-10 flex flex-col min-h-screen">
         {/* Nav */}
-        <nav className="flex items-center justify-between bg-[hsl(var(--surface))] rounded-md px-6 py-4">
+        <nav className="flex items-center justify-between bg-[hsl(var(--surface))] px-8 py-4">
           <a href="/" className="flex items-center gap-2 font-semibold">
             <img src={logo} alt="EveryoneCanLight logo" className="w-8 h-8 rounded-md object-contain" />
             <span>EveryoneCanLight</span>
@@ -30,7 +30,7 @@ const Index = () => {
         </nav>
 
         {/* Hero */}
-        <section className="grid lg:grid-cols-2 gap-12 items-center flex-1 py-16 bg-[hsl(var(--surface))] rounded-md px-8 my-8">
+        <section className="grid lg:grid-cols-2 gap-12 items-center flex-1 py-16 px-8 max-w-[1400px] mx-auto w-full">
           <div className="space-y-8">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
               Learn Lighting,<br />
@@ -71,7 +71,7 @@ const Index = () => {
         </section>
 
         {/* Footer */}
-        <footer className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 py-6 px-6 border-t border-foreground/10 text-sm bg-[hsl(var(--surface))] rounded-md">
+        <footer className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 py-6 px-8 border-t border-foreground/10 text-sm bg-[hsl(var(--surface))]">
           <div className="flex items-center gap-3 text-foreground/70">
             <img src={logo} alt="EveryoneCanLight logo" className="w-6 h-6 rounded object-contain" />
             © 2026 Everyone Can Light Technologies
