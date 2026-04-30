@@ -1,16 +1,114 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import creator from "@/assets/creator.jpg";
+import light from "@/assets/light.png";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
+      {/* Grid background */}
+      <div
+        className="absolute inset-0 opacity-100 pointer-events-none"
+        style={{
+          backgroundImage:
+            "linear-gradient(hsl(var(--grid-line)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--grid-line)) 1px, transparent 1px)",
+          backgroundSize: "80px 80px",
+        }}
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 max-w-[1400px] mx-auto px-8 py-8 flex flex-col min-h-screen">
+        {/* Nav */}
+        <nav className="flex items-center justify-between">
+          <a href="/" className="flex items-center gap-2 font-semibold">
+            <span className="w-8 h-8 rounded-md bg-[hsl(var(--cta))] flex items-center justify-center text-white font-bold">E</span>
+            <span>EveryoneCanLight</span>
+          </a>
+          <ul className="hidden md:flex items-center gap-12 text-sm text-foreground/80">
+            <li><a href="#articles" className="hover:text-foreground">Articles</a></li>
+            <li><a href="#equipment" className="hover:text-foreground">Lighting Equipment</a></li>
+            <li><a href="#courses" className="hover:text-foreground">Courses</a></li>
+          </ul>
+        </nav>
+
+        {/* Hero */}
+        <section className="grid lg:grid-cols-2 gap-12 items-center flex-1 py-16">
+          <div className="space-y-8">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
+              Learn Lighting,<br />
+              Create <span className="text-[hsl(var(--accent-lime))]">better</span> stories.
+            </h1>
+            <p className="text-lg text-foreground/70">
+              Access hundreds of Videos and Lighting Gear Resources
+            </p>
+
+            <div className="pt-12 space-y-4 max-w-md">
+              <p className="text-foreground/80">
+                Be the first to know when courses and lighting gear resources are accessible
+              </p>
+              <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
+                <input
+                  type="email"
+                  placeholder="Enter Your Email Address"
+                  className="flex-1 rounded-md bg-transparent border border-foreground/20 px-4 py-3 text-sm placeholder:text-foreground/40 focus:outline-none focus:border-foreground/50"
+                />
+                <button
+                  type="submit"
+                  className="rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-6 py-3 text-sm font-medium hover:opacity-90 transition"
+                >
+                  Notify me
+                </button>
+              </form>
+            </div>
+          </div>
+
+          {/* Visual collage */}
+          <div className="relative h-[520px]">
+            <img
+              src={creator}
+              alt="Creator learning lighting"
+              width={1024}
+              height={1024}
+              className="absolute left-4 top-16 w-[55%] rounded-2xl object-cover aspect-square shadow-2xl"
+            />
+            <div className="absolute right-4 top-0 w-[48%] rounded-2xl bg-[hsl(var(--card-mint))] text-black p-6 aspect-[5/3] shadow-xl">
+              <div className="text-3xl font-bold">50+</div>
+              <div className="mt-10 text-xs font-semibold tracking-widest uppercase">
+                Easy learning videos<br />& Materials
+              </div>
+            </div>
+            <img
+              src={light}
+              alt="Amaran Ray lighting equipment"
+              width={1024}
+              height={1024}
+              loading="lazy"
+              className="absolute -right-8 top-16 w-56 object-contain z-10"
+            />
+            <div className="absolute right-4 bottom-0 w-[48%] rounded-2xl bg-[hsl(var(--card-sky))] text-black p-6 aspect-[5/3] shadow-xl">
+              <div className="text-3xl font-bold">210+</div>
+              <div className="mt-10 text-xs font-semibold tracking-widest uppercase">
+                Lighting Equipment<br />Explained
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pt-10 border-t border-foreground/10 text-sm">
+          <div className="flex items-center gap-3 text-foreground/70">
+            <span className="w-6 h-6 rounded bg-[hsl(var(--cta))] flex items-center justify-center text-white text-xs font-bold">E</span>
+            © 2026 Everyone Can Light Technologies
+          </div>
+          <div className="flex items-center gap-6">
+            <span className="text-foreground/50">Social</span>
+            <a href="#" className="hover:text-foreground">Instagram</a>
+            <a href="#" className="hover:text-foreground">YouTube</a>
+            <a href="#" className="hover:text-foreground">TikTok</a>
+            <a href="#" className="hover:text-foreground">LinkedIn</a>
+          </div>
+        </footer>
+      </div>
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
