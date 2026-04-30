@@ -44,7 +44,7 @@ const Index = () => {
             </div>
 
             {/* Email form */}
-            <div className="order-3 pt-4 lg:pt-12 space-y-4 max-w-md">
+            <div id="notify" className="order-3 pt-4 lg:pt-12 space-y-4 max-w-md scroll-mt-24">
               <p className="text-foreground/80">
                 Be the first to know when courses and lighting gear resources are accessible
               </p>
