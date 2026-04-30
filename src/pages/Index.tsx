@@ -10,7 +10,7 @@ const Index = () => {
         style={{
           backgroundImage:
             "linear-gradient(hsl(var(--grid-line)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--grid-line)) 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
+          backgroundSize: "120px 120px",
         }}
         aria-hidden="true"
       />
