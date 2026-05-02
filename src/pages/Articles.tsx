@@ -1,35 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
-import thumb from "@/assets/article-thumb.png";
 import SiteNav from "@/components/SiteNav";
-
-type Article = {
-  title: string;
-  date: string;
-  tags: string[];
-  image: string;
-};
-
-const articles: Article[] = [
-  {
-    title: "Softbox vs Umbrella: Which should I buy first?",
-    date: "May 9, 2026",
-    tags: ["Comparison"],
-    image: thumb,
-  },
-  {
-    title: "How to Light a Small Room for Video With Just 2 Lights.",
-    date: "May 30, 2026",
-    tags: ["Comparison", "How-to"],
-    image: thumb,
-  },
-  {
-    title: "Softbox vs Umbrella: Which should I buy first?",
-    date: "May 9, 2026",
-    tags: ["Comparison"],
-    image: thumb,
-  },
-];
+import { articles } from "@/data/articles";
 
 const Articles = () => {
   return (
@@ -57,18 +29,30 @@ const Articles = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {articles.map((a, i) => (
-              <article key={i} className="space-y-4">
-                <div className="rounded-xl overflow-hidden aspect-[16/9] bg-[hsl(var(--surface))]">
-                  <img src={a.image} alt={a.title} className="w-full h-full object-cover" />
-                </div>
-                <div className="flex items-center gap-3 text-sm text-foreground/80">
-                  {a.tags.map((t) => (
-                    <span key={t}>{t}</span>
-                  ))}
-                </div>
-                <h2 className="text-2xl font-medium leading-snug">{a.title}</h2>
-                <p className="text-sm text-foreground/60">{a.date}</p>
-              </article>
+              <Link
+                key={`${a.slug}-${i}`}
+                to={`/articles/${a.slug}`}
+                className="group space-y-4 block focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/40 rounded-xl"
+              >
+                <article className="space-y-4">
+                  <div className="rounded-xl overflow-hidden aspect-[2/1] bg-[hsl(var(--surface))]">
+                    <img
+                      src={a.image}
+                      alt={a.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                    />
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-foreground/80">
+                    {a.tags.map((t) => (
+                      <span key={t}>{t}</span>
+                    ))}
+                  </div>
+                  <h2 className="text-2xl font-medium leading-snug group-hover:text-foreground/90">
+                    {a.title}
+                  </h2>
+                  <p className="text-sm text-foreground/60">{a.date}</p>
+                </article>
+              </Link>
             ))}
           </div>
         </main>
