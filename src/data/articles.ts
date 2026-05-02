@@ -1,4 +1,5 @@
 import thumb from "@/assets/article-thumb.png";
+import softboxVsUmbrella from "@/assets/softbox-vs-umbrella.png";
 
 export type ArticleContentBlock =
   | { type: "paragraph"; text: string }
@@ -25,7 +26,7 @@ export const articles: Article[] = [
     title: "Softbox vs Umbrella: Which should I buy first?",
     date: "May 9, 2026",
     tags: ["Comparison"],
-    image: thumb,
+    image: softboxVsUmbrella,
     authors: [
       { name: "Favour Agbogun" },
       { name: "Adeyinka Ibidapo" },
