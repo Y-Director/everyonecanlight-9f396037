@@ -1,11 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import collage from "@/assets/collage.png";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 const Index = () => {
   const { hash } = useLocation();
+  const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (hash === "#notify") {
@@ -17,6 +21,34 @@ const Index = () => {
       }
     }
   }, [hash]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (submitting) return;
+    const value = email.trim();
+    if (!value) {
+      toast({ title: "Please enter your email", variant: "destructive" });
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("notify-signup", {
+        body: { email: value },
+      });
+      if (error) throw error;
+      if (!data?.success) throw new Error(data?.error || "Something went wrong");
+      toast({ title: "You're on the list!", description: "We'll be in touch soon." });
+      setEmail("");
+    } catch (err: any) {
+      toast({
+        title: "Couldn't sign you up",
+        description: err?.message ?? "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
@@ -63,17 +95,21 @@ const Index = () => {
               <p className="text-foreground/80">
                 Be the first to know when courses and lighting gear resources are accessible
               </p>
-              <form className="flex flex-col sm:flex-row gap-2" onSubmit={(e) => e.preventDefault()}>
+              <form className="flex flex-col sm:flex-row gap-2" onSubmit={handleSubmit}>
                 <input
                   type="email"
                   placeholder="Enter Your Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                   className="flex-1 rounded-md bg-[#414141] border border-[#6B6B6B] text-[#888888] px-4 py-3 text-sm placeholder:text-[#888888] focus:outline-none focus:border-foreground/50"
                 />
                 <button
                   type="submit"
-                  className="rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-6 py-3 text-sm font-medium hover:opacity-90 transition"
+                  disabled={submitting}
+                  className="rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-6 py-3 text-sm font-medium hover:opacity-90 transition disabled:opacity-60"
                 >
-                  Notify me
+                  {submitting ? "Submitting..." : "Notify me"}
                 </button>
               </form>
             </div>
