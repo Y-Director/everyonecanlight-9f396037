@@ -87,7 +87,7 @@ export const articles: Article[] = [
     title: "Softbox vs Umbrella: Which should I buy first?",
     date: "May 9, 2026",
     tags: ["Comparison"],
-    image: thumb,
+    image: softboxVsUmbrella,
     authors: [{ name: "Favour Agbogun" }],
     content: [
       {
