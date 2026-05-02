@@ -1,5 +1,7 @@
 import thumb from "@/assets/article-thumb.png";
 import softboxVsUmbrella from "@/assets/softbox-vs-umbrella.png";
+import authorFavour from "@/assets/author-favour.jpg";
+import authorAdeyinka from "@/assets/author-adeyinka.jpg";
 
 export type ArticleContentBlock =
   | { type: "paragraph"; text: string }
@@ -28,8 +30,8 @@ export const articles: Article[] = [
     tags: ["Comparison"],
     image: softboxVsUmbrella,
     authors: [
-      { name: "Favour Agbogun" },
-      { name: "Adeyinka Ibidapo" },
+      { name: "Favour Agbogun", avatar: authorFavour },
+      { name: "Adeyinka Ibidapo", avatar: authorAdeyinka },
     ],
     content: [
       {
@@ -69,7 +71,7 @@ export const articles: Article[] = [
     date: "May 30, 2026",
     tags: ["Comparison", "How-to"],
     image: thumb,
-    authors: [{ name: "Favour Agbogun" }],
+    authors: [{ name: "Favour Agbogun", avatar: authorFavour }],
     content: [
       {
         type: "paragraph",
@@ -88,7 +90,7 @@ export const articles: Article[] = [
     date: "May 9, 2026",
     tags: ["Comparison"],
     image: softboxVsUmbrella,
-    authors: [{ name: "Favour Agbogun" }],
+    authors: [{ name: "Favour Agbogun", avatar: authorFavour }],
     content: [
       {
         type: "paragraph",
