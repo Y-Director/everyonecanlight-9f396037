@@ -63,23 +63,34 @@ const ArticleDetail = () => {
             </div>
 
             <div className="space-y-6">
-              {article.content.map((block, i) =>
-                block.type === "heading" ? (
-                  <h2
-                    key={i}
-                    className="text-base md:text-lg font-semibold pt-4"
-                  >
-                    {block.text}
-                  </h2>
-                ) : (
-                  <p
-                    key={i}
-                    className="text-sm md:text-base leading-relaxed text-foreground/85"
-                  >
+              {article.content.map((block, i) => {
+                if (block.type === "heading") {
+                  return (
+                    <h2 key={i} className="text-base md:text-lg font-semibold pt-4">
+                      {block.text}
+                    </h2>
+                  );
+                }
+                if (block.type === "image") {
+                  return (
+                    <div
+                      key={i}
+                      className="rounded-xl overflow-hidden bg-[hsl(var(--surface))] max-w-sm"
+                    >
+                      <img
+                        src={block.src}
+                        alt={block.alt}
+                        className="w-full h-auto object-contain"
+                      />
+                    </div>
+                  );
+                }
+                return (
+                  <p key={i} className="text-sm md:text-base leading-relaxed text-foreground/85">
                     {block.text}
                   </p>
-                ),
-              )}
+                );
+              })}
             </div>
 
             {/* Writers */}
