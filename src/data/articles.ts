@@ -1,7 +1,9 @@
 import thumb from "@/assets/article-thumb.png";
 import softboxVsUmbrella from "@/assets/softbox-vs-umbrella.png";
+import bestLights2026 from "@/assets/best-lights-2026.png";
 import authorFavour from "@/assets/author-favour.jpg";
 import authorAdeyinka from "@/assets/author-adeyinka.jpg";
+import authorAdeyinkaNew from "@/assets/author-adeyinka-new.jpg";
 
 export type ArticleContentBlock =
   | { type: "paragraph"; text: string }
@@ -85,18 +87,18 @@ export const articles: Article[] = [
     ],
   },
   {
-    slug: "softbox-vs-umbrella-which-should-i-buy-first-2",
-    title: "Softbox vs Umbrella: Which should I buy first?",
-    date: "May 9, 2026",
-    tags: ["Comparison"],
-    image: softboxVsUmbrella,
-    authors: [{ name: "Favour Agbogun", avatar: authorFavour }],
+    slug: "best-lights-for-content-creators-in-2026",
+    title: "Best Lights for Content Creators in 2026",
+    date: "Jan 21, 2026",
+    tags: ["Guides"],
+    image: bestLights2026,
+    authors: [{ name: "Adeyinka Ibidapo", avatar: authorAdeyinkaNew }],
     content: [
       {
         type: "paragraph",
-        text: "A second look at choosing between a softbox and an umbrella for your first diffuser purchase.",
+        text: "We put together a set of COB lights. COB lights are widely used because of the versatility of attaching different sizes of modifiers for different scenarios. And as a content creator who will do more of \"talking heads\" shoots for brands, here are the best COB options you should pick from.",
       },
-      { type: "heading", text: "Coming soon" },
+      { type: "heading", text: "Before the Light Options, Understand this." },
       {
         type: "paragraph",
         text: "The full write-up is on its way. Check back shortly for the complete walkthrough.",
