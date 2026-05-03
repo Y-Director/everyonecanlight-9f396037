@@ -145,6 +145,8 @@ export const articles: Article[] = [
       { type: "heading", text: "Neewer CB200C" },
       { type: "image", src: lightNeewerCb200c, alt: "Neewer CB200C" },
       { type: "paragraph", text: "200W RGBWW built for creator flexibility. A balanced pick if you want one light that handles key, accent, and color work." },
+      { type: "heading", text: "Key Takeaway" },
+      { type: "paragraph", text: "There's no single \"best\" light — only the best one for the job in front of you. If you're just starting out, a 150W daylight COB like the Prolite PL-150W or K&F ST-150W will carry most talking-head and product shoots. As your work grows into interviews, brand sets, and creative pieces, step up into bi-color or RGBWW options like the Amaran 200x S, COLBOR CL220/CL220 R, or Neewer CB200C/CB300C for more control over mood and color. Pick the wattage and color system that match your space, your subjects, and the look you want — then invest in modifiers and learn to shape that light. Good lighting is less about owning every fixture, and more about mastering the few you choose." },
     ],
   },
 ];
