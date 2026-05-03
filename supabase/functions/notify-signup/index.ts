@@ -32,6 +32,28 @@ Deno.serve(async (req) => {
 
     const timestamp = new Date().toISOString();
 
+    // Check for duplicates first by reading existing emails in column B
+    const readUrl = `${GATEWAY_URL}/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}`;
+    const readResp = await fetch(readUrl, {
+      headers: {
+        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        "X-Connection-Api-Key": GOOGLE_SHEETS_API_KEY,
+      },
+    });
+    const readData = await readResp.json();
+    if (readResp.ok && Array.isArray(readData?.values)) {
+      const normalized = email.toLowerCase();
+      const exists = readData.values.some((row: string[]) =>
+        (row?.[1] ?? "").toString().trim().toLowerCase() === normalized
+      );
+      if (exists) {
+        return new Response(
+          JSON.stringify({ success: true, duplicate: true }),
+          { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+        );
+      }
+    }
+
     const url = `${GATEWAY_URL}/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
     const response = await fetch(url, {
       method: "POST",

@@ -30,6 +30,15 @@ const Index = () => {
       toast({ title: "Please enter your email", variant: "destructive" });
       return;
     }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailRegex.test(value)) {
+      toast({
+        title: "Invalid email address",
+        description: "Please include an \"@\" and a valid domain (e.g. name@example.com).",
+        variant: "destructive",
+      });
+      return;
+    }
     setSubmitting(true);
     try {
       const { data, error } = await supabase.functions.invoke("notify-signup", {
@@ -37,7 +46,14 @@ const Index = () => {
       });
       if (error) throw error;
       if (!data?.success) throw new Error(data?.error || "Something went wrong");
-      toast({ title: "You're on the list!", description: "We'll be in touch soon." });
+      if (data?.duplicate) {
+        toast({
+          title: "You're already on the list",
+          description: "This email has been added to our priority creators list.",
+        });
+      } else {
+        toast({ title: "You're on the list!", description: "We'll be in touch soon." });
+      }
       setEmail("");
     } catch (err: any) {
       toast({
