@@ -128,6 +128,9 @@ const Index = () => {
                   {submitting ? "Submitting..." : "Notify me"}
                 </button>
               </form>
+              <p className="text-xs text-foreground/60">
+                Use the format <span className="text-foreground/80">name@example.com</span> — e.g. jane.doe@gmail.com, creator@studio.co
+              </p>
             </div>
           </div>
 
