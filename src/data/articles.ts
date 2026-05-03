@@ -4,10 +4,21 @@ import bestLights2026 from "@/assets/best-lights-2026.png";
 import authorFavour from "@/assets/author-favour.jpg";
 import authorAdeyinka from "@/assets/author-adeyinka.jpg";
 import authorAdeyinkaNew from "@/assets/author-adeyinka-new.jpg";
+import lightProlite from "@/assets/lights/prolite-pl150w.png";
+import lightKf from "@/assets/lights/kf-st150w.png";
+import lightGodoxVl150 from "@/assets/lights/godox-vl150.png";
+import lightColbor220r from "@/assets/lights/colbor-cl220r.png";
+import lightColbor220 from "@/assets/lights/colbor-cl220.png";
+import lightColbor330 from "@/assets/lights/colbor-cl330.png";
+import lightAmaran150c from "@/assets/lights/amaran-150c.png";
+import lightAmaran200xs from "@/assets/lights/amaran-200xs.png";
+import lightNeewerCb300c from "@/assets/lights/neewer-cb300c.png";
+import lightNeewerCb200c from "@/assets/lights/neewer-cb200c.png";
 
 export type ArticleContentBlock =
   | { type: "paragraph"; text: string }
-  | { type: "heading"; text: string };
+  | { type: "heading"; text: string }
+  | { type: "image"; src: string; alt: string };
 
 export type Author = {
   name: string;
@@ -103,6 +114,37 @@ export const articles: Article[] = [
         type: "paragraph",
         text: "The full write-up is on its way. Check back shortly for the complete walkthrough.",
       },
+      { type: "heading", text: "Here are top 10 Best options" },
+      { type: "image", src: lightProlite, alt: "Prolite PL-150W" },
+      { type: "heading", text: "Prolite PL-150W" },
+      { type: "paragraph", text: "A versatile starter COB at 150W daylight. Reliable output, simple controls, and broad modifier support make it a dependable first light for creators stepping up from on-camera panels." },
+      { type: "image", src: lightKf, alt: "K&F ST-150W" },
+      { type: "heading", text: "K&F ST-150W" },
+      { type: "paragraph", text: "A solid studio basic at 150W daylight. Clean output and an accessible price point — great for building your first key/fill setup without overspending." },
+      { type: "image", src: lightGodoxVl150, alt: "Godox VL150" },
+      { type: "heading", text: "Godox VL150" },
+      { type: "paragraph", text: "Tuned for portraits and interviews at 150W daylight. Quiet operation and consistent color make it ideal for sit-down talking heads and brand interviews." },
+      { type: "image", src: lightColbor220r, alt: "COLBOR CL 220 R" },
+      { type: "heading", text: "COLBOR CL 220 R" },
+      { type: "paragraph", text: "RGBWW at 220W for cinema and creative shots. Full-spectrum color plus punchy output — perfect when you want mood, gels-without-gels, and cinematic accents." },
+      { type: "image", src: lightColbor220, alt: "COLBOR CL 220" },
+      { type: "heading", text: "COLBOR CL 220" },
+      { type: "paragraph", text: "Bi-color at 220W — a workhorse key & fill. Dial in warm to daylight to match practicals or windows in any room." },
+      { type: "image", src: lightColbor330, alt: "COLBOR CL330" },
+      { type: "heading", text: "COLBOR CL330" },
+      { type: "paragraph", text: "330W RGBWW built for big studio setups. Plenty of headroom to push through large softboxes and umbrellas, or to light wider scenes." },
+      { type: "image", src: lightAmaran150c, alt: "Amaran 150C" },
+      { type: "heading", text: "Amaran 150C" },
+      { type: "paragraph", text: "150W RGBWW for creative shots. Compact, app-controlled, and color-accurate — great for adding stylized accents to your setups." },
+      { type: "image", src: lightAmaran200xs, alt: "Amaran 200x S" },
+      { type: "heading", text: "Amaran 200x S" },
+      { type: "paragraph", text: "200W bi-color tuned for pro interviews. Strong output, smooth dimming, and reliable color rendering for premium brand work." },
+      { type: "image", src: lightNeewerCb300c, alt: "Neewer CB300C" },
+      { type: "heading", text: "Neewer CB300C" },
+      { type: "paragraph", text: "300W RGBWW for studio and full-body lighting. Big output for backdrops, group shots, and high-ceiling spaces." },
+      { type: "image", src: lightNeewerCb200c, alt: "Neewer CB200C" },
+      { type: "heading", text: "Neewer CB200C" },
+      { type: "paragraph", text: "200W RGBWW built for creator flexibility. A balanced pick if you want one light that handles key, accent, and color work." },
     ],
   },
 ];
