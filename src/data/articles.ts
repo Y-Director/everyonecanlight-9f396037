@@ -129,7 +129,7 @@ export const articles: Article[] = [
       { type: "paragraph", text: "RGBWW at 220W for cinema and creative shots. Full-spectrum color plus punchy output — perfect when you want mood, gels-without-gels, and cinematic accents." },
       { type: "heading", text: "COLBOR CL 220" },
       { type: "image", src: lightColbor220, alt: "COLBOR CL 220" },
-      { type: "paragraph", text: "Bi-color at 220W — a workhorse key & fill. Dial in warm to daylight to match practicals or windows in any room." },
+      { type: "paragraph", text: "150W RGBWW for creative shots. Compact, app-controlled, and color-accurate, great for adding stylized accents to your setups." },
       { type: "heading", text: "COLBOR CL330" },
       { type: "image", src: lightColbor330, alt: "COLBOR CL330" },
       { type: "paragraph", text: "330W RGBWW built for big studio setups. Plenty of headroom to push through large softboxes and umbrellas, or to light wider scenes." },
