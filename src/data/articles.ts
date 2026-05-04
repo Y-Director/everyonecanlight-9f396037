@@ -40,7 +40,7 @@ export const articles: Article[] = [
     slug: "softbox-vs-umbrella-which-should-i-buy-first",
     title: "Softbox vs Umbrella: Which should I buy first?",
     date: "May 9, 2026",
-    tags: ["Comparison"],
+    tags: ["​"],
     image: softboxVsUmbrella,
     authors: [
       { name: "Favour Agbogun", avatar: authorFavour },
@@ -81,16 +81,16 @@ export const articles: Article[] = [
   {
     slug: "how-to-light-a-small-room-for-video-with-just-2-lights",
     title: "How to Light a Small Room for Video With Just 2 Lights.",
-    date: "May 30, 2026",
-    tags: ["Comparison", "How-to"],
+    date: "April 25, 2026",
+    tags: ["​", "How-to"],
     image: thumb,
     authors: [{ name: "Favour Agbogun", avatar: authorFavour }],
     content: [
       {
         type: "paragraph",
-        text: "Lighting a small room for video doesn't require a truckload of gear. With just two lights, thoughtful placement, and a little diffusion, you can craft a clean, professional look.",
+        text: "A \"Key Light\" which is main source to illuminate your face and body, and then \"Back Light\" which works as the light to either light your wall background or light your back and this technique is called a 2-point Lighting setup.",
       },
-      { type: "heading", text: "Coming soon" },
+      { type: "heading", text: "Here is All You Need" },
       {
         type: "paragraph",
         text: "The full write-up is on its way. Check back shortly for the complete walkthrough.",
