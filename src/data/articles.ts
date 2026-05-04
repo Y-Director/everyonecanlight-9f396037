@@ -40,7 +40,7 @@ export const articles: Article[] = [
     slug: "softbox-vs-umbrella-which-should-i-buy-first",
     title: "Softbox vs Umbrella: Which should I buy first?",
     date: "May 9, 2026",
-    tags: ["​"],
+    tags: ["Comparison"],
     image: softboxVsUmbrella,
     authors: [
       { name: "Favour Agbogun", avatar: authorFavour },
