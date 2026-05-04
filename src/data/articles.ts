@@ -112,9 +112,9 @@ export const articles: Article[] = [
       { type: "heading", text: "Before the Light Options, Understand this." },
       {
         type: "paragraph",
-        text: "The full write-up is on its way. Check back shortly for the complete walkthrough.",
+        text: "We put together a set of COB lights. COB lights are widely used because of the versatility of attaching different sizes of modifiers for different scenarios. And as a content creator who will do more of talking heads, shoots for brands, and other creative things here are the best COB options you should pick from.",
       },
-      { type: "heading", text: "Here are top 10 Best options" },
+      { type: "heading", text: "Here are top 10 Best Options for You" },
       { type: "heading", text: "Prolite PL-150W" },
       { type: "image", src: lightProlite, alt: "Prolite PL-150W" },
       { type: "paragraph", text: "A versatile starter COB at 150W daylight. Reliable output, simple controls, and broad modifier support make it a dependable first light for creators stepping up from on-camera panels." },
