@@ -82,7 +82,7 @@ export const articles: Article[] = [
     slug: "how-to-light-a-small-room-for-video-with-just-2-lights",
     title: "How to Light a Small Room for Video With Just 2 Lights.",
     date: "April 25, 2026",
-    tags: ["​", "How-to"],
+    tags: ["How-to"],
     image: thumb,
     authors: [{ name: "Favour Agbogun", avatar: authorFavour }],
     content: [
