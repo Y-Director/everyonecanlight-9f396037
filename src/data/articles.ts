@@ -93,7 +93,7 @@ export const articles: Article[] = [
       { type: "heading", text: "Here is All You Need" },
       {
         type: "paragraph",
-        text: "The full write-up is on its way. Check back shortly for the complete walkthrough.",
+        text: "You've tried your best to use less to achieve more in the corner of your apartment, or in your office or even on location. Making your videos look professional are looking almost impossible cause you are unaware of what lights to work with and how to position them.",
       },
     ],
   },
