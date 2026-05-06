@@ -14,6 +14,7 @@ import lightAmaran150c from "@/assets/lights/amaran-150c.png";
 import lightAmaran200xs from "@/assets/lights/amaran-200xs.png";
 import lightNeewerCb300c from "@/assets/lights/neewer-cb300c.png";
 import lightNeewerCb200c from "@/assets/lights/neewer-cb200c.png";
+import twoLightDiagram from "@/assets/articles/2-light-setup-diagram.png";
 
 export type ArticleContentBlock =
   | { type: "paragraph"; text: string }
@@ -106,6 +107,11 @@ export const articles: Article[] = [
       {
         type: "paragraph",
         text: "Technique 1: Use a c-stand to mount your mat light, a 1x1 size or a 2x2 size will be great choices. With the diffuser modifier attached, direct it to face top down or slightly angled to the direction where your face will be positioned.",
+      },
+      {
+        type: "image",
+        src: twoLightDiagram,
+        alt: "Top-down diagram of a small room 2-light setup with Falcon Eye 24TD as key light on a c-stand and Amaran Ace 25C as back light",
       },
       {
         type: "paragraph",
