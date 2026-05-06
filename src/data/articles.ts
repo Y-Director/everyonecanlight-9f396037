@@ -95,10 +95,6 @@ export const articles: Article[] = [
         type: "paragraph",
         text: "You've tried your best to use less to achieve more in the corner of your apartment, or in your office or even on location. Making your videos look professional are looking almost impossible cause you are unaware of what lights to work with and how to position them.",
       },
-      {
-        type: "paragraph",
-        text: "You've tried your best to use less to achieve more in the corner of your apartment, or in your office or even on location. Making your videos look professional are looking almost impossible cause you are unaware of what lights to work with and how to position them.",
-      },
     ],
   },
   {
