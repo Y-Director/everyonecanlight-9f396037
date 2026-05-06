@@ -95,6 +95,38 @@ export const articles: Article[] = [
         type: "paragraph",
         text: "A \"Key Light\" which is main source to illuminate your face and body, and then \"Back Light\" which works as the light to either light your wall background or light your back and this technique is called a 2-point Lighting setup.",
       },
+      {
+        type: "paragraph",
+        text: "Considering your small space, you want to go for a key light that is small in size, flat in build, at the same time perfect enough to illuminate your face.",
+      },
+      {
+        type: "paragraph",
+        text: "Mat lights are perfect for this scenario. Cause of how flat they could fit into small areas.",
+      },
+      {
+        type: "paragraph",
+        text: "Technique 1: Use a c-stand to mount your mat light, a 1x1 size or a 2x2 size will be great choices. With the diffuser modifier attached, direct it to face top down or slightly angled to the direction where your face will be positioned.",
+      },
+      {
+        type: "paragraph",
+        text: "Mat Light recommended options included and not limited to: Godox F200Bi, Amaran F22, Falcon Eye 24TD which are soft enough with the diffuser attached and project 200 Watts of Light enough to illuminate the face properly.",
+      },
+      {
+        type: "paragraph",
+        text: "Technique 2: This is without using the c-stand and may be a bit more technical. This requires you to tape the mat light to the ceiling area using gaffer or duct tapes. The technicalities involved in this would mean that you are sure of the positioning and won't be moving it at least for the shoot period. We recommend Technique 1 for beginners and newbies to avoid lighting mistakes.",
+      },
+      {
+        type: "paragraph",
+        text: "To further make the scene more interestingly awesome, add a back light either to face the wall behind you or place it in your left rear or right rear to form a kicker light that will touch the edges of your neck and side arm. This is advice to be in warm white, white or full colored.",
+      },
+      {
+        type: "paragraph",
+        text: "Recommended lights for these include Amaran PT2C, Nanlite 15X, Aputure MC, Amaran Ace 25C, Godox TL60, Sutefoto tp25 which will provide between 5 Watts to 25 Watts of light.",
+      },
+      {
+        type: "paragraph",
+        text: "Remember to adjust your Key Light's intensity to fir your camera or phone's exposure settings, and make your back light less intensified than your key light.",
+      },
     ],
   },
   {
