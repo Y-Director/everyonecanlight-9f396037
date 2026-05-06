@@ -90,10 +90,6 @@ export const articles: Article[] = [
         type: "paragraph",
         text: "A \"Key Light\" which is main source to illuminate your face and body, and then \"Back Light\" which works as the light to either light your wall background or light your back and this technique is called a 2-point Lighting setup.",
       },
-      {
-        type: "paragraph",
-        text: "In short, a 2-point lighting setup relies on two roles working together: the Key Light is your main source, shaping your face and body so you read clearly on camera, while the Back Light separates you from the scene by lighting either your background or the back of your head and shoulders for depth.",
-      },
       { type: "heading", text: "Here is All You Need" },
       {
         type: "paragraph",
