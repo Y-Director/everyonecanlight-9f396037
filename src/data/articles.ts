@@ -1,4 +1,4 @@
-import thumb from "@/assets/article-thumb.png";
+import thumb from "@/assets/two-lights-thumb.png";
 import softboxVsUmbrella from "@/assets/softbox-vs-umbrella.png";
 import bestLights2026 from "@/assets/best-lights-2026.png";
 import authorFavour from "@/assets/author-favour.jpg";
