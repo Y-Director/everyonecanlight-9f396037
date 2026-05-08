@@ -89,7 +89,7 @@ export const articles: Article[] = [
     content: [
       {
         type: "paragraph",
-        text: "A \"Key Light\" which is main source to illuminate your face and body, and then \"Back Light\" which works as the light to either light your wall background or light your back and this technique is called a 2-point Lighting setup.",
+        text: "You've tried your best to use less to achieve more in the corner of your apartment, or in your office or even on location. Making your videos look professional are looking almost impossible cause you are unaware of what lights to work with and how to position them.",
       },
       { type: "heading", text: "Here is All You Need" },
       {
