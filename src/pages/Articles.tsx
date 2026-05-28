@@ -55,6 +55,40 @@ const Articles = () => {
               </Link>
             ))}
           </div>
+
+          <header className="mt-24 mb-12">
+            <h2 className="text-5xl md:text-6xl font-medium tracking-tight">Lighting Guides and Updates</h2>
+            <p className="mt-3 text-xs tracking-[0.2em] text-foreground/60 uppercase">Tips and guides from real life experiences</p>
+          </header>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {articles.map((a, i) => (
+              <Link
+                key={`guides-${a.slug}-${i}`}
+                to={`/articles/${a.slug}`}
+                className="group space-y-4 block focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/40 rounded-xl"
+              >
+                <article className="space-y-4">
+                  <div className="rounded-xl overflow-hidden aspect-[2/1] bg-[hsl(var(--surface))]">
+                    <img
+                      src={a.image}
+                      alt={a.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                    />
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-foreground/80">
+                    {a.tags.map((t) => (
+                      <span key={t}>{t}</span>
+                    ))}
+                  </div>
+                  <h3 className="text-2xl font-medium leading-snug group-hover:text-foreground/90">
+                    {a.title}
+                  </h3>
+                  <p className="text-sm text-foreground/60">{a.date}</p>
+                </article>
+              </Link>
+            ))}
+          </div>
         </main>
 
         {/* Footer */}
