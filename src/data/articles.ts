@@ -212,3 +212,26 @@ export const differentTypesArticle: Article = {
   authors: [{ name: "Favour Agbogun" }],
   content: [],
 };
+
+export const talkingHead1LightArticle: Article = {
+  slug: "how-to-light-a-talking-head-video-with-1-single-light",
+  title: "How to light a talking head video with 1 Single Light",
+  date: "Feb 4, 2026",
+  tags: ["Beginner"],
+  image: softboxVsUmbrella,
+  authors: [
+    { name: "Favour Agbogun", avatar: authorFavour },
+    { name: "Adeyinka Ibidapo", avatar: authorAdeyinka },
+  ],
+  content: [],
+};
+
+export const whatIsWattageArticle: Article = {
+  slug: "what-is-wattage-in-lighting",
+  title: "What is Wattage in Lighting?",
+  date: "April 25, 2026",
+  tags: ["Beginner"],
+  image: thumb,
+  authors: [{ name: "Favour Agbogun", avatar: authorFavour }],
+  content: [],
+};
