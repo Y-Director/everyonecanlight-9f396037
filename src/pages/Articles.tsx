@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
-import { articles } from "@/data/articles";
+import { articles, fixDarkVideosArticle } from "@/data/articles";
 
 const Articles = () => {
   const [expanded, setExpanded] = useState(false);
-  const usefulArticles = [...articles, ...articles.slice(0, 2)];
+  const usefulArticles = [...articles, fixDarkVideosArticle, articles[0]];
   const visibleUseful = expanded ? usefulArticles.slice(0, 5) : usefulArticles.slice(0, 3);
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">

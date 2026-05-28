@@ -1,4 +1,5 @@
 import thumb from "@/assets/two-lights-thumb.png";
+import softboxVsUmbrella from "@/assets/softbox-vs-umbrella.png";
 import fixDarkVideos from "@/assets/fix-dark-videos.png";
 import bestLights2026 from "@/assets/best-lights-2026.png";
 import authorFavour from "@/assets/author-favour.jpg";
@@ -38,11 +39,11 @@ export type Article = {
 
 export const articles: Article[] = [
   {
-    slug: "why-your-videos-look-dark-and-how-to-fix-it",
-    title: "Why Your Videos Look Dark (And How to Fix It)",
-    date: "May 21, 2026",
-    tags: ["Problem Solving"],
-    image: fixDarkVideos,
+    slug: "softbox-vs-umbrella-which-should-i-buy-first",
+    title: "Softbox vs Umbrella: Which should I buy first?",
+    date: "May 9, 2026",
+    tags: ["Comparison"],
+    image: softboxVsUmbrella,
     authors: [
       { name: "Favour Agbogun", avatar: authorFavour },
       { name: "Adeyinka Ibidapo", avatar: authorAdeyinka },
@@ -191,3 +192,13 @@ export const articles: Article[] = [
 
 export const getArticleBySlug = (slug: string) =>
   articles.find((a) => a.slug === slug);
+
+export const fixDarkVideosArticle: Article = {
+  slug: "why-your-videos-look-dark-and-how-to-fix-it",
+  title: "Why Your Videos Look Dark (And How to Fix It)",
+  date: "May 21, 2026",
+  tags: ["Problem Solving"],
+  image: fixDarkVideos,
+  authors: [{ name: "Favour Agbogun" }],
+  content: [],
+};
