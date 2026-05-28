@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
 import { articles } from "@/data/articles";
 
 const Articles = () => {
+  const [expanded, setExpanded] = useState(false);
+  const usefulArticles = [...articles, ...articles.slice(0, 2)];
+  const visibleUseful = expanded ? usefulArticles.slice(0, 5) : usefulArticles.slice(0, 3);
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       {/* Grid background */}
@@ -28,7 +32,7 @@ const Articles = () => {
           </header>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {articles.map((a, i) => (
+            {visibleUseful.map((a, i) => (
               <Link
                 key={`${a.slug}-${i}`}
                 to={`/articles/${a.slug}`}
@@ -54,6 +58,16 @@ const Articles = () => {
                 </article>
               </Link>
             ))}
+          </div>
+
+          <div className="flex justify-center mt-10">
+            <button
+              type="button"
+              onClick={() => setExpanded((v) => !v)}
+              className="text-sm text-foreground underline underline-offset-4 decoration-[hsl(var(--cta))] decoration-2 hover:opacity-80 transition"
+            >
+              {expanded ? "Show Less" : "Read More"}
+            </button>
           </div>
 
           <header className="mt-24 mb-12">
