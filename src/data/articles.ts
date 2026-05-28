@@ -39,10 +39,10 @@ export type Article = {
 
 export const articles: Article[] = [
   {
-    slug: "how-to-light-a-talking-head-video-with-1-single-light",
-    title: "How to light a talking head video with 1 Single Light",
-    date: "Feb 4, 2026",
-    tags: ["Beginner"],
+    slug: "softbox-vs-umbrella-which-should-i-buy-first",
+    title: "Softbox vs Umbrella: Which should I buy first?",
+    date: "May 9, 2026",
+    tags: ["Comparison"],
     image: softboxVsUmbrella,
     authors: [
       { name: "Favour Agbogun", avatar: authorFavour },
@@ -81,10 +81,10 @@ export const articles: Article[] = [
     ],
   },
   {
-    slug: "what-is-wattage-in-lighting",
-    title: "What is Wattage in Lighting?",
+    slug: "how-to-light-a-small-room-for-video-with-just-2-lights",
+    title: "How to Light a Small Room for Video With Just 2 Lights.",
     date: "April 25, 2026",
-    tags: ["Beginner"],
+    tags: ["How-to"],
     image: thumb,
     authors: [{ name: "Favour Agbogun", avatar: authorFavour }],
     content: [
@@ -210,5 +210,28 @@ export const differentTypesArticle: Article = {
   tags: ["Beginner"],
   image: softboxVsUmbrella,
   authors: [{ name: "Favour Agbogun" }],
+  content: [],
+};
+
+export const talkingHead1LightArticle: Article = {
+  slug: "how-to-light-a-talking-head-video-with-1-single-light",
+  title: "How to light a talking head video with 1 Single Light",
+  date: "Feb 4, 2026",
+  tags: ["Beginner"],
+  image: softboxVsUmbrella,
+  authors: [
+    { name: "Favour Agbogun", avatar: authorFavour },
+    { name: "Adeyinka Ibidapo", avatar: authorAdeyinka },
+  ],
+  content: [],
+};
+
+export const whatIsWattageArticle: Article = {
+  slug: "what-is-wattage-in-lighting",
+  title: "What is Wattage in Lighting?",
+  date: "April 25, 2026",
+  tags: ["Beginner"],
+  image: thumb,
+  authors: [{ name: "Favour Agbogun", avatar: authorFavour }],
   content: [],
 };
