@@ -238,7 +238,7 @@ export const whatIsWattageArticle: Article = {
   date: "April 25, 2026",
   tags: ["Beginner"],
   image: thumb,
-  authors: [{ name: "Favour Agbogun", avatar: authorFavour }],
+  authors: [{ name: "Adeyinka Ibidapo", avatar: authorAdeyinkaNew }],
   content: [
     { type: "paragraph", text: "One of the first terms you'll hear when learning about video lighting is wattage." },
     { type: "paragraph", text: "Simply put, wattage refers to how much electrical power a light uses to produce light output." },
