@@ -191,7 +191,13 @@ export const articles: Article[] = [
 ];
 
 export const getArticleBySlug = (slug: string) =>
-  articles.find((a) => a.slug === slug);
+  [
+    ...articles,
+    fixDarkVideosArticle,
+    differentTypesArticle,
+    talkingHead1LightArticle,
+    whatIsWattageArticle,
+  ].find((a) => a.slug === slug);
 
 export const fixDarkVideosArticle: Article = {
   slug: "why-your-videos-look-dark-and-how-to-fix-it",
