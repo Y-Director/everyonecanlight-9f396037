@@ -233,5 +233,30 @@ export const whatIsWattageArticle: Article = {
   tags: ["Beginner"],
   image: thumb,
   authors: [{ name: "Favour Agbogun", avatar: authorFavour }],
-  content: [],
+  content: [
+    {
+      type: "paragraph",
+      text: "Wattage is one of the first specs you'll see when shopping for a light, and it's also one of the most misunderstood. In simple terms, wattage tells you how much electrical power a light consumes to produce its output. The higher the wattage, the more power the light draws, and generally, the brighter it can get.",
+    },
+    { type: "heading", text: "Wattage vs Brightness" },
+    {
+      type: "paragraph",
+      text: "Wattage is not the same as brightness. Two lights rated at 150W can produce very different amounts of usable light depending on the LED chip quality, the reflector design, and the modifier attached. A modern 150W COB light will often out-perform an older 300W fixture because newer LEDs convert power into light far more efficiently. Always pair wattage with the manufacturer's lux or lumen rating to get the full picture.",
+    },
+    { type: "heading", text: "How Much Wattage Do You Actually Need?" },
+    {
+      type: "paragraph",
+      text: "For talking head videos, interviews, and small product shoots in a controlled indoor space, a 100W to 200W COB light is usually more than enough as your key light. For larger rooms, group shots, or when you need to overpower window light during the day, step up to 300W or higher. If you're lighting an entire backdrop or shooting outdoors, you may need multiple 300W+ fixtures to get a clean exposure.",
+    },
+    { type: "heading", text: "Why More Watts Isn't Always Better" },
+    {
+      type: "paragraph",
+      text: "Higher wattage lights cost more, draw more current from your wall socket, generate more heat, and often require louder cooling fans. They also tend to be heavier, which means sturdier stands and more setup time. If your shoots are mostly indoor and up close, a smaller light gives you finer control over exposure and is far easier to travel with.",
+    },
+    { type: "heading", text: "Key Takeaway" },
+    {
+      type: "paragraph",
+      text: "Think of wattage as a ceiling, not a guarantee. It tells you the maximum power a light can pull, but the real brightness depends on the LED, the modifier, and the distance to your subject. Start with a wattage that matches your space and subject, then learn to shape that light with diffusion and positioning. That's where good lighting actually comes from.",
+    },
+  ],
 };
