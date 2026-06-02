@@ -86,7 +86,7 @@ const ArticleDetail = () => {
                   );
                 }
                 return (
-                  <p key={i} className="text-sm md:text-base leading-relaxed text-foreground/85">
+                  <p key={i} className="text-sm md:text-base leading-relaxed text-foreground/85 whitespace-pre-line">
                     {block.text}
                   </p>
                 );
