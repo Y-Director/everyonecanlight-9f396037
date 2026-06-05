@@ -16,6 +16,7 @@ import lightAmaran200xs from "@/assets/lights/amaran-200xs.png";
 import lightNeewerCb300c from "@/assets/lights/neewer-cb300c.png";
 import lightNeewerCb200c from "@/assets/lights/neewer-cb200c.png";
 import twoLightDiagram from "@/assets/articles/2-light-setup-diagram.png";
+import whatIsWattageThumb from "@/assets/articles/what-is-wattage.png.asset.json";
 
 export type ArticleContentBlock =
   | { type: "paragraph"; text: string }
@@ -237,7 +238,7 @@ export const whatIsWattageArticle: Article = {
   title: "What is Wattage in Lighting?",
   date: "April 25, 2026",
   tags: ["Beginner"],
-  image: thumb,
+  image: whatIsWattageThumb.url,
   authors: [{ name: "Adeyinka Ibidapo", avatar: authorAdeyinkaNew }],
   content: [
     { type: "paragraph", text: "One of the first terms you'll hear when learning about video lighting is wattage.\nSimply put, wattage refers to how much electrical power a light uses to produce light output.\nThe higher the wattage of a light, the more power it can draw and, in most cases, the more light it can produce.\nEvery lighting fixture has a wattage rating. You can usually find it:\nOn the product body\nIn the user manual\nOn the product packaging\nOr directly in the product name" },
