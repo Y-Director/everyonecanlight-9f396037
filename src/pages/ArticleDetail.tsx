@@ -85,6 +85,58 @@ const ArticleDetail = () => {
                     </div>
                   );
                 }
+                if (block.type === "setup") {
+                  return (
+                    <section
+                      key={i}
+                      className="mt-10 rounded-2xl border border-foreground/15 bg-[hsl(var(--surface))]/60 overflow-hidden"
+                    >
+                      <div className="px-6 md:px-8 pt-6 md:pt-8 pb-2 flex items-center gap-3">
+                        <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-foreground text-background text-sm font-semibold">
+                          {block.number}
+                        </span>
+                        <div className="text-xs uppercase tracking-widest text-foreground/60">
+                          Setup {block.number}
+                        </div>
+                      </div>
+                      <div className="px-6 md:px-8 pb-6 md:pb-8">
+                        <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
+                          {block.title}
+                        </h2>
+                        <p className="mt-2 text-sm md:text-base text-foreground/80 leading-relaxed">
+                          {block.intro}
+                        </p>
+                        <div className="mt-6 rounded-xl overflow-hidden bg-white border border-foreground/10">
+                          <img
+                            src={block.diagramSrc}
+                            alt={block.diagramAlt}
+                            loading="lazy"
+                            className="w-full h-auto object-contain"
+                          />
+                          <p className="text-xs text-foreground/60 px-4 py-2 border-t border-foreground/10">
+                            Fig. {block.number} — {block.title} setup diagram
+                          </p>
+                        </div>
+                        <div className="mt-6">
+                          <h3 className="text-xs uppercase tracking-widest text-foreground/60 mb-3">
+                            Equipment Needed
+                          </h3>
+                          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+                            {block.equipment.map((item) => (
+                              <li
+                                key={item}
+                                className="flex items-start gap-2 text-sm text-foreground/85"
+                              >
+                                <span className="mt-2 inline-block w-1.5 h-1.5 rounded-full bg-foreground/50 flex-shrink-0" />
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </section>
+                  );
+                }
                 return (
                   <p key={i} className="text-sm md:text-base leading-relaxed text-foreground/85 whitespace-pre-line">
                     {block.text}
