@@ -16,6 +16,7 @@ import lightAmaran200xs from "@/assets/lights/amaran-200xs.png";
 import lightNeewerCb300c from "@/assets/lights/neewer-cb300c.png";
 import lightNeewerCb200c from "@/assets/lights/neewer-cb200c.png";
 import twoLightDiagram from "@/assets/articles/2-light-setup-diagram.png";
+import whatIsWattageThumb from "@/assets/articles/what-is-wattage.png.asset.json";
 
 export type ArticleContentBlock =
   | { type: "paragraph"; text: string }
