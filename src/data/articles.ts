@@ -18,11 +18,22 @@ import lightNeewerCb200c from "@/assets/lights/neewer-cb200c.png";
 import twoLightDiagram from "@/assets/articles/2-light-setup-diagram.png";
 import whatIsWattageThumb from "@/assets/articles/what-is-wattage.png.asset.json";
 import fixDarkVideosThumb from "@/assets/articles/fix-dark-videos.png.asset.json";
+import loopLightingDiagram from "@/assets/articles/loop-lighting-diagram.png";
+import butterflyLightingDiagram from "@/assets/articles/butterfly-lighting-diagram.png";
 
 export type ArticleContentBlock =
   | { type: "paragraph"; text: string }
   | { type: "heading"; text: string }
-  | { type: "image"; src: string; alt: string };
+  | { type: "image"; src: string; alt: string }
+  | {
+      type: "setup";
+      number: number;
+      title: string;
+      intro: string;
+      equipment: string[];
+      diagramSrc: string;
+      diagramAlt: string;
+    };
 
 export type Author = {
   name: string;
