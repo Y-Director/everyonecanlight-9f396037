@@ -17,6 +17,7 @@ import lightNeewerCb300c from "@/assets/lights/neewer-cb300c.png";
 import lightNeewerCb200c from "@/assets/lights/neewer-cb200c.png";
 import twoLightDiagram from "@/assets/articles/2-light-setup-diagram.png";
 import whatIsWattageThumb from "@/assets/articles/what-is-wattage.png.asset.json";
+import fixDarkVideosThumb from "@/assets/articles/fix-dark-videos.png.asset.json";
 
 export type ArticleContentBlock =
   | { type: "paragraph"; text: string }
@@ -205,7 +206,7 @@ export const fixDarkVideosArticle: Article = {
   title: "Why Your Videos Look Dark (And How to Fix It)",
   date: "May 21, 2026",
   tags: ["Problem Solving"],
-  image: fixDarkVideos,
+  image: fixDarkVideosThumb.url,
   authors: [{ name: "Favour Agbogun" }],
   content: [],
 };
