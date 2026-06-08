@@ -218,7 +218,7 @@ export const getArticleBySlug = (slug: string) =>
 export const fixDarkVideosArticle: Article = {
   slug: "why-your-videos-look-dark-and-how-to-fix-it",
   title: "Why Your Videos Look Dark (And How to Fix It)",
-  date: "May 21, 2026",
+  date: "Mar 21, 2026",
   tags: ["Problem Solving"],
   image: fixDarkVideosThumb.url,
   authors: [{ name: "Favour Agbogun" }],
