@@ -1,5 +1,5 @@
 import thumb from "@/assets/two-lights-thumb.png";
-import softboxVsUmbrella from "@/assets/softbox-vs-umbrella.png";
+import lightingEquipmentOptions from "@/assets/lighting-equipment-options.png";
 import fixDarkVideos from "@/assets/fix-dark-videos.png";
 import bestLights2026 from "@/assets/best-lights-2026.png";
 import authorFavour from "@/assets/author-favour.jpg";
@@ -56,7 +56,7 @@ export const articles: Article[] = [
     title: "Softbox vs Umbrella: Which should I buy first?",
     date: "May 9, 2026",
     tags: ["Comparison"],
-    image: softboxVsUmbrella,
+    image: lightingEquipmentOptions,
     authors: [
       { name: "Favour Agbogun", avatar: authorFavour },
       { name: "Adeyinka Ibidapo", avatar: authorAdeyinka },
@@ -227,7 +227,7 @@ export const differentTypesArticle: Article = {
   title: "Different Types of Lights and their usage: For Beginners",
   date: "Feb 4, 2026",
   tags: ["Beginner"],
-  image: softboxVsUmbrella,
+  image: lightingEquipmentOptions,
   authors: [{ name: "Favour Agbogun" }],
   content: [],
 };
@@ -237,7 +237,7 @@ export const talkingHead1LightArticle: Article = {
   title: "How to light a talking head video with 1 Single Light",
   date: "Feb 4, 2026",
   tags: ["Beginner"],
-  image: softboxVsUmbrella,
+  image: lightingEquipmentOptions,
   authors: [{ name: "Adeyinka Ibidapo", avatar: authorAdeyinka }],
   content: [
     { type: "paragraph", text: "Many creators believe they need multiple lights before they can create professional-looking videos.\nThe truth is that some of the best talking-head videos can be created with just one light.\nBefore investing in more equipment, learn how to get the most from a single light source. Mastering one light will teach you the foundations of lighting faster than owning five lights you don't know how to use.\nHere are two beginner-friendly setups that work almost every time." },
