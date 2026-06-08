@@ -1,5 +1,6 @@
 import thumb from "@/assets/two-lights-thumb.png";
 import lightingEquipmentOptions from "@/assets/lighting-equipment-options.png";
+import differentTypesOfLightsCover from "@/assets/different-types-of-lights-cover.png";
 import softboxVsUmbrellaCover from "@/assets/softbox-vs-umbrella.png";
 import fixDarkVideos from "@/assets/fix-dark-videos.png";
 import bestLights2026 from "@/assets/best-lights-2026.png";
@@ -57,7 +58,7 @@ export const articles: Article[] = [
     title: "Softbox vs Umbrella: Which should I buy first?",
     date: "May 9, 2026",
     tags: ["Comparison"],
-    image: lightingEquipmentOptions,
+    image: softboxVsUmbrellaCover,
     authors: [
       { name: "Favour Agbogun", avatar: authorFavour },
       { name: "Adeyinka Ibidapo", avatar: authorAdeyinka },
@@ -228,7 +229,7 @@ export const differentTypesArticle: Article = {
   title: "Different Types of Lights and their usage: For Beginners",
   date: "Feb 4, 2026",
   tags: ["Beginner"],
-  image: lightingEquipmentOptions,
+  image: differentTypesOfLightsCover,
   authors: [{ name: "Favour Agbogun" }],
   content: [],
 };
