@@ -46,6 +46,7 @@ export type Article = {
   date: string;
   tags: string[];
   image: string;
+  hideCover?: boolean;
   authors: Author[];
   content: ArticleContentBlock[];
 };
@@ -57,6 +58,7 @@ export const articles: Article[] = [
     date: "May 9, 2026",
     tags: ["Comparison"],
     image: lightingEquipmentOptions,
+    hideCover: true,
     authors: [
       { name: "Favour Agbogun", avatar: authorFavour },
       { name: "Adeyinka Ibidapo", avatar: authorAdeyinka },
@@ -238,6 +240,7 @@ export const talkingHead1LightArticle: Article = {
   date: "Feb 4, 2026",
   tags: ["Beginner"],
   image: lightingEquipmentOptions,
+  hideCover: true,
   authors: [{ name: "Adeyinka Ibidapo", avatar: authorAdeyinka }],
   content: [
     { type: "paragraph", text: "Many creators believe they need multiple lights before they can create professional-looking videos.\nThe truth is that some of the best talking-head videos can be created with just one light.\nBefore investing in more equipment, learn how to get the most from a single light source. Mastering one light will teach you the foundations of lighting faster than owning five lights you don't know how to use.\nHere are two beginner-friendly setups that work almost every time." },
