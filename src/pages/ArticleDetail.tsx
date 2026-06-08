@@ -54,15 +54,13 @@ const ArticleDetail = () => {
               <p className="mt-3 text-sm text-foreground/60">{article.date}</p>
             </header>
 
-            {!article.hideCover && (
-              <div className="rounded-xl overflow-hidden aspect-[2/1] bg-[hsl(var(--surface))] mb-10">
-                <img
-                  src={article.image}
-                  alt={article.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            )}
+            <div className="rounded-xl overflow-hidden aspect-[2/1] bg-[hsl(var(--surface))] mb-10">
+              <img
+                src={article.image}
+                alt={article.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
 
             <div className="space-y-6">
               {article.content.map((block, i) => {
