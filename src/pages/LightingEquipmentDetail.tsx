@@ -144,7 +144,7 @@ const LightingEquipmentDetail = () => {
         <footer className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 py-6 px-8 border-t border-border text-sm bg-[hsl(var(--surface))] text-foreground mt-16">
           <div className="flex items-center gap-3 text-foreground/70">
             <img src={logo} alt="EveryoneCanLight logo" className="w-6 h-6 rounded object-contain" />
-            \u00a9 2026 Everyone Can Light Technologies
+            © 2026 Everyone Can Light Technologies
           </div>
           <div className="flex items-center gap-6">
             <span className="text-foreground/50">Social</span>
