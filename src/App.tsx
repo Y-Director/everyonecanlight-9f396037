@@ -7,6 +7,7 @@ import Index from "./pages/Index.tsx";
 import Articles from "./pages/Articles.tsx";
 import ArticleDetail from "./pages/ArticleDetail.tsx";
 import LightingEquipment from "./pages/LightingEquipment.tsx";
+import LightingEquipmentDetail from "./pages/LightingEquipmentDetail.tsx";
 import Courses from "./pages/Courses.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/articles" element={<Articles />} />
           <Route path="/articles/:slug" element={<ArticleDetail />} />
           <Route path="/lighting-equipment" element={<LightingEquipment />} />
+          <Route path="/lighting-equipment/:slug" element={<LightingEquipmentDetail />} />
           <Route path="/courses" element={<Courses />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
