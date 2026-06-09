@@ -238,7 +238,7 @@ export const differentTypesArticle: Article = {
 export const talkingHead1LightArticle: Article = {
   slug: "how-to-light-a-talking-head-video-with-1-single-light",
   title: "How to light a talking head video with 1 Single Light",
-  date: "Feb 4, 2026",
+  date: "May 21, 2026",
   tags: ["Beginner"],
   image: talkingHead1LightCover,
   authors: [{ name: "Adeyinka Ibidapo", avatar: authorAdeyinka }],
