@@ -228,7 +228,7 @@ export const fixDarkVideosArticle: Article = {
 export const differentTypesArticle: Article = {
   slug: "different-types-of-lights-and-their-usage-for-beginners",
   title: "Different Types of Lights and their usage: For Beginners",
-  date: "Feb 4, 2026",
+  date: "May 21, 2026",
   tags: ["Beginner"],
   image: differentTypesOfLightsCover,
   authors: [{ name: "Favour Agbogun" }],
