@@ -3,19 +3,9 @@ import { useMemo, useState } from "react";
 import { Search, ArrowLeft, ArrowRight, ArrowUpDown } from "lucide-react";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
-import placeholderLight from "@/assets/light-product.png";
-import godoxVl150 from "@/assets/lights/godox-vl150.png";
-import colbor220r from "@/assets/lights/colbor-cl220r.png";
-import amaran200xs from "@/assets/lights/amaran-200xs.png";
+import { equipment as EQUIPMENT, type EquipmentCategory } from "@/data/equipment";
 
-type Category = "All Equipment" | "COB Lights" | "Mat Lights" | "Tube Lights" | "Panel Lights" | "Stands & Grips" | "Others";
-
-type Equipment = {
-  slug: string;
-  name: string;
-  image: string;
-  category: Exclude<Category, "All Equipment">;
-};
+type Category = "All Equipment" | EquipmentCategory;
 
 const CATEGORIES: Category[] = [
   "All Equipment",
@@ -25,24 +15,6 @@ const CATEGORIES: Category[] = [
   "Panel Lights",
   "Stands & Grips",
   "Others",
-];
-
-const EQUIPMENT: Equipment[] = [
-  { slug: "aputure-120d", name: "Aputure 120D", image: placeholderLight, category: "COB Lights" },
-  { slug: "godox-vl-150", name: "Godox VL 150", image: godoxVl150, category: "COB Lights" },
-  { slug: "colbor-220r", name: "Colbor 220R", image: colbor220r, category: "COB Lights" },
-  { slug: "aputure-nova-300c", name: "Aputure Nova 300C", image: placeholderLight, category: "Panel Lights" },
-  { slug: "amaran-200x-s", name: "Amaran 200X S", image: amaran200xs, category: "COB Lights" },
-  { slug: "reflector-dish", name: "Reflector Dish", image: placeholderLight, category: "Others" },
-  { slug: "aputure-600d", name: "Aputure 600D", image: placeholderLight, category: "COB Lights" },
-  { slug: "amaran-pt2c", name: "Amaran PT2C", image: placeholderLight, category: "Tube Lights" },
-  { slug: "amaran-f22c", name: "Amaran F22C", image: placeholderLight, category: "Mat Lights" },
-  { slug: "aputure-mc", name: "Aputure MC", image: placeholderLight, category: "Panel Lights" },
-  { slug: "aputure-b7c", name: "Aputure B7C", image: placeholderLight, category: "Others" },
-  { slug: "nanlite-gobo-disk", name: "Nanlite Gobo Disk", image: placeholderLight, category: "Others" },
-  { slug: "nanlite-fs-200", name: "Nanlite FS 200", image: placeholderLight, category: "COB Lights" },
-  { slug: "sutefoto-p230bi", name: "Sutefoto P230Bi", image: placeholderLight, category: "COB Lights" },
-  { slug: "feelworld-fl-125d", name: "Feelworld FL 125D", image: placeholderLight, category: "COB Lights" },
 ];
 
 const PAGE_SIZE = 15;
