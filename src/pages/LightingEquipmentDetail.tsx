@@ -1,4 +1,5 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
@@ -6,7 +7,18 @@ import { equipment, getEquipmentBySlug } from "@/data/equipment";
 
 const LightingEquipmentDetail = () => {
   const { slug = "" } = useParams();
+  const [searchParams] = useSearchParams();
   const item = getEquipmentBySlug(slug);
+
+  // Preserve listing state across navigation. The listing page passes its
+  // query string in `from` so the back button can restore filters.
+  const fromQuery = searchParams.get("from") ?? "";
+  const backHref = `/lighting-equipment${fromQuery ? `?${fromQuery}` : ""}`;
+  const detailHref = (s: string) =>
+    `/lighting-equipment/${s}${fromQuery ? `?from=${encodeURIComponent(fromQuery)}` : ""}`;
+
+  const [activeImage, setActiveImage] = useState(0);
+  useEffect(() => setActiveImage(0), [slug]);
 
   if (!item) {
     return (
@@ -14,7 +26,7 @@ const LightingEquipmentDetail = () => {
         <SiteNav />
         <main className="max-w-[1400px] mx-auto px-8 py-24 text-center">
           <h1 className="text-3xl font-medium">Equipment not found</h1>
-          <Link to="/lighting-equipment" className="mt-6 inline-flex items-center gap-2 text-foreground/70 hover:text-foreground">
+          <Link to={backHref} className="mt-6 inline-flex items-center gap-2 text-foreground/70 hover:text-foreground">
             <ArrowLeft className="w-4 h-4" /> Back to Lighting Equipment
           </Link>
         </main>
@@ -30,29 +42,54 @@ const LightingEquipmentDetail = () => {
   if (item.watts) badges.push({ label: `Watts: ${item.watts}`, bg: "bg-[hsl(265_70%_88%)] text-[hsl(265_40%_30%)]" });
   if (item.app) badges.push({ label: `App: ${item.app}`, bg: "bg-[hsl(140_55%_82%)] text-[hsl(150_45%_22%)]" });
 
+  const gallery = item.images.length > 0 ? item.images : [item.image];
+  const mainImage = gallery[Math.min(activeImage, gallery.length - 1)];
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="flex flex-col min-h-screen">
         <SiteNav />
 
         <main className="flex-1 max-w-[1400px] mx-auto w-full px-8 py-8">
-          {/* Back link */}
+          {/* Back button — returns to the listing with prior search/sort applied. */}
           <Link
-            to="/lighting-equipment"
-            className="inline-flex items-center gap-2 text-sm text-foreground/65 hover:text-foreground transition-colors mb-6"
+            to={backHref}
+            className="inline-flex items-center gap-2 text-sm text-foreground/70 hover:text-foreground transition-colors mb-6 px-3 py-2 rounded-md border border-border hover:border-foreground/40"
           >
-            <ArrowLeft className="w-4 h-4" /> All Equipment
+            <ArrowLeft className="w-4 h-4" /> Back to Lighting Equipment
           </Link>
 
-          {/* Product card */}
           <article className="bg-white text-neutral-900 rounded-sm p-8 md:p-12">
             <div className="grid md:grid-cols-2 gap-10 items-start">
-              <div className="flex items-center justify-center min-h-[320px]">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="max-h-[360px] w-auto object-contain"
-                />
+              {/* Gallery */}
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center justify-center min-h-[320px] bg-white">
+                  <img
+                    key={mainImage}
+                    src={mainImage}
+                    alt={item.name}
+                    className="max-h-[360px] w-auto object-contain"
+                  />
+                </div>
+                {gallery.length > 1 && (
+                  <div className="flex flex-wrap gap-3 justify-center">
+                    {gallery.map((src, i) => (
+                      <button
+                        key={`${src}-${i}`}
+                        type="button"
+                        onClick={() => setActiveImage(i)}
+                        aria-label={`Show image ${i + 1} of ${gallery.length}`}
+                        className={`w-20 h-20 rounded border bg-white flex items-center justify-center p-2 transition ${
+                          i === activeImage
+                            ? "border-neutral-900 ring-2 ring-neutral-900/20"
+                            : "border-neutral-200 hover:border-neutral-400"
+                        }`}
+                      >
+                        <img src={src} alt="" className="max-w-full max-h-full object-contain" />
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div>
@@ -99,7 +136,6 @@ const LightingEquipmentDetail = () => {
             </div>
           </article>
 
-          {/* Explore More divider */}
           <div className="mt-16 flex items-center gap-6">
             <div className="flex-1 h-px bg-border" />
             <h2 className="text-sm md:text-base uppercase tracking-[0.2em] text-foreground/70">
@@ -108,12 +144,11 @@ const LightingEquipmentDetail = () => {
             <div className="flex-1 h-px bg-border" />
           </div>
 
-          {/* Other equipment grid */}
           <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
             {others.map((o) => (
               <Link
                 key={o.slug}
-                to={`/lighting-equipment/${o.slug}`}
+                to={detailHref(o.slug)}
                 className="group block overflow-hidden rounded-sm bg-card transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-foreground/30"
               >
                 <div className="aspect-square bg-white flex items-center justify-center p-6 overflow-hidden">
@@ -124,7 +159,7 @@ const LightingEquipmentDetail = () => {
                     loading="lazy"
                   />
                 </div>
-                <div className="bg-muted/60 text-center py-4 px-3 text-sm text-foreground/85 group-hover:text-foreground">
+                <div className="bg-[#373737] text-white text-center py-4 px-3 text-sm">
                   {o.name}
                 </div>
               </Link>
@@ -133,7 +168,7 @@ const LightingEquipmentDetail = () => {
 
           <div className="mt-12 flex justify-center">
             <Link
-              to="/lighting-equipment"
+              to={backHref}
               className="text-sm text-foreground/70 hover:text-foreground transition-colors inline-flex items-center gap-2"
             >
               <ArrowLeft className="w-4 h-4" /> Back to all equipment
