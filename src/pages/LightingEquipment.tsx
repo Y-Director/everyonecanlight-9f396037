@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { useMemo, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { useMemo } from "react";
 import { Search, ArrowLeft, ArrowRight, ArrowUpDown } from "lucide-react";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
@@ -20,10 +20,21 @@ const CATEGORIES: Category[] = [
 const PAGE_SIZE = 15;
 
 const LightingEquipment = () => {
-  const [category, setCategory] = useState<Category>("All Equipment");
-  const [query, setQuery] = useState("");
-  const [sortAsc, setSortAsc] = useState(true);
-  const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const query = searchParams.get("q") ?? "";
+  const category = (searchParams.get("cat") as Category) || "All Equipment";
+  const sortAsc = searchParams.get("sort") !== "desc";
+  const page = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10) || 1);
+
+  const update = (patch: Record<string, string | null>) => {
+    const next = new URLSearchParams(searchParams);
+    Object.entries(patch).forEach(([k, v]) => {
+      if (v === null || v === "") next.delete(k);
+      else next.set(k, v);
+    });
+    setSearchParams(next, { replace: true });
+  };
 
   const filtered = useMemo(() => {
     const list = EQUIPMENT.filter((e) => {
@@ -40,23 +51,50 @@ const LightingEquipment = () => {
   const currentPage = Math.min(page, totalPages);
   const pageItems = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
+  // Pass current listing state to each detail link so the back button can restore it.
+  const listingQuery = searchParams.toString();
+  const detailHref = (slug: string) => {
+    const params = new URLSearchParams();
+    if (listingQuery) params.set("from", listingQuery);
+    const q = params.toString();
+    return `/lighting-equipment/${slug}${q ? `?${q}` : ""}`;
+  };
+
+  // Compact pagination: show up to ~9 page buttons with ellipses.
+  const pageButtons = useMemo(() => {
+    const pages: (number | "...")[] = [];
+    const max = totalPages;
+    const cur = currentPage;
+    const push = (p: number) => {
+      if (!pages.includes(p) && p >= 1 && p <= max) pages.push(p);
+    };
+    if (max <= 9) {
+      for (let p = 1; p <= max; p++) pages.push(p);
+    } else {
+      push(1);
+      push(2);
+      if (cur > 4) pages.push("...");
+      for (let p = cur - 1; p <= cur + 1; p++) push(p);
+      if (cur < max - 3) pages.push("...");
+      push(max - 1);
+      push(max);
+    }
+    return pages;
+  }, [totalPages, currentPage]);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="flex flex-col min-h-screen">
         <SiteNav />
 
         <main className="flex-1 px-8 max-w-[1400px] mx-auto w-full py-12">
-          {/* Top bar: search + categories */}
           <div className="flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-8">
             <div className="relative w-full lg:w-[360px]">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/50" aria-hidden="true" />
               <input
                 type="text"
                 value={query}
-                onChange={(e) => {
-                  setQuery(e.target.value);
-                  setPage(1);
-                }}
+                onChange={(e) => update({ q: e.target.value, page: null })}
                 placeholder="Search for Lights"
                 className="w-full bg-muted/40 border border-border rounded-full pl-11 pr-4 py-3 text-sm placeholder:text-foreground/50 focus:outline-none focus:ring-1 focus:ring-foreground/30"
               />
@@ -65,10 +103,7 @@ const LightingEquipment = () => {
               {CATEGORIES.map((c) => (
                 <button
                   key={c}
-                  onClick={() => {
-                    setCategory(c);
-                    setPage(1);
-                  }}
+                  onClick={() => update({ cat: c === "All Equipment" ? null : c, page: null })}
                   className={`transition-colors ${
                     category === c ? "text-foreground" : "text-foreground/55 hover:text-foreground"
                   }`}
@@ -81,10 +116,9 @@ const LightingEquipment = () => {
 
           <div className="mt-6 border-t border-border" />
 
-          {/* Sort control */}
           <div className="mt-6 flex justify-end">
             <button
-              onClick={() => setSortAsc((s) => !s)}
+              onClick={() => update({ sort: sortAsc ? "desc" : null })}
               className="inline-flex items-center gap-2 text-sm text-foreground/70 hover:text-foreground transition-colors"
               aria-label={`Sort ${sortAsc ? "Z to A" : "A to Z"}`}
             >
@@ -93,12 +127,11 @@ const LightingEquipment = () => {
             </button>
           </div>
 
-          {/* Grid */}
           <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
             {pageItems.map((item) => (
               <Link
                 key={item.slug}
-                to={`/lighting-equipment/${item.slug}`}
+                to={detailHref(item.slug)}
                 className="group block overflow-hidden rounded-sm bg-card transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-foreground/30"
               >
                 <div className="aspect-square bg-white flex items-center justify-center p-6 overflow-hidden">
@@ -109,7 +142,7 @@ const LightingEquipment = () => {
                     loading="lazy"
                   />
                 </div>
-                <div className="bg-muted/60 text-center py-4 px-3 text-sm text-foreground/85 group-hover:text-foreground">
+                <div className="bg-[#373737] text-white text-center py-4 px-3 text-sm">
                   {item.name}
                 </div>
               </Link>
@@ -120,31 +153,34 @@ const LightingEquipment = () => {
             <p className="mt-12 text-center text-foreground/60">No equipment found.</p>
           )}
 
-          {/* Pagination */}
           {filtered.length > 0 && (
-            <div className="mt-12 flex items-center justify-center gap-4 text-sm">
+            <div className="mt-12 flex flex-wrap items-center justify-center gap-3 text-sm">
               <span className="text-foreground/70 mr-2">Page</span>
               <button
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                onClick={() => update({ page: String(Math.max(1, currentPage - 1)) })}
                 disabled={currentPage === 1}
                 className="w-9 h-9 rounded-md border border-border flex items-center justify-center text-foreground/70 hover:text-foreground disabled:opacity-30"
                 aria-label="Previous page"
               >
                 <ArrowLeft className="w-4 h-4" />
               </button>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-                <button
-                  key={p}
-                  onClick={() => setPage(p)}
-                  className={`w-8 h-8 rounded-md transition-colors ${
-                    p === currentPage ? "text-foreground font-medium" : "text-foreground/55 hover:text-foreground"
-                  }`}
-                >
-                  {p}
-                </button>
-              ))}
+              {pageButtons.map((p, idx) =>
+                p === "..." ? (
+                  <span key={`e-${idx}`} className="text-foreground/40 px-1">…</span>
+                ) : (
+                  <button
+                    key={p}
+                    onClick={() => update({ page: String(p) })}
+                    className={`w-8 h-8 rounded-md transition-colors ${
+                      p === currentPage ? "text-foreground font-medium" : "text-foreground/55 hover:text-foreground"
+                    }`}
+                  >
+                    {p}
+                  </button>
+                )
+              )}
               <button
-                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                onClick={() => update({ page: String(Math.min(totalPages, currentPage + 1)) })}
                 disabled={currentPage === totalPages}
                 className="w-9 h-9 rounded-md border border-border flex items-center justify-center text-foreground/70 hover:text-foreground disabled:opacity-30"
                 aria-label="Next page"
@@ -155,7 +191,6 @@ const LightingEquipment = () => {
           )}
         </main>
 
-        {/* Footer */}
         <footer className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 py-6 px-8 border-t border-border text-sm bg-[hsl(var(--surface))] text-foreground mt-12">
           <div className="flex items-center gap-3 text-foreground/70">
             <img src={logo} alt="EveryoneCanLight logo" className="w-6 h-6 rounded object-contain" />
