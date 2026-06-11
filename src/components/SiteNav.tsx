@@ -8,6 +8,7 @@ type Variant = "dark" | "light";
 const links = [
   { to: "/articles", label: "Articles" },
   { to: "/lighting-equipment", label: "Lighting Equipment" },
+  { to: "/control-apps", label: "Control Apps" },
   { to: "/courses", label: "Courses" },
 ];
 
