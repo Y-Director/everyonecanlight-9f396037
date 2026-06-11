@@ -9,6 +9,7 @@ import ArticleDetail from "./pages/ArticleDetail.tsx";
 import LightingEquipment from "./pages/LightingEquipment.tsx";
 import LightingEquipmentDetail from "./pages/LightingEquipmentDetail.tsx";
 import Courses from "./pages/Courses.tsx";
+import ControlApps from "./pages/ControlApps.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/lighting-equipment" element={<LightingEquipment />} />
           <Route path="/lighting-equipment/:slug" element={<LightingEquipmentDetail />} />
           <Route path="/courses" element={<Courses />} />
+          <Route path="/control-apps" element={<ControlApps />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
