@@ -86,7 +86,7 @@ const ControlApps = () => {
               Control Apps
             </h1>
             <p className="mt-4 text-foreground/70 text-base md:text-lg">
-              The official companion apps for major lighting manufacturers — find,
+              The official companion apps for major lighting manufacturers. Find,
               download, and pair the right one for your fixtures.
             </p>
           </header>
