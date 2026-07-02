@@ -41,9 +41,9 @@ const AppCard = ({ app }: { app: ControlApp }) => (
       >
         {app.initials}
       </div>
-      <div className="min-w-0">
-        <h3 className="text-base font-medium truncate">{app.appName}</h3>
-        <p className="text-xs text-foreground/60 truncate">{app.brand}</p>
+      <div className="min-w-0 flex-1">
+        <p className="text-xs uppercase tracking-wide text-foreground/50">{app.brand}</p>
+        <h3 className="text-base font-medium leading-tight break-words">{app.appName}</h3>
       </div>
     </header>
 
@@ -118,8 +118,8 @@ const ControlApps = () => {
           )}
 
           <p className="mt-12 text-center text-xs text-foreground/50">
-            Download links are placeholders and will point to the official App Store
-            and Google Play pages once verified.
+            Links open the official App Store and Google Play listings. Where a
+            platform button is dimmed, no official app is available.
           </p>
         </main>
 
