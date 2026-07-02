@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ComponentType } from "react";
 import { Search, Smartphone, Globe } from "lucide-react";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
@@ -21,7 +21,7 @@ const AppleLogo = ({ className }: { className?: string }) => (
   </svg>
 );
 
-type IconType = React.ComponentType<{ className?: string }>;
+type IconType = ComponentType<{ className?: string }>;
 
 const DownloadButton = ({
   href,
