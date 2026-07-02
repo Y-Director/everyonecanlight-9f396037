@@ -1,8 +1,27 @@
 import { useMemo, useState } from "react";
-import { Search, Apple, Smartphone, Globe } from "lucide-react";
+import { Search, Smartphone, Globe } from "lucide-react";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
 import { controlApps, type ControlApp } from "@/data/controlApps";
+
+// Apple company logo — outline only (no fill), stroke follows currentColor.
+const AppleLogo = ({ className }: { className?: string }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-hidden="true"
+  >
+    <path d="M17.5 12.5c0-2.6 2.1-3.8 2.2-3.9-1.2-1.7-3-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.3-.9-1.7 0-3.3 1-4.2 2.5-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.5 1.3-.1 1.8-.8 3.3-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.2 3.1-2.4.7-1 1.3-2.2 1.6-3.4-1.4-.5-3-1.9-3-3.5z"/>
+    <path d="M14.7 4.5c.7-.9 1.2-2.1 1.1-3.3-1 .1-2.3.7-3 1.6-.6.8-1.2 2-1.1 3.2 1.2.1 2.3-.6 3-1.5z"/>
+  </svg>
+);
+
+type IconType = React.ComponentType<{ className?: string }>;
 
 const DownloadButton = ({
   href,
@@ -11,7 +30,7 @@ const DownloadButton = ({
 }: {
   href?: string;
   label: string;
-  icon: typeof Apple;
+  icon: IconType;
 }) => {
   const disabled = !href || href === "#";
   return (
@@ -36,11 +55,20 @@ const DownloadButton = ({
 const AppCard = ({ app }: { app: ControlApp }) => (
   <article className="group flex flex-col rounded-xl border border-foreground/10 bg-[hsl(var(--surface))] p-5 hover:border-foreground/30 transition-colors">
     <header className="flex items-center gap-4">
-      <div
-        className={`w-14 h-14 rounded-xl flex items-center justify-center text-lg font-semibold text-white shadow-sm ${app.accent}`}
-      >
-        {app.initials}
-      </div>
+      {app.iconUrl ? (
+        <img
+          src={app.iconUrl}
+          alt={`${app.appName} icon`}
+          loading="lazy"
+          className="w-14 h-14 rounded-xl object-cover shadow-sm border border-foreground/10 bg-white"
+        />
+      ) : (
+        <div
+          className={`w-14 h-14 rounded-xl flex items-center justify-center text-lg font-semibold text-white shadow-sm ${app.accent}`}
+        >
+          {app.initials}
+        </div>
+      )}
       <div className="min-w-0 flex-1">
         <p className="text-xs uppercase tracking-wide text-foreground/50">{app.brand}</p>
         <h3 className="text-base font-medium leading-tight break-words">{app.appName}</h3>
@@ -52,7 +80,7 @@ const AppCard = ({ app }: { app: ControlApp }) => (
     </p>
 
     <div className="mt-5 flex flex-wrap gap-2">
-      <DownloadButton href={app.ios} label="iOS" icon={Apple} />
+      <DownloadButton href={app.ios} label="iOS" icon={AppleLogo} />
       <DownloadButton href={app.android} label="Android" icon={Smartphone} />
       {app.web !== undefined && (
         <DownloadButton href={app.web} label="Web" icon={Globe} />
