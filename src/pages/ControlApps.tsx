@@ -34,7 +34,7 @@ const DownloadButton = ({
 };
 
 const AppCard = ({ app }: { app: ControlApp }) => (
-  <article className="group flex flex-col rounded-xl border border-foreground/10 bg-card p-5 hover:border-foreground/30 transition-colors">
+  <article className="group flex flex-col rounded-xl border border-foreground/10 bg-[hsl(var(--surface))] p-5 hover:border-foreground/30 transition-colors">
     <header className="flex items-center gap-4">
       <div
         className={`w-14 h-14 rounded-xl flex items-center justify-center text-lg font-semibold text-white shadow-sm ${app.accent}`}
