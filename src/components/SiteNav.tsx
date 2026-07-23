@@ -10,6 +10,7 @@ const links = [
   { to: "/lighting-equipment", label: "Lighting Equipment" },
   { to: "/control-apps", label: "Control Apps" },
   { to: "/courses", label: "Courses" },
+  { to: "/masterclass", label: "Masterclass" },
 ];
 
 interface SiteNavProps {
