@@ -1,8 +1,28 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import logo from "@/assets/logo.png";
-import heroImg from "@/assets/masterclass-hero.jpg";
+import heroAsset from "@/assets/masterclass-hero.png.asset.json";
 import SiteNav from "@/components/SiteNav";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { toast } from "sonner";
+
+const heroImg = heroAsset.url;
 
 type Testimonial = {
   name: string;
@@ -51,6 +71,45 @@ const testimonials: Testimonial[] = [
 
 const Masterclass = () => {
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const [registerOpen, setRegisterOpen] = useState(false);
+  const [scheduleOpen, setScheduleOpen] = useState(false);
+  const [form, setForm] = useState({
+    fullName: "",
+    whatsapp: "",
+    countryCode: "+234",
+    email: "",
+    background: "",
+    experience: "",
+  });
+
+  const handlePayment = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (
+      !form.fullName ||
+      !form.whatsapp ||
+      !form.email ||
+      !form.background ||
+      !form.experience
+    ) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+    toast.success("Redirecting to secure payment...");
+    // Paystack (via Stripe) redirect placeholder — replace with live checkout URL once payment provider is configured.
+    const params = new URLSearchParams({
+      name: form.fullName,
+      phone: `${form.countryCode}${form.whatsapp}`,
+      email: form.email,
+      background: form.background,
+      experience: form.experience,
+      amount: "250000",
+      currency: "NGN",
+      reference: `STL2-${Date.now()}`,
+    });
+    setTimeout(() => {
+      window.location.href = `https://paystack.com/pay/shift-the-light-2?${params.toString()}`;
+    }, 600);
+  };
 
   const scrollBy = (dir: 1 | -1) => {
     const el = scrollerRef.current;
@@ -99,18 +158,20 @@ const Masterclass = () => {
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center gap-3">
-                  <a
-                    href="#register"
+                  <button
+                    type="button"
+                    onClick={() => setRegisterOpen(true)}
                     className="inline-flex items-center rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-6 py-3 text-sm font-medium hover:opacity-90 transition"
                   >
                     Register
-                  </a>
-                  <a
-                    href="#schedule"
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setScheduleOpen(true)}
                     className="inline-flex items-center rounded-md border border-foreground/30 text-foreground px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition"
                   >
                     See Schedule
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -191,6 +252,213 @@ const Masterclass = () => {
           </div>
         </footer>
       </div>
+
+      {/* Registration Dialog */}
+      <Dialog open={registerOpen} onOpenChange={setRegisterOpen}>
+        <DialogContent className="max-w-lg bg-[hsl(var(--surface))] border-foreground/10">
+          <DialogHeader>
+            <DialogTitle className="text-2xl">Register — Shift The Light 2</DialogTitle>
+            <DialogDescription>
+              Creator Residency · Nov 19–21, 2026 · ₦250,000 (3 Days)
+            </DialogDescription>
+          </DialogHeader>
+
+          <form onSubmit={handlePayment} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="fullName">Full Name</Label>
+              <Input
+                id="fullName"
+                value={form.fullName}
+                onChange={(e) => setForm({ ...form, fullName: e.target.value })}
+                placeholder="Jane Doe"
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="whatsapp">WhatsApp Number</Label>
+              <div className="flex gap-2">
+                <Select
+                  value={form.countryCode}
+                  onValueChange={(v) => setForm({ ...form, countryCode: v })}
+                >
+                  <SelectTrigger className="w-[110px] shrink-0">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="+234">🇳🇬 +234</SelectItem>
+                    <SelectItem value="+1">🇺🇸 +1</SelectItem>
+                    <SelectItem value="+44">🇬🇧 +44</SelectItem>
+                    <SelectItem value="+27">🇿🇦 +27</SelectItem>
+                    <SelectItem value="+254">🇰🇪 +254</SelectItem>
+                    <SelectItem value="+233">🇬🇭 +233</SelectItem>
+                    <SelectItem value="+971">🇦🇪 +971</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Input
+                  id="whatsapp"
+                  type="tel"
+                  inputMode="numeric"
+                  value={form.whatsapp}
+                  onChange={(e) =>
+                    setForm({ ...form, whatsapp: e.target.value.replace(/\D/g, "") })
+                  }
+                  placeholder="8012345678"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="email">Email Address</Label>
+              <Input
+                id="email"
+                type="email"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Creative Background</Label>
+              <Select
+                value={form.background}
+                onValueChange={(v) => setForm({ ...form, background: v })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select your background" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Cinematographer">Cinematographer</SelectItem>
+                  <SelectItem value="Content creator">Content Creator</SelectItem>
+                  <SelectItem value="Filmmaker">Filmmaker</SelectItem>
+                  <SelectItem value="Videographer">Videographer</SelectItem>
+                  <SelectItem value="Photographer">Photographer</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Experience Level</Label>
+              <Select
+                value={form.experience}
+                onValueChange={(v) => setForm({ ...form, experience: v })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select your level" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Intermediate">Intermediate</SelectItem>
+                  <SelectItem value="Advanced">Advanced</SelectItem>
+                  <SelectItem value="Very Advanced">Very Advanced</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <DialogFooter className="pt-2">
+              <button
+                type="submit"
+                className="w-full inline-flex items-center justify-center rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-6 py-3 text-sm font-medium hover:opacity-90 transition"
+              >
+                Make Payment — ₦250,000
+              </button>
+            </DialogFooter>
+            <p className="text-xs text-foreground/50 text-center">
+              Secure checkout via Paystack (powered by Stripe).
+            </p>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Schedule Dialog */}
+      <Dialog open={scheduleOpen} onOpenChange={setScheduleOpen}>
+        <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto bg-[hsl(var(--surface))] border-foreground/10">
+          <DialogHeader>
+            <DialogTitle className="text-2xl">
+              ShiftTheLight Masterclass 2026 — Official Blueprint
+            </DialogTitle>
+            <DialogDescription>
+              A three-day intensive: transform from technical operator into intentional visual storyteller.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-6 text-sm text-foreground/85 leading-relaxed">
+            <section>
+              <h3 className="text-base font-semibold text-foreground">Core Details</h3>
+              <ul className="mt-2 space-y-1 list-disc list-inside">
+                <li><strong>Date:</strong> Nov 19 – Nov 21, 2026 (3 Days)</li>
+                <li><strong>Time:</strong> 8:45 AM – 6:00 PM Daily</li>
+                <li><strong>Location:</strong> Revealed after registration</li>
+                <li><strong>Audience:</strong> Videographers, content creators, filmmakers, gaffers, photographers</li>
+                <li><strong>Capacity:</strong> Limited to 20 participants</li>
+                <li><strong>Fee:</strong> ₦250,000 (Standard Experience)</li>
+              </ul>
+            </section>
+
+            <section>
+              <h3 className="text-base font-semibold text-foreground">Day 1 — Podcast & Interview Lighting</h3>
+              <p className="mt-1 text-foreground/70">Master the art of lighting people. Practical, real-world commercial applications including podcasts and corporate setups.</p>
+              <ul className="mt-2 space-y-2">
+                <li><strong>09:00 – 12:00</strong> — Foundations of Light: colour temp, contrast, intensity, motivating sources, working with ambient light. Gear anatomy. Human face lighting: Butterfly, Rembrandt, Split, Additive & Negative Fill.</li>
+                <li><strong>12:00 – 13:00</strong> — Lunch Break</li>
+                <li><strong>13:30 – 15:00</strong> — Podcast Lighting · Corporate Interview · Natural Window Simulation</li>
+                <li><strong>15:00 – 17:00</strong> — Group Exercise: 90-sec trailer documentary on a war survivor</li>
+                <li><strong>17:00 – 18:00</strong> — Team grading & set down</li>
+              </ul>
+            </section>
+
+            <section>
+              <h3 className="text-base font-semibold text-foreground">Day 2 — Food & Product Commercial Lighting</h3>
+              <p className="mt-1 text-foreground/70">How food commercials are lit for that expensive look and feel.</p>
+              <ul className="mt-2 space-y-2">
+                <li><strong>09:00 – 11:30</strong> — Product Lighting with Knorr Seasoning · Food commercials</li>
+                <li><strong>11:30 – 12:30</strong> — Lunch Break</li>
+                <li><strong>12:30 – 13:00</strong> — Practical Lab selections (5 lighting questions decide picks)</li>
+                <li><strong>13:00 – 16:30</strong> — Practical Labs: 1-min commercials for Chicken Republic ChickWizz · Fayrouz Pineapple · Oraimo Powerbank</li>
+                <li><strong>16:30 – 18:00</strong> — Team grading, set down, Q&A</li>
+              </ul>
+            </section>
+
+            <section>
+              <h3 className="text-base font-semibold text-foreground">Day 3 — Outdoor & Music Video Lighting</h3>
+              <p className="mt-1 text-foreground/70">A full outdoor production combining everything learned.</p>
+              <ul className="mt-2 space-y-2">
+                <li><strong>09:00 – 15:00</strong> — Final Project: Full production of "Everyone Loves Football" music video featuring Malta Guinness. Sun control, sunlight balancing, car lighting, RGB lighting.</li>
+                <li><strong>15:00 – 15:30</strong> — Lunch Break</li>
+                <li><strong>15:30 – 17:00</strong> — Music Video Editing</li>
+                <li><strong>17:00 – 18:00</strong> — Certification & Closing · Networking</li>
+              </ul>
+            </section>
+
+            <section>
+              <h3 className="text-base font-semibold text-foreground">What to Bring</h3>
+              <ul className="mt-2 space-y-1 list-disc list-inside">
+                <li>Specific lighting questions or challenges you're facing</li>
+                <li>Optional: your own gear (professional gear is provided)</li>
+                <li>Editing device (laptop or phone) for grading, SFX, basic edits</li>
+                <li>Notebook or digital tablet for light maps</li>
+                <li>Networking mindset</li>
+                <li>Residency staycation: football jersey, sports shoes/workout wear, toiletries</li>
+              </ul>
+            </section>
+          </div>
+
+          <DialogFooter className="pt-4">
+            <button
+              type="button"
+              onClick={() => {
+                setScheduleOpen(false);
+                setRegisterOpen(true);
+              }}
+              className="w-full inline-flex items-center justify-center rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-6 py-3 text-sm font-medium hover:opacity-90 transition"
+            >
+              Register Now
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
