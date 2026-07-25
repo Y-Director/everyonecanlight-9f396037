@@ -5,8 +5,14 @@ import heroAsset from "@/assets/masterclass-hero.png.asset.json";
 import t1Asset from "@/assets/masterclass/t1.png.asset.json";
 import t2Asset from "@/assets/masterclass/t2.png.asset.json";
 import t3Asset from "@/assets/masterclass/t3.jpg.asset.json";
-import t4Asset from "@/assets/masterclass/t4.jpg.asset.json";
 import t5Asset from "@/assets/masterclass/t5.png.asset.json";
+import boluwatifeAsset from "@/assets/masterclass/boluwatife.jpg.asset.json";
+import g1Asset from "@/assets/masterclass/g-IMG_4093.jpg.asset.json";
+import g2Asset from "@/assets/masterclass/g-IMG_4101.jpg.asset.json";
+import g3Asset from "@/assets/masterclass/g-IMG_4161.jpg.asset.json";
+import g4Asset from "@/assets/masterclass/g-IMG_4169.jpg.asset.json";
+import g5Asset from "@/assets/masterclass/g-IMG_4173.jpg.asset.json";
+import g6Asset from "@/assets/masterclass/g-IMG_4184.jpg.asset.json";
 import SiteNav from "@/components/SiteNav";
 import {
   Dialog,
@@ -66,7 +72,7 @@ const testimonials: Testimonial[] = [
     name: "Samuel Boluwatife",
     role: "Video Editor and Videographer",
     year: "STL 2025",
-    avatar: t4Asset.url,
+    avatar: boluwatifeAsset.url,
     quote:
       "I learnt a lot about positioning of light, the different types and the different brands, including the direction of light.",
   },
@@ -82,10 +88,12 @@ const testimonials: Testimonial[] = [
 
 // Past masterclass gallery — add or replace image URLs here.
 const galleryImages: { src: string; caption: string }[] = [
-  { src: t1Asset.url, caption: "Shift The Light 2025 — Portrait lab" },
-  { src: t3Asset.url, caption: "Shift The Light 2025 — Colour & gels" },
-  { src: t4Asset.url, caption: "Shift The Light 2025 — Interview setup" },
-  { src: t2Asset.url, caption: "Shift The Light 2025 — Practical session" },
+  { src: g1Asset.url, caption: "Shift The Light 2025 — On set" },
+  { src: g2Asset.url, caption: "Shift The Light 2025 — Practical session" },
+  { src: g3Asset.url, caption: "Shift The Light 2025 — Lighting demo" },
+  { src: g4Asset.url, caption: "Shift The Light 2025 — Group work" },
+  { src: g5Asset.url, caption: "Shift The Light 2025 — Portrait lab" },
+  { src: g6Asset.url, caption: "Shift The Light 2025 — Behind the scenes" },
 ];
 
 const Masterclass = () => {
