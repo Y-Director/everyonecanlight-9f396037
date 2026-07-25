@@ -253,9 +253,12 @@ const Masterclass = () => {
                     "{t.quote}"
                   </p>
                   <footer className="mt-6 flex items-center gap-3 border-t border-foreground/10 pt-4">
-                    <div className="w-10 h-10 rounded-full bg-foreground/10 flex items-center justify-center text-sm font-medium">
-                      {t.name.charAt(0)}
-                    </div>
+                    <img
+                      src={t.avatar}
+                      alt={`${t.name}, ${t.role}`}
+                      loading="lazy"
+                      className="w-10 h-10 rounded-full object-cover object-top bg-foreground/10"
+                    />
                     <div className="min-w-0">
                       <p className="text-sm font-medium truncate">{t.name}</p>
                       <p className="text-xs text-foreground/60">
@@ -265,6 +268,94 @@ const Masterclass = () => {
                   </footer>
                 </article>
               ))}
+            </div>
+          </section>
+
+          {/* Past masterclass gallery */}
+          <section className="mt-20">
+            <p className="text-xs uppercase tracking-[0.2em] text-foreground/50">
+              Gallery
+            </p>
+            <h2 className="mt-2 text-3xl md:text-4xl font-medium tracking-tight">
+              Moments from past Masterclasses
+            </h2>
+
+            <div className="mt-8 relative rounded-2xl overflow-hidden border border-foreground/10 bg-[hsl(var(--surface))]">
+              <div className="relative h-[320px] md:h-[520px]">
+                {galleryImages.map((img, i) => (
+                  <img
+                    key={i}
+                    src={img.src}
+                    alt={img.caption}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+                      i === slide ? "opacity-100" : "opacity-0"
+                    }`}
+                  />
+                ))}
+                <div
+                  className="absolute inset-x-0 bottom-0 h-1/3"
+                  style={{
+                    background:
+                      "linear-gradient(0deg, hsl(0 0% 0% / 0.75) 0%, hsl(0 0% 0% / 0) 100%)",
+                  }}
+                  aria-hidden="true"
+                />
+                <p className="absolute left-6 bottom-6 text-sm text-foreground/90">
+                  {galleryImages[slide]?.caption}
+                </p>
+
+                <button
+                  type="button"
+                  aria-label="Previous photo"
+                  onClick={() => {
+                    setPlaying(false);
+                    setSlide((s) => (s - 1 + galleryImages.length) % galleryImages.length);
+                  }}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-foreground/25 bg-background/50 backdrop-blur flex items-center justify-center hover:bg-foreground hover:text-background transition"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Next photo"
+                  onClick={() => {
+                    setPlaying(false);
+                    setSlide((s) => (s + 1) % galleryImages.length);
+                  }}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-foreground/25 bg-background/50 backdrop-blur flex items-center justify-center hover:bg-foreground hover:text-background transition"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+
+              <div className="flex items-center justify-between gap-4 p-4 border-t border-foreground/10">
+                <div className="flex gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                  {galleryImages.map((img, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      aria-label={`Show photo ${i + 1}`}
+                      onClick={() => {
+                        setPlaying(false);
+                        setSlide(i);
+                      }}
+                      className={`shrink-0 w-16 h-12 rounded-md overflow-hidden border transition ${
+                        i === slide ? "border-foreground" : "border-foreground/15 opacity-60 hover:opacity-100"
+                      }`}
+                    >
+                      <img src={img.src} alt="" className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setPlaying((p) => !p)}
+                  className="shrink-0 text-xs uppercase tracking-[0.15em] text-foreground/70 hover:text-foreground transition"
+                >
+                  {playing ? "Pause" : "Play"} slideshow
+                </button>
+              </div>
             </div>
           </section>
         </main>
