@@ -5,7 +5,6 @@ import heroAsset from "@/assets/masterclass-hero.png.asset.json";
 import t1Asset from "@/assets/masterclass/t1.png.asset.json";
 import t2Asset from "@/assets/masterclass/t2.png.asset.json";
 import t3Asset from "@/assets/masterclass/t3.jpg.asset.json";
-import t4Asset from "@/assets/masterclass/t4.jpg.asset.json";
 import t5Asset from "@/assets/masterclass/t5.png.asset.json";
 import boluwatifeAsset from "@/assets/masterclass/boluwatife.jpg.asset.json";
 import g1Asset from "@/assets/masterclass/g-IMG_4093.jpg.asset.json";
