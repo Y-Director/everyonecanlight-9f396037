@@ -1,7 +1,12 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import logo from "@/assets/logo.png";
 import heroAsset from "@/assets/masterclass-hero.png.asset.json";
+import t1Asset from "@/assets/masterclass/t1.png.asset.json";
+import t2Asset from "@/assets/masterclass/t2.png.asset.json";
+import t3Asset from "@/assets/masterclass/t3.jpg.asset.json";
+import t4Asset from "@/assets/masterclass/t4.jpg.asset.json";
+import t5Asset from "@/assets/masterclass/t5.png.asset.json";
 import SiteNav from "@/components/SiteNav";
 import {
   Dialog,
@@ -29,44 +34,58 @@ type Testimonial = {
   role: string;
   year: string;
   quote: string;
+  avatar: string;
 };
 
 const testimonials: Testimonial[] = [
   {
-    name: "Chidera O.",
+    name: "Titobiloba Oyetunji",
+    role: "Content Director and Producer",
+    year: "STL 2025",
+    avatar: t1Asset.url,
+    quote:
+      "The past 2 days have been very impactful, learnt a lot about different types of light. What this class also taught me is more than light, it opened my eyes to collaboration.",
+  },
+  {
+    name: "Faith Bassey",
     role: "Content Creator",
-    year: "STL 2024",
+    year: "STL 2025",
+    avatar: t2Asset.url,
     quote:
-      "Shift The Light completely changed how I think about lighting. I walked in a hobbyist and walked out with a system I use on every shoot.",
+      "The class opened my eyes to a lot about lighting setup, and cameras, and how lighting setup is very important in every production no matter your camera.",
   },
   {
-    name: "Tomiwa A.",
-    role: "Filmmaker",
-    year: "STL 2024",
-    quote:
-      "The hands-on residency format is unmatched. Real fixtures, real diagrams, and feedback on my actual setup — worth every naira.",
-  },
-  {
-    name: "Grace E.",
+    name: "Osoba Tobiloba",
     role: "Photographer",
-    year: "STL 2023",
+    year: "STL 2025",
+    avatar: t3Asset.url,
     quote:
-      "I finally understood color temperature, CRI and how to shape light for skin tones. My portraits look ten times more professional now.",
+      "Our facilitator is very good at what he does, He brought it down to us to a very simple way to understand. I learnt the power of light, cause without light even with that your Sony FX you can't get a good shot.",
   },
   {
-    name: "Femi K.",
-    role: "YouTuber",
-    year: "STL 2023",
+    name: "Samuel Boluwatife",
+    role: "Video Editor and Videographer",
+    year: "STL 2025",
+    avatar: t4Asset.url,
     quote:
-      "Adeyinka teaches with so much clarity. The 1-light and 2-light setups he broke down are still the backbone of my studio today.",
+      "I learnt a lot about positioning of light, the different types and the different brands, including the direction of light.",
   },
   {
-    name: "Ada M.",
-    role: "Video Producer",
-    year: "STL 2022",
+    name: "Victor Adewunmi",
+    role: "Headshot Photographer",
+    year: "STL 2025",
+    avatar: t5Asset.url,
     quote:
-      "Best investment I've made in my craft. The community that came out of the class is still active and supportive years later.",
+      "In those days of the masterclass, I saw light differently to be honest. The way you can draw with light, like let light obey your command. I feel like the class taught how to control my light and shape it differently.",
   },
+];
+
+// Past masterclass gallery — add or replace image URLs here.
+const galleryImages: { src: string; caption: string }[] = [
+  { src: t1Asset.url, caption: "Shift The Light 2025 — Portrait lab" },
+  { src: t3Asset.url, caption: "Shift The Light 2025 — Colour & gels" },
+  { src: t4Asset.url, caption: "Shift The Light 2025 — Interview setup" },
+  { src: t2Asset.url, caption: "Shift The Light 2025 — Practical session" },
 ];
 
 const Masterclass = () => {
@@ -116,6 +135,18 @@ const Masterclass = () => {
     if (!el) return;
     el.scrollBy({ left: dir * (el.clientWidth * 0.8), behavior: "smooth" });
   };
+
+  const [slide, setSlide] = useState(0);
+  const [playing, setPlaying] = useState(true);
+
+  useEffect(() => {
+    if (!playing) return;
+    const id = setInterval(
+      () => setSlide((s) => (s + 1) % galleryImages.length),
+      4000,
+    );
+    return () => clearInterval(id);
+  }, [playing]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
