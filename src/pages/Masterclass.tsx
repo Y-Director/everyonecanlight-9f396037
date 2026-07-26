@@ -511,13 +511,14 @@ const Masterclass = () => {
             <DialogFooter className="pt-2">
               <button
                 type="submit"
-                className="w-full inline-flex items-center justify-center rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-6 py-3 text-sm font-medium hover:opacity-90 transition"
+                disabled={paying}
+                className="w-full inline-flex items-center justify-center rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-6 py-3 text-sm font-medium hover:opacity-90 transition disabled:opacity-60"
               >
-                Make Payment — ₦250,000
+                {paying ? "Starting secure checkout..." : "Make Payment — ₦250,000"}
               </button>
             </DialogFooter>
             <p className="text-xs text-foreground/50 text-center">
-              Secure checkout via Paystack (powered by Stripe).
+              Secure checkout via Paystack.
             </p>
           </form>
         </DialogContent>
