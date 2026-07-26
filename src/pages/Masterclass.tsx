@@ -32,6 +32,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const heroImg = heroAsset.url;
 
@@ -100,6 +101,7 @@ const Masterclass = () => {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [registerOpen, setRegisterOpen] = useState(false);
   const [scheduleOpen, setScheduleOpen] = useState(false);
+  const [paying, setPaying] = useState(false);
   const [form, setForm] = useState({
     fullName: "",
     whatsapp: "",
@@ -109,7 +111,23 @@ const Masterclass = () => {
     experience: "",
   });
 
-  const handlePayment = (e: React.FormEvent) => {
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const reference = params.get("reference") || params.get("trxref");
+    if (!reference) return;
+    window.history.replaceState({}, "", window.location.pathname);
+    supabase.functions
+      .invoke("paystack-verify", { body: { reference } })
+      .then(({ data, error }) => {
+        if (error || !data?.paid) {
+          toast.error("We couldn't confirm your payment. Please contact us if you were debited.");
+          return;
+        }
+        toast.success("Payment confirmed — your seat for Shift The Light 2 is booked!");
+      });
+  }, []);
+
+  const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
     if (
       !form.fullName ||
@@ -121,21 +139,24 @@ const Masterclass = () => {
       toast.error("Please fill in all fields");
       return;
     }
-    toast.success("Redirecting to secure payment...");
-    // Paystack (via Stripe) redirect placeholder — replace with live checkout URL once payment provider is configured.
-    const params = new URLSearchParams({
-      name: form.fullName,
-      phone: `${form.countryCode}${form.whatsapp}`,
-      email: form.email,
-      background: form.background,
-      experience: form.experience,
-      amount: "250000",
-      currency: "NGN",
-      reference: `STL2-${Date.now()}`,
+    setPaying(true);
+    const { data, error } = await supabase.functions.invoke("paystack-initialize", {
+      body: {
+        fullName: form.fullName,
+        whatsapp: `${form.countryCode}${form.whatsapp}`,
+        email: form.email,
+        background: form.background,
+        experience: form.experience,
+        callbackUrl: `${window.location.origin}/masterclass`,
+      },
     });
-    setTimeout(() => {
-      window.location.href = `https://paystack.com/pay/shift-the-light-2?${params.toString()}`;
-    }, 600);
+    if (error || !data?.authorization_url) {
+      setPaying(false);
+      toast.error("Could not start payment. Please try again.");
+      return;
+    }
+    toast.success("Redirecting to secure payment...");
+    window.location.href = data.authorization_url;
   };
 
   const scrollBy = (dir: 1 | -1) => {
