@@ -14,7 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      masterclass_registrations: {
+        Row: {
+          amount: number
+          background: string
+          created_at: string
+          currency: string
+          email: string
+          experience: string
+          full_name: string
+          id: string
+          paid_at: string | null
+          reference: string
+          status: string
+          updated_at: string
+          whatsapp: string
+        }
+        Insert: {
+          amount: number
+          background: string
+          created_at?: string
+          currency?: string
+          email: string
+          experience: string
+          full_name: string
+          id?: string
+          paid_at?: string | null
+          reference: string
+          status?: string
+          updated_at?: string
+          whatsapp: string
+        }
+        Update: {
+          amount?: number
+          background?: string
+          created_at?: string
+          currency?: string
+          email?: string
+          experience?: string
+          full_name?: string
+          id?: string
+          paid_at?: string | null
+          reference?: string
+          status?: string
+          updated_at?: string
+          whatsapp?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
