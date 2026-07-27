@@ -11,6 +11,7 @@ import LightingEquipmentDetail from "./pages/LightingEquipmentDetail.tsx";
 import Courses from "./pages/Courses.tsx";
 import ControlApps from "./pages/ControlApps.tsx";
 import Masterclass from "./pages/Masterclass.tsx";
+import RentEquipment from "./pages/RentEquipment.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/articles" element={<Articles />} />
           <Route path="/articles/:slug" element={<ArticleDetail />} />
+          <Route path="/rent-equipment" element={<RentEquipment />} />
           <Route path="/lighting-equipment" element={<LightingEquipment />} />
           <Route path="/lighting-equipment/:slug" element={<LightingEquipmentDetail />} />
           <Route path="/courses" element={<Courses />} />
