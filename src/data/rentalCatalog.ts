@@ -1,4 +1,14 @@
 import { equipment as EQUIPMENT } from "@/data/equipment";
+import scrim4Flag from "@/assets/rental/4x4_ft_Scrim_Frame_Black_Solid_Flag.png.asset.json";
+import scrim4Full from "@/assets/rental/4x4_ft_Scrim_Frame_Full_Diffusion.png.asset.json";
+import scrim4Half from "@/assets/rental/4x4_ft_Scrim_Frame_Half_Diffusion.png.asset.json";
+import scrim4Silver from "@/assets/rental/4x4_ft_Scrim_Frame_Silver_Reflector.png.asset.json";
+import reflector120 from "@/assets/rental/5-in-1_Collapsible_Reflector_120cm.png.asset.json";
+import reflector80 from "@/assets/rental/5-in-1_Collapsible_Reflector_80cm.png.asset.json";
+import scrim6Flag from "@/assets/rental/6x6_ft_Scrim_Frame_Black_Solid_Flag.png.asset.json";
+import scrim6Full from "@/assets/rental/6x6_ft_Scrim_Frame_Full_Diffusion.png.asset.json";
+import scrim6Half from "@/assets/rental/6x6_ft_Scrim_Frame_Half_Diffusion.png.asset.json";
+import scrim6SilverGold from "@/assets/rental/6x6_ft_Scrim_Frame_Silver_Gold_Reflector.png.asset.json";
 
 export type RentalCategory =
   | "Lights"
@@ -29,8 +39,27 @@ const imageByName = new Map<string, string>();
 EQUIPMENT.forEach((e) => imageByName.set(norm(e.name), e.image));
 
 const fallbackPool = EQUIPMENT.map((e) => e.image);
+
+/** Dedicated product photos uploaded for specific rental items (keyed by normalized name). */
+const OVERRIDES: Record<string, string> = Object.fromEntries(
+  [
+    scrim4Flag,
+    scrim4Full,
+    scrim4Half,
+    scrim4Silver,
+    reflector120,
+    reflector80,
+    scrim6Flag,
+    scrim6Full,
+    scrim6Half,
+    scrim6SilverGold,
+  ].map((a) => [norm(a.original_filename.replace(/\.png$/i, "")), a.url])
+);
+
 const pickImage = (name: string, index: number) =>
-  imageByName.get(norm(name)) ?? fallbackPool[index % fallbackPool.length];
+  OVERRIDES[norm(name)] ??
+  imageByName.get(norm(name)) ??
+  fallbackPool[index % fallbackPool.length];
 
 type Raw = [name: string, price: number, category: RentalCategory, watts?: number, comingSoon?: boolean];
 
