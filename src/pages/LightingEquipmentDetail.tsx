@@ -27,7 +27,7 @@ const LightingEquipmentDetail = () => {
         <main className="max-w-[1400px] mx-auto px-8 py-24 text-center">
           <h1 className="text-3xl font-medium">Equipment not found</h1>
           <Link to={backHref} className="mt-6 inline-flex items-center gap-2 text-foreground/70 hover:text-foreground">
-            <ArrowLeft className="w-4 h-4" /> Back to Lighting Equipment
+            <ArrowLeft className="w-4 h-4" /> Back to Equipment Database
           </Link>
         </main>
       </div>
@@ -56,7 +56,7 @@ const LightingEquipmentDetail = () => {
             to={backHref}
             className="inline-flex items-center gap-2 text-sm text-foreground/70 hover:text-foreground transition-colors mb-6 px-3 py-2 rounded-md border border-border hover:border-foreground/40"
           >
-            <ArrowLeft className="w-4 h-4" /> Back to Lighting Equipment
+            <ArrowLeft className="w-4 h-4" /> Back to Equipment Database
           </Link>
 
           <article className="bg-white text-neutral-900 rounded-sm p-8 md:p-12">

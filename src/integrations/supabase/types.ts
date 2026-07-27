@@ -62,6 +62,150 @@ export type Database = {
         }
         Relationships: []
       }
+      rental_customers: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          id_image_path: string | null
+          id_type: string | null
+          kyc_status: string
+          phone: string
+          updated_at: string
+          verified_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          id_image_path?: string | null
+          id_type?: string | null
+          kyc_status?: string
+          phone: string
+          updated_at?: string
+          verified_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          id_image_path?: string | null
+          id_type?: string | null
+          kyc_status?: string
+          phone?: string
+          updated_at?: string
+          verified_at?: string | null
+        }
+        Relationships: []
+      }
+      rental_reservations: {
+        Row: {
+          call_time: string
+          created_at: string
+          currency: string
+          customer_id: string | null
+          days: number
+          end_date: string | null
+          id: string
+          items: Json
+          location: string
+          paid_at: string | null
+          reference: string
+          runner_id: string | null
+          start_date: string | null
+          status: string
+          subtotal: number
+          total: number
+          updated_at: string
+        }
+        Insert: {
+          call_time: string
+          created_at?: string
+          currency?: string
+          customer_id?: string | null
+          days?: number
+          end_date?: string | null
+          id?: string
+          items?: Json
+          location: string
+          paid_at?: string | null
+          reference: string
+          runner_id?: string | null
+          start_date?: string | null
+          status?: string
+          subtotal?: number
+          total?: number
+          updated_at?: string
+        }
+        Update: {
+          call_time?: string
+          created_at?: string
+          currency?: string
+          customer_id?: string | null
+          days?: number
+          end_date?: string | null
+          id?: string
+          items?: Json
+          location?: string
+          paid_at?: string | null
+          reference?: string
+          runner_id?: string | null
+          start_date?: string | null
+          status?: string
+          subtotal?: number
+          total?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rental_reservations_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "rental_customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rental_reservations_runner_id_fkey"
+            columns: ["runner_id"]
+            isOneToOne: false
+            referencedRelation: "runners"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      runners: {
+        Row: {
+          active: boolean
+          avatar_url: string | null
+          created_at: string
+          id: string
+          name: string
+          phone: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          avatar_url?: string | null
+          created_at?: string
+          id?: string
+          name: string
+          phone: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          avatar_url?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+          phone?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
