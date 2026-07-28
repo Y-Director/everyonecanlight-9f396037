@@ -445,6 +445,19 @@ const RentalsSection = () => {
               <SelectItem value="failed">Failed</SelectItem>
             </SelectContent>
           </Select>
+          <Select value={fulfilment} onValueChange={setFulfilment}>
+            <SelectTrigger className="md:w-48">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All gear states</SelectItem>
+              {FULFILMENT.map((f) => (
+                <SelectItem key={f.value} value={f.value}>
+                  {f.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <Select value={sortKey} onValueChange={(v) => setSortKey(v as SortKey)}>
             <SelectTrigger className="md:w-48">
               <SelectValue />
@@ -473,20 +486,21 @@ const RentalsSection = () => {
                 <th className="px-4 py-3 font-medium">Lighting Operator</th>
                 <th className="px-4 py-3 font-medium">Total</th>
                 <th className="px-4 py-3 font-medium">Status</th>
+                <th className="px-4 py-3 font-medium">Gear</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
             <tbody>
               {loading && (
                 <tr>
-                  <td colSpan={8} className="px-4 py-10 text-center text-foreground/50">
+                  <td colSpan={9} className="px-4 py-10 text-center text-foreground/50">
                     <Loader2 className="w-5 h-5 animate-spin inline" />
                   </td>
                 </tr>
               )}
               {!loading && visible.length === 0 && (
                 <tr>
-                  <td colSpan={8} className="px-4 py-10 text-center text-foreground/50">
+                  <td colSpan={9} className="px-4 py-10 text-center text-foreground/50">
                     No reservations match this search.
                   </td>
                 </tr>
@@ -530,6 +544,37 @@ const RentalsSection = () => {
                     <span className={`rounded-full border px-2 py-1 text-xs capitalize ${statusStyle(r.status)}`}>
                       {r.status}
                     </span>
+                  </td>
+                  <td className="px-4 py-3">
+                    <Select
+                      value={r.fulfilment_status ?? "awaiting_pickup"}
+                      onValueChange={(v) => setFulfilmentStatus(r, v)}
+                    >
+                      <SelectTrigger
+                        className={`h-8 w-[168px] rounded-full border text-xs ${fulfilmentStyle(
+                          r.fulfilment_status ?? "awaiting_pickup",
+                        )}`}
+                      >
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {FULFILMENT.map((f) => (
+                          <SelectItem key={f.value} value={f.value}>
+                            {f.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {r.fulfilment_status === "rented_out" && r.checked_out_at && (
+                      <div className="mt-1 text-xs text-foreground/45">
+                        Out {new Date(r.checked_out_at).toLocaleDateString()}
+                      </div>
+                    )}
+                    {r.fulfilment_status === "returned" && r.returned_at && (
+                      <div className="mt-1 text-xs text-foreground/45">
+                        Back {new Date(r.returned_at).toLocaleDateString()}
+                      </div>
+                    )}
                   </td>
                   <td className="px-4 py-3">
                     <Button variant="ghost" size="sm" onClick={() => openRow(r)}>
