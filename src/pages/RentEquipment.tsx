@@ -129,6 +129,7 @@ const RentEquipment = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [returning, setReturning] = useState<boolean | null>(null);
+  const [checkingAccount, setCheckingAccount] = useState(false);
   const [idType, setIdType] = useState("");
   const [idImage, setIdImage] = useState<string | null>(null);
   const [idFileName, setIdFileName] = useState("");
@@ -232,16 +233,22 @@ const RentEquipment = () => {
     reader.readAsDataURL(file);
   };
 
-  const checkPhone = async (value: string) => {
-    if (value.replace(/\D/g, "").length < 10) {
+  const checkEmail = async (value: string) => {
+    const clean = value.trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(clean)) {
       setReturning(null);
       return;
     }
-    const { data } = await supabase.functions.invoke("rental-kyc", {
-      body: { action: "check", phone: `+234${value.replace(/\D/g, "").replace(/^0/, "")}` },
-    });
-    setReturning(Boolean(data?.returning));
-    if (data?.returning && data?.fullName && !fullName) setFullName(data.fullName);
+    setCheckingAccount(true);
+    try {
+      const { data } = await supabase.functions.invoke("rental-kyc", {
+        body: { action: "check", email: clean },
+      });
+      setReturning(Boolean(data?.returning));
+      if (data?.returning && data?.fullName && !fullName) setFullName(data.fullName);
+    } finally {
+      setCheckingAccount(false);
+    }
   };
 
   const verifyIdentity = async () => {
@@ -560,7 +567,7 @@ const RentEquipment = () => {
             <SheetTitle className="flex items-center gap-2">
               <ShoppingBag className="w-4 h-4" />
               {step === "details" && "Your Gear List"}
-              {step === "kyc" && "Create your account"}
+              {step === "kyc" && "Confirm your identity"}
               {step === "payment" && "Reservation summary"}
             </SheetTitle>
           </SheetHeader>
@@ -706,7 +713,8 @@ const RentEquipment = () => {
               {step === "kyc" && (
                 <>
                   <p className="text-sm text-foreground/60">
-                    We verify every renter once. Returning customers only need their phone number.
+                    Just a quick check so we know who the gear is going out with. Enter your email
+                    and we'll pick up from where you left off.
                   </p>
                   <div className="grid gap-4">
                     <div>
@@ -720,9 +728,40 @@ const RentEquipment = () => {
                       />
                     </div>
                     <div>
+                      <Label htmlFor="kyc-email">Email address</Label>
+                      <Input
+                        id="kyc-email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                          setReturning(null);
+                        }}
+                        onBlur={(e) => checkEmail(e.target.value)}
+                        placeholder="you@example.com"
+                        className="mt-2"
+                      />
+                      {checkingAccount && (
+                        <p className="mt-2 text-xs text-foreground/55 flex items-center gap-1">
+                          <Loader2 className="w-3 h-3 animate-spin" /> Checking your details…
+                        </p>
+                      )}
+                      {!checkingAccount && returning === true && (
+                        <p className="mt-2 text-xs text-primary">
+                          Welcome back — your ID is already on file, nothing else needed.
+                        </p>
+                      )}
+                      {!checkingAccount && returning === false && (
+                        <p className="mt-2 rounded-md border border-border bg-muted/40 px-3 py-2 text-xs text-foreground/70">
+                          Looks like this is your first rental with us. We'll confirm your identity
+                          just this once — after today, you'll never be asked again.
+                        </p>
+                      )}
+                    </div>
+                    <div>
                       <Label htmlFor="kyc-phone">Phone number</Label>
                       <div className="mt-2 flex">
-                        <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-input bg-muted text-sm">
+                        <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-input bg-muted text-sm text-foreground font-medium">
                           🇳🇬 +234
                         </span>
                         <Input
@@ -730,39 +769,28 @@ const RentEquipment = () => {
                           inputMode="tel"
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
-                          onBlur={(e) => checkPhone(e.target.value)}
                           placeholder="801 234 5678"
                           className="rounded-l-none"
                         />
                       </div>
-                      {returning === true && (
-                        <p className="mt-2 text-xs text-primary">
-                          Welcome back — we already have your ID on file.
-                        </p>
-                      )}
-                      {returning === false && (
-                        <p className="mt-2 text-xs text-foreground/55">
-                          First time with us — we'll need a government ID below.
-                        </p>
-                      )}
-                    </div>
-                    <div>
-                      <Label htmlFor="kyc-email">Email address</Label>
-                      <Input
-                        id="kyc-email"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="you@example.com"
-                        className="mt-2"
-                      />
                     </div>
 
-                    {returning !== true && (
-                      <>
+                    <div
+                      className={cn(
+                        "grid gap-4 transition-opacity",
+                        returning === false
+                          ? "opacity-100"
+                          : "opacity-40 pointer-events-none select-none"
+                      )}
+                      aria-disabled={returning !== false}
+                    >
                         <div>
                           <Label>Government issued ID type</Label>
-                          <Select value={idType} onValueChange={setIdType}>
+                          <Select
+                            value={idType}
+                            onValueChange={setIdType}
+                            disabled={returning !== false}
+                          >
                             <SelectTrigger className="mt-2">
                               <SelectValue placeholder="Select ID type" />
                             </SelectTrigger>
@@ -786,6 +814,7 @@ const RentEquipment = () => {
                           />
                           <button
                             type="button"
+                            disabled={returning !== false}
                             onClick={() => fileRef.current?.click()}
                             className="mt-2 w-full rounded-lg border border-dashed border-border py-6 text-sm text-foreground/60 hover:text-foreground hover:border-foreground/40 flex flex-col items-center gap-2"
                           >
@@ -800,8 +829,7 @@ const RentEquipment = () => {
                             />
                           )}
                         </div>
-                      </>
-                    )}
+                    </div>
                   </div>
 
                   <div className="flex gap-3">
@@ -810,7 +838,7 @@ const RentEquipment = () => {
                     </Button>
                     <Button className="flex-1" disabled={!kycValid || verifying} onClick={verifyIdentity}>
                       {verifying && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-                      Verify your Identity
+                      {returning === true ? "Proceed" : "Confirm my identity"}
                     </Button>
                   </div>
                 </>
