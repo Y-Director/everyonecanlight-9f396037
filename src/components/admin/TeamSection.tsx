@@ -118,6 +118,34 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
     setEditAvatar(null);
   };
 
+  // Keeps the public-facing Lighting Operator record in step with the staff record
+  // so name, phone, photo and availability update everywhere customers see them.
+  const syncOperator = async (row: Staff, name: string, phone: string) => {
+    const publicAvatar = row.avatar_url
+      ? supabase.storage.from("staff-avatars").getPublicUrl(row.avatar_url).data.publicUrl
+      : null;
+    const active = row.status === "active" && row.is_light_operator;
+
+    if (row.runner_id) {
+      await supabase
+        .from("runners")
+        .update({ name, phone, avatar_url: publicAvatar, active })
+        .eq("id", row.runner_id);
+      return;
+    }
+
+    if (!row.is_light_operator) return;
+
+    const { data: created } = await supabase
+      .from("runners")
+      .insert({ name, phone, avatar_url: publicAvatar, active })
+      .select("id")
+      .maybeSingle();
+    if (created?.id) {
+      await supabase.from("staff_members").update({ runner_id: created.id }).eq("id", row.id);
+    }
+  };
+
   const saveEdit = async () => {
     if (!editRow) return;
     const name = editForm.full_name.trim();
