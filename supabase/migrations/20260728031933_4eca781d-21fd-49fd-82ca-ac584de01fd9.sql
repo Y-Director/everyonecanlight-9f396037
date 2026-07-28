@@ -1,0 +1,1 @@
+UPDATE public.staff_members SET avatar_url = 'adeyinka-ibidapo.jpg' WHERE lower(full_name) = 'adeyinka ibidapo';
