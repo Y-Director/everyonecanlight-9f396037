@@ -91,7 +91,7 @@ const statusStyle = (s: string) =>
       ? "border-red-500/30 bg-red-500/15 text-red-400"
       : "border-foreground/20 bg-foreground/5 text-foreground/60";
 
-const TeamSection = () => {
+const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) => {
   const [rows, setRows] = useState<Staff[]>([]);
   const [jobs, setJobs] = useState<Job[]>([]);
   const [avatars, setAvatars] = useState<Record<string, string>>({});
