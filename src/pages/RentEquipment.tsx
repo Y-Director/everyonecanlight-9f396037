@@ -1052,21 +1052,41 @@ const RentEquipment = () => {
                     Start with your email address — we'll check if you've rented with us before and
                     only ask for what's still missing.
                   </p>
+                  <p className="text-xs text-foreground/50">
+                    Fields marked <span className="text-destructive">*</span> are required.
+                  </p>
                   <div className="grid gap-4">
                     <div>
-                      <Label htmlFor="kyc-email">Email address</Label>
+                      <Label htmlFor="kyc-email">
+                        Email address <span className="text-destructive">*</span>
+                      </Label>
                       <Input
                         id="kyc-email"
                         type="email"
+                        required
+                        aria-invalid={touched.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)}
                         value={email}
                         onChange={(e) => {
                           setEmail(e.target.value);
                           setReturning(null);
                         }}
-                        onBlur={(e) => checkEmail(e.target.value)}
+                        onBlur={(e) => {
+                          touch("email");
+                          checkEmail(e.target.value);
+                        }}
                         placeholder="you@example.com"
-                        className="mt-2"
+                        className={cn(
+                          "mt-2",
+                          touched.email &&
+                            !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) &&
+                            "border-destructive focus-visible:ring-destructive"
+                        )}
                       />
+                      {touched.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) && (
+                        <p className="mt-1.5 text-xs text-destructive">
+                          Enter a valid email address to continue.
+                        </p>
+                      )}
                       {checkingAccount && (
                         <p className="mt-2 text-xs text-foreground/55 flex items-center gap-1">
                           <Loader2 className="w-3 h-3 animate-spin" /> Checking your details…
@@ -1094,32 +1114,75 @@ const RentEquipment = () => {
                       aria-disabled={returning === null}
                     >
                       <div>
-                        <Label htmlFor="kyc-name">Full name (as it appears on your ID)</Label>
+                        <Label htmlFor="kyc-name">
+                          Full name (as it appears on your ID){" "}
+                          <span className="text-destructive">*</span>
+                        </Label>
                         <Input
                           id="kyc-name"
                           value={fullName}
+                          required
                           disabled={returning === null}
                           onChange={(e) => setFullName(e.target.value)}
+                          onBlur={() => touch("fullName")}
                           placeholder="Adebayo Johnson"
-                          className="mt-2"
+                          className={cn(
+                            "mt-2",
+                            touched.fullName &&
+                              fullName.trim().length < 2 &&
+                              "border-destructive focus-visible:ring-destructive"
+                          )}
                         />
+                        {touched.fullName && fullName.trim().length < 2 && (
+                          <p className="mt-1.5 text-xs text-destructive">
+                            Please enter your full name as it appears on your ID.
+                          </p>
+                        )}
                       </div>
                       <div>
-                        <Label htmlFor="kyc-phone">Phone number</Label>
-                        <div className="mt-2 flex">
-                          <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-input bg-muted text-sm text-foreground font-medium">
-                            🇳🇬 +234
-                          </span>
+                        <Label htmlFor="kyc-phone">
+                          Phone number <span className="text-destructive">*</span>
+                        </Label>
+                        <div className="mt-2 flex gap-2">
+                          <Select
+                            value={countryCode}
+                            onValueChange={setCountryCode}
+                            disabled={returning === null}
+                          >
+                            <SelectTrigger className="w-[110px] shrink-0">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="+234">🇳🇬 +234</SelectItem>
+                              <SelectItem value="+1">🇺🇸 +1</SelectItem>
+                              <SelectItem value="+44">🇬🇧 +44</SelectItem>
+                              <SelectItem value="+27">🇿🇦 +27</SelectItem>
+                              <SelectItem value="+254">🇰🇪 +254</SelectItem>
+                              <SelectItem value="+233">🇬🇭 +233</SelectItem>
+                              <SelectItem value="+971">🇦🇪 +971</SelectItem>
+                            </SelectContent>
+                          </Select>
                           <Input
                             id="kyc-phone"
                             inputMode="tel"
+                            required
                             value={phone}
                             disabled={returning === null}
-                            onChange={(e) => setPhone(e.target.value)}
+                            onChange={(e) => setPhone(e.target.value.replace(/[^\d\s]/g, ""))}
+                            onBlur={() => touch("phone")}
                             placeholder="801 234 5678"
-                            className="rounded-l-none"
+                            className={cn(
+                              touched.phone &&
+                                phone.replace(/\D/g, "").length < 10 &&
+                                "border-destructive focus-visible:ring-destructive"
+                            )}
                           />
                         </div>
+                        {touched.phone && phone.replace(/\D/g, "").length < 10 && (
+                          <p className="mt-1.5 text-xs text-destructive">
+                            Enter a valid phone number (at least 10 digits).
+                          </p>
+                        )}
                       </div>
                     </div>
 
