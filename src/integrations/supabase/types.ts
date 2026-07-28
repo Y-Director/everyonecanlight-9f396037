@@ -221,6 +221,53 @@ export type Database = {
         }
         Relationships: []
       }
+      rental_amendments: {
+        Row: {
+          added_items: Json
+          amount: number
+          created_at: string
+          id: string
+          paid_at: string | null
+          reference: string
+          removed_items: Json
+          reservation_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          added_items?: Json
+          amount?: number
+          created_at?: string
+          id?: string
+          paid_at?: string | null
+          reference: string
+          removed_items?: Json
+          reservation_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          added_items?: Json
+          amount?: number
+          created_at?: string
+          id?: string
+          paid_at?: string | null
+          reference?: string
+          removed_items?: Json
+          reservation_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rental_amendments_reservation_id_fkey"
+            columns: ["reservation_id"]
+            isOneToOne: false
+            referencedRelation: "rental_reservations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       rental_customers: {
         Row: {
           created_at: string
@@ -304,6 +351,7 @@ export type Database = {
       }
       rental_reservations: {
         Row: {
+          amount_paid: number
           booking_code: string | null
           call_time: string
           confirmation_sent_at: string | null
@@ -332,6 +380,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          amount_paid?: number
           booking_code?: string | null
           call_time: string
           confirmation_sent_at?: string | null
@@ -360,6 +409,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          amount_paid?: number
           booking_code?: string | null
           call_time?: string
           confirmation_sent_at?: string | null

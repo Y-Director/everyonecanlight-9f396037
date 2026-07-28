@@ -4,6 +4,8 @@ import {
   ArrowRight,
   CalendarIcon,
   CheckCircle2,
+  KeyRound,
+  Lock,
   Loader2,
   Minus,
   Plus,
@@ -17,6 +19,8 @@ import { toast } from "sonner";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
 import BookingSummaryDialog from "@/components/rental/BookingSummaryDialog";
+import BookingStatusCard, { type BookingLookup } from "@/components/rental/BookingStatusCard";
+import ManageBookingDialog from "@/components/rental/ManageBookingDialog";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
@@ -146,6 +150,13 @@ const RentEquipment = () => {
   const [checkingPayment, setCheckingPayment] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
+  // Manage / amend an existing booking
+  const [manageOpen, setManageOpen] = useState(false);
+  const [booking, setBooking] = useState<BookingLookup | null>(null);
+  const [amending, setAmending] = useState(false);
+  const [savedCart, setSavedCart] = useState<Cart | null>(null);
+  const [payingDiff, setPayingDiff] = useState(false);
+
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
   }, [cart]);
@@ -164,9 +175,16 @@ const RentEquipment = () => {
           setReservation(data.reservation as Reservation);
           setSummaryOpen(true);
           setCart({});
-          toast.success("Reservation completed", {
-            description: "A confirmation has been sent to your email.",
-          });
+          setAmending(false);
+          setBooking(null);
+          toast.success(
+            data?.amendment ? "Booking updated" : "Reservation completed",
+            {
+              description: data?.amendment
+                ? "Your added gear is now on the booking."
+                : "A confirmation has been sent to your email.",
+            }
+          );
         } else {
           toast.error("Payment was not completed.");
         }
@@ -200,6 +218,76 @@ const RentEquipment = () => {
   );
   const total = useMemo(() => lineItems.reduce((s, i) => s + i.lineTotal, 0), [lineItems]);
 
+  const baseQty = useMemo(() => {
+    const map: Cart = {};
+    if (amending && booking) {
+      for (const i of booking.reservation.items ?? []) map[i.id] = Number(i.qty) || 0;
+    }
+    return map;
+  }, [amending, booking]);
+  const paidTotal = booking?.reservation.total ?? 0;
+  const difference = total - paidTotal;
+  const amendmentChanged = useMemo(() => {
+    if (!amending) return false;
+    const ids = new Set([...Object.keys(baseQty), ...cartIds]);
+    return Array.from(ids).some((id) => (cart[id] ?? 0) !== (baseQty[id] ?? 0));
+  }, [amending, baseQty, cart, cartIds]);
+
+  const startAmendment = () => {
+    if (!booking) return;
+    setSavedCart(cart);
+    const next: Cart = {};
+    for (const i of booking.reservation.items ?? []) next[i.id] = Number(i.qty) || 0;
+    setCart(next);
+    setDates(undefined);
+    setManualDays(booking.reservation.days || 1);
+    setAmending(true);
+    setSheetOpen(false);
+    toast("Change mode on", {
+      description: "Add gear or swap for equal-or-higher value kit. Paid items stay on the booking.",
+      duration: 2600,
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const cancelAmendment = () => {
+    setAmending(false);
+    setCart(savedCart ?? {});
+    setSavedCart(null);
+  };
+
+  const payDifference = async () => {
+    if (!booking) return;
+    setPayingDiff(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("rental-amend-initialize", {
+        body: {
+          bookingCode: booking.reservation.booking_code,
+          email: booking.reservation.contact_email,
+          items: lineItems.map((i) => ({ id: i.id, name: i.name, qty: i.qty })),
+          callbackUrl: `${window.location.origin}/rent-equipment`,
+        },
+      });
+      if (error && !data) throw error;
+      if (data?.error) {
+        toast.error(data.error);
+        return;
+      }
+      if (data?.applied) {
+        toast.success("Booking updated", { description: "Equal-value swap — nothing more to pay." });
+        setAmending(false);
+        setBooking(null);
+        setCart(savedCart ?? {});
+        return;
+      }
+      window.location.href = data.authorization_url;
+    } catch {
+      toast.error("Could not start payment. Please try again.");
+    } finally {
+      setPayingDiff(false);
+    }
+  };
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return rentalCatalog.filter(
@@ -212,6 +300,13 @@ const RentEquipment = () => {
   const setQty = (id: string, next: number, itemName: string) => {
     setCart((prev) => {
       const current = prev[id] ?? 0;
+      const locked = baseQty[id] ?? 0;
+      if (amending && next < current && next < locked) {
+        toast("This item is already paid for", {
+          description: "You can swap it for equal or higher value gear, but it can't be refunded.",
+          duration: 2600,
+        });
+      }
       if (next > current) {
         toast("Item added to Gear List", { description: itemName, duration: 1500 });
       }
@@ -388,20 +483,52 @@ const RentEquipment = () => {
                 with a lighting operator.
               </p>
             </div>
-            <Button
-              onClick={() => setSheetOpen(true)}
-              className="relative self-start lg:self-auto gap-2 rounded-full px-5"
-            >
-              <ShoppingBag className="w-4 h-4" />
-              Gear List
-              <ArrowRight className="w-4 h-4 -rotate-45" />
-              {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 min-w-[1.25rem] h-5 px-1 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center border border-background">
-                  {cartCount}
-                </span>
-              )}
-            </Button>
+            <div className="flex flex-wrap items-center gap-3 self-start lg:self-auto">
+              <Button
+                variant="outline"
+                onClick={() => setManageOpen(true)}
+                className="gap-2 rounded-full px-5"
+              >
+                <KeyRound className="w-4 h-4" />
+                Manage Booking
+              </Button>
+              <Button
+                onClick={() => setSheetOpen(true)}
+                className="relative gap-2 rounded-full px-5"
+              >
+                <ShoppingBag className="w-4 h-4" />
+                Gear List
+                <ArrowRight className="w-4 h-4 -rotate-45" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 min-w-[1.25rem] h-5 px-1 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center border border-background">
+                    {cartCount}
+                  </span>
+                )}
+              </Button>
+            </div>
           </header>
+
+          <ManageBookingDialog
+            open={manageOpen}
+            onOpenChange={setManageOpen}
+            onLoaded={(b) => {
+              setBooking(b);
+              setAmending(false);
+            }}
+          />
+
+          {booking && (
+            <BookingStatusCard
+              booking={booking}
+              amending={amending}
+              onAmend={startAmendment}
+              onCancelAmend={cancelAmendment}
+              onClose={() => {
+                if (amending) cancelAmendment();
+                setBooking(null);
+              }}
+            />
+          )}
 
           {reservation && (
             <section className="mt-10 rounded-xl border border-primary/40 bg-[hsl(var(--surface))] p-6">
@@ -632,14 +759,54 @@ const RentEquipment = () => {
         </footer>
       </div>
 
+      {amending && booking && !sheetOpen && (
+        <div className="fixed bottom-0 inset-x-0 z-40 border-t border-border bg-slate-900 text-slate-100 px-6 py-4">
+          <div className="max-w-[1400px] mx-auto flex flex-wrap items-center justify-between gap-4">
+            <div className="text-sm">
+              <p className="font-medium">
+                Changing booking{" "}
+                <span className="font-mono tracking-[0.15em]">
+                  {booking.reservation.booking_code}
+                </span>
+              </p>
+              <p className="text-xs text-slate-400">
+                Paid {formatNaira(paidTotal)} ·{" "}
+                {difference > 0
+                  ? `${formatNaira(difference)} to pay`
+                  : difference < 0
+                    ? "Below paid value — add or swap up"
+                    : "No extra charge"}
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              <Button
+                variant="ghost"
+                className="text-slate-300 hover:text-slate-100 hover:bg-slate-800"
+                onClick={cancelAmendment}
+              >
+                Cancel
+              </Button>
+              <Button className="rounded-full gap-2" onClick={() => setSheetOpen(true)}>
+                Review changes
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
         <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
           <SheetHeader>
             <SheetTitle className="flex items-center gap-2">
               <ShoppingBag className="w-4 h-4" />
-              {step === "details" && "Your Gear List"}
-              {step === "kyc" && "Confirm your identity"}
-              {step === "payment" && "Reservation summary"}
+              {amending
+                ? `Change booking ${booking?.reservation.booking_code ?? ""}`
+                : step === "details"
+                  ? "Your Gear List"
+                  : step === "kyc"
+                    ? "Confirm your identity"
+                    : "Reservation summary"}
             </SheetTitle>
           </SheetHeader>
 
@@ -649,7 +816,86 @@ const RentEquipment = () => {
             </p>
           ) : (
             <div className="mt-6 space-y-8 pb-10">
-              {step === "details" && (
+              {amending && booking && (
+                <>
+                  <div className="rounded-lg border border-primary/40 bg-primary/5 p-4 text-xs text-foreground/75">
+                    <p className="flex items-center gap-2 font-medium text-foreground">
+                      <Lock className="w-3.5 h-3.5 text-primary" /> Paid gear is locked
+                    </p>
+                    <p className="mt-2">
+                      Your {booking.reservation.days} day
+                      {booking.reservation.days > 1 ? "s" : ""} rental, pickup and call time stay as
+                      booked. Add gear or swap for equal-or-higher value — we'll only charge the
+                      difference.
+                    </p>
+                  </div>
+
+                  <ul className="space-y-3">
+                    {lineItems.map((i) => {
+                      const locked = baseQty[i.id] ?? 0;
+                      return (
+                        <li key={i.id} className="flex items-center gap-3">
+                          <div className="w-12 h-12 rounded bg-white flex items-center justify-center p-1 shrink-0">
+                            <img src={i.image} alt={i.name} className="w-full h-full object-contain" />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <p className="text-sm truncate">{i.name}</p>
+                            <p className="text-xs text-foreground/55">
+                              {locked > 0 ? `${locked} paid for · ` : "New · "}
+                              {formatNaira(i.price)} / day
+                            </p>
+                          </div>
+                          <QtyStepper
+                            size="sm"
+                            qty={i.qty}
+                            onChange={(n) => setQty(i.id, n, i.name)}
+                          />
+                        </li>
+                      );
+                    })}
+                  </ul>
+
+                  <div className="space-y-2 text-sm border-t border-border pt-4">
+                    <div className="flex justify-between">
+                      <span className="text-foreground/60">Already paid</span>
+                      <span className="tabular-nums">{formatNaira(paidTotal)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-foreground/60">New booking value</span>
+                      <span className="tabular-nums">{formatNaira(total)}</span>
+                    </div>
+                    <div className="flex justify-between font-medium">
+                      <span>Balance to pay</span>
+                      <span className="tabular-nums">
+                        {formatNaira(Math.max(0, difference))}
+                      </span>
+                    </div>
+                  </div>
+
+                  {difference < 0 && (
+                    <p className="rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-xs text-foreground/80">
+                      Your new gear list is worth less than what you've paid. Swaps must be for
+                      equal or higher value — add gear back or choose a higher-value alternative.
+                    </p>
+                  )}
+
+                  <div className="flex gap-3">
+                    <Button variant="outline" onClick={cancelAmendment}>
+                      Cancel
+                    </Button>
+                    <Button
+                      className="flex-1"
+                      disabled={payingDiff || !amendmentChanged || difference < 0}
+                      onClick={payDifference}
+                    >
+                      {payingDiff && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                      {difference > 0 ? `Pay ${formatNaira(difference)}` : "Confirm swap"}
+                    </Button>
+                  </div>
+                </>
+              )}
+
+              {!amending && step === "details" && (
                 <>
                   <div>
                     <Label className="text-xs uppercase tracking-wider text-foreground/50">
@@ -781,7 +1027,7 @@ const RentEquipment = () => {
                 </>
               )}
 
-              {step === "kyc" && (
+              {!amending && step === "kyc" && (
                 <>
                   <p className="text-sm text-foreground/60">
                     Start with your email address — we'll check if you've rented with us before and
@@ -985,7 +1231,7 @@ const RentEquipment = () => {
                 </>
               )}
 
-              {step === "payment" && (
+              {!amending && step === "payment" && (
                 <>
                   <div className="flex items-center gap-2 text-sm text-primary">
                     <CheckCircle2 className="w-4 h-4" /> Identity verified
