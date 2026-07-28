@@ -35,6 +35,9 @@ type Row = {
   call_time: string;
   total: number;
   status: string;
+  fulfilment_status: string;
+  checked_out_at: string | null;
+  returned_at: string | null;
   paid_at: string | null;
   created_at: string;
   runners: { name: string; phone: string; avatar_url: string | null } | null;
@@ -69,6 +72,25 @@ const REJECT_REASONS = [
 
 type SortKey = "created_at" | "contact_name" | "contact_email" | "contact_phone" | "total";
 
+const FULFILMENT = [
+  { value: "awaiting_pickup", label: "Awaiting pickup" },
+  { value: "rented_out", label: "Rented out" },
+  { value: "returned", label: "Rental returned" },
+  { value: "attention_needed", label: "Attention needed" },
+] as const;
+
+const fulfilmentLabel = (v: string) =>
+  FULFILMENT.find((f) => f.value === v)?.label ?? "Awaiting pickup";
+
+const fulfilmentStyle = (v: string) =>
+  v === "rented_out"
+    ? "bg-sky-500/15 text-sky-400 border-sky-500/30"
+    : v === "returned"
+      ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
+      : v === "attention_needed"
+        ? "bg-red-500/15 text-red-400 border-red-500/30"
+        : "bg-foreground/5 text-foreground/60 border-foreground/20";
+
 const naira = (n: number) => `₦${n.toLocaleString("en-NG")}`;
 
 const statusStyle = (status: string) =>
@@ -85,6 +107,7 @@ const RentalsSection = () => {
   const [status, setStatus] = useState("all");
   const [sortKey, setSortKey] = useState<SortKey>("created_at");
   const [asc, setAsc] = useState(false);
+  const [fulfilment, setFulfilment] = useState("all");
   const [active, setActive] = useState<Row | null>(null);
   const [idUrl, setIdUrl] = useState<string | null>(null);
   const [tab, setTab] = useState<"bookings" | "identity">("bookings");
@@ -100,7 +123,7 @@ const RentalsSection = () => {
     const { data, error } = await supabase
       .from("rental_reservations")
       .select(
-        "id, reference, booking_code, contact_name, contact_email, contact_phone, items, days, start_date, end_date, location, call_time, total, status, paid_at, created_at, runners(name, phone, avatar_url), rental_customers(full_name, email, phone, id_type, id_image_path, kyc_status)",
+        "id, reference, booking_code, contact_name, contact_email, contact_phone, items, days, start_date, end_date, location, call_time, total, status, fulfilment_status, checked_out_at, returned_at, paid_at, created_at, runners(name, phone, avatar_url), rental_customers(full_name, email, phone, id_type, id_image_path, kyc_status)",
       )
       .order("created_at", { ascending: false })
       .limit(500);
@@ -163,6 +186,20 @@ const RentalsSection = () => {
     load();
   }, [load]);
 
+  const setFulfilmentStatus = async (row: Row, value: string) => {
+    const patch: Record<string, unknown> = { fulfilment_status: value };
+    if (value === "rented_out") patch.checked_out_at = new Date().toISOString();
+    if (value === "returned") patch.returned_at = new Date().toISOString();
+    setRows((prev) => prev.map((r) => (r.id === row.id ? { ...r, ...(patch as object) } as Row : r)));
+    const { error } = await supabase.from("rental_reservations").update(patch).eq("id", row.id);
+    if (error) {
+      toast.error("Could not update this booking");
+      load();
+      return;
+    }
+    toast.success(`Marked as ${fulfilmentLabel(value).toLowerCase()}`);
+  };
+
   useEffect(() => {
     if (tab === "identity") loadIdentities();
   }, [tab, loadIdentities]);
@@ -171,6 +208,7 @@ const RentalsSection = () => {
     const q = query.trim().toLowerCase();
     let list = rows.filter((r) => {
       if (status !== "all" && r.status !== status) return false;
+      if (fulfilment !== "all" && (r.fulfilment_status ?? "awaiting_pickup") !== fulfilment) return false;
       if (!q) return true;
       return [
         r.booking_code,
@@ -196,7 +234,7 @@ const RentalsSection = () => {
       return (av > bv ? 1 : -1) * (asc ? 1 : -1);
     });
     return list;
-  }, [rows, query, status, sortKey, asc]);
+  }, [rows, query, status, fulfilment, sortKey, asc]);
 
   const openRow = async (row: Row) => {
     setActive(row);
