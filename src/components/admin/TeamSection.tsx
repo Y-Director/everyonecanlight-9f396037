@@ -107,6 +107,61 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({ ...emptyForm });
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [editRow, setEditRow] = useState<Staff | null>(null);
+  const [editForm, setEditForm] = useState({ full_name: "", email: "", phone: "" });
+  const [editAvatar, setEditAvatar] = useState<File | null>(null);
+  const [editSaving, setEditSaving] = useState(false);
+
+  const openEdit = (row: Staff) => {
+    setEditRow(row);
+    setEditForm({ full_name: row.full_name, email: row.email, phone: row.phone });
+    setEditAvatar(null);
+  };
+
+  const saveEdit = async () => {
+    if (!editRow) return;
+    const name = editForm.full_name.trim();
+    const email = editForm.email.trim().toLowerCase();
+    const phone = editForm.phone.trim();
+    if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !phone) {
+      toast.error("Full name, a valid email and a phone number are required");
+      return;
+    }
+    setEditSaving(true);
+    let avatarPath = editRow.avatar_url;
+    if (editAvatar) {
+      const ext = editAvatar.name.split(".").pop() ?? "jpg";
+      const path = `${crypto.randomUUID()}.${ext}`;
+      const { error: upErr } = await supabase.storage
+        .from("staff-avatars")
+        .upload(path, editAvatar, { upsert: false });
+      if (upErr) {
+        setEditSaving(false);
+        toast.error("Could not upload the photo");
+        return;
+      }
+      avatarPath = path;
+    }
+
+    const { error } = await supabase
+      .from("staff_members")
+      .update({ full_name: name, email, phone, avatar_url: avatarPath })
+      .eq("id", editRow.id);
+
+    if (!error && editRow.runner_id) {
+      await supabase.from("runners").update({ name, phone }).eq("id", editRow.runner_id);
+    }
+
+    setEditSaving(false);
+    if (error) {
+      toast.error("Could not update this team member");
+      return;
+    }
+    toast.success("Team member updated");
+    setEditRow(null);
+    setEditAvatar(null);
+    load();
+  };
 
   const load = useCallback(async () => {
     setLoading(true);
