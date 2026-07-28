@@ -129,6 +129,7 @@ const RentEquipment = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [returning, setReturning] = useState<boolean | null>(null);
+  const [checkingAccount, setCheckingAccount] = useState(false);
   const [idType, setIdType] = useState("");
   const [idImage, setIdImage] = useState<string | null>(null);
   const [idFileName, setIdFileName] = useState("");
