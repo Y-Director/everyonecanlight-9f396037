@@ -483,20 +483,52 @@ const RentEquipment = () => {
                 with a lighting operator.
               </p>
             </div>
-            <Button
-              onClick={() => setSheetOpen(true)}
-              className="relative self-start lg:self-auto gap-2 rounded-full px-5"
-            >
-              <ShoppingBag className="w-4 h-4" />
-              Gear List
-              <ArrowRight className="w-4 h-4 -rotate-45" />
-              {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 min-w-[1.25rem] h-5 px-1 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center border border-background">
-                  {cartCount}
-                </span>
-              )}
-            </Button>
+            <div className="flex flex-wrap items-center gap-3 self-start lg:self-auto">
+              <Button
+                variant="outline"
+                onClick={() => setManageOpen(true)}
+                className="gap-2 rounded-full px-5"
+              >
+                <KeyRound className="w-4 h-4" />
+                Manage Booking
+              </Button>
+              <Button
+                onClick={() => setSheetOpen(true)}
+                className="relative gap-2 rounded-full px-5"
+              >
+                <ShoppingBag className="w-4 h-4" />
+                Gear List
+                <ArrowRight className="w-4 h-4 -rotate-45" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 min-w-[1.25rem] h-5 px-1 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center border border-background">
+                    {cartCount}
+                  </span>
+                )}
+              </Button>
+            </div>
           </header>
+
+          <ManageBookingDialog
+            open={manageOpen}
+            onOpenChange={setManageOpen}
+            onLoaded={(b) => {
+              setBooking(b);
+              setAmending(false);
+            }}
+          />
+
+          {booking && (
+            <BookingStatusCard
+              booking={booking}
+              amending={amending}
+              onAmend={startAmendment}
+              onCancelAmend={cancelAmendment}
+              onClose={() => {
+                if (amending) cancelAmendment();
+                setBooking(null);
+              }}
+            />
+          )}
 
           {reservation && (
             <section className="mt-10 rounded-xl border border-primary/40 bg-[hsl(var(--surface))] p-6">
