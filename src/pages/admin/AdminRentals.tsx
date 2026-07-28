@@ -9,6 +9,7 @@ import {
   ShieldAlert,
   UserCog,
   Users,
+  Contact,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,7 @@ import RentalsSection from "@/components/admin/RentalsSection";
 import MasterclassSection from "@/components/admin/MasterclassSection";
 import CoursesSection from "@/components/admin/CoursesSection";
 import AdminsSection from "@/components/admin/AdminsSection";
+import TeamSection from "@/components/admin/TeamSection";
 
 type Account = {
   email: string;
@@ -24,12 +26,13 @@ type Account = {
   sections: string[];
 };
 
-type TabKey = "rentals" | "masterclass" | "courses" | "admins";
+type TabKey = "rentals" | "masterclass" | "courses" | "team" | "admins";
 
 const TABS: { key: TabKey; label: string; icon: typeof Package }[] = [
   { key: "rentals", label: "Rentals", icon: Package },
   { key: "masterclass", label: "Masterclass", icon: Users },
   { key: "courses", label: "Courses", icon: GraduationCap },
+  { key: "team", label: "Team Members", icon: Contact },
   { key: "admins", label: "Admins", icon: UserCog },
 ];
 
@@ -156,6 +159,7 @@ const AdminRentals = () => {
         {tab === "rentals" && <RentalsSection />}
         {tab === "masterclass" && <MasterclassSection />}
         {tab === "courses" && <CoursesSection />}
+        {tab === "team" && <TeamSection />}
         {tab === "admins" && account.is_super && <AdminsSection />}
       </div>
     </main>
