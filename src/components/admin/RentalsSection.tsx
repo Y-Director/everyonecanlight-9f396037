@@ -278,6 +278,53 @@ const RentalsSection = () => {
           ))}
         </div>
 
+        <div className="mt-4 grid sm:grid-cols-3 gap-4">
+          {[
+            {
+              label: "Rented out",
+              value: rows.filter((r) => r.fulfilment_status === "rented_out").length,
+              key: "rented_out",
+            },
+            {
+              label: "Returned to bank",
+              value: rows.filter((r) => r.fulfilment_status === "returned").length,
+              key: "returned",
+            },
+            {
+              label: "Attention needed",
+              value: rows.filter((r) => r.fulfilment_status === "attention_needed").length,
+              key: "attention_needed",
+            },
+          ].map((s) => (
+            <button
+              key={s.label}
+              onClick={() => {
+                setTab("bookings");
+                setFulfilment((cur) => (cur === s.key ? "all" : s.key));
+              }}
+              className={`text-left rounded-xl border p-5 transition ${
+                fulfilment === s.key
+                  ? "border-[hsl(var(--cta))] bg-[hsl(var(--cta))]/10"
+                  : "border-foreground/10 bg-[hsl(var(--surface))] hover:border-foreground/25"
+              }`}
+            >
+              <div className="text-xs uppercase tracking-wider text-foreground/50">{s.label}</div>
+              <div className="mt-2 text-2xl font-semibold">{s.value}</div>
+            </button>
+          ))}
+        </div>
+        {false && (
+          [].map((s: { label: string; value: string }) => (
+            <div
+              key={s.label}
+              className="rounded-xl border border-foreground/10 bg-[hsl(var(--surface))] p-5"
+            >
+              <div className="text-xs uppercase tracking-wider text-foreground/50">{s.label}</div>
+              <div className="mt-2 text-2xl font-semibold">{s.value}</div>
+            </div>
+          ))
+        )}
+
         <div className="mt-8 flex gap-2 border-b border-foreground/10">
           {(["bookings", "identity"] as const).map((t) => (
             <button
