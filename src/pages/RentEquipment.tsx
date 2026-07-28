@@ -218,6 +218,76 @@ const RentEquipment = () => {
   );
   const total = useMemo(() => lineItems.reduce((s, i) => s + i.lineTotal, 0), [lineItems]);
 
+  const baseQty = useMemo(() => {
+    const map: Cart = {};
+    if (amending && booking) {
+      for (const i of booking.reservation.items ?? []) map[i.id] = Number(i.qty) || 0;
+    }
+    return map;
+  }, [amending, booking]);
+  const paidTotal = booking?.reservation.total ?? 0;
+  const difference = total - paidTotal;
+  const amendmentChanged = useMemo(() => {
+    if (!amending) return false;
+    const ids = new Set([...Object.keys(baseQty), ...cartIds]);
+    return Array.from(ids).some((id) => (cart[id] ?? 0) !== (baseQty[id] ?? 0));
+  }, [amending, baseQty, cart, cartIds]);
+
+  const startAmendment = () => {
+    if (!booking) return;
+    setSavedCart(cart);
+    const next: Cart = {};
+    for (const i of booking.reservation.items ?? []) next[i.id] = Number(i.qty) || 0;
+    setCart(next);
+    setDates(undefined);
+    setManualDays(booking.reservation.days || 1);
+    setAmending(true);
+    setSheetOpen(false);
+    toast("Change mode on", {
+      description: "Add gear or swap for equal-or-higher value kit. Paid items stay on the booking.",
+      duration: 2600,
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const cancelAmendment = () => {
+    setAmending(false);
+    setCart(savedCart ?? {});
+    setSavedCart(null);
+  };
+
+  const payDifference = async () => {
+    if (!booking) return;
+    setPayingDiff(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("rental-amend-initialize", {
+        body: {
+          bookingCode: booking.reservation.booking_code,
+          email: booking.reservation.contact_email,
+          items: lineItems.map((i) => ({ id: i.id, name: i.name, qty: i.qty })),
+          callbackUrl: `${window.location.origin}/rent-equipment`,
+        },
+      });
+      if (error && !data) throw error;
+      if (data?.error) {
+        toast.error(data.error);
+        return;
+      }
+      if (data?.applied) {
+        toast.success("Booking updated", { description: "Equal-value swap — nothing more to pay." });
+        setAmending(false);
+        setBooking(null);
+        setCart(savedCart ?? {});
+        return;
+      }
+      window.location.href = data.authorization_url;
+    } catch {
+      toast.error("Could not start payment. Please try again.");
+    } finally {
+      setPayingDiff(false);
+    }
+  };
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return rentalCatalog.filter(
@@ -230,6 +300,13 @@ const RentEquipment = () => {
   const setQty = (id: string, next: number, itemName: string) => {
     setCart((prev) => {
       const current = prev[id] ?? 0;
+      const locked = baseQty[id] ?? 0;
+      if (amending && next < current && next < locked) {
+        toast("This item is already paid for", {
+          description: "You can swap it for equal or higher value gear, but it can't be refunded.",
+          duration: 2600,
+        });
+      }
       if (next > current) {
         toast("Item added to Gear List", { description: itemName, duration: 1500 });
       }
