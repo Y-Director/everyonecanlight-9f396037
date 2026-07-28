@@ -1,5 +1,6 @@
 import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors'
 import { createClient } from 'npm:@supabase/supabase-js@2'
+import { resolveOperator } from '../_shared/operator.ts'
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {
@@ -13,7 +14,7 @@ const sendConfirmationEmail = async (supabase: any, reservationId: string) => {
     const { data: r } = await supabase
       .from('rental_reservations')
       .select(
-        'id, reference, booking_code, contact_name, contact_email, items, days, start_date, end_date, location, call_time, total, confirmation_sent_at, runners(name, phone), rental_customers(full_name, email)',
+        'id, reference, booking_code, contact_name, contact_email, items, days, start_date, end_date, location, call_time, total, confirmation_sent_at, runner_id, rental_customers(full_name, email)',
       )
       .eq('id', reservationId)
       .maybeSingle()
@@ -25,6 +26,8 @@ const sendConfirmationEmail = async (supabase: any, reservationId: string) => {
       console.error('No recipient email on reservation', reservationId)
       return
     }
+
+    const operator = await resolveOperator(supabase, r.runner_id)
 
     const res = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/send-transactional-email`, {
       method: 'POST',
@@ -47,8 +50,8 @@ const sendConfirmationEmail = async (supabase: any, reservationId: string) => {
           location: r.location,
           callTime: r.call_time,
           total: r.total,
-          operatorName: r.runners?.name ?? null,
-          operatorPhone: r.runners?.phone ?? null,
+          operatorName: operator?.name ?? null,
+          operatorPhone: operator?.phone ?? null,
         },
       }),
     })
@@ -153,12 +156,18 @@ Deno.serve(async (req) => {
       const { data: updated } = await supabase
         .from('rental_reservations')
         .select(
-          'reference, booking_code, contact_name, contact_email, contact_phone, items, days, start_date, end_date, location, call_time, total, status, runners(name, phone, avatar_url), rental_customers(full_name, email)',
+          'reference, booking_code, contact_name, contact_email, contact_phone, items, days, start_date, end_date, location, call_time, total, status, runner_id, rental_customers(full_name, email)',
         )
         .eq('id', amendment.reservation_id)
         .maybeSingle()
 
-      return json({ paid, amendment: true, reservation: updated })
+      const amendOperator = updated ? await resolveOperator(supabase, updated.runner_id) : null
+
+      return json({
+        paid,
+        amendment: true,
+        reservation: updated ? { ...updated, runner_id: undefined, runners: amendOperator } : updated,
+      })
     }
 
     await supabase
@@ -187,12 +196,17 @@ Deno.serve(async (req) => {
     const { data: reservation } = await supabase
       .from('rental_reservations')
       .select(
-        'reference, booking_code, contact_name, contact_email, contact_phone, items, days, start_date, end_date, location, call_time, total, status, runners(name, phone, avatar_url), rental_customers(full_name, email)',
+        'reference, booking_code, contact_name, contact_email, contact_phone, items, days, start_date, end_date, location, call_time, total, status, runner_id, rental_customers(full_name, email)',
       )
       .eq('reference', reference)
       .maybeSingle()
 
-    return json({ paid, reservation })
+    const operator = reservation ? await resolveOperator(supabase, reservation.runner_id) : null
+
+    return json({
+      paid,
+      reservation: reservation ? { ...reservation, runner_id: undefined, runners: operator } : reservation,
+    })
   } catch (e) {
     console.error('rental-verify error', e)
     return json({ error: 'Unexpected error' }, 500)

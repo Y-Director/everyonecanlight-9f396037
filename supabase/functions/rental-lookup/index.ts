@@ -1,6 +1,7 @@
 import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors'
 import { createClient } from 'npm:@supabase/supabase-js@2'
 import { EDIT_CUTOFF_HOURS, isEditable, normaliseCode, normaliseEmail, pickupAt } from '../_shared/rentalBooking.ts'
+import { resolveOperator } from '../_shared/operator.ts'
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {
@@ -28,7 +29,7 @@ Deno.serve(async (req) => {
     const { data: reservation } = await supabase
       .from('rental_reservations')
       .select(
-        'id, reference, booking_code, contact_name, contact_email, contact_phone, items, days, start_date, end_date, location, call_time, subtotal, total, amount_paid, status, paid_at, runners(name, phone, avatar_url)',
+        'id, reference, booking_code, contact_name, contact_email, contact_phone, items, days, start_date, end_date, location, call_time, subtotal, total, amount_paid, status, paid_at, runner_id',
       )
       .eq('booking_code', bookingCode)
       .maybeSingle()
@@ -48,9 +49,10 @@ Deno.serve(async (req) => {
       .order('created_at', { ascending: true })
 
     const pickup = pickupAt(reservation.start_date, reservation.call_time)
+    const operator = await resolveOperator(supabase, reservation.runner_id)
 
     return json({
-      reservation: { ...reservation, id: undefined },
+      reservation: { ...reservation, id: undefined, runner_id: undefined, runners: operator },
       amendments: amendments ?? [],
       pickupAt: pickup ? pickup.toISOString() : null,
       editable: isEditable(reservation.start_date, reservation.call_time),

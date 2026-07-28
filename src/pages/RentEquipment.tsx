@@ -132,6 +132,7 @@ const RentEquipment = () => {
   // KYC
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
+  const [countryCode, setCountryCode] = useState("+234");
   const [email, setEmail] = useState("");
   const [returning, setReturning] = useState<boolean | null>(null);
   const [checkingAccount, setCheckingAccount] = useState(false);
@@ -144,6 +145,8 @@ const RentEquipment = () => {
   const [rejectionReason, setRejectionReason] = useState<string | null>(null);
   const [cooldown, setCooldown] = useState(0);
   const [paying, setPaying] = useState(false);
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const touch = (field: string) => setTouched((t) => ({ ...t, [field]: true }));
 
   const [reservation, setReservation] = useState<Reservation | null>(null);
   const [summaryOpen, setSummaryOpen] = useState(false);
@@ -348,9 +351,14 @@ const RentEquipment = () => {
       const isReturning = Boolean(data?.returning);
       setReturning(isReturning);
       if (isReturning) {
-        toast.success("Welcome back — we recognise you.", { duration: 1800 });
+        toast.success("Welcome back — we recognise you.", { duration: 5000 });
         if (data?.fullName && !fullName) setFullName(data.fullName);
-        if (data?.phone && !phone) setPhone(String(data.phone).replace(/^\+234/, ""));
+        if (data?.phone && !phone) {
+          const raw = String(data.phone);
+          const match = raw.match(/^\+(234|254|233|971|44|27|1)/);
+          if (match) setCountryCode(`+${match[1]}`);
+          setPhone(raw.replace(/^\+\d{1,3}/, ""));
+        }
         if (data?.status === "rejected") {
           setKycStatus("rejected");
           setRejectionReason(data?.rejectionReason ?? null);
@@ -361,7 +369,7 @@ const RentEquipment = () => {
           if (data?.customerId) setCustomerId(data.customerId);
         }
       } else {
-        toast("A new face — lovely to have you here.", { duration: 1800 });
+        toast("A new face — lovely to have you here.", { duration: 5000 });
         setKycStatus("idle");
         setRejectionReason(null);
       }
@@ -371,6 +379,11 @@ const RentEquipment = () => {
   };
 
   const verifyIdentity = async () => {
+    setTouched({ email: true, fullName: true, phone: true, idType: true, idImage: true });
+    if (!kycValid) {
+      toast.error("Please complete every required field before continuing.");
+      return;
+    }
     setVerifying(true);
     try {
       const { data, error } = await supabase.functions.invoke("rental-kyc", {
@@ -378,7 +391,7 @@ const RentEquipment = () => {
           action: "submit",
           fullName,
           email,
-          phone: `+234${phone.replace(/\D/g, "").replace(/^0/, "")}`,
+          phone: `${countryCode}${phone.replace(/\D/g, "").replace(/^0/, "")}`,
           idType: idType || undefined,
           idImage: idImage || undefined,
         },
@@ -828,6 +841,17 @@ const RentEquipment = () => {
                       booked. Add gear or swap for equal-or-higher value — we'll only charge the
                       difference.
                     </p>
+                    <p className="mt-2 rounded-md border border-border bg-muted/50 px-3 py-2 text-foreground/80">
+                      Rental dates can't be changed once payment has been made. Need a different
+                      date? Write to us at{" "}
+                      <a
+                        className="font-semibold text-foreground underline decoration-primary decoration-2 underline-offset-2"
+                        href="mailto:cx@everyonecanlight.com"
+                      >
+                        cx@everyonecanlight.com
+                      </a>
+                      .
+                    </p>
                   </div>
 
                   <ul className="space-y-3">
@@ -1033,21 +1057,41 @@ const RentEquipment = () => {
                     Start with your email address — we'll check if you've rented with us before and
                     only ask for what's still missing.
                   </p>
+                  <p className="text-xs text-foreground/50">
+                    Fields marked <span className="text-destructive">*</span> are required.
+                  </p>
                   <div className="grid gap-4">
                     <div>
-                      <Label htmlFor="kyc-email">Email address</Label>
+                      <Label htmlFor="kyc-email">
+                        Email address <span className="text-destructive">*</span>
+                      </Label>
                       <Input
                         id="kyc-email"
                         type="email"
+                        required
+                        aria-invalid={touched.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)}
                         value={email}
                         onChange={(e) => {
                           setEmail(e.target.value);
                           setReturning(null);
                         }}
-                        onBlur={(e) => checkEmail(e.target.value)}
+                        onBlur={(e) => {
+                          touch("email");
+                          checkEmail(e.target.value);
+                        }}
                         placeholder="you@example.com"
-                        className="mt-2"
+                        className={cn(
+                          "mt-2",
+                          touched.email &&
+                            !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) &&
+                            "border-destructive focus-visible:ring-destructive"
+                        )}
                       />
+                      {touched.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) && (
+                        <p className="mt-1.5 text-xs text-destructive">
+                          Enter a valid email address to continue.
+                        </p>
+                      )}
                       {checkingAccount && (
                         <p className="mt-2 text-xs text-foreground/55 flex items-center gap-1">
                           <Loader2 className="w-3 h-3 animate-spin" /> Checking your details…
@@ -1075,32 +1119,75 @@ const RentEquipment = () => {
                       aria-disabled={returning === null}
                     >
                       <div>
-                        <Label htmlFor="kyc-name">Full name (as it appears on your ID)</Label>
+                        <Label htmlFor="kyc-name">
+                          Full name (as it appears on your ID){" "}
+                          <span className="text-destructive">*</span>
+                        </Label>
                         <Input
                           id="kyc-name"
                           value={fullName}
+                          required
                           disabled={returning === null}
                           onChange={(e) => setFullName(e.target.value)}
+                          onBlur={() => touch("fullName")}
                           placeholder="Adebayo Johnson"
-                          className="mt-2"
+                          className={cn(
+                            "mt-2",
+                            touched.fullName &&
+                              fullName.trim().length < 2 &&
+                              "border-destructive focus-visible:ring-destructive"
+                          )}
                         />
+                        {touched.fullName && fullName.trim().length < 2 && (
+                          <p className="mt-1.5 text-xs text-destructive">
+                            Please enter your full name as it appears on your ID.
+                          </p>
+                        )}
                       </div>
                       <div>
-                        <Label htmlFor="kyc-phone">Phone number</Label>
-                        <div className="mt-2 flex">
-                          <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-input bg-muted text-sm text-foreground font-medium">
-                            🇳🇬 +234
-                          </span>
+                        <Label htmlFor="kyc-phone">
+                          Phone number <span className="text-destructive">*</span>
+                        </Label>
+                        <div className="mt-2 flex gap-2">
+                          <Select
+                            value={countryCode}
+                            onValueChange={setCountryCode}
+                            disabled={returning === null}
+                          >
+                            <SelectTrigger className="w-[110px] shrink-0">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="+234">🇳🇬 +234</SelectItem>
+                              <SelectItem value="+1">🇺🇸 +1</SelectItem>
+                              <SelectItem value="+44">🇬🇧 +44</SelectItem>
+                              <SelectItem value="+27">🇿🇦 +27</SelectItem>
+                              <SelectItem value="+254">🇰🇪 +254</SelectItem>
+                              <SelectItem value="+233">🇬🇭 +233</SelectItem>
+                              <SelectItem value="+971">🇦🇪 +971</SelectItem>
+                            </SelectContent>
+                          </Select>
                           <Input
                             id="kyc-phone"
                             inputMode="tel"
+                            required
                             value={phone}
                             disabled={returning === null}
-                            onChange={(e) => setPhone(e.target.value)}
+                            onChange={(e) => setPhone(e.target.value.replace(/[^\d\s]/g, ""))}
+                            onBlur={() => touch("phone")}
                             placeholder="801 234 5678"
-                            className="rounded-l-none"
+                            className={cn(
+                              touched.phone &&
+                                phone.replace(/\D/g, "").length < 10 &&
+                                "border-destructive focus-visible:ring-destructive"
+                            )}
                           />
                         </div>
+                        {touched.phone && phone.replace(/\D/g, "").length < 10 && (
+                          <p className="mt-1.5 text-xs text-destructive">
+                            Enter a valid phone number (at least 10 digits).
+                          </p>
+                        )}
                       </div>
                     </div>
 
@@ -1114,13 +1201,27 @@ const RentEquipment = () => {
                       aria-disabled={returning !== false}
                     >
                         <div>
-                          <Label>Government issued ID type</Label>
+                          <Label>
+                            Government issued ID type{" "}
+                            {returning === false && <span className="text-destructive">*</span>}
+                          </Label>
                           <Select
                             value={idType}
-                            onValueChange={setIdType}
+                            onValueChange={(v) => {
+                              setIdType(v);
+                              touch("idType");
+                            }}
                             disabled={returning !== false}
                           >
-                            <SelectTrigger className="mt-2">
+                            <SelectTrigger
+                              className={cn(
+                                "mt-2",
+                                returning === false &&
+                                  touched.idType &&
+                                  !idType &&
+                                  "border-destructive"
+                              )}
+                            >
                               <SelectValue placeholder="Select ID type" />
                             </SelectTrigger>
                             <SelectContent>
@@ -1128,9 +1229,17 @@ const RentEquipment = () => {
                               <SelectItem value="Drivers License">Driver's License</SelectItem>
                             </SelectContent>
                           </Select>
+                          {returning === false && touched.idType && !idType && (
+                            <p className="mt-1.5 text-xs text-destructive">
+                              Choose the ID document you'll upload.
+                            </p>
+                          )}
                         </div>
                         <div>
-                          <Label>Upload a clear image of your ID</Label>
+                          <Label>
+                            Upload a clear image of your ID{" "}
+                            {returning === false && <span className="text-destructive">*</span>}
+                          </Label>
                           <input
                             ref={fileRef}
                             type="file"
@@ -1145,7 +1254,13 @@ const RentEquipment = () => {
                             type="button"
                             disabled={returning !== false}
                             onClick={() => fileRef.current?.click()}
-                            className="mt-2 w-full rounded-lg border border-dashed border-border py-6 text-sm text-foreground/60 hover:text-foreground hover:border-foreground/40 flex flex-col items-center gap-2"
+                            className={cn(
+                              "mt-2 w-full rounded-lg border border-dashed border-border py-6 text-sm text-foreground/60 hover:text-foreground hover:border-foreground/40 flex flex-col items-center gap-2",
+                              returning === false &&
+                                touched.idImage &&
+                                !idImage &&
+                                "border-destructive text-destructive"
+                            )}
                           >
                             <Upload className="w-4 h-4" />
                             {idFileName || "Choose an image (JPG or PNG, max 8MB)"}
@@ -1156,6 +1271,11 @@ const RentEquipment = () => {
                               alt="ID preview"
                               className="mt-3 w-full max-h-48 object-contain rounded-lg border border-border"
                             />
+                          )}
+                          {returning === false && touched.idImage && !idImage && (
+                            <p className="mt-1.5 text-xs text-destructive">
+                              An image of your ID is required to verify you.
+                            </p>
                           )}
                         </div>
                     </div>
@@ -1188,9 +1308,12 @@ const RentEquipment = () => {
                       <p className="mt-2 text-xs text-foreground/75">
                         Reason: {rejectionReason ?? "Identity concerns"}
                       </p>
-                      <p className="mt-2 text-xs text-foreground/65">
+                      <p className="mt-2 text-xs text-foreground/75">
                         Upload a clearer, valid document and try again, or write to us at{" "}
-                        <a className="underline text-primary" href="mailto:cx@everyonecanlight.com">
+                        <a
+                          className="inline-block rounded bg-foreground/10 px-1.5 py-0.5 font-semibold text-foreground underline decoration-primary decoration-2 underline-offset-2 hover:text-primary"
+                          href="mailto:cx@everyonecanlight.com"
+                        >
                           cx@everyonecanlight.com
                         </a>{" "}
                         to dispute this decision.
