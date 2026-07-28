@@ -72,6 +72,9 @@ export type Database = {
           id_type: string | null
           kyc_status: string
           phone: string
+          rejection_reason: string | null
+          reviewed_at: string | null
+          submitted_at: string | null
           updated_at: string
           verified_at: string | null
         }
@@ -84,6 +87,9 @@ export type Database = {
           id_type?: string | null
           kyc_status?: string
           phone: string
+          rejection_reason?: string | null
+          reviewed_at?: string | null
+          submitted_at?: string | null
           updated_at?: string
           verified_at?: string | null
         }
@@ -96,6 +102,9 @@ export type Database = {
           id_type?: string | null
           kyc_status?: string
           phone?: string
+          rejection_reason?: string | null
+          reviewed_at?: string | null
+          submitted_at?: string | null
           updated_at?: string
           verified_at?: string | null
         }

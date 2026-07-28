@@ -135,6 +135,9 @@ const RentEquipment = () => {
   const [idFileName, setIdFileName] = useState("");
   const [customerId, setCustomerId] = useState<string | null>(null);
   const [verifying, setVerifying] = useState(false);
+  const [kycStatus, setKycStatus] = useState<"idle" | "pending" | "rejected" | "approved">("idle");
+  const [rejectionReason, setRejectionReason] = useState<string | null>(null);
+  const [cooldown, setCooldown] = useState(0);
   const [paying, setPaying] = useState(false);
 
   const [reservation, setReservation] = useState<Reservation | null>(null);
@@ -244,10 +247,25 @@ const RentEquipment = () => {
       const { data } = await supabase.functions.invoke("rental-kyc", {
         body: { action: "check", email: clean },
       });
-      setReturning(Boolean(data?.returning));
-      if (data?.returning && data?.fullName && !fullName) setFullName(data.fullName);
-      if (data?.returning && data?.phone && !phone) {
-        setPhone(String(data.phone).replace(/^\+234/, ""));
+      const isReturning = Boolean(data?.returning);
+      setReturning(isReturning);
+      if (isReturning) {
+        toast.success("Welcome back — we recognise you.", { duration: 1800 });
+        if (data?.fullName && !fullName) setFullName(data.fullName);
+        if (data?.phone && !phone) setPhone(String(data.phone).replace(/^\+234/, ""));
+        if (data?.status === "rejected") {
+          setKycStatus("rejected");
+          setRejectionReason(data?.rejectionReason ?? null);
+        } else if (data?.status === "pending") {
+          setKycStatus("pending");
+        } else if (data?.status === "verified") {
+          setKycStatus("approved");
+          if (data?.customerId) setCustomerId(data.customerId);
+        }
+      } else {
+        toast("A new face — lovely to have you here.", { duration: 1800 });
+        setKycStatus("idle");
+        setRejectionReason(null);
       }
     } finally {
       setCheckingAccount(false);
@@ -273,17 +291,47 @@ const RentEquipment = () => {
         return;
       }
       setCustomerId(data.customerId);
-      toast.success("Identity verified", {
-        description: "Your details are on file with the Light Bank.",
-        duration: 2500,
-      });
-      setStep("payment");
+      if (data.status === "verified") {
+        setKycStatus("approved");
+        toast.success("Identity approved", { duration: 1800 });
+        setStep("payment");
+        return;
+      }
+      setKycStatus(data.status === "rejected" ? "rejected" : "pending");
+      setRejectionReason(data.rejectionReason ?? null);
+      if (data.status !== "rejected") setCooldown(300);
     } catch {
       toast.error("We could not verify your identity. Please try again.");
     } finally {
       setVerifying(false);
     }
   };
+
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const t = setInterval(() => setCooldown((c) => (c > 0 ? c - 1 : 0)), 1000);
+    return () => clearInterval(t);
+  }, [cooldown]);
+
+  useEffect(() => {
+    if (kycStatus !== "pending" || !email) return;
+    const poll = async () => {
+      const { data } = await supabase.functions.invoke("rental-kyc", {
+        body: { action: "status", email: email.trim() },
+      });
+      if (data?.customerId) setCustomerId(data.customerId);
+      if (data?.status === "verified") {
+        setKycStatus("approved");
+        toast.success("Identity approved", { duration: 1800 });
+        setStep("payment");
+      } else if (data?.status === "rejected") {
+        setKycStatus("rejected");
+        setRejectionReason(data?.rejectionReason ?? null);
+      }
+    };
+    const t = setInterval(poll, 10000);
+    return () => clearInterval(t);
+  }, [kycStatus, email]);
 
   const startPayment = async () => {
     if (!customerId) return;
@@ -847,13 +895,71 @@ const RentEquipment = () => {
                     </div>
                   </div>
 
+                  {kycStatus === "pending" && (
+                    <div className="rounded-lg border border-border bg-muted/40 p-4 text-sm">
+                      <div className="flex items-center gap-2 font-medium">
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Hang tight — we're confirming your identity
+                      </div>
+                      <p className="mt-2 text-foreground/65 text-xs">
+                        Our team is reviewing your document now. This page updates automatically
+                        once it's approved.
+                      </p>
+                      {cooldown > 0 && (
+                        <p className="mt-2 text-xs text-foreground/55">
+                          You can resubmit in {Math.floor(cooldown / 60)}:
+                          {String(cooldown % 60).padStart(2, "0")}
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+                  {kycStatus === "rejected" && (
+                    <div className="rounded-lg border border-destructive/40 bg-destructive/10 p-4 text-sm">
+                      <div className="font-medium text-destructive">
+                        We couldn't approve this ID
+                      </div>
+                      <p className="mt-2 text-xs text-foreground/75">
+                        Reason: {rejectionReason ?? "Identity concerns"}
+                      </p>
+                      <p className="mt-2 text-xs text-foreground/65">
+                        Upload a clearer, valid document and try again, or write to us at{" "}
+                        <a className="underline text-primary" href="mailto:cx@everyonecanlight.com">
+                          cx@everyonecanlight.com
+                        </a>{" "}
+                        to dispute this decision.
+                      </p>
+                    </div>
+                  )}
+
+                  {kycStatus === "approved" && (
+                    <div className="flex items-center gap-2 text-sm text-emerald-500">
+                      <CheckCircle2 className="w-4 h-4" /> Approved
+                    </div>
+                  )}
+
                   <div className="flex gap-3">
                     <Button variant="outline" onClick={() => setStep("details")}>
                       Back
                     </Button>
-                    <Button className="flex-1" disabled={!kycValid || verifying} onClick={verifyIdentity}>
+                    <Button
+                      className="flex-1"
+                      disabled={
+                        !kycValid ||
+                        verifying ||
+                        kycStatus === "pending" ||
+                        (kycStatus === "rejected" && cooldown > 0)
+                      }
+                      onClick={verifyIdentity}
+                    >
                       {verifying && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-                      {returning === true ? "Proceed" : "Confirm my identity"}
+                      {kycStatus === "pending"
+                        ? "Awaiting approval…"
+                        : cooldown > 0 && kycStatus === "rejected"
+                          ? `Try again in ${Math.floor(cooldown / 60)}:${String(cooldown % 60).padStart(2, "0")}`
+                          : returning === true && kycStatus === "approved"
+                            ? "Proceed"
+                            : "Confirm my identity"}
                     </Button>
                   </div>
                 </>

@@ -31,12 +31,15 @@ Deno.serve(async (req) => {
         if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(rawEmail)) return json({ error: 'Invalid email' }, 400)
         const { data } = await supabase
           .from('rental_customers')
-          .select('id, full_name, phone, kyc_status')
+          .select('id, full_name, phone, kyc_status, rejection_reason')
           .ilike('email', rawEmail)
           .maybeSingle()
         return json({
           returning: Boolean(data),
           verified: data?.kyc_status === 'verified',
+          status: data?.kyc_status ?? null,
+          rejectionReason: data?.rejection_reason ?? null,
+          customerId: data?.id ?? null,
           fullName: data?.full_name ?? null,
           phone: data?.phone ?? null,
         })
@@ -52,6 +55,21 @@ Deno.serve(async (req) => {
         returning: Boolean(data),
         verified: data?.kyc_status === 'verified',
         fullName: data?.full_name ?? null,
+      })
+    }
+
+    if (action === 'status') {
+      const email = String(body.email ?? '').trim().toLowerCase()
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return json({ error: 'Invalid email' }, 400)
+      const { data } = await supabase
+        .from('rental_customers')
+        .select('id, kyc_status, rejection_reason')
+        .ilike('email', email)
+        .maybeSingle()
+      return json({
+        customerId: data?.id ?? null,
+        status: data?.kyc_status ?? null,
+        rejectionReason: data?.rejection_reason ?? null,
       })
     }
 
@@ -102,18 +120,24 @@ Deno.serve(async (req) => {
         email,
         id_type: idType ?? existing?.id_type ?? null,
         id_image_path: idImagePath,
-        kyc_status: 'verified',
-        verified_at: new Date().toISOString(),
+        kyc_status: isFirstTime ? 'pending' : (existing?.kyc_status ?? 'pending'),
+        rejection_reason: isFirstTime ? null : undefined,
+        submitted_at: new Date().toISOString(),
       }
 
       const { data: saved, error } = await supabase
         .from('rental_customers')
         .upsert(payload, { onConflict: 'phone' })
-        .select('id, kyc_status')
+        .select('id, kyc_status, rejection_reason')
         .single()
       if (error) throw error
 
-      return json({ customerId: saved.id, status: saved.kyc_status, returning: !isFirstTime })
+      return json({
+        customerId: saved.id,
+        status: saved.kyc_status,
+        rejectionReason: saved.rejection_reason ?? null,
+        returning: !isFirstTime,
+      })
     }
 
     return json({ error: 'Unknown action' }, 400)
