@@ -29,6 +29,16 @@ import colbor330r from "@/assets/rental/Colbor_330R.png.asset.json";
 import comboStand from "@/assets/rental/Combo_Stand_Turtle_Base_Stand.png.asset.json";
 import cstand105 from "@/assets/rental/C-Stand_Heavy_Duty_10.5_ft_with_Arm.png.asset.json";
 import falconEyes24Tdx from "@/assets/rental/Falcon_Eyes_24_TDX_Mat_2x2_ft.png.asset.json";
+import godoxF200 from "@/assets/rental/Godox_F200_Mat_2x2_ft.png.asset.json";
+import godoxF400 from "@/assets/rental/Godox_F400_Mat_2x4_ft.png.asset.json";
+import godoxF600 from "@/assets/rental/Godox_F600_Mat_4x4_ft.png.asset.json";
+import godoxF800 from "@/assets/rental/Godox_F800_Mat_8x8_ft.png.asset.json";
+import godoxMg200bi from "@/assets/rental/Godox_MG200Bi.png.asset.json";
+import godoxMg300bi from "@/assets/rental/Godox_MG300Bi.png.asset.json";
+import godoxMg1200bi from "@/assets/rental/Godox_MG1200Bi.png.asset.json";
+import godoxSl100d from "@/assets/rental/Godox_SL100D.png.asset.json";
+import godoxSl150 from "@/assets/rental/Godox_SL150.png.asset.json";
+import godoxSl300 from "@/assets/rental/Godox_SL300.png.asset.json";
 
 export type RentalCategory =
   | "Lights"
@@ -93,6 +103,16 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
     comboStand,
     cstand105,
     falconEyes24Tdx,
+    godoxF200,
+    godoxF400,
+    godoxF600,
+    godoxF800,
+    godoxMg200bi,
+    godoxMg300bi,
+    godoxMg1200bi,
+    godoxSl100d,
+    godoxSl150,
+    godoxSl300,
   ].map((a) => [norm(a.original_filename.replace(/\.png$/i, "")), a.url])
 );
 
