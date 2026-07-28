@@ -375,11 +375,10 @@ const InventorySection = () => {
                 <span className="font-medium">{key}</span>
                 <span className="text-xs text-foreground/50">{list.length} units</span>
                 <span
-                  className={`ml-auto text-xs px-2.5 py-1 rounded-full border ${
-                    available === 0
-                      ? "bg-red-500/15 text-red-400 border-red-500/30"
-                      : "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
-                  }`}
+                  className={`ml-auto text-xs px-2.5 py-1 rounded-full border ${availabilityClass(
+                    available,
+                    list.length
+                  )}`}
                 >
                   {available}/{list.length} left
                 </span>
