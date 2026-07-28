@@ -759,6 +759,42 @@ const RentEquipment = () => {
         </footer>
       </div>
 
+      {amending && booking && !sheetOpen && (
+        <div className="fixed bottom-0 inset-x-0 z-40 border-t border-border bg-slate-900 text-slate-100 px-6 py-4">
+          <div className="max-w-[1400px] mx-auto flex flex-wrap items-center justify-between gap-4">
+            <div className="text-sm">
+              <p className="font-medium">
+                Changing booking{" "}
+                <span className="font-mono tracking-[0.15em]">
+                  {booking.reservation.booking_code}
+                </span>
+              </p>
+              <p className="text-xs text-slate-400">
+                Paid {formatNaira(paidTotal)} ·{" "}
+                {difference > 0
+                  ? `${formatNaira(difference)} to pay`
+                  : difference < 0
+                    ? "Below paid value — add or swap up"
+                    : "No extra charge"}
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              <Button
+                variant="ghost"
+                className="text-slate-300 hover:text-slate-100 hover:bg-slate-800"
+                onClick={cancelAmendment}
+              >
+                Cancel
+              </Button>
+              <Button className="rounded-full gap-2" onClick={() => setSheetOpen(true)}>
+                Review changes
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
         <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
           <SheetHeader>
