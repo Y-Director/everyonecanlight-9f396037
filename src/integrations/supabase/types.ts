@@ -14,6 +14,78 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_accounts: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          is_super: boolean
+          sections: string[]
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          is_super?: boolean
+          sections?: string[]
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          is_super?: boolean
+          sections?: string[]
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      course_purchases: {
+        Row: {
+          amount: number
+          course_name: string
+          created_at: string
+          currency: string
+          email: string
+          full_name: string | null
+          id: string
+          purchased_at: string
+          reference: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          amount?: number
+          course_name: string
+          created_at?: string
+          currency?: string
+          email: string
+          full_name?: string | null
+          id?: string
+          purchased_at?: string
+          reference?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          course_name?: string
+          created_at?: string
+          currency?: string
+          email?: string
+          full_name?: string | null
+          id?: string
+          purchased_at?: string
+          reference?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       masterclass_registrations: {
         Row: {
           amount: number
