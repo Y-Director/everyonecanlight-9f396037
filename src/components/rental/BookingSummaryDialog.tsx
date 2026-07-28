@@ -76,8 +76,8 @@ const BookingSummaryDialog = ({
         >
           <div className="flex items-center justify-between">
             <img src={logo} alt="Everyone Can Light" className="h-6 w-auto" />
-            <span className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-primary">
-              <CheckCircle2 className="w-3.5 h-3.5" /> Confirmed
+            <span className="mr-7 inline-flex items-center gap-1.5 rounded-full bg-emerald-500/15 px-2.5 py-1 text-[10px] uppercase tracking-wider text-emerald-400">
+              <CheckCircle2 className="w-3 h-3" /> Confirmed
             </span>
           </div>
 
