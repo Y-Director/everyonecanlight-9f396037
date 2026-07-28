@@ -19,6 +19,16 @@ import aputureLs600c from "@/assets/rental/Aputure_LS_600c.png.asset.json";
 import aputureLs600dPro from "@/assets/rental/Aputure_LS_600d_Pro.png.asset.json";
 import aputureLs600xPro from "@/assets/rental/Aputure_LS_600x_Pro.png.asset.json";
 import aputureLs1200d from "@/assets/rental/Aputure_LS_1200D.png.asset.json";
+import aputureLsXt26 from "@/assets/rental/Aputure_LS_XT26.png.asset.json";
+import aputureLsXt52 from "@/assets/rental/Aputure_LS_XT52.png.asset.json";
+import aputureNovaP300c from "@/assets/rental/Aputure_NOVA_P300c.png.asset.json";
+import aputureNovaP600c from "@/assets/rental/Aputure_NOVA_P600c.png.asset.json";
+import boomArmCstand from "@/assets/rental/Boom_Arm_for_C-Stand_Overhead.png.asset.json";
+import colbor220r from "@/assets/rental/Colbor_220R.png.asset.json";
+import colbor330r from "@/assets/rental/Colbor_330R.png.asset.json";
+import comboStand from "@/assets/rental/Combo_Stand_Turtle_Base_Stand.png.asset.json";
+import cstand105 from "@/assets/rental/C-Stand_Heavy_Duty_10.5_ft_with_Arm.png.asset.json";
+import falconEyes24Tdx from "@/assets/rental/Falcon_Eyes_24_TDX_Mat_2x2_ft.png.asset.json";
 
 export type RentalCategory =
   | "Lights"
@@ -73,6 +83,16 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
     aputureLs600dPro,
     aputureLs600xPro,
     aputureLs1200d,
+    aputureLsXt26,
+    aputureLsXt52,
+    aputureNovaP300c,
+    aputureNovaP600c,
+    boomArmCstand,
+    colbor220r,
+    colbor330r,
+    comboStand,
+    cstand105,
+    falconEyes24Tdx,
   ].map((a) => [norm(a.original_filename.replace(/\.png$/i, "")), a.url])
 );
 
