@@ -187,10 +187,14 @@ const RentalsSection = () => {
   }, [load]);
 
   const setFulfilmentStatus = async (row: Row, value: string) => {
-    const patch: Record<string, unknown> = { fulfilment_status: value };
+    const patch: {
+      fulfilment_status: string;
+      checked_out_at?: string;
+      returned_at?: string;
+    } = { fulfilment_status: value };
     if (value === "rented_out") patch.checked_out_at = new Date().toISOString();
     if (value === "returned") patch.returned_at = new Date().toISOString();
-    setRows((prev) => prev.map((r) => (r.id === row.id ? { ...r, ...(patch as object) } as Row : r)));
+    setRows((prev) => prev.map((r) => (r.id === row.id ? ({ ...r, ...patch } as Row) : r)));
     const { error } = await supabase.from("rental_reservations").update(patch).eq("id", row.id);
     if (error) {
       toast.error("Could not update this booking");
