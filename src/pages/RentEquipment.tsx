@@ -232,16 +232,22 @@ const RentEquipment = () => {
     reader.readAsDataURL(file);
   };
 
-  const checkPhone = async (value: string) => {
-    if (value.replace(/\D/g, "").length < 10) {
+  const checkEmail = async (value: string) => {
+    const clean = value.trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(clean)) {
       setReturning(null);
       return;
     }
-    const { data } = await supabase.functions.invoke("rental-kyc", {
-      body: { action: "check", phone: `+234${value.replace(/\D/g, "").replace(/^0/, "")}` },
-    });
-    setReturning(Boolean(data?.returning));
-    if (data?.returning && data?.fullName && !fullName) setFullName(data.fullName);
+    setCheckingAccount(true);
+    try {
+      const { data } = await supabase.functions.invoke("rental-kyc", {
+        body: { action: "check", email: clean },
+      });
+      setReturning(Boolean(data?.returning));
+      if (data?.returning && data?.fullName && !fullName) setFullName(data.fullName);
+    } finally {
+      setCheckingAccount(false);
+    }
   };
 
   const verifyIdentity = async () => {
