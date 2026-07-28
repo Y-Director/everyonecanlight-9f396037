@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { format } from "date-fns";
 import {
   ArrowRight,
+  ArrowUp,
   CalendarIcon,
   CheckCircle2,
   KeyRound,
@@ -159,6 +160,14 @@ const RentEquipment = () => {
   const [amending, setAmending] = useState(false);
   const [savedCart, setSavedCart] = useState<Cart | null>(null);
   const [payingDiff, setPayingDiff] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setShowBackToTop(window.scrollY > 400);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
@@ -1411,6 +1420,17 @@ const RentEquipment = () => {
           )}
         </SheetContent>
       </Sheet>
+
+      {showBackToTop && (
+        <button
+          type="button"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-cta text-cta-foreground shadow-lg flex items-center justify-center hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-foreground/30"
+          aria-label="Back to top"
+        >
+          <ArrowUp className="w-5 h-5" />
+        </button>
+      )}
     </div>
   );
 };
