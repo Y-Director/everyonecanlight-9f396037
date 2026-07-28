@@ -91,7 +91,7 @@ const statusStyle = (s: string) =>
       ? "border-red-500/30 bg-red-500/15 text-red-400"
       : "border-foreground/20 bg-foreground/5 text-foreground/60";
 
-const TeamSection = () => {
+const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) => {
   const [rows, setRows] = useState<Staff[]>([]);
   const [jobs, setJobs] = useState<Job[]>([]);
   const [avatars, setAvatars] = useState<Record<string, string>>({});
@@ -234,6 +234,7 @@ const TeamSection = () => {
 
   return (
     <div className="space-y-8">
+      {view !== "operators" && (
       <div className="rounded-xl border border-foreground/10 bg-[hsl(var(--surface))] p-5">
         <h2 className="font-semibold">Add a team member</h2>
         <div className="mt-4 grid gap-4 md:grid-cols-3">
@@ -339,7 +340,9 @@ const TeamSection = () => {
           Add team member
         </Button>
       </div>
+      )}
 
+      {view !== "operators" && (
       <div className="overflow-x-auto rounded-xl border border-foreground/10">
         <table className="w-full text-sm">
           <thead className="bg-[hsl(var(--surface))] text-foreground/60">
@@ -441,7 +444,9 @@ const TeamSection = () => {
           </tbody>
         </table>
       </div>
+      )}
 
+      {view !== "team" && (
       <div>
         <h2 className="font-semibold">Lighting Operators · job log</h2>
         <p className="mt-1 text-sm text-foreground/60">
@@ -519,6 +524,7 @@ const TeamSection = () => {
           })}
         </div>
       </div>
+      )}
     </div>
   );
 };
