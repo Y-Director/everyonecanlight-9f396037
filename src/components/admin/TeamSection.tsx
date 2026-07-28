@@ -118,12 +118,20 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
     setEditAvatar(null);
   };
 
+  // Staff photos live in a private bucket, so operators get a long-lived signed link
+  // that customer-facing booking cards and emails can render.
+  const operatorAvatarUrl = async (path: string | null) => {
+    if (!path) return null;
+    const { data } = await supabase.storage
+      .from("staff-avatars")
+      .createSignedUrl(path, 60 * 60 * 24 * 365 * 5);
+    return data?.signedUrl ?? null;
+  };
+
   // Keeps the public-facing Lighting Operator record in step with the staff record
   // so name, phone, photo and availability update everywhere customers see them.
   const syncOperator = async (row: Staff, name: string, phone: string) => {
-    const publicAvatar = row.avatar_url
-      ? supabase.storage.from("staff-avatars").getPublicUrl(row.avatar_url).data.publicUrl
-      : null;
+    const publicAvatar = await operatorAvatarUrl(row.avatar_url);
     const active = row.status === "active" && row.is_light_operator;
 
     if (row.runner_id) {
@@ -257,15 +265,14 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
 
     let runnerId: string | null = null;
     if (form.is_light_operator) {
+      const signedAvatar = await operatorAvatarUrl(avatarPath);
       const { data: runner } = await supabase
         .from("runners")
         .insert({
           name: form.full_name.trim(),
           phone: form.phone.trim(),
           active: form.status === "active",
-          avatar_url: avatarPath
-            ? supabase.storage.from("staff-avatars").getPublicUrl(avatarPath).data.publicUrl
-            : null,
+          avatar_url: signedAvatar,
         })
         .select("id")
         .maybeSingle();
