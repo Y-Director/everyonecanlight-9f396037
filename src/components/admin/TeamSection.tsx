@@ -498,7 +498,10 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
                 </td>
                 <td className="px-4 py-3 text-foreground/70">{r.date_joined}</td>
                 <td className="px-4 py-3 text-right">
-                  <Button variant="ghost" size="sm" onClick={() => remove(r)}>
+                  <Button variant="ghost" size="sm" aria-label={`Edit ${r.full_name}`} onClick={() => openEdit(r)}>
+                    <Pencil className="w-4 h-4" />
+                  </Button>
+                  <Button variant="ghost" size="sm" aria-label={`Remove ${r.full_name}`} onClick={() => remove(r)}>
                     <Trash2 className="w-4 h-4" />
                   </Button>
                 </td>
