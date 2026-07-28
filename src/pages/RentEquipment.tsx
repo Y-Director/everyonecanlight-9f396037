@@ -353,7 +353,12 @@ const RentEquipment = () => {
       if (isReturning) {
         toast.success("Welcome back — we recognise you.", { duration: 5000 });
         if (data?.fullName && !fullName) setFullName(data.fullName);
-        if (data?.phone && !phone) setPhone(String(data.phone).replace(/^\+234/, ""));
+        if (data?.phone && !phone) {
+          const raw = String(data.phone);
+          const match = raw.match(/^\+(234|254|233|971|44|27|1)/);
+          if (match) setCountryCode(`+${match[1]}`);
+          setPhone(raw.replace(/^\+\d{1,3}/, ""));
+        }
         if (data?.status === "rejected") {
           setKycStatus("rejected");
           setRejectionReason(data?.rejectionReason ?? null);
