@@ -47,6 +47,10 @@ const STORAGE_KEY = "ecl-gear-list";
 
 type Reservation = {
   reference: string;
+  booking_code: string | null;
+  contact_name: string | null;
+  contact_email: string | null;
+  contact_phone: string | null;
   items: { name: string; qty: number; price: number; lineTotal: number }[];
   days: number;
   start_date: string | null;
@@ -345,10 +349,20 @@ const RentEquipment = () => {
                 <h2 className="font-semibold">Reservation Completed</h2>
               </div>
               <p className="mt-1 text-sm text-foreground/60">
-                Ref {reservation.reference} · {reservation.days} day
+                {reservation.days} day
                 {reservation.days > 1 ? "s" : ""} · Call time {reservation.call_time} ·{" "}
                 {reservation.location}
               </p>
+              {reservation.booking_code && (
+                <div className="mt-4 inline-flex items-center gap-3 rounded-lg border border-foreground/15 bg-background px-4 py-3">
+                  <span className="text-xs uppercase tracking-wider text-foreground/50">
+                    Booking reference
+                  </span>
+                  <span className="font-mono text-lg font-semibold tracking-[0.2em]">
+                    {reservation.booking_code}
+                  </span>
+                </div>
+              )}
               <div className="mt-6 grid md:grid-cols-2 gap-6">
                 <div>
                   <h3 className="text-xs uppercase tracking-wider text-foreground/50">Gear list</h3>
