@@ -396,6 +396,7 @@ export type Database = {
           amount_paid: number
           booking_code: string | null
           call_time: string
+          checked_out_at: string | null
           confirmation_sent_at: string | null
           contact_email: string | null
           contact_name: string | null
@@ -407,12 +408,14 @@ export type Database = {
           damages_recorded: boolean
           days: number
           end_date: string | null
+          fulfilment_status: string
           id: string
           items: Json
           job_outcome: string | null
           location: string
           paid_at: string | null
           reference: string
+          returned_at: string | null
           runner_id: string | null
           start_date: string | null
           status: string
@@ -425,6 +428,7 @@ export type Database = {
           amount_paid?: number
           booking_code?: string | null
           call_time: string
+          checked_out_at?: string | null
           confirmation_sent_at?: string | null
           contact_email?: string | null
           contact_name?: string | null
@@ -436,12 +440,14 @@ export type Database = {
           damages_recorded?: boolean
           days?: number
           end_date?: string | null
+          fulfilment_status?: string
           id?: string
           items?: Json
           job_outcome?: string | null
           location: string
           paid_at?: string | null
           reference: string
+          returned_at?: string | null
           runner_id?: string | null
           start_date?: string | null
           status?: string
@@ -454,6 +460,7 @@ export type Database = {
           amount_paid?: number
           booking_code?: string | null
           call_time?: string
+          checked_out_at?: string | null
           confirmation_sent_at?: string | null
           contact_email?: string | null
           contact_name?: string | null
@@ -465,12 +472,14 @@ export type Database = {
           damages_recorded?: boolean
           days?: number
           end_date?: string | null
+          fulfilment_status?: string
           id?: string
           items?: Json
           job_outcome?: string | null
           location?: string
           paid_at?: string | null
           reference?: string
+          returned_at?: string | null
           runner_id?: string | null
           start_date?: string | null
           status?: string
