@@ -567,7 +567,7 @@ const RentEquipment = () => {
             <SheetTitle className="flex items-center gap-2">
               <ShoppingBag className="w-4 h-4" />
               {step === "details" && "Your Gear List"}
-              {step === "kyc" && "Create your account"}
+              {step === "kyc" && "Confirm your identity"}
               {step === "payment" && "Reservation summary"}
             </SheetTitle>
           </SheetHeader>
