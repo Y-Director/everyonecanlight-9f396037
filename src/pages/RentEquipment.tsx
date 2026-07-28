@@ -764,9 +764,13 @@ const RentEquipment = () => {
           <SheetHeader>
             <SheetTitle className="flex items-center gap-2">
               <ShoppingBag className="w-4 h-4" />
-              {step === "details" && "Your Gear List"}
-              {step === "kyc" && "Confirm your identity"}
-              {step === "payment" && "Reservation summary"}
+              {amending
+                ? `Change booking ${booking?.reservation.booking_code ?? ""}`
+                : step === "details"
+                  ? "Your Gear List"
+                  : step === "kyc"
+                    ? "Confirm your identity"
+                    : "Reservation summary"}
             </SheetTitle>
           </SheetHeader>
 
@@ -776,7 +780,86 @@ const RentEquipment = () => {
             </p>
           ) : (
             <div className="mt-6 space-y-8 pb-10">
-              {step === "details" && (
+              {amending && booking && (
+                <>
+                  <div className="rounded-lg border border-primary/40 bg-primary/5 p-4 text-xs text-foreground/75">
+                    <p className="flex items-center gap-2 font-medium text-foreground">
+                      <Lock className="w-3.5 h-3.5 text-primary" /> Paid gear is locked
+                    </p>
+                    <p className="mt-2">
+                      Your {booking.reservation.days} day
+                      {booking.reservation.days > 1 ? "s" : ""} rental, pickup and call time stay as
+                      booked. Add gear or swap for equal-or-higher value — we'll only charge the
+                      difference.
+                    </p>
+                  </div>
+
+                  <ul className="space-y-3">
+                    {lineItems.map((i) => {
+                      const locked = baseQty[i.id] ?? 0;
+                      return (
+                        <li key={i.id} className="flex items-center gap-3">
+                          <div className="w-12 h-12 rounded bg-white flex items-center justify-center p-1 shrink-0">
+                            <img src={i.image} alt={i.name} className="w-full h-full object-contain" />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <p className="text-sm truncate">{i.name}</p>
+                            <p className="text-xs text-foreground/55">
+                              {locked > 0 ? `${locked} paid for · ` : "New · "}
+                              {formatNaira(i.price)} / day
+                            </p>
+                          </div>
+                          <QtyStepper
+                            size="sm"
+                            qty={i.qty}
+                            onChange={(n) => setQty(i.id, n, i.name)}
+                          />
+                        </li>
+                      );
+                    })}
+                  </ul>
+
+                  <div className="space-y-2 text-sm border-t border-border pt-4">
+                    <div className="flex justify-between">
+                      <span className="text-foreground/60">Already paid</span>
+                      <span className="tabular-nums">{formatNaira(paidTotal)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-foreground/60">New booking value</span>
+                      <span className="tabular-nums">{formatNaira(total)}</span>
+                    </div>
+                    <div className="flex justify-between font-medium">
+                      <span>Balance to pay</span>
+                      <span className="tabular-nums">
+                        {formatNaira(Math.max(0, difference))}
+                      </span>
+                    </div>
+                  </div>
+
+                  {difference < 0 && (
+                    <p className="rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-xs text-foreground/80">
+                      Your new gear list is worth less than what you've paid. Swaps must be for
+                      equal or higher value — add gear back or choose a higher-value alternative.
+                    </p>
+                  )}
+
+                  <div className="flex gap-3">
+                    <Button variant="outline" onClick={cancelAmendment}>
+                      Cancel
+                    </Button>
+                    <Button
+                      className="flex-1"
+                      disabled={payingDiff || !amendmentChanged || difference < 0}
+                      onClick={payDifference}
+                    >
+                      {payingDiff && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                      {difference > 0 ? `Pay ${formatNaira(difference)}` : "Confirm swap"}
+                    </Button>
+                  </div>
+                </>
+              )}
+
+              {!amending && step === "details" && (
                 <>
                   <div>
                     <Label className="text-xs uppercase tracking-wider text-foreground/50">
@@ -908,7 +991,7 @@ const RentEquipment = () => {
                 </>
               )}
 
-              {step === "kyc" && (
+              {!amending && step === "kyc" && (
                 <>
                   <p className="text-sm text-foreground/60">
                     Start with your email address — we'll check if you've rented with us before and
@@ -1112,7 +1195,7 @@ const RentEquipment = () => {
                 </>
               )}
 
-              {step === "payment" && (
+              {!amending && step === "payment" && (
                 <>
                   <div className="flex items-center gap-2 text-sm text-primary">
                     <CheckCircle2 className="w-4 h-4" /> Identity verified
