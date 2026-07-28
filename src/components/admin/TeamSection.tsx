@@ -340,7 +340,9 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
           Add team member
         </Button>
       </div>
+      )}
 
+      {view !== "operators" && (
       <div className="overflow-x-auto rounded-xl border border-foreground/10">
         <table className="w-full text-sm">
           <thead className="bg-[hsl(var(--surface))] text-foreground/60">
