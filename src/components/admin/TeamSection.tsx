@@ -259,7 +259,14 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
     if (form.is_light_operator) {
       const { data: runner } = await supabase
         .from("runners")
-        .insert({ name: form.full_name.trim(), phone: form.phone.trim(), active: form.status === "active" })
+        .insert({
+          name: form.full_name.trim(),
+          phone: form.phone.trim(),
+          active: form.status === "active",
+          avatar_url: avatarPath
+            ? supabase.storage.from("staff-avatars").getPublicUrl(avatarPath).data.publicUrl
+            : null,
+        })
         .select("id")
         .maybeSingle();
       runnerId = runner?.id ?? null;
