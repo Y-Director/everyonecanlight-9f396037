@@ -173,6 +173,48 @@ export type Database = {
         }
         Relationships: []
       }
+      inventory_items: {
+        Row: {
+          category: string
+          created_at: string
+          date_added: string
+          id: string
+          location: string
+          manufacturer: string
+          name: string
+          notes: string | null
+          serial_number: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          date_added?: string
+          id?: string
+          location?: string
+          manufacturer?: string
+          name: string
+          notes?: string | null
+          serial_number?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          date_added?: string
+          id?: string
+          location?: string
+          manufacturer?: string
+          name?: string
+          notes?: string | null
+          serial_number?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       masterclass_registrations: {
         Row: {
           amount: number
