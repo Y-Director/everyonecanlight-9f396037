@@ -12,6 +12,8 @@ import Courses from "./pages/Courses.tsx";
 import ControlApps from "./pages/ControlApps.tsx";
 import Masterclass from "./pages/Masterclass.tsx";
 import RentEquipment from "./pages/RentEquipment.tsx";
+import AdminLogin from "./pages/admin/AdminLogin.tsx";
+import AdminRentals from "./pages/admin/AdminRentals.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -32,6 +34,8 @@ const App = () => (
           <Route path="/courses" element={<Courses />} />
           <Route path="/control-apps" element={<ControlApps />} />
           <Route path="/masterclass" element={<Masterclass />} />
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin/rentals" element={<AdminRentals />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
