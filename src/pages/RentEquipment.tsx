@@ -895,13 +895,71 @@ const RentEquipment = () => {
                     </div>
                   </div>
 
+                  {kycStatus === "pending" && (
+                    <div className="rounded-lg border border-border bg-muted/40 p-4 text-sm">
+                      <div className="flex items-center gap-2 font-medium">
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Hang tight — we're confirming your identity
+                      </div>
+                      <p className="mt-2 text-foreground/65 text-xs">
+                        Our team is reviewing your document now. This page updates automatically
+                        once it's approved.
+                      </p>
+                      {cooldown > 0 && (
+                        <p className="mt-2 text-xs text-foreground/55">
+                          You can resubmit in {Math.floor(cooldown / 60)}:
+                          {String(cooldown % 60).padStart(2, "0")}
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+                  {kycStatus === "rejected" && (
+                    <div className="rounded-lg border border-destructive/40 bg-destructive/10 p-4 text-sm">
+                      <div className="font-medium text-destructive">
+                        We couldn't approve this ID
+                      </div>
+                      <p className="mt-2 text-xs text-foreground/75">
+                        Reason: {rejectionReason ?? "Identity concerns"}
+                      </p>
+                      <p className="mt-2 text-xs text-foreground/65">
+                        Upload a clearer, valid document and try again, or write to us at{" "}
+                        <a className="underline text-primary" href="mailto:cx@everyonecanlight.com">
+                          cx@everyonecanlight.com
+                        </a>{" "}
+                        to dispute this decision.
+                      </p>
+                    </div>
+                  )}
+
+                  {kycStatus === "approved" && (
+                    <div className="flex items-center gap-2 text-sm text-emerald-500">
+                      <CheckCircle2 className="w-4 h-4" /> Approved
+                    </div>
+                  )}
+
                   <div className="flex gap-3">
                     <Button variant="outline" onClick={() => setStep("details")}>
                       Back
                     </Button>
-                    <Button className="flex-1" disabled={!kycValid || verifying} onClick={verifyIdentity}>
+                    <Button
+                      className="flex-1"
+                      disabled={
+                        !kycValid ||
+                        verifying ||
+                        kycStatus === "pending" ||
+                        (kycStatus === "rejected" && cooldown > 0)
+                      }
+                      onClick={verifyIdentity}
+                    >
                       {verifying && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-                      {returning === true ? "Proceed" : "Confirm my identity"}
+                      {kycStatus === "pending"
+                        ? "Awaiting approval…"
+                        : cooldown > 0 && kycStatus === "rejected"
+                          ? `Try again in ${Math.floor(cooldown / 60)}:${String(cooldown % 60).padStart(2, "0")}`
+                          : returning === true && kycStatus === "approved"
+                            ? "Proceed"
+                            : "Confirm my identity"}
                     </Button>
                   </div>
                 </>
