@@ -6,6 +6,13 @@ const PRICES: Record<string, number> = {"amaran100ds":10000,"amaran100xs":10000,
 
 const LOCATIONS = ['Lagos Island', 'Lagos Mainland', 'Outside Lagos']
 
+// Unambiguous alphabet (no I, O, 0, 1) for human-readable booking references.
+const CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
+const makeBookingCode = (len = 8) => {
+  const bytes = crypto.getRandomValues(new Uint8Array(len))
+  return Array.from(bytes, (b) => CODE_ALPHABET[b % CODE_ALPHABET.length]).join('')
+}
+
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {
     status,
@@ -49,7 +56,7 @@ Deno.serve(async (req) => {
 
     const { data: customer } = await supabase
       .from('rental_customers')
-      .select('id, email, full_name, kyc_status')
+      .select('id, email, full_name, phone, kyc_status')
       .eq('id', customerId)
       .maybeSingle()
 
@@ -61,6 +68,18 @@ Deno.serve(async (req) => {
     const subtotal = items.reduce((s, i) => s + i.lineTotal, 0)
     const total = subtotal
     const reference = `ECLR-${Date.now()}-${crypto.randomUUID().slice(0, 8)}`
+
+    // Booking code, retried on the (very unlikely) unique-index collision.
+    let bookingCode = makeBookingCode()
+    for (let attempt = 0; attempt < 5; attempt++) {
+      const { data: clash } = await supabase
+        .from('rental_reservations')
+        .select('id')
+        .eq('booking_code', bookingCode)
+        .maybeSingle()
+      if (!clash) break
+      bookingCode = makeBookingCode()
+    }
 
     // Assign an available runner (round-robin on least recent assignment).
     const { data: runners } = await supabase
@@ -74,7 +93,11 @@ Deno.serve(async (req) => {
 
     const { error: insertError } = await supabase.from('rental_reservations').insert({
       reference,
+      booking_code: bookingCode,
       customer_id: customer.id,
+      contact_name: customer.full_name,
+      contact_email: customer.email,
+      contact_phone: customer.phone,
       items,
       days,
       start_date: startDate,
@@ -109,7 +132,12 @@ Deno.serve(async (req) => {
       return json({ error: data?.message ?? 'Could not start payment' }, 502)
     }
 
-    return json({ authorization_url: data.data.authorization_url, reference, total })
+    return json({
+      authorization_url: data.data.authorization_url,
+      reference,
+      bookingCode,
+      total,
+    })
   } catch (e) {
     console.error('rental-initialize error', e)
     return json({ error: 'Unexpected error' }, 500)

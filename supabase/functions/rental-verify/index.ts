@@ -43,7 +43,7 @@ Deno.serve(async (req) => {
     const { data: reservation } = await supabase
       .from('rental_reservations')
       .select(
-        'reference, items, days, start_date, end_date, location, call_time, total, status, runners(name, phone, avatar_url), rental_customers(full_name, email)',
+        'reference, booking_code, contact_name, contact_email, contact_phone, items, days, start_date, end_date, location, call_time, total, status, runners(name, phone, avatar_url), rental_customers(full_name, email)',
       )
       .eq('reference', reference)
       .maybeSingle()
