@@ -148,9 +148,7 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
       .update({ full_name: name, email, phone, avatar_url: avatarPath })
       .eq("id", editRow.id);
 
-    if (!error && editRow.runner_id) {
-      await supabase.from("runners").update({ name, phone }).eq("id", editRow.runner_id);
-    }
+    if (!error) await syncOperator({ ...editRow, avatar_url: avatarPath }, name, phone);
 
     setEditSaving(false);
     if (error) {
@@ -270,6 +268,8 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
       toast.error("Could not update this team member");
       return;
     }
+    const merged = { ...row, ...patch } as Staff;
+    await syncOperator(merged, merged.full_name, merged.phone);
     load();
   };
 
