@@ -16,6 +16,7 @@ import {
 import { toast } from "sonner";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
+import BookingSummaryDialog from "@/components/rental/BookingSummaryDialog";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
@@ -141,6 +142,7 @@ const RentEquipment = () => {
   const [paying, setPaying] = useState(false);
 
   const [reservation, setReservation] = useState<Reservation | null>(null);
+  const [summaryOpen, setSummaryOpen] = useState(false);
   const [checkingPayment, setCheckingPayment] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -160,6 +162,7 @@ const RentEquipment = () => {
         if (error) throw error;
         if (data?.paid) {
           setReservation(data.reservation as Reservation);
+          setSummaryOpen(true);
           setCart({});
           toast.success("Reservation completed", {
             description: "A confirmation has been sent to your email.",
