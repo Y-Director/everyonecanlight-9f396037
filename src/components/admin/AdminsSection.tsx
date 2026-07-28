@@ -7,7 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 
-export const SECTIONS = ["rentals", "masterclass", "courses", "team"] as const;
+export const SECTIONS = ["rentals", "masterclass", "courses", "team", "inventory"] as const;
 export type Section = (typeof SECTIONS)[number];
 
 type AdminRow = {

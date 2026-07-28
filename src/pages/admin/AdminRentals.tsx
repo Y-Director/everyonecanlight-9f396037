@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
+  Boxes,
   Crown,
   GraduationCap,
   Loader2,
@@ -19,6 +20,7 @@ import MasterclassSection from "@/components/admin/MasterclassSection";
 import CoursesSection from "@/components/admin/CoursesSection";
 import AdminsSection from "@/components/admin/AdminsSection";
 import TeamSection from "@/components/admin/TeamSection";
+import InventorySection from "@/components/admin/InventorySection";
 
 type Account = {
   email: string;
@@ -27,11 +29,12 @@ type Account = {
   sections: string[];
 };
 
-type TabKey = "rentals" | "masterclass" | "courses" | "team" | "operators" | "admins";
+type TabKey = "rentals" | "masterclass" | "courses" | "team" | "operators" | "admins" | "inventory";
 
 const TABS: { key: TabKey; label: string; icon: typeof Package }[] = [
   { key: "admins", label: "Admins", icon: UserCog },
   { key: "courses", label: "Courses", icon: GraduationCap },
+  { key: "inventory", label: "Inventory", icon: Boxes },
   { key: "operators", label: "Lighting Operators", icon: Zap },
   { key: "masterclass", label: "Masterclass", icon: Users },
   { key: "rentals", label: "Rentals", icon: Package },
@@ -167,6 +170,7 @@ const AdminRentals = () => {
         {tab === "courses" && <CoursesSection />}
         {tab === "team" && <TeamSection view="team" />}
         {tab === "operators" && <TeamSection view="operators" />}
+        {tab === "inventory" && <InventorySection />}
         {tab === "admins" && account.is_super && <AdminsSection />}
       </div>
     </main>
