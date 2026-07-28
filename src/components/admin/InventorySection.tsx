@@ -66,6 +66,13 @@ const statusClass = (s: string) =>
       ? "bg-amber-500/15 text-amber-400 border-amber-500/30"
       : "bg-red-500/15 text-red-400 border-red-500/30";
 
+const availabilityClass = (available: number, total: number) => {
+  if (available === 0) return "bg-red-500/15 text-red-400 border-red-500/30";
+  if (available / total < 0.3) return "bg-orange-500/15 text-orange-400 border-orange-500/30";
+  if (available === total) return "bg-emerald-500/15 text-emerald-400 border-emerald-500/30";
+  return "bg-yellow-500/15 text-yellow-400 border-yellow-500/30";
+};
+
 const emptyDraft = {
   name: "",
   manufacturer: "",
