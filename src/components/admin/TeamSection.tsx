@@ -234,6 +234,7 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
 
   return (
     <div className="space-y-8">
+      {view !== "operators" && (
       <div className="rounded-xl border border-foreground/10 bg-[hsl(var(--surface))] p-5">
         <h2 className="font-semibold">Add a team member</h2>
         <div className="mt-4 grid gap-4 md:grid-cols-3">
