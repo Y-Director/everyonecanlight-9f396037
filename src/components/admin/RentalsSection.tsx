@@ -313,17 +313,6 @@ const RentalsSection = () => {
             </button>
           ))}
         </div>
-        {false && (
-          [].map((s: { label: string; value: string }) => (
-            <div
-              key={s.label}
-              className="rounded-xl border border-foreground/10 bg-[hsl(var(--surface))] p-5"
-            >
-              <div className="text-xs uppercase tracking-wider text-foreground/50">{s.label}</div>
-              <div className="mt-2 text-2xl font-semibold">{s.value}</div>
-            </div>
-          ))
-        )}
 
         <div className="mt-8 flex gap-2 border-b border-foreground/10">
           {(["bookings", "identity"] as const).map((t) => (
