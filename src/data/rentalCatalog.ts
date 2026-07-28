@@ -39,6 +39,16 @@ import godoxMg1200bi from "@/assets/rental/Godox_MG1200Bi.png.asset.json";
 import godoxSl100d from "@/assets/rental/Godox_SL100D.png.asset.json";
 import godoxSl150 from "@/assets/rental/Godox_SL150.png.asset.json";
 import godoxSl300 from "@/assets/rental/Godox_SL300.png.asset.json";
+import godoxSl200 from "@/assets/rental/Godox_SL200.png.asset.json";
+import nanliteForza300b from "@/assets/rental/Nanlite_Forza_300B.png.asset.json";
+import nanliteForza500b from "@/assets/rental/Nanlite_Forza_500B.png.asset.json";
+import nanliteForza720b from "@/assets/rental/Nanlite_Forza_720B.png.asset.json";
+import nanlitePavobulb4 from "@/assets/rental/Nanlite_Pavobulb_Set_of_4.png.asset.json";
+import nanlitePavotube15c from "@/assets/rental/Nanlite_Pavotube_II_15C_RGB_Tube_1.5_ft.png.asset.json";
+import nanlitePavotube30c from "@/assets/rental/Nanlite_Pavotube_II_30C_RGB_Tube_3_ft.png.asset.json";
+import octabox90 from "@/assets/rental/Octabox_90cm.png.asset.json";
+import superClampStud from "@/assets/rental/Super_Clamp_with_Stud.png.asset.json";
+import vMountBattery from "@/assets/rental/V-Mount_Battery.png.asset.json";
 
 export type RentalCategory =
   | "Lights"
@@ -113,6 +123,16 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
     godoxSl100d,
     godoxSl150,
     godoxSl300,
+    godoxSl200,
+    nanliteForza300b,
+    nanliteForza500b,
+    nanliteForza720b,
+    nanlitePavobulb4,
+    nanlitePavotube15c,
+    nanlitePavotube30c,
+    octabox90,
+    superClampStud,
+    vMountBattery,
   ].map((a) => [norm(a.original_filename.replace(/\.png$/i, "")), a.url])
 );
 
