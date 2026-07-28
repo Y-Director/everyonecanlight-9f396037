@@ -12,6 +12,7 @@ const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [mode, setMode] = useState<"signin" | "signup">("signin");
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -22,6 +23,21 @@ const AdminLogin = () => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    if (mode === "signup") {
+      const { error } = await supabase.auth.signUp({
+        email: email.trim(),
+        password,
+        options: { emailRedirectTo: `${window.location.origin}/admin` },
+      });
+      setLoading(false);
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+      toast.success("Account created. Ask an owner to grant you admin access.");
+      setMode("signin");
+      return;
+    }
     const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
     setLoading(false);
     if (error) {
@@ -62,8 +78,9 @@ const AdminLogin = () => {
             <Input
               id="admin-password"
               type="password"
-              autoComplete="current-password"
+              autoComplete={mode === "signup" ? "new-password" : "current-password"}
               required
+              minLength={8}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -71,8 +88,22 @@ const AdminLogin = () => {
         </div>
 
         <Button type="submit" disabled={loading} className="mt-6 w-full">
-          {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Sign in"}
+          {loading ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : mode === "signup" ? (
+            "Create account"
+          ) : (
+            "Sign in"
+          )}
         </Button>
+
+        <button
+          type="button"
+          onClick={() => setMode((m) => (m === "signin" ? "signup" : "signin"))}
+          className="mt-4 w-full text-center text-sm text-foreground/60 underline decoration-[hsl(var(--cta))] underline-offset-4"
+        >
+          {mode === "signin" ? "Create a staff account" : "I already have an account"}
+        </button>
       </form>
     </main>
   );
