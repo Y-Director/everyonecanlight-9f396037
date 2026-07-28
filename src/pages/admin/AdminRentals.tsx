@@ -57,6 +57,25 @@ type Row = {
   } | null;
 };
 
+type Identity = {
+  id: string;
+  full_name: string;
+  email: string;
+  phone: string;
+  id_type: string | null;
+  id_image_path: string | null;
+  kyc_status: string;
+  rejection_reason: string | null;
+  created_at: string;
+};
+
+const REJECT_REASONS = [
+  "Unclear image upload",
+  "Expired identity document",
+  "Unapproved due to identity concerns",
+  "False document uploaded",
+];
+
 type SortKey = "created_at" | "contact_name" | "contact_email" | "contact_phone" | "total";
 
 const naira = (n: number) => `₦${n.toLocaleString("en-NG")}`;
@@ -80,6 +99,12 @@ const AdminRentals = () => {
   const [asc, setAsc] = useState(false);
   const [active, setActive] = useState<Row | null>(null);
   const [idUrl, setIdUrl] = useState<string | null>(null);
+  const [tab, setTab] = useState<"bookings" | "identity">("bookings");
+  const [identities, setIdentities] = useState<Identity[]>([]);
+  const [identitiesLoading, setIdentitiesLoading] = useState(false);
+  const [identityUrls, setIdentityUrls] = useState<Record<string, string>>({});
+  const [rejecting, setRejecting] = useState<Identity | null>(null);
+  const [rejectReason, setRejectReason] = useState(REJECT_REASONS[0]);
 
   useEffect(() => {
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
@@ -122,9 +147,60 @@ const AdminRentals = () => {
     setRows((data ?? []) as unknown as Row[]);
   }, []);
 
+  const loadIdentities = useCallback(async () => {
+    setIdentitiesLoading(true);
+    const { data, error } = await supabase
+      .from("rental_customers")
+      .select("id, full_name, email, phone, id_type, id_image_path, kyc_status, rejection_reason, created_at")
+      .order("created_at", { ascending: false })
+      .limit(500);
+    setIdentitiesLoading(false);
+    if (error) {
+      toast.error("Could not load identities");
+      return;
+    }
+    const list = (data ?? []) as Identity[];
+    setIdentities(list);
+    const urls: Record<string, string> = {};
+    await Promise.all(
+      list
+        .filter((i) => i.id_image_path)
+        .map(async (i) => {
+          const { data: signed } = await supabase.storage
+            .from("kyc-ids")
+            .createSignedUrl(i.id_image_path as string, 600);
+          if (signed?.signedUrl) urls[i.id] = signed.signedUrl;
+        }),
+    );
+    setIdentityUrls(urls);
+  }, []);
+
+  const setIdentityStatus = async (row: Identity, status: string, reason: string | null) => {
+    const { error } = await supabase
+      .from("rental_customers")
+      .update({
+        kyc_status: status,
+        rejection_reason: reason,
+        reviewed_at: new Date().toISOString(),
+        verified_at: status === "verified" ? new Date().toISOString() : null,
+      })
+      .eq("id", row.id);
+    if (error) {
+      toast.error("Could not update this identity");
+      return;
+    }
+    toast.success(status === "verified" ? "Identity approved" : "Identity rejected");
+    setRejecting(null);
+    loadIdentities();
+  };
+
   useEffect(() => {
     if (isAdmin) load();
   }, [isAdmin, load]);
+
+  useEffect(() => {
+    if (isAdmin && tab === "identity") loadIdentities();
+  }, [isAdmin, tab, loadIdentities]);
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
