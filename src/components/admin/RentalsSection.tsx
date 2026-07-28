@@ -392,7 +392,7 @@ const RentalsSection = () => {
                 <th className="px-4 py-3 font-medium">Customer</th>
                 <th className="px-4 py-3 font-medium">Dates</th>
                 <th className="px-4 py-3 font-medium">Call time</th>
-                <th className="px-4 py-3 font-medium">Runner</th>
+                <th className="px-4 py-3 font-medium">Lighting Operator</th>
                 <th className="px-4 py-3 font-medium">Total</th>
                 <th className="px-4 py-3 font-medium">Status</th>
                 <th className="px-4 py-3" />

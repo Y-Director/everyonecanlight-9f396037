@@ -382,7 +382,7 @@ const RentEquipment = () => {
               <h1 className="text-3xl md:text-4xl font-semibold">Rent Equipment</h1>
               <p className="mt-3 text-foreground/60 text-sm md:text-base">
                 The ECL Light Bank. Build your gear list, pick your dates, and we'll send it out
-                with a runner.
+                with a lighting operator.
               </p>
             </div>
             <Button
@@ -441,7 +441,7 @@ const RentEquipment = () => {
                 </div>
                 <div>
                   <h3 className="text-xs uppercase tracking-wider text-foreground/50">
-                    Runner assigned
+                    Lighting Operator assigned
                   </h3>
                   {reservation.runners ? (
                     <div className="mt-3 flex items-center gap-3">
@@ -472,7 +472,7 @@ const RentEquipment = () => {
                     </div>
                   ) : (
                     <p className="mt-3 text-sm text-foreground/60">
-                      A runner will be assigned and shared with you before your call time.
+                      A lighting operator will be assigned and shared with you before your call time.
                     </p>
                   )}
                 </div>
