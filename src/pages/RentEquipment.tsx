@@ -1196,13 +1196,27 @@ const RentEquipment = () => {
                       aria-disabled={returning !== false}
                     >
                         <div>
-                          <Label>Government issued ID type</Label>
+                          <Label>
+                            Government issued ID type{" "}
+                            {returning === false && <span className="text-destructive">*</span>}
+                          </Label>
                           <Select
                             value={idType}
-                            onValueChange={setIdType}
+                            onValueChange={(v) => {
+                              setIdType(v);
+                              touch("idType");
+                            }}
                             disabled={returning !== false}
                           >
-                            <SelectTrigger className="mt-2">
+                            <SelectTrigger
+                              className={cn(
+                                "mt-2",
+                                returning === false &&
+                                  touched.idType &&
+                                  !idType &&
+                                  "border-destructive"
+                              )}
+                            >
                               <SelectValue placeholder="Select ID type" />
                             </SelectTrigger>
                             <SelectContent>
@@ -1210,9 +1224,17 @@ const RentEquipment = () => {
                               <SelectItem value="Drivers License">Driver's License</SelectItem>
                             </SelectContent>
                           </Select>
+                          {returning === false && touched.idType && !idType && (
+                            <p className="mt-1.5 text-xs text-destructive">
+                              Choose the ID document you'll upload.
+                            </p>
+                          )}
                         </div>
                         <div>
-                          <Label>Upload a clear image of your ID</Label>
+                          <Label>
+                            Upload a clear image of your ID{" "}
+                            {returning === false && <span className="text-destructive">*</span>}
+                          </Label>
                           <input
                             ref={fileRef}
                             type="file"
@@ -1227,7 +1249,13 @@ const RentEquipment = () => {
                             type="button"
                             disabled={returning !== false}
                             onClick={() => fileRef.current?.click()}
-                            className="mt-2 w-full rounded-lg border border-dashed border-border py-6 text-sm text-foreground/60 hover:text-foreground hover:border-foreground/40 flex flex-col items-center gap-2"
+                            className={cn(
+                              "mt-2 w-full rounded-lg border border-dashed border-border py-6 text-sm text-foreground/60 hover:text-foreground hover:border-foreground/40 flex flex-col items-center gap-2",
+                              returning === false &&
+                                touched.idImage &&
+                                !idImage &&
+                                "border-destructive text-destructive"
+                            )}
                           >
                             <Upload className="w-4 h-4" />
                             {idFileName || "Choose an image (JPG or PNG, max 8MB)"}
@@ -1238,6 +1266,11 @@ const RentEquipment = () => {
                               alt="ID preview"
                               className="mt-3 w-full max-h-48 object-contain rounded-lg border border-border"
                             />
+                          )}
+                          {returning === false && touched.idImage && !idImage && (
+                            <p className="mt-1.5 text-xs text-destructive">
+                              An image of your ID is required to verify you.
+                            </p>
                           )}
                         </div>
                     </div>
@@ -1270,9 +1303,12 @@ const RentEquipment = () => {
                       <p className="mt-2 text-xs text-foreground/75">
                         Reason: {rejectionReason ?? "Identity concerns"}
                       </p>
-                      <p className="mt-2 text-xs text-foreground/65">
+                      <p className="mt-2 text-xs text-foreground/75">
                         Upload a clearer, valid document and try again, or write to us at{" "}
-                        <a className="underline text-primary" href="mailto:cx@everyonecanlight.com">
+                        <a
+                          className="inline-block rounded bg-foreground/10 px-1.5 py-0.5 font-semibold text-foreground underline decoration-primary decoration-2 underline-offset-2 hover:text-primary"
+                          href="mailto:cx@everyonecanlight.com"
+                        >
                           cx@everyonecanlight.com
                         </a>{" "}
                         to dispute this decision.
