@@ -132,6 +132,7 @@ const RentEquipment = () => {
   // KYC
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
+  const [countryCode, setCountryCode] = useState("+234");
   const [email, setEmail] = useState("");
   const [returning, setReturning] = useState<boolean | null>(null);
   const [checkingAccount, setCheckingAccount] = useState(false);
@@ -144,6 +145,8 @@ const RentEquipment = () => {
   const [rejectionReason, setRejectionReason] = useState<string | null>(null);
   const [cooldown, setCooldown] = useState(0);
   const [paying, setPaying] = useState(false);
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const touch = (field: string) => setTouched((t) => ({ ...t, [field]: true }));
 
   const [reservation, setReservation] = useState<Reservation | null>(null);
   const [summaryOpen, setSummaryOpen] = useState(false);
