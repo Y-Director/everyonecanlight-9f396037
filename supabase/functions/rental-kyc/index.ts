@@ -26,6 +26,20 @@ Deno.serve(async (req) => {
     const supabase = admin()
 
     if (action === 'check') {
+      const rawEmail = String(body.email ?? '').trim().toLowerCase()
+      if (rawEmail) {
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(rawEmail)) return json({ error: 'Invalid email' }, 400)
+        const { data } = await supabase
+          .from('rental_customers')
+          .select('id, full_name, kyc_status')
+          .ilike('email', rawEmail)
+          .maybeSingle()
+        return json({
+          returning: Boolean(data),
+          verified: data?.kyc_status === 'verified',
+          fullName: data?.full_name ?? null,
+        })
+      }
       const phone = normalizePhone(body.phone)
       if (phone.length < 8 || phone.length > 20) return json({ error: 'Invalid phone number' }, 400)
       const { data } = await supabase
