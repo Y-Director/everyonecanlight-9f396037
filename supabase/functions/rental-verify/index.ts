@@ -7,6 +7,66 @@ const json = (body: unknown, status = 200) =>
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   })
 
+// deno-lint-ignore no-explicit-any
+const sendConfirmationEmail = async (supabase: any, reservationId: string) => {
+  try {
+    const { data: r } = await supabase
+      .from('rental_reservations')
+      .select(
+        'id, reference, booking_code, contact_name, contact_email, items, days, start_date, end_date, location, call_time, total, confirmation_sent_at, runners(name, phone), rental_customers(full_name, email)',
+      )
+      .eq('id', reservationId)
+      .maybeSingle()
+
+    if (!r || r.confirmation_sent_at) return
+
+    const to = String(r.contact_email ?? r.rental_customers?.email ?? '').trim().toLowerCase()
+    if (!to) {
+      console.error('No recipient email on reservation', reservationId)
+      return
+    }
+
+    const res = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/send-transactional-email`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+      },
+      body: JSON.stringify({
+        templateName: 'booking-confirmation',
+        recipientEmail: to,
+        idempotencyKey: `booking-confirmation-${r.id}`,
+        templateData: {
+          customerName: r.contact_name ?? r.rental_customers?.full_name ?? null,
+          bookingCode: r.booking_code,
+          reference: r.reference,
+          items: r.items ?? [],
+          days: r.days,
+          startDate: r.start_date,
+          endDate: r.end_date,
+          location: r.location,
+          callTime: r.call_time,
+          total: r.total,
+          operatorName: r.runners?.name ?? null,
+          operatorPhone: r.runners?.phone ?? null,
+        },
+      }),
+    })
+
+    if (!res.ok) {
+      console.error('Confirmation email failed', res.status, await res.text())
+      return
+    }
+
+    await supabase
+      .from('rental_reservations')
+      .update({ confirmation_sent_at: new Date().toISOString() })
+      .eq('id', r.id)
+  } catch (e) {
+    console.error('sendConfirmationEmail error', e)
+  }
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders })
 
@@ -120,6 +180,7 @@ Deno.serve(async (req) => {
           .from('rental_reservations')
           .update({ amount_paid: row.total })
           .eq('id', row.id)
+        await sendConfirmationEmail(supabase, row.id)
       }
     }
 
