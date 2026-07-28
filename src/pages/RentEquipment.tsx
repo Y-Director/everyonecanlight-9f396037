@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { format } from "date-fns";
 import {
   ArrowRight,
+  ArrowUp,
   CalendarIcon,
   CheckCircle2,
   KeyRound,
