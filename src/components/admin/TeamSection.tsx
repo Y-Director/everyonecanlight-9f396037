@@ -545,6 +545,14 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
                       {damaged} with damages
                     </div>
                   </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    aria-label={`Edit ${op.full_name}`}
+                    onClick={() => openEdit(op)}
+                  >
+                    <Pencil className="w-4 h-4" />
+                  </Button>
                 </div>
                 <div className="mt-4 overflow-x-auto">
                   <table className="w-full text-xs">
@@ -591,6 +599,72 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
         </div>
       </div>
       )}
+
+      <Dialog open={!!editRow} onOpenChange={(o) => !o && setEditRow(null)}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Edit team member</DialogTitle>
+            <DialogDescription>
+              Update the photo, name, email address and phone number.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <span className="w-14 h-14 rounded-full bg-foreground/10 overflow-hidden grid place-items-center text-sm shrink-0">
+                {editAvatar ? (
+                  <img src={URL.createObjectURL(editAvatar)} alt="" className="w-full h-full object-cover" />
+                ) : editRow?.avatar_url && avatars[editRow.avatar_url] ? (
+                  <img src={avatars[editRow.avatar_url]} alt="" className="w-full h-full object-cover" />
+                ) : (
+                  initials(editRow?.full_name ?? "?")
+                )}
+              </span>
+              <label className="flex items-center gap-2 rounded-md border border-foreground/15 px-3 py-2 text-sm text-foreground/70 cursor-pointer">
+                <Upload className="w-4 h-4" />
+                <span className="truncate max-w-[180px]">
+                  {editAvatar ? editAvatar.name : "Change avatar"}
+                </span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => setEditAvatar(e.target.files?.[0] ?? null)}
+                />
+              </label>
+            </div>
+            <div>
+              <Label className="text-xs text-foreground/60">Full name</Label>
+              <Input
+                value={editForm.full_name}
+                onChange={(e) => setEditForm({ ...editForm, full_name: e.target.value })}
+              />
+            </div>
+            <div>
+              <Label className="text-xs text-foreground/60">Email address</Label>
+              <Input
+                value={editForm.email}
+                onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
+              />
+            </div>
+            <div>
+              <Label className="text-xs text-foreground/60">Phone number</Label>
+              <Input
+                value={editForm.phone}
+                onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEditRow(null)}>
+              Cancel
+            </Button>
+            <Button onClick={saveEdit} disabled={editSaving}>
+              {editSaving && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+              Save changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
