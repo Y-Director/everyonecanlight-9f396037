@@ -246,6 +246,9 @@ const RentEquipment = () => {
       });
       setReturning(Boolean(data?.returning));
       if (data?.returning && data?.fullName && !fullName) setFullName(data.fullName);
+      if (data?.returning && data?.phone && !phone) {
+        setPhone(String(data.phone).replace(/^\+234/, ""));
+      }
     } finally {
       setCheckingAccount(false);
     }
@@ -713,20 +716,10 @@ const RentEquipment = () => {
               {step === "kyc" && (
                 <>
                   <p className="text-sm text-foreground/60">
-                    Just a quick check so we know who the gear is going out with. Enter your email
-                    and we'll pick up from where you left off.
+                    Start with your email address — we'll check if you've rented with us before and
+                    only ask for what's still missing.
                   </p>
                   <div className="grid gap-4">
-                    <div>
-                      <Label htmlFor="kyc-name">Full name (as it appears on your ID)</Label>
-                      <Input
-                        id="kyc-name"
-                        value={fullName}
-                        onChange={(e) => setFullName(e.target.value)}
-                        placeholder="Adebayo Johnson"
-                        className="mt-2"
-                      />
-                    </div>
                     <div>
                       <Label htmlFor="kyc-email">Email address</Label>
                       <Input
@@ -758,20 +751,42 @@ const RentEquipment = () => {
                         </p>
                       )}
                     </div>
-                    <div>
-                      <Label htmlFor="kyc-phone">Phone number</Label>
-                      <div className="mt-2 flex">
-                        <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-input bg-muted text-sm text-foreground font-medium">
-                          🇳🇬 +234
-                        </span>
+                    <div
+                      className={cn(
+                        "grid gap-4 transition-opacity",
+                        returning === null
+                          ? "opacity-40 pointer-events-none select-none"
+                          : "opacity-100"
+                      )}
+                      aria-disabled={returning === null}
+                    >
+                      <div>
+                        <Label htmlFor="kyc-name">Full name (as it appears on your ID)</Label>
                         <Input
-                          id="kyc-phone"
-                          inputMode="tel"
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
-                          placeholder="801 234 5678"
-                          className="rounded-l-none"
+                          id="kyc-name"
+                          value={fullName}
+                          disabled={returning === null}
+                          onChange={(e) => setFullName(e.target.value)}
+                          placeholder="Adebayo Johnson"
+                          className="mt-2"
                         />
+                      </div>
+                      <div>
+                        <Label htmlFor="kyc-phone">Phone number</Label>
+                        <div className="mt-2 flex">
+                          <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-input bg-muted text-sm text-foreground font-medium">
+                            🇳🇬 +234
+                          </span>
+                          <Input
+                            id="kyc-phone"
+                            inputMode="tel"
+                            value={phone}
+                            disabled={returning === null}
+                            onChange={(e) => setPhone(e.target.value)}
+                            placeholder="801 234 5678"
+                            className="rounded-l-none"
+                          />
+                        </div>
                       </div>
                     </div>
 

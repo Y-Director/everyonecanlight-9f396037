@@ -31,13 +31,14 @@ Deno.serve(async (req) => {
         if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(rawEmail)) return json({ error: 'Invalid email' }, 400)
         const { data } = await supabase
           .from('rental_customers')
-          .select('id, full_name, kyc_status')
+          .select('id, full_name, phone, kyc_status')
           .ilike('email', rawEmail)
           .maybeSingle()
         return json({
           returning: Boolean(data),
           verified: data?.kyc_status === 'verified',
           fullName: data?.full_name ?? null,
+          phone: data?.phone ?? null,
         })
       }
       const phone = normalizePhone(body.phone)
