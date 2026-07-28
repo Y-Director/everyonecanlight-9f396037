@@ -160,6 +160,14 @@ const RentEquipment = () => {
   const [amending, setAmending] = useState(false);
   const [savedCart, setSavedCart] = useState<Cart | null>(null);
   const [payingDiff, setPayingDiff] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setShowBackToTop(window.scrollY > 400);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
