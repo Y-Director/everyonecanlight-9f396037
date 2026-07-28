@@ -135,6 +135,9 @@ const RentEquipment = () => {
   const [idFileName, setIdFileName] = useState("");
   const [customerId, setCustomerId] = useState<string | null>(null);
   const [verifying, setVerifying] = useState(false);
+  const [kycStatus, setKycStatus] = useState<"idle" | "pending" | "rejected" | "approved">("idle");
+  const [rejectionReason, setRejectionReason] = useState<string | null>(null);
+  const [cooldown, setCooldown] = useState(0);
   const [paying, setPaying] = useState(false);
 
   const [reservation, setReservation] = useState<Reservation | null>(null);
@@ -244,10 +247,25 @@ const RentEquipment = () => {
       const { data } = await supabase.functions.invoke("rental-kyc", {
         body: { action: "check", email: clean },
       });
-      setReturning(Boolean(data?.returning));
-      if (data?.returning && data?.fullName && !fullName) setFullName(data.fullName);
-      if (data?.returning && data?.phone && !phone) {
-        setPhone(String(data.phone).replace(/^\+234/, ""));
+      const isReturning = Boolean(data?.returning);
+      setReturning(isReturning);
+      if (isReturning) {
+        toast.success("Welcome back — we recognise you.", { duration: 1800 });
+        if (data?.fullName && !fullName) setFullName(data.fullName);
+        if (data?.phone && !phone) setPhone(String(data.phone).replace(/^\+234/, ""));
+        if (data?.status === "rejected") {
+          setKycStatus("rejected");
+          setRejectionReason(data?.rejectionReason ?? null);
+        } else if (data?.status === "pending") {
+          setKycStatus("pending");
+        } else if (data?.status === "verified") {
+          setKycStatus("approved");
+          if (data?.customerId) setCustomerId(data.customerId);
+        }
+      } else {
+        toast("A new face — lovely to have you here.", { duration: 1800 });
+        setKycStatus("idle");
+        setRejectionReason(null);
       }
     } finally {
       setCheckingAccount(false);
@@ -273,17 +291,47 @@ const RentEquipment = () => {
         return;
       }
       setCustomerId(data.customerId);
-      toast.success("Identity verified", {
-        description: "Your details are on file with the Light Bank.",
-        duration: 2500,
-      });
-      setStep("payment");
+      if (data.status === "verified") {
+        setKycStatus("approved");
+        toast.success("Identity approved", { duration: 1800 });
+        setStep("payment");
+        return;
+      }
+      setKycStatus(data.status === "rejected" ? "rejected" : "pending");
+      setRejectionReason(data.rejectionReason ?? null);
+      if (data.status !== "rejected") setCooldown(300);
     } catch {
       toast.error("We could not verify your identity. Please try again.");
     } finally {
       setVerifying(false);
     }
   };
+
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const t = setInterval(() => setCooldown((c) => (c > 0 ? c - 1 : 0)), 1000);
+    return () => clearInterval(t);
+  }, [cooldown]);
+
+  useEffect(() => {
+    if (kycStatus !== "pending" || !email) return;
+    const poll = async () => {
+      const { data } = await supabase.functions.invoke("rental-kyc", {
+        body: { action: "status", email: email.trim() },
+      });
+      if (data?.customerId) setCustomerId(data.customerId);
+      if (data?.status === "verified") {
+        setKycStatus("approved");
+        toast.success("Identity approved", { duration: 1800 });
+        setStep("payment");
+      } else if (data?.status === "rejected") {
+        setKycStatus("rejected");
+        setRejectionReason(data?.rejectionReason ?? null);
+      }
+    };
+    const t = setInterval(poll, 10000);
+    return () => clearInterval(t);
+  }, [kycStatus, email]);
 
   const startPayment = async () => {
     if (!customerId) return;
