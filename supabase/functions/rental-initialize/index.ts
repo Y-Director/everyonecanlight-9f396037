@@ -81,14 +81,16 @@ Deno.serve(async (req) => {
       bookingCode = makeBookingCode()
     }
 
-    // Assign an available runner (round-robin on least recent assignment).
-    const { data: runners } = await supabase
-      .from('runners')
-      .select('id')
-      .eq('active', true)
+    // Only assign operators that exist as active Lighting Operators in Team Members.
+    const { data: operators } = await supabase
+      .from('staff_members')
+      .select('runner_id')
+      .eq('is_light_operator', true)
+      .eq('status', 'active')
+      .not('runner_id', 'is', null)
       .order('created_at', { ascending: true })
-    const runnerId = runners && runners.length
-      ? runners[Math.floor(Math.random() * runners.length)].id
+    const runnerId = operators && operators.length
+      ? operators[Math.floor(Math.random() * operators.length)].runner_id
       : null
 
     const { error: insertError } = await supabase.from('rental_reservations').insert({
