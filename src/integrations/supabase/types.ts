@@ -101,9 +101,47 @@ export type Database = {
         }
         Relationships: []
       }
+      rental_otps: {
+        Row: {
+          attempts: number
+          code_hash: string
+          consumed_at: string | null
+          created_at: string
+          email: string
+          expires_at: string
+          id: string
+          phone: string | null
+        }
+        Insert: {
+          attempts?: number
+          code_hash: string
+          consumed_at?: string | null
+          created_at?: string
+          email: string
+          expires_at: string
+          id?: string
+          phone?: string | null
+        }
+        Update: {
+          attempts?: number
+          code_hash?: string
+          consumed_at?: string | null
+          created_at?: string
+          email?: string
+          expires_at?: string
+          id?: string
+          phone?: string | null
+        }
+        Relationships: []
+      }
       rental_reservations: {
         Row: {
+          booking_code: string | null
           call_time: string
+          confirmation_sent_at: string | null
+          contact_email: string | null
+          contact_name: string | null
+          contact_phone: string | null
           created_at: string
           currency: string
           customer_id: string | null
@@ -118,11 +156,17 @@ export type Database = {
           start_date: string | null
           status: string
           subtotal: number
+          summary_image_path: string | null
           total: number
           updated_at: string
         }
         Insert: {
+          booking_code?: string | null
           call_time: string
+          confirmation_sent_at?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
           created_at?: string
           currency?: string
           customer_id?: string | null
@@ -137,11 +181,17 @@ export type Database = {
           start_date?: string | null
           status?: string
           subtotal?: number
+          summary_image_path?: string | null
           total?: number
           updated_at?: string
         }
         Update: {
+          booking_code?: string | null
           call_time?: string
+          confirmation_sent_at?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
           created_at?: string
           currency?: string
           customer_id?: string | null
@@ -156,6 +206,7 @@ export type Database = {
           start_date?: string | null
           status?: string
           subtotal?: number
+          summary_image_path?: string | null
           total?: number
           updated_at?: string
         }
@@ -206,15 +257,42 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "staff" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -341,6 +419,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "staff", "user"],
+    },
   },
 } as const
