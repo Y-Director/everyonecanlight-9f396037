@@ -246,6 +246,9 @@ const RentEquipment = () => {
       });
       setReturning(Boolean(data?.returning));
       if (data?.returning && data?.fullName && !fullName) setFullName(data.fullName);
+      if (data?.returning && data?.phone && !phone) {
+        setPhone(String(data.phone).replace(/^\+234/, ""));
+      }
     } finally {
       setCheckingAccount(false);
     }
