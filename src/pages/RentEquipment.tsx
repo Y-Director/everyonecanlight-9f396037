@@ -4,6 +4,8 @@ import {
   ArrowRight,
   CalendarIcon,
   CheckCircle2,
+  KeyRound,
+  Lock,
   Loader2,
   Minus,
   Plus,
@@ -17,6 +19,8 @@ import { toast } from "sonner";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
 import BookingSummaryDialog from "@/components/rental/BookingSummaryDialog";
+import BookingStatusCard, { type BookingLookup } from "@/components/rental/BookingStatusCard";
+import ManageBookingDialog from "@/components/rental/ManageBookingDialog";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
@@ -146,6 +150,13 @@ const RentEquipment = () => {
   const [checkingPayment, setCheckingPayment] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
+  // Manage / amend an existing booking
+  const [manageOpen, setManageOpen] = useState(false);
+  const [booking, setBooking] = useState<BookingLookup | null>(null);
+  const [amending, setAmending] = useState(false);
+  const [savedCart, setSavedCart] = useState<Cart | null>(null);
+  const [payingDiff, setPayingDiff] = useState(false);
+
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
   }, [cart]);
@@ -164,9 +175,16 @@ const RentEquipment = () => {
           setReservation(data.reservation as Reservation);
           setSummaryOpen(true);
           setCart({});
-          toast.success("Reservation completed", {
-            description: "A confirmation has been sent to your email.",
-          });
+          setAmending(false);
+          setBooking(null);
+          toast.success(
+            data?.amendment ? "Booking updated" : "Reservation completed",
+            {
+              description: data?.amendment
+                ? "Your added gear is now on the booking."
+                : "A confirmation has been sent to your email.",
+            }
+          );
         } else {
           toast.error("Payment was not completed.");
         }
