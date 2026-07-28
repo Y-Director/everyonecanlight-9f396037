@@ -1,9 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Loader2, Plus, Trash2, Upload, Zap } from "lucide-react";
+import { Loader2, Pencil, Plus, Trash2, Upload, Zap } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
@@ -99,6 +107,61 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({ ...emptyForm });
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [editRow, setEditRow] = useState<Staff | null>(null);
+  const [editForm, setEditForm] = useState({ full_name: "", email: "", phone: "" });
+  const [editAvatar, setEditAvatar] = useState<File | null>(null);
+  const [editSaving, setEditSaving] = useState(false);
+
+  const openEdit = (row: Staff) => {
+    setEditRow(row);
+    setEditForm({ full_name: row.full_name, email: row.email, phone: row.phone });
+    setEditAvatar(null);
+  };
+
+  const saveEdit = async () => {
+    if (!editRow) return;
+    const name = editForm.full_name.trim();
+    const email = editForm.email.trim().toLowerCase();
+    const phone = editForm.phone.trim();
+    if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !phone) {
+      toast.error("Full name, a valid email and a phone number are required");
+      return;
+    }
+    setEditSaving(true);
+    let avatarPath = editRow.avatar_url;
+    if (editAvatar) {
+      const ext = editAvatar.name.split(".").pop() ?? "jpg";
+      const path = `${crypto.randomUUID()}.${ext}`;
+      const { error: upErr } = await supabase.storage
+        .from("staff-avatars")
+        .upload(path, editAvatar, { upsert: false });
+      if (upErr) {
+        setEditSaving(false);
+        toast.error("Could not upload the photo");
+        return;
+      }
+      avatarPath = path;
+    }
+
+    const { error } = await supabase
+      .from("staff_members")
+      .update({ full_name: name, email, phone, avatar_url: avatarPath })
+      .eq("id", editRow.id);
+
+    if (!error && editRow.runner_id) {
+      await supabase.from("runners").update({ name, phone }).eq("id", editRow.runner_id);
+    }
+
+    setEditSaving(false);
+    if (error) {
+      toast.error("Could not update this team member");
+      return;
+    }
+    toast.success("Team member updated");
+    setEditRow(null);
+    setEditAvatar(null);
+    load();
+  };
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -435,7 +498,10 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
                 </td>
                 <td className="px-4 py-3 text-foreground/70">{r.date_joined}</td>
                 <td className="px-4 py-3 text-right">
-                  <Button variant="ghost" size="sm" onClick={() => remove(r)}>
+                  <Button variant="ghost" size="sm" aria-label={`Edit ${r.full_name}`} onClick={() => openEdit(r)}>
+                    <Pencil className="w-4 h-4" />
+                  </Button>
+                  <Button variant="ghost" size="sm" aria-label={`Remove ${r.full_name}`} onClick={() => remove(r)}>
                     <Trash2 className="w-4 h-4" />
                   </Button>
                 </td>
@@ -479,6 +545,14 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
                       {damaged} with damages
                     </div>
                   </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    aria-label={`Edit ${op.full_name}`}
+                    onClick={() => openEdit(op)}
+                  >
+                    <Pencil className="w-4 h-4" />
+                  </Button>
                 </div>
                 <div className="mt-4 overflow-x-auto">
                   <table className="w-full text-xs">
@@ -525,6 +599,72 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
         </div>
       </div>
       )}
+
+      <Dialog open={!!editRow} onOpenChange={(o) => !o && setEditRow(null)}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Edit team member</DialogTitle>
+            <DialogDescription>
+              Update the photo, name, email address and phone number.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <span className="w-14 h-14 rounded-full bg-foreground/10 overflow-hidden grid place-items-center text-sm shrink-0">
+                {editAvatar ? (
+                  <img src={URL.createObjectURL(editAvatar)} alt="" className="w-full h-full object-cover" />
+                ) : editRow?.avatar_url && avatars[editRow.avatar_url] ? (
+                  <img src={avatars[editRow.avatar_url]} alt="" className="w-full h-full object-cover" />
+                ) : (
+                  initials(editRow?.full_name ?? "?")
+                )}
+              </span>
+              <label className="flex items-center gap-2 rounded-md border border-foreground/15 px-3 py-2 text-sm text-foreground/70 cursor-pointer">
+                <Upload className="w-4 h-4" />
+                <span className="truncate max-w-[180px]">
+                  {editAvatar ? editAvatar.name : "Change avatar"}
+                </span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => setEditAvatar(e.target.files?.[0] ?? null)}
+                />
+              </label>
+            </div>
+            <div>
+              <Label className="text-xs text-foreground/60">Full name</Label>
+              <Input
+                value={editForm.full_name}
+                onChange={(e) => setEditForm({ ...editForm, full_name: e.target.value })}
+              />
+            </div>
+            <div>
+              <Label className="text-xs text-foreground/60">Email address</Label>
+              <Input
+                value={editForm.email}
+                onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
+              />
+            </div>
+            <div>
+              <Label className="text-xs text-foreground/60">Phone number</Label>
+              <Input
+                value={editForm.phone}
+                onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEditRow(null)}>
+              Cancel
+            </Button>
+            <Button onClick={saveEdit} disabled={editSaving}>
+              {editSaving && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+              Save changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
