@@ -374,6 +374,11 @@ const RentEquipment = () => {
   };
 
   const verifyIdentity = async () => {
+    setTouched({ email: true, fullName: true, phone: true, idType: true, idImage: true });
+    if (!kycValid) {
+      toast.error("Please complete every required field before continuing.");
+      return;
+    }
     setVerifying(true);
     try {
       const { data, error } = await supabase.functions.invoke("rental-kyc", {
@@ -381,7 +386,7 @@ const RentEquipment = () => {
           action: "submit",
           fullName,
           email,
-          phone: `+234${phone.replace(/\D/g, "").replace(/^0/, "")}`,
+          phone: `${countryCode}${phone.replace(/\D/g, "").replace(/^0/, "")}`,
           idType: idType || undefined,
           idImage: idImage || undefined,
         },
