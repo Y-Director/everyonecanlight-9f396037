@@ -118,6 +118,34 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
     setEditAvatar(null);
   };
 
+  // Keeps the public-facing Lighting Operator record in step with the staff record
+  // so name, phone, photo and availability update everywhere customers see them.
+  const syncOperator = async (row: Staff, name: string, phone: string) => {
+    const publicAvatar = row.avatar_url
+      ? supabase.storage.from("staff-avatars").getPublicUrl(row.avatar_url).data.publicUrl
+      : null;
+    const active = row.status === "active" && row.is_light_operator;
+
+    if (row.runner_id) {
+      await supabase
+        .from("runners")
+        .update({ name, phone, avatar_url: publicAvatar, active })
+        .eq("id", row.runner_id);
+      return;
+    }
+
+    if (!row.is_light_operator) return;
+
+    const { data: created } = await supabase
+      .from("runners")
+      .insert({ name, phone, avatar_url: publicAvatar, active })
+      .select("id")
+      .maybeSingle();
+    if (created?.id) {
+      await supabase.from("staff_members").update({ runner_id: created.id }).eq("id", row.id);
+    }
+  };
+
   const saveEdit = async () => {
     if (!editRow) return;
     const name = editForm.full_name.trim();
@@ -148,9 +176,7 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
       .update({ full_name: name, email, phone, avatar_url: avatarPath })
       .eq("id", editRow.id);
 
-    if (!error && editRow.runner_id) {
-      await supabase.from("runners").update({ name, phone }).eq("id", editRow.runner_id);
-    }
+    if (!error) await syncOperator({ ...editRow, avatar_url: avatarPath }, name, phone);
 
     setEditSaving(false);
     if (error) {
@@ -233,7 +259,14 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
     if (form.is_light_operator) {
       const { data: runner } = await supabase
         .from("runners")
-        .insert({ name: form.full_name.trim(), phone: form.phone.trim(), active: form.status === "active" })
+        .insert({
+          name: form.full_name.trim(),
+          phone: form.phone.trim(),
+          active: form.status === "active",
+          avatar_url: avatarPath
+            ? supabase.storage.from("staff-avatars").getPublicUrl(avatarPath).data.publicUrl
+            : null,
+        })
         .select("id")
         .maybeSingle();
       runnerId = runner?.id ?? null;
@@ -270,6 +303,8 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
       toast.error("Could not update this team member");
       return;
     }
+    const merged = { ...row, ...patch } as Staff;
+    await syncOperator(merged, merged.full_name, merged.phone);
     load();
   };
 
