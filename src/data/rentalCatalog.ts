@@ -9,6 +9,16 @@ import scrim6Flag from "@/assets/rental/6x6_ft_Scrim_Frame_Black_Solid_Flag.png.
 import scrim6Full from "@/assets/rental/6x6_ft_Scrim_Frame_Full_Diffusion.png.asset.json";
 import scrim6Half from "@/assets/rental/6x6_ft_Scrim_Frame_Half_Diffusion.png.asset.json";
 import scrim6SilverGold from "@/assets/rental/6x6_ft_Scrim_Frame_Silver_Gold_Reflector.png.asset.json";
+import amaranRay360c from "@/assets/rental/Amaran_Ray_360c.png.asset.json";
+import amaranRay660c from "@/assets/rental/Amaran_Ray_660c.png.asset.json";
+import aputure1000c from "@/assets/rental/Aputure_1000c.png.asset.json";
+import aputureCs15 from "@/assets/rental/Aputure_CS15.png.asset.json";
+import aputureLs300d from "@/assets/rental/Aputure_LS_300d.png.asset.json";
+import aputureLs300x from "@/assets/rental/Aputure_LS_300x.png.asset.json";
+import aputureLs600c from "@/assets/rental/Aputure_LS_600c.png.asset.json";
+import aputureLs600dPro from "@/assets/rental/Aputure_LS_600d_Pro.png.asset.json";
+import aputureLs600xPro from "@/assets/rental/Aputure_LS_600x_Pro.png.asset.json";
+import aputureLs1200d from "@/assets/rental/Aputure_LS_1200D.png.asset.json";
 
 export type RentalCategory =
   | "Lights"
@@ -53,6 +63,16 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
     scrim6Full,
     scrim6Half,
     scrim6SilverGold,
+    amaranRay360c,
+    amaranRay660c,
+    aputure1000c,
+    aputureCs15,
+    aputureLs300d,
+    aputureLs300x,
+    aputureLs600c,
+    aputureLs600dPro,
+    aputureLs600xPro,
+    aputureLs1200d,
   ].map((a) => [norm(a.original_filename.replace(/\.png$/i, "")), a.url])
 );
 
