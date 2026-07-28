@@ -970,7 +970,7 @@ const RentEquipment = () => {
                   <div className="grid gap-4">
                     <div>
                       <Label className="text-xs uppercase tracking-wider text-foreground/50">
-                        Pickup location
+                        LOCATION TO BE USED
                       </Label>
                       <Select value={location} onValueChange={setLocation}>
                         <SelectTrigger className="mt-2">
