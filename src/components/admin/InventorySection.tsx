@@ -374,7 +374,7 @@ const InventorySection = () => {
                       : "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
                   }`}
                 >
-                  {available} left
+                  {available}/{list.length} left
                 </span>
               </button>
 
