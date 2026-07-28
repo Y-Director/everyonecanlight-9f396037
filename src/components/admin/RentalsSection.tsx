@@ -35,6 +35,9 @@ type Row = {
   call_time: string;
   total: number;
   status: string;
+  fulfilment_status: string;
+  checked_out_at: string | null;
+  returned_at: string | null;
   paid_at: string | null;
   created_at: string;
   runners: { name: string; phone: string; avatar_url: string | null } | null;
@@ -69,6 +72,25 @@ const REJECT_REASONS = [
 
 type SortKey = "created_at" | "contact_name" | "contact_email" | "contact_phone" | "total";
 
+const FULFILMENT = [
+  { value: "awaiting_pickup", label: "Awaiting pickup" },
+  { value: "rented_out", label: "Rented out" },
+  { value: "returned", label: "Rental returned" },
+  { value: "attention_needed", label: "Attention needed" },
+] as const;
+
+const fulfilmentLabel = (v: string) =>
+  FULFILMENT.find((f) => f.value === v)?.label ?? "Awaiting pickup";
+
+const fulfilmentStyle = (v: string) =>
+  v === "rented_out"
+    ? "bg-sky-500/15 text-sky-400 border-sky-500/30"
+    : v === "returned"
+      ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
+      : v === "attention_needed"
+        ? "bg-red-500/15 text-red-400 border-red-500/30"
+        : "bg-foreground/5 text-foreground/60 border-foreground/20";
+
 const naira = (n: number) => `₦${n.toLocaleString("en-NG")}`;
 
 const statusStyle = (status: string) =>
@@ -85,6 +107,7 @@ const RentalsSection = () => {
   const [status, setStatus] = useState("all");
   const [sortKey, setSortKey] = useState<SortKey>("created_at");
   const [asc, setAsc] = useState(false);
+  const [fulfilment, setFulfilment] = useState("all");
   const [active, setActive] = useState<Row | null>(null);
   const [idUrl, setIdUrl] = useState<string | null>(null);
   const [tab, setTab] = useState<"bookings" | "identity">("bookings");
@@ -100,7 +123,7 @@ const RentalsSection = () => {
     const { data, error } = await supabase
       .from("rental_reservations")
       .select(
-        "id, reference, booking_code, contact_name, contact_email, contact_phone, items, days, start_date, end_date, location, call_time, total, status, paid_at, created_at, runners(name, phone, avatar_url), rental_customers(full_name, email, phone, id_type, id_image_path, kyc_status)",
+        "id, reference, booking_code, contact_name, contact_email, contact_phone, items, days, start_date, end_date, location, call_time, total, status, fulfilment_status, checked_out_at, returned_at, paid_at, created_at, runners(name, phone, avatar_url), rental_customers(full_name, email, phone, id_type, id_image_path, kyc_status)",
       )
       .order("created_at", { ascending: false })
       .limit(500);
@@ -163,6 +186,24 @@ const RentalsSection = () => {
     load();
   }, [load]);
 
+  const setFulfilmentStatus = async (row: Row, value: string) => {
+    const patch: {
+      fulfilment_status: string;
+      checked_out_at?: string;
+      returned_at?: string;
+    } = { fulfilment_status: value };
+    if (value === "rented_out") patch.checked_out_at = new Date().toISOString();
+    if (value === "returned") patch.returned_at = new Date().toISOString();
+    setRows((prev) => prev.map((r) => (r.id === row.id ? ({ ...r, ...patch } as Row) : r)));
+    const { error } = await supabase.from("rental_reservations").update(patch).eq("id", row.id);
+    if (error) {
+      toast.error("Could not update this booking");
+      load();
+      return;
+    }
+    toast.success(`Marked as ${fulfilmentLabel(value).toLowerCase()}`);
+  };
+
   useEffect(() => {
     if (tab === "identity") loadIdentities();
   }, [tab, loadIdentities]);
@@ -171,6 +212,7 @@ const RentalsSection = () => {
     const q = query.trim().toLowerCase();
     let list = rows.filter((r) => {
       if (status !== "all" && r.status !== status) return false;
+      if (fulfilment !== "all" && (r.fulfilment_status ?? "awaiting_pickup") !== fulfilment) return false;
       if (!q) return true;
       return [
         r.booking_code,
@@ -196,7 +238,7 @@ const RentalsSection = () => {
       return (av > bv ? 1 : -1) * (asc ? 1 : -1);
     });
     return list;
-  }, [rows, query, status, sortKey, asc]);
+  }, [rows, query, status, fulfilment, sortKey, asc]);
 
   const openRow = async (row: Row) => {
     setActive(row);
@@ -233,6 +275,42 @@ const RentalsSection = () => {
               <div className="text-xs uppercase tracking-wider text-foreground/50">{s.label}</div>
               <div className="mt-2 text-2xl font-semibold">{s.value}</div>
             </div>
+          ))}
+        </div>
+
+        <div className="mt-4 grid sm:grid-cols-3 gap-4">
+          {[
+            {
+              label: "Rented out",
+              value: rows.filter((r) => r.fulfilment_status === "rented_out").length,
+              key: "rented_out",
+            },
+            {
+              label: "Returned to bank",
+              value: rows.filter((r) => r.fulfilment_status === "returned").length,
+              key: "returned",
+            },
+            {
+              label: "Attention needed",
+              value: rows.filter((r) => r.fulfilment_status === "attention_needed").length,
+              key: "attention_needed",
+            },
+          ].map((s) => (
+            <button
+              key={s.label}
+              onClick={() => {
+                setTab("bookings");
+                setFulfilment((cur) => (cur === s.key ? "all" : s.key));
+              }}
+              className={`text-left rounded-xl border p-5 transition ${
+                fulfilment === s.key
+                  ? "border-[hsl(var(--cta))] bg-[hsl(var(--cta))]/10"
+                  : "border-foreground/10 bg-[hsl(var(--surface))] hover:border-foreground/25"
+              }`}
+            >
+              <div className="text-xs uppercase tracking-wider text-foreground/50">{s.label}</div>
+              <div className="mt-2 text-2xl font-semibold">{s.value}</div>
+            </button>
           ))}
         </div>
 
@@ -367,6 +445,19 @@ const RentalsSection = () => {
               <SelectItem value="failed">Failed</SelectItem>
             </SelectContent>
           </Select>
+          <Select value={fulfilment} onValueChange={setFulfilment}>
+            <SelectTrigger className="md:w-48">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All gear states</SelectItem>
+              {FULFILMENT.map((f) => (
+                <SelectItem key={f.value} value={f.value}>
+                  {f.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <Select value={sortKey} onValueChange={(v) => setSortKey(v as SortKey)}>
             <SelectTrigger className="md:w-48">
               <SelectValue />
@@ -395,20 +486,21 @@ const RentalsSection = () => {
                 <th className="px-4 py-3 font-medium">Lighting Operator</th>
                 <th className="px-4 py-3 font-medium">Total</th>
                 <th className="px-4 py-3 font-medium">Status</th>
+                <th className="px-4 py-3 font-medium">Gear</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
             <tbody>
               {loading && (
                 <tr>
-                  <td colSpan={8} className="px-4 py-10 text-center text-foreground/50">
+                  <td colSpan={9} className="px-4 py-10 text-center text-foreground/50">
                     <Loader2 className="w-5 h-5 animate-spin inline" />
                   </td>
                 </tr>
               )}
               {!loading && visible.length === 0 && (
                 <tr>
-                  <td colSpan={8} className="px-4 py-10 text-center text-foreground/50">
+                  <td colSpan={9} className="px-4 py-10 text-center text-foreground/50">
                     No reservations match this search.
                   </td>
                 </tr>
@@ -452,6 +544,37 @@ const RentalsSection = () => {
                     <span className={`rounded-full border px-2 py-1 text-xs capitalize ${statusStyle(r.status)}`}>
                       {r.status}
                     </span>
+                  </td>
+                  <td className="px-4 py-3">
+                    <Select
+                      value={r.fulfilment_status ?? "awaiting_pickup"}
+                      onValueChange={(v) => setFulfilmentStatus(r, v)}
+                    >
+                      <SelectTrigger
+                        className={`h-8 w-[168px] rounded-full border text-xs ${fulfilmentStyle(
+                          r.fulfilment_status ?? "awaiting_pickup",
+                        )}`}
+                      >
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {FULFILMENT.map((f) => (
+                          <SelectItem key={f.value} value={f.value}>
+                            {f.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {r.fulfilment_status === "rented_out" && r.checked_out_at && (
+                      <div className="mt-1 text-xs text-foreground/45">
+                        Out {new Date(r.checked_out_at).toLocaleDateString()}
+                      </div>
+                    )}
+                    {r.fulfilment_status === "returned" && r.returned_at && (
+                      <div className="mt-1 text-xs text-foreground/45">
+                        Back {new Date(r.returned_at).toLocaleDateString()}
+                      </div>
+                    )}
                   </td>
                   <td className="px-4 py-3">
                     <Button variant="ghost" size="sm" onClick={() => openRow(r)}>
