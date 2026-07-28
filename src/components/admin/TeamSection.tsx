@@ -444,7 +444,9 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
           </tbody>
         </table>
       </div>
+      )}
 
+      {view !== "team" && (
       <div>
         <h2 className="font-semibold">Lighting Operators · job log</h2>
         <p className="mt-1 text-sm text-foreground/60">
@@ -522,6 +524,7 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
           })}
         </div>
       </div>
+      )}
     </div>
   );
 };
