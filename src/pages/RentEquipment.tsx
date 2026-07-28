@@ -480,7 +480,24 @@ const RentEquipment = () => {
                   )}
                 </div>
               </div>
+              <div className="mt-6">
+                <Button
+                  variant="outline"
+                  className="rounded-full gap-2"
+                  onClick={() => setSummaryOpen(true)}
+                >
+                  View & download summary
+                </Button>
+              </div>
             </section>
+          )}
+
+          {reservation && (
+            <BookingSummaryDialog
+              reservation={reservation}
+              open={summaryOpen}
+              onOpenChange={setSummaryOpen}
+            />
           )}
 
           {checkingPayment && (
