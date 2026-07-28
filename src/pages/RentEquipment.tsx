@@ -348,7 +348,7 @@ const RentEquipment = () => {
       const isReturning = Boolean(data?.returning);
       setReturning(isReturning);
       if (isReturning) {
-        toast.success("Welcome back — we recognise you.", { duration: 1800 });
+        toast.success("Welcome back — we recognise you.", { duration: 5000 });
         if (data?.fullName && !fullName) setFullName(data.fullName);
         if (data?.phone && !phone) setPhone(String(data.phone).replace(/^\+234/, ""));
         if (data?.status === "rejected") {
@@ -361,7 +361,7 @@ const RentEquipment = () => {
           if (data?.customerId) setCustomerId(data.customerId);
         }
       } else {
-        toast("A new face — lovely to have you here.", { duration: 1800 });
+        toast("A new face — lovely to have you here.", { duration: 5000 });
         setKycStatus("idle");
         setRejectionReason(null);
       }
@@ -827,6 +827,17 @@ const RentEquipment = () => {
                       {booking.reservation.days > 1 ? "s" : ""} rental, pickup and call time stay as
                       booked. Add gear or swap for equal-or-higher value — we'll only charge the
                       difference.
+                    </p>
+                    <p className="mt-2 rounded-md border border-border bg-muted/50 px-3 py-2 text-foreground/80">
+                      Rental dates can't be changed once payment has been made. Need a different
+                      date? Write to us at{" "}
+                      <a
+                        className="font-semibold text-foreground underline decoration-primary decoration-2 underline-offset-2"
+                        href="mailto:cx@everyonecanlight.com"
+                      >
+                        cx@everyonecanlight.com
+                      </a>
+                      .
                     </p>
                   </div>
 
