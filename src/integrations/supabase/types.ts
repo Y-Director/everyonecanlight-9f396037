@@ -226,10 +226,13 @@ export type Database = {
           created_at: string
           currency: string
           customer_id: string | null
+          damages_notes: string | null
+          damages_recorded: boolean
           days: number
           end_date: string | null
           id: string
           items: Json
+          job_outcome: string | null
           location: string
           paid_at: string | null
           reference: string
@@ -251,10 +254,13 @@ export type Database = {
           created_at?: string
           currency?: string
           customer_id?: string | null
+          damages_notes?: string | null
+          damages_recorded?: boolean
           days?: number
           end_date?: string | null
           id?: string
           items?: Json
+          job_outcome?: string | null
           location: string
           paid_at?: string | null
           reference: string
@@ -276,10 +282,13 @@ export type Database = {
           created_at?: string
           currency?: string
           customer_id?: string | null
+          damages_notes?: string | null
+          damages_recorded?: boolean
           days?: number
           end_date?: string | null
           id?: string
           items?: Json
+          job_outcome?: string | null
           location?: string
           paid_at?: string | null
           reference?: string
@@ -337,6 +346,68 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      staff_members: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          date_joined: string
+          email: string
+          emergency_contact_name: string | null
+          emergency_contact_phone: string | null
+          full_name: string
+          id: string
+          is_light_operator: boolean
+          phone: string
+          position: string
+          runner_id: string | null
+          status: string
+          unit: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          date_joined?: string
+          email: string
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          full_name: string
+          id?: string
+          is_light_operator?: boolean
+          phone: string
+          position?: string
+          runner_id?: string | null
+          status?: string
+          unit?: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          date_joined?: string
+          email?: string
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          full_name?: string
+          id?: string
+          is_light_operator?: boolean
+          phone?: string
+          position?: string
+          runner_id?: string | null
+          status?: string
+          unit?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "staff_members_runner_id_fkey"
+            columns: ["runner_id"]
+            isOneToOne: false
+            referencedRelation: "runners"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
