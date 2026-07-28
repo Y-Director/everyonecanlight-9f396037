@@ -214,7 +214,7 @@ const RentalsSection = () => {
 
   return (
     <>
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div>
         <div className="grid sm:grid-cols-3 gap-4">
           {[
             { label: "Reservations", value: rows.length },
