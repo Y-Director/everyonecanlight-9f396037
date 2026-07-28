@@ -713,8 +713,8 @@ const RentEquipment = () => {
               {step === "kyc" && (
                 <>
                   <p className="text-sm text-foreground/60">
-                    Just a quick check so we know who the gear is going out with. Enter your email
-                    and we'll pick up from where you left off.
+                    Start with your email address — we'll check if you've rented with us before and
+                    only ask for what's still missing.
                   </p>
                   <div className="grid gap-4">
                     <div>
