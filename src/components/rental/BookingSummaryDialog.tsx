@@ -76,13 +76,14 @@ const BookingSummaryDialog = ({
         >
           <div className="flex items-center justify-between">
             <img src={logo} alt="Everyone Can Light" className="h-6 w-auto" />
-            <span className="mr-7 inline-flex items-center gap-1.5 rounded-full bg-emerald-500/15 px-2.5 py-1 text-[10px] uppercase tracking-wider text-emerald-400">
-              <CheckCircle2 className="w-3 h-3" /> Confirmed
+            <span className="mr-7 inline-flex items-center gap-1.5 rounded-full border border-emerald-400/60 bg-emerald-500/25 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-emerald-300 shadow-[0_0_0_3px_rgba(16,185,129,0.12)]">
+              <CheckCircle2 className="w-3.5 h-3.5" /> Confirmed
             </span>
           </div>
 
-          <h2 className="mt-5 text-lg font-semibold">Rental Summary</h2>
-          <p className="text-xs text-white/50">Hi {name}, your gear is locked in.</p>
+          <h2 className="mt-5 text-lg font-semibold">Rental Confirmation</h2>
+          <p className="text-xs text-white/60">Your booking has been confirmed</p>
+          <p className="text-xs text-white/45">Hi {name}, your gear is locked in.</p>
 
           <div className="mt-4 rounded-lg border border-white/15 px-4 py-3">
             <div className="text-[10px] uppercase tracking-wider text-white/45">

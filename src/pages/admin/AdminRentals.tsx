@@ -10,6 +10,7 @@ import {
   UserCog,
   Users,
   Contact,
+  Zap,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -26,15 +27,16 @@ type Account = {
   sections: string[];
 };
 
-type TabKey = "rentals" | "masterclass" | "courses" | "team" | "admins";
+type TabKey = "rentals" | "masterclass" | "courses" | "team" | "operators" | "admins";
 
 const TABS: { key: TabKey; label: string; icon: typeof Package }[] = [
-  { key: "rentals", label: "Rentals", icon: Package },
-  { key: "masterclass", label: "Masterclass", icon: Users },
-  { key: "courses", label: "Courses", icon: GraduationCap },
-  { key: "team", label: "Team Members", icon: Contact },
   { key: "admins", label: "Admins", icon: UserCog },
-];
+  { key: "courses", label: "Courses", icon: GraduationCap },
+  { key: "operators", label: "Lighting Operators", icon: Zap },
+  { key: "masterclass", label: "Masterclass", icon: Users },
+  { key: "rentals", label: "Rentals", icon: Package },
+  { key: "team", label: "Team Members", icon: Contact },
+].sort((a, b) => a.label.localeCompare(b.label)) as { key: TabKey; label: string; icon: typeof Package }[];
 
 const AdminRentals = () => {
   const navigate = useNavigate();
@@ -70,7 +72,11 @@ const AdminRentals = () => {
   const allowed = useMemo(() => {
     if (!account) return [] as TabKey[];
     if (account.is_super) return TABS.map((t) => t.key);
-    return TABS.filter((t) => t.key !== "admins" && account.sections.includes(t.key)).map((t) => t.key);
+    return TABS.filter(
+      (t) =>
+        t.key !== "admins" &&
+        account.sections.includes(t.key === "operators" ? "team" : t.key),
+    ).map((t) => t.key);
   }, [account]);
 
   useEffect(() => {
@@ -159,7 +165,8 @@ const AdminRentals = () => {
         {tab === "rentals" && <RentalsSection />}
         {tab === "masterclass" && <MasterclassSection />}
         {tab === "courses" && <CoursesSection />}
-        {tab === "team" && <TeamSection />}
+        {tab === "team" && <TeamSection view="team" />}
+        {tab === "operators" && <TeamSection view="operators" />}
         {tab === "admins" && account.is_super && <AdminsSection />}
       </div>
     </main>
