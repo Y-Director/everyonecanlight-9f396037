@@ -971,9 +971,24 @@ const RentEquipment = () => {
                     <div>
                       <Label className="text-xs uppercase tracking-wider text-foreground/50">
                         LOCATION TO BE USED
+                        <span className="text-destructive"> *</span>
                       </Label>
-                      <Select value={location} onValueChange={setLocation}>
-                        <SelectTrigger className="mt-2">
+                      <Select
+                        value={location}
+                        onValueChange={(v) => {
+                          setLocation(v);
+                          touch("location");
+                        }}
+                      >
+                        <SelectTrigger
+                          className={cn(
+                            "mt-2",
+                            touched.location &&
+                              !location &&
+                              "border-destructive focus:ring-destructive"
+                          )}
+                          onBlur={() => touch("location")}
+                        >
                           <SelectValue placeholder="Select location" />
                         </SelectTrigger>
                         <SelectContent>
@@ -984,6 +999,11 @@ const RentEquipment = () => {
                           ))}
                         </SelectContent>
                       </Select>
+                      {touched.location && !location && (
+                        <p className="mt-1.5 text-xs text-destructive">
+                          Select where the equipment will be used.
+                        </p>
+                      )}
                     </div>
                     <div>
                       <Label
@@ -991,6 +1011,7 @@ const RentEquipment = () => {
                         className="text-xs uppercase tracking-wider text-foreground/50"
                       >
                         Call time for pickup
+                        <span className="text-destructive"> *</span>
                       </Label>
                       <Input
                         id="call-time"
@@ -999,9 +1020,20 @@ const RentEquipment = () => {
                         step={900}
                         value={callTime}
                         onChange={(e) => setCallTime(e.target.value)}
-                        className="mt-2"
+                        onBlur={() => touch("callTime")}
+                        className={cn(
+                          "mt-2 [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:opacity-60 [&::-webkit-calendar-picker-indicator]:hover:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer",
+                          touched.callTime &&
+                            !callTime &&
+                            "border-destructive focus-visible:ring-destructive"
+                        )}
                       />
-                      <p className="mt-2 text-xs text-foreground/55">
+                      {touched.callTime && !callTime && (
+                        <p className="mt-1.5 text-xs text-destructive">
+                          Choose a pickup call time.
+                        </p>
+                      )}
+                      <p className="mt-2 text-xs text-foreground/70">
                         The Light Bank opens from 5:30 AM. Note: returns after 11:00 PM attract a
                         full extra day's payment.
                       </p>
@@ -1052,8 +1084,21 @@ const RentEquipment = () => {
 
                   <Button
                     className="w-full"
-                    disabled={!detailsValid}
-                    onClick={() => setStep("kyc")}
+                    onClick={() => {
+                      if (!detailsValid) {
+                        setTouched((t) => ({ ...t, location: true, callTime: true }));
+                        toast("Complete your details", {
+                          description: !lineItems.length
+                            ? "Add at least one item to your gear list."
+                            : !location
+                              ? "Select the location the equipment will be used."
+                              : "Choose a pickup call time.",
+                          duration: 4000,
+                        });
+                        return;
+                      }
+                      setStep("kyc");
+                    }}
                   >
                     Continue to Reservation
                   </Button>
@@ -1062,11 +1107,11 @@ const RentEquipment = () => {
 
               {!amending && step === "kyc" && (
                 <>
-                  <p className="text-sm text-foreground/60">
+                  <p className="text-sm text-foreground/75">
                     Start with your email address — we'll check if you've rented with us before and
                     only ask for what's still missing.
                   </p>
-                  <p className="text-xs text-foreground/50">
+                  <p className="text-xs text-foreground/65">
                     Fields marked <span className="text-destructive">*</span> are required.
                   </p>
                   <div className="grid gap-4">
@@ -1236,6 +1281,7 @@ const RentEquipment = () => {
                             <SelectContent>
                               <SelectItem value="Passport">International Passport</SelectItem>
                               <SelectItem value="Drivers License">Driver's License</SelectItem>
+                              <SelectItem value="NIN">NIN Slip or NIN Card</SelectItem>
                             </SelectContent>
                           </Select>
                           {returning === false && touched.idType && !idType && (
