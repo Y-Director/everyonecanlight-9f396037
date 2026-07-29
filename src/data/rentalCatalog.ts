@@ -49,6 +49,16 @@ import nanlitePavotube30c from "@/assets/rental/Nanlite_Pavotube_II_30C_RGB_Tube
 import octabox90 from "@/assets/rental/Octabox_90cm.png.asset.json";
 import superClampStud from "@/assets/rental/Super_Clamp_with_Stud.png.asset.json";
 import vMountBattery from "@/assets/rental/V-Mount_Battery.png.asset.json";
+import aputureB7c6 from "@/assets/rental/Aputure_B7C_Set_of_6.png.asset.json";
+import godoxC7r6 from "@/assets/rental/Godox_C7R_Set_of_6.png.asset.json";
+import amaranPt2c from "@/assets/rental/Amaran_PT2c_RGBWW_Pixel_Tube_2_ft.png.asset.json";
+import amaranPt4c from "@/assets/rental/Amaran_PT4c_RGBWW_Pixel_Tube_4_ft.png.asset.json";
+import amaranT2c from "@/assets/rental/Amaran_T2c_RGBWW_Tube_Bar_2_ft.png.asset.json";
+import amaranT4c from "@/assets/rental/Amaran_T4c_RGBWW_Tube_Bar_4_ft.png.asset.json";
+import godoxTl30 from "@/assets/rental/Godox_TL30_RGB_Tube_Light.png.asset.json";
+import godoxTl60 from "@/assets/rental/Godox_TL60_RGB_Tube_Light.png.asset.json";
+import aputureFresnel2x from "@/assets/rental/Aputure_Fresnel_2X_Lens_Mount.png.asset.json";
+import nanlitePavotubeT87c from "@/assets/rental/Nanlite_Pavotube_T8-7C_RGB_Tube_4_ft.png.asset.json";
 
 export type RentalCategory =
   | "Lights"
@@ -133,6 +143,16 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
     octabox90,
     superClampStud,
     vMountBattery,
+    aputureB7c6,
+    godoxC7r6,
+    amaranPt2c,
+    amaranPt4c,
+    amaranT2c,
+    amaranT4c,
+    godoxTl30,
+    godoxTl60,
+    aputureFresnel2x,
+    nanlitePavotubeT87c,
   ].map((a) => [norm(a.original_filename.replace(/\.png$/i, "")), a.url])
 );
 
