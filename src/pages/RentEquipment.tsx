@@ -1152,7 +1152,7 @@ const RentEquipment = () => {
                         </p>
                       )}
                       {!checkingAccount && returning === true && (
-                        <p className="mt-2 text-xs text-primary">
+                        <p className="mt-2 rounded-md border border-primary/30 bg-primary/10 px-3 py-2 text-xs text-foreground/90">
                           Welcome back — your ID is already on file, nothing else needed.
                         </p>
                       )}
