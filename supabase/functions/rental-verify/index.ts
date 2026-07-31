@@ -1,6 +1,8 @@
 import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors'
 import { createClient } from 'npm:@supabase/supabase-js@2'
 import { resolveOperator } from '../_shared/operator.ts'
+import { logActivity, sendTemplate } from '../_shared/activity.ts'
+import { sendConfirmationEmail } from '../_shared/bookingEmail.ts'
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {
@@ -8,65 +10,76 @@ const json = (body: unknown, status = 200) =>
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   })
 
+// Paid-but-broken bookings: flag them, tell the customer, alert the admins.
 // deno-lint-ignore no-explicit-any
-const sendConfirmationEmail = async (supabase: any, reservationId: string) => {
+const raiseIncident = async (
+  // deno-lint-ignore no-explicit-any
+  supabase: any,
+  args: {
+    reference: string
+    kind: string
+    details: string
+    amount: number
+    email?: string | null
+    fullName?: string | null
+    reservationId?: string | null
+  },
+) => {
   try {
-    const { data: r } = await supabase
-      .from('rental_reservations')
-      .select(
-        'id, reference, booking_code, contact_name, contact_email, items, days, start_date, end_date, location, call_time, total, confirmation_sent_at, runner_id, rental_customers(full_name, email)',
-      )
-      .eq('id', reservationId)
+    const { data: existing } = await supabase
+      .from('payment_incidents')
+      .select('id, customer_notified_at')
+      .eq('reference', args.reference)
       .maybeSingle()
 
-    if (!r || r.confirmation_sent_at) return
-
-    const to = String(r.contact_email ?? r.rental_customers?.email ?? '').trim().toLowerCase()
-    if (!to) {
-      console.error('No recipient email on reservation', reservationId)
-      return
-    }
-
-    const operator = await resolveOperator(supabase, r.runner_id)
-
-    const res = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/send-transactional-email`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
-      },
-      body: JSON.stringify({
-        templateName: 'booking-confirmation',
-        recipientEmail: to,
-        idempotencyKey: `booking-confirmation-${r.id}`,
-        templateData: {
-          customerName: r.contact_name ?? r.rental_customers?.full_name ?? null,
-          bookingCode: r.booking_code,
-          reference: r.reference,
-          items: r.items ?? [],
-          days: r.days,
-          startDate: r.start_date,
-          endDate: r.end_date,
-          location: r.location,
-          callTime: r.call_time,
-          total: r.total,
-          operatorName: operator?.name ?? null,
-          operatorPhone: operator?.phone ?? null,
+    const { data: incident } = await supabase
+      .from('payment_incidents')
+      .upsert(
+        {
+          kind: args.kind,
+          reference: args.reference,
+          email: args.email ?? null,
+          full_name: args.fullName ?? null,
+          amount: args.amount,
+          reservation_id: args.reservationId ?? null,
+          status: 'open',
+          details: args.details,
         },
-      }),
-    })
+        { onConflict: 'reference' },
+      )
+      .select('id')
+      .single()
 
-    if (!res.ok) {
-      console.error('Confirmation email failed', res.status, await res.text())
-      return
+    if (args.email && !existing?.customer_notified_at) {
+      const sent = await sendTemplate('payment-issue', args.email, `payment-issue-${args.reference}`, {
+        customerName: args.fullName ?? null,
+        reference: args.reference,
+        amount: args.amount,
+      })
+      if (sent && incident?.id) {
+        await supabase
+          .from('payment_incidents')
+          .update({ customer_notified_at: new Date().toISOString() })
+          .eq('id', incident.id)
+      }
     }
 
-    await supabase
-      .from('rental_reservations')
-      .update({ confirmation_sent_at: new Date().toISOString() })
-      .eq('id', r.id)
+    await logActivity(supabase, {
+      category: 'payments',
+      event: 'payment_issue',
+      title: 'Payment received but booking did not complete',
+      summary: args.details,
+      severity: 'critical',
+      entityType: 'payment_incident',
+      entityId: incident?.id ?? null,
+      lines: [
+        { label: 'Payment reference', value: args.reference },
+        { label: 'Customer', value: `${args.fullName ?? '—'} · ${args.email ?? 'no email'}` },
+        { label: 'Amount', value: `NGN ${Number(args.amount).toLocaleString('en-NG')}` },
+      ],
+    })
   } catch (e) {
-    console.error('sendConfirmationEmail error', e)
+    console.error('raiseIncident failed', e)
   }
 }
 
@@ -181,7 +194,7 @@ Deno.serve(async (req) => {
     if (paid) {
       const { data: row } = await supabase
         .from('rental_reservations')
-        .select('id, total')
+        .select('id, total, booking_code, contact_email, contact_name')
         .eq('reference', reference)
         .maybeSingle()
       if (row) {
@@ -189,7 +202,44 @@ Deno.serve(async (req) => {
           .from('rental_reservations')
           .update({ amount_paid: row.total })
           .eq('id', row.id)
-        await sendConfirmationEmail(supabase, row.id)
+        const emailed = await sendConfirmationEmail(supabase, row.id)
+        if (!emailed) {
+          await raiseIncident(supabase, {
+            reference,
+            kind: 'confirmation_email_failed',
+            details:
+              'Payment succeeded and the booking is confirmed, but the confirmation email could not be delivered.',
+            amount: Math.round(Number(data?.data?.amount ?? row.total * 100) / 100),
+            email: row.contact_email,
+            fullName: row.contact_name,
+            reservationId: row.id,
+          })
+        } else {
+          await logActivity(supabase, {
+            category: 'rentals',
+            event: 'booking_confirmed',
+            title: `Rental booking confirmed — ${row.booking_code ?? reference}`,
+            summary: `${row.contact_name ?? 'A customer'} paid NGN ${Number(row.total).toLocaleString('en-NG')}.`,
+            entityType: 'rental_reservation',
+            entityId: row.id,
+            lines: [
+              { label: 'Booking reference', value: String(row.booking_code ?? reference) },
+              { label: 'Customer', value: `${row.contact_name ?? '—'} · ${row.contact_email ?? '—'}` },
+            ],
+          })
+        }
+      } else {
+        // Money in, no reservation row: the customer must not be left in the dark.
+        const payer = data?.data?.customer
+        await raiseIncident(supabase, {
+          reference,
+          kind: 'paid_without_reservation',
+          details:
+            'Paystack confirmed this payment but no rental reservation exists for the reference. Needs manual booking.',
+          amount: Math.round(Number(data?.data?.amount ?? 0) / 100),
+          email: payer?.email ?? null,
+          fullName: [payer?.first_name, payer?.last_name].filter(Boolean).join(' ') || null,
+        })
       }
     }
 

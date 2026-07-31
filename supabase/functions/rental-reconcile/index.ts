@@ -127,8 +127,7 @@ Deno.serve(async (req) => {
           summary: `${flagged} successful payment(s) had unconfirmed bookings. ${recovered} were repaired automatically.`,
           severity: recovered === flagged ? 'warning' : 'critical',
           actorEmail,
-          category_hint: undefined,
-        } as never)
+        })
       }
 
       const { data: incidents } = await supabase
