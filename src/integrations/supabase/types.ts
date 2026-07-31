@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      activity_log: {
+        Row: {
+          actor_email: string | null
+          category: string
+          created_at: string
+          entity_id: string | null
+          entity_type: string | null
+          event: string
+          id: string
+          metadata: Json
+          notified_emails: string[]
+          severity: string
+          summary: string | null
+          title: string
+        }
+        Insert: {
+          actor_email?: string | null
+          category: string
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string | null
+          event: string
+          id?: string
+          metadata?: Json
+          notified_emails?: string[]
+          severity?: string
+          summary?: string | null
+          title: string
+        }
+        Update: {
+          actor_email?: string | null
+          category?: string
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string | null
+          event?: string
+          id?: string
+          metadata?: Json
+          notified_emails?: string[]
+          severity?: string
+          summary?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
       admin_accounts: {
         Row: {
           created_at: string
@@ -262,6 +307,74 @@ export type Database = {
           whatsapp?: string
         }
         Relationships: []
+      }
+      payment_incidents: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          customer_notified_at: string | null
+          details: string | null
+          email: string | null
+          full_name: string | null
+          id: string
+          kind: string
+          metadata: Json
+          provider: string
+          reference: string
+          reservation_id: string | null
+          resolved_at: string | null
+          resolved_by: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          customer_notified_at?: string | null
+          details?: string | null
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          kind: string
+          metadata?: Json
+          provider?: string
+          reference: string
+          reservation_id?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          customer_notified_at?: string | null
+          details?: string | null
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          kind?: string
+          metadata?: Json
+          provider?: string
+          reference?: string
+          reservation_id?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_incidents_reservation_id_fkey"
+            columns: ["reservation_id"]
+            isOneToOne: false
+            referencedRelation: "rental_reservations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       rental_amendments: {
         Row: {
