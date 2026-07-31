@@ -484,7 +484,9 @@ const RentEquipment = () => {
     }
   };
 
-  const detailsValid = Boolean(location) && Boolean(callTime) && lineItems.length > 0;
+  const datesValid = Boolean(dates && dates.length > 0);
+  const detailsValid =
+    datesValid && Boolean(location) && Boolean(callTime) && lineItems.length > 0;
   const kycBaseValid =
     fullName.trim().length > 1 &&
     /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) &&
@@ -933,20 +935,40 @@ const RentEquipment = () => {
                   <div>
                     <Label className="text-xs uppercase tracking-wider text-foreground/50">
                       Rental dates
+                      <span className="text-destructive"> *</span>
                     </Label>
                     <p className="mt-1 text-xs text-foreground/55">
                       Tip: tap each day you need the gear — select multiple dates for a multi-day
                       shoot.
                     </p>
-                    <div className="mt-3 rounded-lg border border-border">
+                    <div
+                      className={cn(
+                        "mt-3 rounded-lg border",
+                        touched.dates && !datesValid ? "border-destructive" : "border-border",
+                      )}
+                    >
                       <Calendar
                         mode="multiple"
                         selected={dates}
-                        onSelect={setDates}
+                        onSelect={(d) => {
+                          setDates(d);
+                          touch("dates");
+                        }}
                         disabled={{ before: new Date() }}
                         className={cn("p-3 pointer-events-auto")}
+                        classNames={{
+                          day_today:
+                            "bg-transparent text-foreground ring-1 ring-inset ring-primary/70 font-medium",
+                          day_selected:
+                            "bg-primary text-primary-foreground ring-0 hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+                        }}
                       />
                     </div>
+                    {touched.dates && !datesValid && (
+                      <p className="mt-2 text-xs text-destructive">
+                        Select at least one rental date.
+                      </p>
+                    )}
                     <div className="mt-3 flex items-center justify-between">
                       <span className="text-sm text-foreground/70">Rental days</span>
                       {dates && dates.length > 0 ? (
@@ -1086,13 +1108,15 @@ const RentEquipment = () => {
                     className="w-full"
                     onClick={() => {
                       if (!detailsValid) {
-                        setTouched((t) => ({ ...t, location: true, callTime: true }));
+                        setTouched((t) => ({ ...t, dates: true, location: true, callTime: true }));
                         toast("Complete your details", {
                           description: !lineItems.length
                             ? "Add at least one item to your gear list."
-                            : !location
-                              ? "Select the location the equipment will be used."
-                              : "Choose a pickup call time.",
+                            : !datesValid
+                              ? "Pick the date (or dates) you need the gear."
+                              : !location
+                                ? "Select the location the equipment will be used."
+                                : "Choose a pickup call time.",
                           duration: 4000,
                         });
                         return;

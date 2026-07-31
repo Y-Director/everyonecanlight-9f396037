@@ -1,5 +1,9 @@
 import type { ComponentType } from 'npm:react@18.3.1'
 import { template as bookingConfirmation } from './booking-confirmation.tsx'
+import { template as adminActivity } from './admin-activity.tsx'
+import { template as paymentIssue } from './payment-issue.tsx'
+import { template as identityApproved } from './identity-approved.tsx'
+import { template as identityRejected } from './identity-rejected.tsx'
 
 export interface TemplateEntry {
   // deno-lint-ignore no-explicit-any
@@ -14,4 +18,8 @@ export interface TemplateEntry {
 
 export const TEMPLATES: Record<string, TemplateEntry> = {
   'booking-confirmation': bookingConfirmation,
+  'admin-activity': adminActivity,
+  'payment-issue': paymentIssue,
+  'identity-approved': identityApproved,
+  'identity-rejected': identityRejected,
 }

@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
+import { logActivity } from "@/lib/activityLog";
 
 export const SECTIONS = ["rentals", "masterclass", "courses", "team", "inventory"] as const;
 export type Section = (typeof SECTIONS)[number];
@@ -61,6 +62,14 @@ const AdminsSection = () => {
       return;
     }
     toast.success("Sub-admin added");
+    void logActivity({
+      category: "admins",
+      event: "admin_added",
+      title: `Sub-admin added — ${value}`,
+      summary: `Sections: ${newSections.join(", ") || "none"}`,
+      severity: "warning",
+      lines: [{ label: "Sections", value: newSections.join(", ") || "none" }],
+    });
     setEmail("");
     setNewSections(["rentals"]);
     load();
@@ -82,6 +91,12 @@ const AdminsSection = () => {
       return;
     }
     toast.success("Sub-admin removed");
+    void logActivity({
+      category: "admins",
+      event: "admin_removed",
+      title: `Sub-admin removed — ${row.email}`,
+      severity: "warning",
+    });
     load();
   };
 

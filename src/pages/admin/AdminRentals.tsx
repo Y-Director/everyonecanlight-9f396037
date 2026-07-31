@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Boxes,
+  BellRing,
   Crown,
   GraduationCap,
   Loader2,
@@ -21,6 +22,7 @@ import CoursesSection from "@/components/admin/CoursesSection";
 import AdminsSection from "@/components/admin/AdminsSection";
 import TeamSection from "@/components/admin/TeamSection";
 import InventorySection from "@/components/admin/InventorySection";
+import NotificationsSection from "@/components/admin/NotificationsSection";
 
 type Account = {
   email: string;
@@ -29,7 +31,15 @@ type Account = {
   sections: string[];
 };
 
-type TabKey = "rentals" | "masterclass" | "courses" | "team" | "operators" | "admins" | "inventory";
+type TabKey =
+  | "rentals"
+  | "masterclass"
+  | "courses"
+  | "team"
+  | "operators"
+  | "admins"
+  | "inventory"
+  | "notifications";
 
 const TABS: { key: TabKey; label: string; icon: typeof Package }[] = [
   { key: "admins", label: "Admins", icon: UserCog },
@@ -37,6 +47,7 @@ const TABS: { key: TabKey; label: string; icon: typeof Package }[] = [
   { key: "inventory", label: "Inventory", icon: Boxes },
   { key: "operators", label: "Lighting Operators", icon: Zap },
   { key: "masterclass", label: "Masterclass", icon: Users },
+  { key: "notifications", label: "Notifications", icon: BellRing },
   { key: "rentals", label: "Rentals", icon: Package },
   { key: "team", label: "Team Members", icon: Contact },
 ].sort((a, b) => a.label.localeCompare(b.label)) as { key: TabKey; label: string; icon: typeof Package }[];
@@ -78,7 +89,8 @@ const AdminRentals = () => {
     return TABS.filter(
       (t) =>
         t.key !== "admins" &&
-        account.sections.includes(t.key === "operators" ? "team" : t.key),
+        (t.key === "notifications" ||
+          account.sections.includes(t.key === "operators" ? "team" : t.key)),
     ).map((t) => t.key);
   }, [account]);
 
@@ -171,6 +183,7 @@ const AdminRentals = () => {
         {tab === "team" && <TeamSection view="team" />}
         {tab === "operators" && <TeamSection view="operators" />}
         {tab === "inventory" && <InventorySection />}
+        {tab === "notifications" && <NotificationsSection />}
         {tab === "admins" && account.is_super && <AdminsSection />}
       </div>
     </main>
