@@ -227,6 +227,20 @@ const RentalsSection = () => {
       return;
     }
     toast.success(`Marked as ${fulfilmentLabel(value).toLowerCase()}`);
+    void logActivity({
+      category: "rentals",
+      event: "fulfilment_updated",
+      title: `Booking ${row.booking_code ?? row.reference} marked ${fulfilmentLabel(value).toLowerCase()}`,
+      summary: `${row.contact_name ?? "Customer"} · ${naira(row.total)}`,
+      severity: value === "attention_needed" ? "critical" : "info",
+      entityType: "rental_reservation",
+      entityId: row.id,
+      lines: [
+        { label: "Booking reference", value: String(row.booking_code ?? row.reference) },
+        { label: "Customer", value: `${row.contact_name ?? "—"} · ${row.contact_email ?? "—"}` },
+        { label: "New status", value: fulfilmentLabel(value) },
+      ],
+    });
   };
 
   useEffect(() => {
