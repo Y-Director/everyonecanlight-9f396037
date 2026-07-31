@@ -1108,13 +1108,15 @@ const RentEquipment = () => {
                     className="w-full"
                     onClick={() => {
                       if (!detailsValid) {
-                        setTouched((t) => ({ ...t, location: true, callTime: true }));
+                        setTouched((t) => ({ ...t, dates: true, location: true, callTime: true }));
                         toast("Complete your details", {
                           description: !lineItems.length
                             ? "Add at least one item to your gear list."
-                            : !location
-                              ? "Select the location the equipment will be used."
-                              : "Choose a pickup call time.",
+                            : !datesValid
+                              ? "Pick the date (or dates) you need the gear."
+                              : !location
+                                ? "Select the location the equipment will be used."
+                                : "Choose a pickup call time.",
                           duration: 4000,
                         });
                         return;
