@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
+import { logActivity } from "@/lib/activityLog";
 
 export const SECTIONS = ["rentals", "masterclass", "courses", "team", "inventory"] as const;
 export type Section = (typeof SECTIONS)[number];
