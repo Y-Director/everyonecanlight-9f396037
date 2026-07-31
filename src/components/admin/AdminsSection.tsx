@@ -61,6 +61,14 @@ const AdminsSection = () => {
       return;
     }
     toast.success("Sub-admin added");
+    void logActivity({
+      category: "admins",
+      event: "admin_added",
+      title: `Sub-admin added — ${value}`,
+      summary: `Sections: ${newSections.join(", ") || "none"}`,
+      severity: "warning",
+      lines: [{ label: "Sections", value: newSections.join(", ") || "none" }],
+    });
     setEmail("");
     setNewSections(["rentals"]);
     load();
@@ -82,6 +90,12 @@ const AdminsSection = () => {
       return;
     }
     toast.success("Sub-admin removed");
+    void logActivity({
+      category: "admins",
+      event: "admin_removed",
+      title: `Sub-admin removed — ${row.email}`,
+      severity: "warning",
+    });
     load();
   };
 
