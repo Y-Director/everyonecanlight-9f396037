@@ -307,6 +307,12 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
       return;
     }
     toast.success("Team member added");
+    void logActivity({
+      category: "team",
+      event: "member_added",
+      title: `Team member added — ${form.full_name.trim()}`,
+      summary: `${form.unit} · ${form.position}${form.is_light_operator ? " · Lighting Operator" : ""}`,
+    });
     setForm({ ...emptyForm });
     setAvatarFile(null);
     load();
@@ -330,6 +336,12 @@ const TeamSection = ({ view = "all" }: { view?: "all" | "team" | "operators" }) 
       return;
     }
     toast.success("Team member removed");
+    void logActivity({
+      category: "team",
+      event: "member_removed",
+      title: `Team member removed — ${row.full_name}`,
+      severity: "warning",
+    });
     load();
   };
 
