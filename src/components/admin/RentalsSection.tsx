@@ -17,6 +17,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
+import { logActivity } from "@/lib/activityLog";
 
 type GearItem = { name: string; qty: number; price: number; lineTotal: number };
 
@@ -177,7 +178,31 @@ const RentalsSection = () => {
       toast.error("Could not update this identity");
       return;
     }
-    toast.success(status === "verified" ? "Identity approved" : "Identity rejected");
+    const approved = status === "verified";
+    toast.success(approved ? "Identity approved" : "Identity rejected");
+    // Tell the customer, log it, and email the admins.
+    void logActivity({
+      category: "identity",
+      event: approved ? "identity_approved" : "identity_rejected",
+      title: `Identity ${approved ? "approved" : "rejected"} — ${row.full_name}`,
+      summary: approved
+        ? `${row.full_name} (${row.email}) can now complete rentals.`
+        : `${row.full_name} (${row.email}) was rejected: ${reason ?? "no reason given"}.`,
+      severity: approved ? "info" : "warning",
+      entityType: "rental_customer",
+      entityId: row.id,
+      lines: [
+        { label: "Customer", value: `${row.full_name} · ${row.email}` },
+        { label: "ID type", value: row.id_type ?? "—" },
+        ...(approved ? [] : [{ label: "Reason", value: reason ?? "—" }]),
+      ],
+      customer: {
+        email: row.email,
+        templateName: approved ? "identity-approved" : "identity-rejected",
+        templateData: { customerName: row.full_name, reason: reason ?? undefined },
+        idempotencyKey: `identity-${status}-${row.id}-${Date.now()}`,
+      },
+    });
     setRejecting(null);
     loadIdentities();
   };
