@@ -484,7 +484,9 @@ const RentEquipment = () => {
     }
   };
 
-  const detailsValid = Boolean(location) && Boolean(callTime) && lineItems.length > 0;
+  const datesValid = Boolean(dates && dates.length > 0);
+  const detailsValid =
+    datesValid && Boolean(location) && Boolean(callTime) && lineItems.length > 0;
   const kycBaseValid =
     fullName.trim().length > 1 &&
     /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) &&
