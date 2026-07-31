@@ -234,6 +234,12 @@ const InventorySection = () => {
       return;
     }
     toast.success("Item removed");
+    void logActivity({
+      category: "inventory",
+      event: "item_removed",
+      title: "Inventory item removed",
+      severity: "warning",
+    });
     load();
   };
 
