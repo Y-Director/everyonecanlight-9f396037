@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { logActivity } from "@/lib/activityLog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -209,6 +210,17 @@ const InventorySection = () => {
       return;
     }
     toast.success(editing ? "Item updated" : "Item added to inventory");
+    void logActivity({
+      category: "inventory",
+      event: editing ? "item_updated" : "item_added",
+      title: `${editing ? "Inventory item updated" : "Inventory item added"} — ${base.name}`,
+      summary: `${base.manufacturer} · ${base.category} · ${base.location} · ${base.status}`,
+      lines: [
+        { label: "Item", value: String(base.name) },
+        { label: "Manufacturer", value: String(base.manufacturer) },
+        { label: "Status", value: String(base.status) },
+      ],
+    });
     setDialogOpen(false);
     load();
   };
