@@ -22,6 +22,7 @@ import SiteNav from "@/components/SiteNav";
 import BookingSummaryDialog from "@/components/rental/BookingSummaryDialog";
 import BookingStatusCard, { type BookingLookup } from "@/components/rental/BookingStatusCard";
 import ManageBookingDialog from "@/components/rental/ManageBookingDialog";
+import EmailVerifyField from "@/components/rental/EmailVerifyField";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
@@ -135,6 +136,7 @@ const RentEquipment = () => {
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+234");
   const [email, setEmail] = useState("");
+  const [emailVerified, setEmailVerified] = useState(false);
   const [returning, setReturning] = useState<boolean | null>(null);
   const [checkingAccount, setCheckingAccount] = useState(false);
   const [idType, setIdType] = useState("");
@@ -389,6 +391,10 @@ const RentEquipment = () => {
 
   const verifyIdentity = async () => {
     setTouched({ email: true, fullName: true, phone: true, idType: true, idImage: true });
+    if (!emailVerified) {
+      toast.error("Verify your email address first.");
+      return;
+    }
     if (!kycValid) {
       toast.error("Please complete every required field before continuing.");
       return;
@@ -403,6 +409,9 @@ const RentEquipment = () => {
           phone: `${countryCode}${phone.replace(/\D/g, "").replace(/^0/, "")}`,
           idType: idType || undefined,
           idImage: idImage || undefined,
+          endDate: sortedDates.length
+            ? format(sortedDates[sortedDates.length - 1], "yyyy-MM-dd")
+            : null,
         },
       });
       if (error) throw error;
@@ -419,7 +428,15 @@ const RentEquipment = () => {
       }
       setKycStatus(data.status === "rejected" ? "rejected" : "pending");
       setRejectionReason(data.rejectionReason ?? null);
-      if (data.status !== "rejected") setCooldown(300);
+      if (data.status === "rejected") {
+        setCooldown(300);
+        toast.error("We couldn't approve this ID", {
+          description: data.rejectionReason ?? undefined,
+          duration: 6000,
+        });
+      } else {
+        setCooldown(300);
+      }
     } catch {
       toast.error("We could not verify your identity. Please try again.");
     } finally {
@@ -488,6 +505,7 @@ const RentEquipment = () => {
   const detailsValid =
     datesValid && Boolean(location) && Boolean(callTime) && lineItems.length > 0;
   const kycBaseValid =
+    emailVerified &&
     fullName.trim().length > 1 &&
     /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) &&
     phone.replace(/\D/g, "").length >= 10;
@@ -1132,44 +1150,35 @@ const RentEquipment = () => {
               {!amending && step === "kyc" && (
                 <>
                   <p className="text-sm text-foreground/75">
-                    Start with your email address — we'll check if you've rented with us before and
-                    only ask for what's still missing.
+                    Start with your email address — we'll send you a 6-digit code to confirm it,
+                    then only ask for what's still missing.
                   </p>
                   <p className="text-xs text-foreground/65">
                     Fields marked <span className="text-destructive">*</span> are required.
                   </p>
                   <div className="grid gap-4">
                     <div>
-                      <Label htmlFor="kyc-email">
-                        Email address <span className="text-destructive">*</span>
-                      </Label>
-                      <Input
-                        id="kyc-email"
-                        type="email"
-                        required
-                        aria-invalid={touched.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)}
-                        value={email}
-                        onChange={(e) => {
-                          setEmail(e.target.value);
+                      <EmailVerifyField
+                        email={email}
+                        verified={emailVerified}
+                        onEmailChange={(v) => {
+                          setEmail(v);
                           setReturning(null);
                         }}
-                        onBlur={(e) => {
-                          touch("email");
-                          checkEmail(e.target.value);
+                        onUnverified={() => {
+                          setEmailVerified(false);
+                          setReturning(null);
+                          setKycStatus("idle");
+                          setRejectionReason(null);
+                          setCustomerId(null);
                         }}
-                        placeholder="you@example.com"
-                        className={cn(
-                          "mt-2",
-                          touched.email &&
-                            !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) &&
-                            "border-destructive focus-visible:ring-destructive"
-                        )}
+                        onVerified={(v) => {
+                          setEmailVerified(true);
+                          setEmail(v);
+                          touch("email");
+                          checkEmail(v);
+                        }}
                       />
-                      {touched.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) && (
-                        <p className="mt-1.5 text-xs text-destructive">
-                          Enter a valid email address to continue.
-                        </p>
-                      )}
                       {checkingAccount && (
                         <p className="mt-2 text-xs text-foreground/55 flex items-center gap-1">
                           <Loader2 className="w-3 h-3 animate-spin" /> Checking your details…

@@ -425,10 +425,15 @@ export type Database = {
       }
       rental_customers: {
         Row: {
+          auto_confidence: number | null
+          auto_decision: string | null
           created_at: string
           email: string
+          email_verified_at: string | null
           full_name: string
           id: string
+          id_expiry_date: string | null
+          id_extracted: Json
           id_image_path: string | null
           id_type: string | null
           kyc_status: string
@@ -440,10 +445,15 @@ export type Database = {
           verified_at: string | null
         }
         Insert: {
+          auto_confidence?: number | null
+          auto_decision?: string | null
           created_at?: string
           email: string
+          email_verified_at?: string | null
           full_name: string
           id?: string
+          id_expiry_date?: string | null
+          id_extracted?: Json
           id_image_path?: string | null
           id_type?: string | null
           kyc_status?: string
@@ -455,10 +465,15 @@ export type Database = {
           verified_at?: string | null
         }
         Update: {
+          auto_confidence?: number | null
+          auto_decision?: string | null
           created_at?: string
           email?: string
+          email_verified_at?: string | null
           full_name?: string
           id?: string
+          id_expiry_date?: string | null
+          id_extracted?: Json
           id_image_path?: string | null
           id_type?: string | null
           kyc_status?: string
