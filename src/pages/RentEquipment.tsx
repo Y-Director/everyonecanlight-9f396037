@@ -22,6 +22,7 @@ import SiteNav from "@/components/SiteNav";
 import BookingSummaryDialog from "@/components/rental/BookingSummaryDialog";
 import BookingStatusCard, { type BookingLookup } from "@/components/rental/BookingStatusCard";
 import ManageBookingDialog from "@/components/rental/ManageBookingDialog";
+import EmailVerifyField from "@/components/rental/EmailVerifyField";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
