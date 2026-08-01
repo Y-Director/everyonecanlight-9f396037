@@ -433,6 +433,8 @@ const RentEquipment = () => {
           description: data.rejectionReason ?? undefined,
           duration: 6000,
         });
+      } else {
+        setCooldown(300);
       }
     } catch {
       toast.error("We could not verify your identity. Please try again.");
