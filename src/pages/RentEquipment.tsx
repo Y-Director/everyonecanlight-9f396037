@@ -505,6 +505,7 @@ const RentEquipment = () => {
   const detailsValid =
     datesValid && Boolean(location) && Boolean(callTime) && lineItems.length > 0;
   const kycBaseValid =
+    emailVerified &&
     fullName.trim().length > 1 &&
     /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) &&
     phone.replace(/\D/g, "").length >= 10;
