@@ -135,6 +135,7 @@ const RentEquipment = () => {
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+234");
   const [email, setEmail] = useState("");
+  const [emailVerified, setEmailVerified] = useState(false);
   const [returning, setReturning] = useState<boolean | null>(null);
   const [checkingAccount, setCheckingAccount] = useState(false);
   const [idType, setIdType] = useState("");
