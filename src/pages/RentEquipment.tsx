@@ -390,6 +390,10 @@ const RentEquipment = () => {
 
   const verifyIdentity = async () => {
     setTouched({ email: true, fullName: true, phone: true, idType: true, idImage: true });
+    if (!emailVerified) {
+      toast.error("Verify your email address first.");
+      return;
+    }
     if (!kycValid) {
       toast.error("Please complete every required field before continuing.");
       return;
@@ -404,6 +408,9 @@ const RentEquipment = () => {
           phone: `${countryCode}${phone.replace(/\D/g, "").replace(/^0/, "")}`,
           idType: idType || undefined,
           idImage: idImage || undefined,
+          endDate: sortedDates.length
+            ? format(sortedDates[sortedDates.length - 1], "yyyy-MM-dd")
+            : null,
         },
       });
       if (error) throw error;
@@ -420,7 +427,13 @@ const RentEquipment = () => {
       }
       setKycStatus(data.status === "rejected" ? "rejected" : "pending");
       setRejectionReason(data.rejectionReason ?? null);
-      if (data.status !== "rejected") setCooldown(300);
+      if (data.status === "rejected") {
+        setCooldown(300);
+        toast.error("We couldn't approve this ID", {
+          description: data.rejectionReason ?? undefined,
+          duration: 6000,
+        });
+      }
     } catch {
       toast.error("We could not verify your identity. Please try again.");
     } finally {
