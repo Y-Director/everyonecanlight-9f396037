@@ -1148,44 +1148,35 @@ const RentEquipment = () => {
               {!amending && step === "kyc" && (
                 <>
                   <p className="text-sm text-foreground/75">
-                    Start with your email address — we'll check if you've rented with us before and
-                    only ask for what's still missing.
+                    Start with your email address — we'll send you a 6-digit code to confirm it,
+                    then only ask for what's still missing.
                   </p>
                   <p className="text-xs text-foreground/65">
                     Fields marked <span className="text-destructive">*</span> are required.
                   </p>
                   <div className="grid gap-4">
                     <div>
-                      <Label htmlFor="kyc-email">
-                        Email address <span className="text-destructive">*</span>
-                      </Label>
-                      <Input
-                        id="kyc-email"
-                        type="email"
-                        required
-                        aria-invalid={touched.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)}
-                        value={email}
-                        onChange={(e) => {
-                          setEmail(e.target.value);
+                      <EmailVerifyField
+                        email={email}
+                        verified={emailVerified}
+                        onEmailChange={(v) => {
+                          setEmail(v);
                           setReturning(null);
                         }}
-                        onBlur={(e) => {
-                          touch("email");
-                          checkEmail(e.target.value);
+                        onUnverified={() => {
+                          setEmailVerified(false);
+                          setReturning(null);
+                          setKycStatus("idle");
+                          setRejectionReason(null);
+                          setCustomerId(null);
                         }}
-                        placeholder="you@example.com"
-                        className={cn(
-                          "mt-2",
-                          touched.email &&
-                            !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) &&
-                            "border-destructive focus-visible:ring-destructive"
-                        )}
+                        onVerified={(v) => {
+                          setEmailVerified(true);
+                          setEmail(v);
+                          touch("email");
+                          checkEmail(v);
+                        }}
                       />
-                      {touched.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) && (
-                        <p className="mt-1.5 text-xs text-destructive">
-                          Enter a valid email address to continue.
-                        </p>
-                      )}
                       {checkingAccount && (
                         <p className="mt-2 text-xs text-foreground/55 flex items-center gap-1">
                           <Loader2 className="w-3 h-3 animate-spin" /> Checking your details…
