@@ -28,7 +28,7 @@ const EmailVerifyField = ({ email, onEmailChange, verified, onVerified, onUnveri
 
   const clean = email.trim();
   const valid = isValidEmail(clean);
-  const suggestion = valid || clean.length < 5 ? suggestEmail(clean) : null;
+  const suggestion = clean.includes("@") && clean.length > 5 ? suggestEmail(clean) : null;
 
   useEffect(() => {
     if (expiresIn <= 0 && resendIn <= 0) return;
