@@ -376,6 +376,53 @@ export type Database = {
           },
         ]
       }
+      prop_items: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string | null
+          name: string
+          notes: string | null
+          reservation_id: string | null
+          slug: string
+          status: string
+          unit_label: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          name: string
+          notes?: string | null
+          reservation_id?: string | null
+          slug: string
+          status?: string
+          unit_label?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          name?: string
+          notes?: string | null
+          reservation_id?: string | null
+          slug?: string
+          status?: string
+          unit_label?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prop_items_reservation_id_fkey"
+            columns: ["reservation_id"]
+            isOneToOne: false
+            referencedRelation: "rental_reservations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       rental_amendments: {
         Row: {
           added_items: Json
@@ -542,6 +589,7 @@ export type Database = {
           job_outcome: string | null
           location: string
           paid_at: string | null
+          props: Json
           reference: string
           returned_at: string | null
           runner_id: string | null
@@ -549,6 +597,7 @@ export type Database = {
           status: string
           subtotal: number
           summary_image_path: string | null
+          terms_accepted_at: string | null
           total: number
           updated_at: string
         }
@@ -574,6 +623,7 @@ export type Database = {
           job_outcome?: string | null
           location: string
           paid_at?: string | null
+          props?: Json
           reference: string
           returned_at?: string | null
           runner_id?: string | null
@@ -581,6 +631,7 @@ export type Database = {
           status?: string
           subtotal?: number
           summary_image_path?: string | null
+          terms_accepted_at?: string | null
           total?: number
           updated_at?: string
         }
@@ -606,6 +657,7 @@ export type Database = {
           job_outcome?: string | null
           location?: string
           paid_at?: string | null
+          props?: Json
           reference?: string
           returned_at?: string | null
           runner_id?: string | null
@@ -613,6 +665,7 @@ export type Database = {
           status?: string
           subtotal?: number
           summary_image_path?: string | null
+          terms_accepted_at?: string | null
           total?: number
           updated_at?: string
         }
