@@ -13,6 +13,8 @@ import {
   Search,
   ShoppingBag,
   Sparkles,
+  Package,
+  FileText,
   Upload,
   X,
 } from "lucide-react";
@@ -22,6 +24,9 @@ import SiteNav from "@/components/SiteNav";
 import BookingSummaryDialog from "@/components/rental/BookingSummaryDialog";
 import BookingStatusCard, { type BookingLookup } from "@/components/rental/BookingStatusCard";
 import ManageBookingDialog from "@/components/rental/ManageBookingDialog";
+import PropsDialog from "@/components/rental/PropsDialog";
+import RentalTermsDialog from "@/components/rental/RentalTermsDialog";
+import { PERK_THRESHOLD, qualifiesForPerks } from "@/lib/rentalTerms";
 import EmailVerifyField from "@/components/rental/EmailVerifyField";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -163,6 +168,9 @@ const RentEquipment = () => {
   const [savedCart, setSavedCart] = useState<Cart | null>(null);
   const [payingDiff, setPayingDiff] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [propsOpen, setPropsOpen] = useState(false);
+  const [termsOpen, setTermsOpen] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setShowBackToTop(window.scrollY > 400);
@@ -510,6 +518,8 @@ const RentEquipment = () => {
     /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) &&
     phone.replace(/\D/g, "").length >= 10;
   const kycValid = kycBaseValid && (returning === true || (Boolean(idType) && Boolean(idImage)));
+  const perksUnlocked = qualifiesForPerks(total);
+  const perkGap = Math.max(0, PERK_THRESHOLD - total);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -526,6 +536,14 @@ const RentEquipment = () => {
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-3 self-start lg:self-auto">
+              <Button
+                variant="outline"
+                onClick={() => setPropsOpen(true)}
+                className="gap-2 rounded-full px-5"
+              >
+                <Package className="w-4 h-4" />
+                Props
+              </Button>
               <Button
                 variant="outline"
                 onClick={() => setManageOpen(true)}
@@ -558,6 +576,8 @@ const RentEquipment = () => {
               setAmending(false);
             }}
           />
+
+          <PropsDialog open={propsOpen} onOpenChange={setPropsOpen} />
 
           {booking && (
             <BookingStatusCard
@@ -1120,6 +1140,29 @@ const RentEquipment = () => {
                       <span>Total ({days} day{days > 1 ? "s" : ""})</span>
                       <span>{formatNaira(total)}</span>
                     </div>
+                    <div
+                      className={`mt-4 rounded-lg border p-3 text-xs leading-relaxed ${
+                        perksUnlocked
+                          ? "border-primary/40 bg-primary/5 text-foreground/80"
+                          : "border-border bg-[hsl(var(--surface))] text-foreground/65"
+                      }`}
+                    >
+                      {perksUnlocked ? (
+                        <>
+                          <span className="font-semibold text-primary">Perks unlocked.</span> A Lighting
+                          Operator follows your gear to set, and props are free on this booking.
+                        </>
+                      ) : (
+                        <>
+                          <span className="font-semibold text-foreground">
+                            Add {formatNaira(perkGap)} to unlock perks.
+                          </span>{" "}
+                          A Lighting Operator only follows the gear — and props are only free — on rentals
+                          from {formatNaira(PERK_THRESHOLD)} up. Below that, pick-up and monitoring are yours
+                          to handle.
+                        </>
+                      )}
+                    </div>
                   </div>
 
                   <Button
@@ -1486,7 +1529,35 @@ const RentEquipment = () => {
                     <span>Total due</span>
                     <span>{formatNaira(total)}</span>
                   </div>
-                  <Button className="w-full" disabled={paying} onClick={startPayment}>
+                  <div className="rounded-lg border border-border bg-[hsl(var(--surface))] p-3">
+                    <label className="flex items-start gap-3 text-xs leading-relaxed text-foreground/80">
+                      <input
+                        type="checkbox"
+                        checked={termsAccepted}
+                        onChange={(e) => setTermsAccepted(e.target.checked)}
+                        className="mt-0.5 h-4 w-4 accent-[hsl(var(--primary))]"
+                      />
+                      <span>
+                        I have read and accept the rental{" "}
+                        <button
+                          type="button"
+                          onClick={() => setTermsOpen(true)}
+                          className="font-medium text-primary underline decoration-primary underline-offset-2"
+                        >
+                          Terms &amp; Conditions
+                        </button>
+                        .
+                      </span>
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setTermsOpen(true)}
+                      className="mt-2 inline-flex items-center gap-1.5 text-xs text-foreground/60 hover:text-foreground"
+                    >
+                      <FileText className="w-3.5 h-3.5" /> View / download the T&amp;C document
+                    </button>
+                  </div>
+                  <Button className="w-full" disabled={paying || !termsAccepted} onClick={startPayment}>
                     {paying && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
                     Pay {formatNaira(total)}
                   </Button>
@@ -1500,6 +1571,12 @@ const RentEquipment = () => {
         </SheetContent>
       </Sheet>
 
+      <RentalTermsDialog
+        open={termsOpen}
+        onOpenChange={setTermsOpen}
+        accepted={termsAccepted}
+        onAccept={() => setTermsAccepted(true)}
+      />
       {showBackToTop && (
         <button
           type="button"
