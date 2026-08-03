@@ -59,6 +59,15 @@ import godoxTl30 from "@/assets/rental/Godox_TL30_RGB_Tube_Light.png.asset.json"
 import godoxTl60 from "@/assets/rental/Godox_TL60_RGB_Tube_Light.png.asset.json";
 import aputureFresnel2x from "@/assets/rental/Aputure_Fresnel_2X_Lens_Mount.png.asset.json";
 import nanlitePavotubeT87c from "@/assets/rental/Nanlite_Pavotube_T8-7C_RGB_Tube_4_ft.png.asset.json";
+import amaranF21c from "@/assets/rental/Amaran_F21c_Mat_2x1_ft.png.asset.json";
+import amaranF22c from "@/assets/rental/Amaran_F22c_Mat_2x2_ft.png.asset.json";
+import nanlitePjFz60 from "@/assets/rental/Nanlite_PJ-FZ60_Projection_Spotlight_for_Forza_60.png.asset.json";
+import octabox55 from "@/assets/rental/Octabox_55cm.png.asset.json";
+import octabox95 from "@/assets/rental/Octabox_95cm.png.asset.json";
+import parabolic120 from "@/assets/rental/Parabolic_Softbox_120cm.png.asset.json";
+import parabolic150 from "@/assets/rental/Parabolic_Softbox_150cm.png.asset.json";
+import sandbag10kg from "@/assets/rental/Sandbag_10kg.png.asset.json";
+import extensionCable15 from "@/assets/rental/15_ft_Extension_Cable.png.asset.json";
 
 export type RentalCategory =
   | "Lights"
@@ -153,6 +162,15 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
     godoxTl60,
     aputureFresnel2x,
     nanlitePavotubeT87c,
+    amaranF21c,
+    amaranF22c,
+    nanlitePjFz60,
+    octabox55,
+    octabox95,
+    parabolic120,
+    parabolic150,
+    sandbag10kg,
+    extensionCable15,
   ].map((a) => [norm(a.original_filename.replace(/\.png$/i, "")), a.url])
 );
 
