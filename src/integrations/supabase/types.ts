@@ -825,7 +825,33 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      prop_items_public: {
+        Row: {
+          id: string | null
+          image_url: string | null
+          name: string | null
+          slug: string | null
+          status: string | null
+          unit_label: string | null
+        }
+        Insert: {
+          id?: string | null
+          image_url?: string | null
+          name?: string | null
+          slug?: string | null
+          status?: string | null
+          unit_label?: string | null
+        }
+        Update: {
+          id?: string | null
+          image_url?: string | null
+          name?: string | null
+          slug?: string | null
+          status?: string | null
+          unit_label?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       delete_email: {
