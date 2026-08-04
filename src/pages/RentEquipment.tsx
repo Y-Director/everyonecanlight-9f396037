@@ -1146,13 +1146,13 @@ const RentEquipment = () => {
                     <div
                       className={`mt-4 rounded-lg border p-3 text-xs leading-relaxed ${
                         perksUnlocked
-                          ? "border-primary/40 bg-primary/5 text-foreground/80"
+                          ? "border-[hsl(var(--ux-success))]/40 bg-[hsl(var(--ux-success))]/5 text-foreground/80"
                           : "border-border bg-[hsl(var(--surface))] text-foreground/65"
                       }`}
                     >
                       {perksUnlocked ? (
                         <>
-                          <span className="font-semibold text-primary">Perks unlocked.</span> A Lighting
+                          <span className="font-semibold text-[hsl(var(--ux-success))]">Perks unlocked.</span> A Lighting
                           Operator follows your gear to set, and props are free on this booking.
                         </>
                       ) : (
@@ -1490,7 +1490,7 @@ const RentEquipment = () => {
 
               {!amending && step === "payment" && (
                 <>
-                  <div className="flex items-center gap-2 text-sm text-primary">
+                  <div className="flex items-center gap-2 text-sm text-[hsl(var(--ux-success))]">
                     <CheckCircle2 className="w-4 h-4" /> Identity verified
                   </div>
                   <div className="rounded-lg border border-border p-4 text-sm space-y-2">
@@ -1580,16 +1580,6 @@ const RentEquipment = () => {
         accepted={termsAccepted}
         onAccept={() => setTermsAccepted(true)}
       />
-      {showBackToTop && (
-        <button
-          type="button"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-cta text-cta-foreground shadow-lg flex items-center justify-center hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-foreground/30"
-          aria-label="Back to top"
-        >
-          <ArrowUp className="w-5 h-5" />
-        </button>
-      )}
     </div>
   );
 };
