@@ -92,8 +92,8 @@ const Index = () => {
             {/* Headline */}
             <div className="order-1 space-y-6">
               <h1 className="font-medium tracking-tight leading-[1.05] text-5xl sm:text-6xl lg:text-[82px]">
-                Learn Lighting,<br />
-                Create <span className="text-[hsl(var(--accent-lime))]">better</span> stories.
+                Everything a Creator<br />
+                Needs for <span className="text-[hsl(var(--accent-lime))]">Lighting</span>
               </h1>
               <p className="text-lg text-foreground/70">
                 Access hundreds of Videos and Lighting Gear Resources
