@@ -147,6 +147,213 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Quick paths */}
+        <section className="px-8 max-w-[1400px] mx-auto w-full py-16 border-t border-foreground/10">
+          <div className="max-w-2xl">
+            <p className="text-xs uppercase tracking-[0.2em] text-foreground/50">
+              Africa's largest lighting platform
+            </p>
+            <h2 className="mt-4 text-3xl sm:text-4xl font-medium tracking-tight">
+              Rent the gear. Control the lights. Learn the craft.
+            </h2>
+            <p className="mt-4 text-foreground/70">
+              Three things every creator asks us for — now in one place.
+            </p>
+          </div>
+
+          <div className="mt-10 grid md:grid-cols-3 gap-6">
+            {quickPaths.map((p) => (
+              <Link
+                key={p.to}
+                to={p.to}
+                className="group rounded-2xl border border-foreground/10 bg-[hsl(var(--surface))] p-6 flex flex-col hover:border-foreground/25 transition-colors"
+              >
+                <div
+                  className="rounded-xl aspect-[16/10] overflow-hidden flex items-center justify-center"
+                  style={{ backgroundColor: `hsl(var(${p.tint}))` }}
+                >
+                  {p.image ? (
+                    <img src={p.image} alt="" className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="text-xs uppercase tracking-widest text-[hsl(var(--page-light-foreground))]/50">
+                      Image
+                    </span>
+                  )}
+                </div>
+                <h3 className="mt-5 text-xl font-medium">{p.title}</h3>
+                <p className="mt-2 text-sm text-foreground/65 leading-relaxed flex-1">{p.brief}</p>
+                <span className="mt-5 inline-flex items-center gap-2 text-sm text-[hsl(var(--accent-lime))]">
+                  {p.cta}
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* Rent Equipment segment */}
+        <section className="px-8 max-w-[1400px] mx-auto w-full py-16 grid lg:grid-cols-2 gap-12 items-center border-t border-foreground/10">
+          <div className="space-y-6">
+            <p className="text-xs uppercase tracking-[0.2em] text-[hsl(var(--accent-lime))]">
+              Rent Equipment
+            </p>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1]">
+              The Light Bank, <span className="text-[hsl(var(--accent-lime))]">delivered</span> to
+              your set.
+            </h2>
+            <p className="text-foreground/70 max-w-md leading-relaxed">
+              Aputure, Amaran, Godox, Nanlite and the full support kit — stands, scrims, mats, tubes,
+              cables and V-mounts. Build a gear list, pick your dates, pay online, and rentals from
+              ₦60,000 up ride out with a Lighting Operator and free props.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                to="/rent-equipment"
+                className="rounded-full bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-6 py-3 text-sm font-medium hover:opacity-90 transition"
+              >
+                Browse the Light Bank
+              </Link>
+              <Link
+                to="/lighting-equipment"
+                className="rounded-full border border-foreground/20 px-6 py-3 text-sm hover:border-foreground/40 transition"
+              >
+                Equipment Database
+              </Link>
+            </div>
+          </div>
+          <div className="rounded-2xl overflow-hidden bg-[hsl(var(--card-sky))] aspect-[4/3] flex items-center justify-center">
+            <img src={equipmentOptions} alt="Lighting gear available in the ECL Light Bank" className="w-full h-full object-cover" />
+          </div>
+        </section>
+
+        {/* Control Apps segment */}
+        <section className="px-8 max-w-[1400px] mx-auto w-full py-16 grid lg:grid-cols-2 gap-12 items-center border-t border-foreground/10">
+          <div className="order-2 lg:order-1 rounded-2xl overflow-hidden bg-[hsl(var(--card-mint))] aspect-[4/3] flex items-center justify-center p-10">
+            <img src={lightProduct} alt="Light controlled from a manufacturer app" className="w-full h-full object-contain" />
+          </div>
+          <div className="order-1 lg:order-2 space-y-6">
+            <p className="text-xs uppercase tracking-[0.2em] text-[hsl(var(--accent-lime))]">
+              Control Apps
+            </p>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1]">
+              Every manufacturer app, one page.
+            </h2>
+            <p className="text-foreground/70 max-w-md leading-relaxed">
+              Sidus Link, Amaran Link, Godox Light, NANLINK and more — with the right download for
+              iOS and Android, what each app actually controls, and the quirks to know before you're
+              on set with a client waiting.
+            </p>
+            <Link
+              to="/control-apps"
+              className="inline-block rounded-full bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-6 py-3 text-sm font-medium hover:opacity-90 transition"
+            >
+              See the apps
+            </Link>
+          </div>
+        </section>
+
+        {/* Masterclass segment */}
+        <section className="px-8 max-w-[1400px] mx-auto w-full py-16 grid lg:grid-cols-2 gap-12 items-center border-t border-foreground/10">
+          <div className="space-y-6">
+            <p className="text-xs uppercase tracking-[0.2em] text-[hsl(var(--accent-lime))]">
+              Masterclass
+            </p>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1]">
+              Shift the Light — hands on the lights, once a year.
+            </h2>
+            <p className="text-foreground/70 max-w-md leading-relaxed">
+              A full day of practical lighting with real fixtures, real sets and real problems.
+              Learn shaping, ratios, colour and motivation the way it happens on a working job — not
+              from a slide deck.
+            </p>
+            <Link
+              to="/masterclass"
+              className="inline-block rounded-full bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-6 py-3 text-sm font-medium hover:opacity-90 transition"
+            >
+              Reserve a seat
+            </Link>
+          </div>
+          <div className="rounded-2xl overflow-hidden bg-[hsl(var(--surface))] aspect-[4/3]">
+            <img src={masterclassHero} alt="Shift the Light masterclass session" className="w-full h-full object-cover" />
+          </div>
+        </section>
+
+        {/* Numbers band */}
+        <section className="px-8 py-14 border-t border-foreground/10 bg-[hsl(var(--surface))]">
+          <div className="max-w-[1400px] mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {stats.map((s) => (
+              <div key={s.label}>
+                <p className="text-4xl font-medium tracking-tight text-[hsl(var(--accent-lime))]">
+                  {s.value}
+                </p>
+                <p className="mt-2 text-sm text-foreground/60">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Learn band */}
+        <section className="px-8 max-w-[1400px] mx-auto w-full py-16">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="max-w-xl">
+              <h2 className="text-3xl sm:text-4xl font-medium tracking-tight">
+                Lighting guides and updates
+              </h2>
+              <p className="mt-3 text-foreground/70">
+                Tips and guides from real life experiences on set.
+              </p>
+            </div>
+            <Link
+              to="/articles"
+              className="text-sm text-foreground/80 underline decoration-[hsl(var(--cta))] decoration-2 underline-offset-4 hover:text-foreground"
+            >
+              Read the articles
+            </Link>
+          </div>
+          <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {learnCards.map((c) => (
+              <Link
+                key={c.title}
+                to={c.to}
+                className="group rounded-2xl border border-foreground/10 p-6 hover:border-foreground/25 transition-colors"
+              >
+                <div className="rounded-xl aspect-[16/10] bg-foreground/5 flex items-center justify-center text-xs uppercase tracking-widest text-foreground/35">
+                  Image
+                </div>
+                <h3 className="mt-5 font-medium">{c.title}</h3>
+                <p className="mt-2 text-sm text-foreground/60">{c.brief}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* Closing CTA */}
+        <section className="px-8 py-16 border-t border-foreground/10">
+          <div className="max-w-[1400px] mx-auto rounded-3xl bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-8 py-14 text-center">
+            <h2 className="text-3xl sm:text-4xl font-medium tracking-tight">
+              Light your next project properly.
+            </h2>
+            <p className="mt-3 text-[hsl(var(--cta-foreground))]/80 max-w-xl mx-auto">
+              Rent the gear, learn the craft, and get told first when new courses and resources go
+              live.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3 justify-center">
+              <Link
+                to="/rent-equipment"
+                className="rounded-full bg-[hsl(var(--accent-lime))] text-[hsl(var(--page-light-foreground))] px-6 py-3 text-sm font-medium hover:opacity-90 transition"
+              >
+                Rent equipment
+              </Link>
+              <a
+                href="#notify"
+                className="rounded-full border border-[hsl(var(--cta-foreground))]/40 px-6 py-3 text-sm hover:border-[hsl(var(--cta-foreground))] transition"
+              >
+                Get notified
+              </a>
+            </div>
+          </div>
+        </section>
+
         {/* Footer */}
         <footer className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 py-6 px-8 border-t border-foreground/10 text-sm bg-[hsl(var(--surface))]">
           <div className="flex items-center gap-3 text-foreground/70">
