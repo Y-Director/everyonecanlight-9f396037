@@ -8,6 +8,62 @@ import lightProduct from "@/assets/light-product.png";
 import SiteNav from "@/components/SiteNav";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { ArrowRight } from "lucide-react";
+
+const quickPaths = [
+  {
+    to: "/rent-equipment",
+    title: "Rent Equipment",
+    brief:
+      "Book lights, stands, mats and modifiers from the ECL Light Bank. Pick your dates, pay online, and get it delivered with an operator.",
+    cta: "Build a gear list",
+    tint: "--card-sky",
+    image: equipmentOptions,
+  },
+  {
+    to: "/control-apps",
+    title: "Control Apps",
+    brief:
+      "Every manufacturer control app in one place — what it does, which lights it pairs with, and where to download it.",
+    cta: "Find your app",
+    tint: "--card-mint",
+    image: lightProduct,
+  },
+  {
+    to: "/masterclass",
+    title: "Masterclass",
+    brief:
+      "Shift the Light: our annual hands-on lighting masterclass. One day, real fixtures, real sets, this November.",
+    cta: "Reserve a seat",
+    tint: "--surface",
+    image: masterclassHero,
+  },
+] as const;
+
+const stats = [
+  { value: "250+", label: "Lights and accessories catalogued" },
+  { value: "100+", label: "Items available to rent" },
+  { value: "5:30 AM", label: "Earliest daily pick-up time" },
+  { value: "1", label: "Masterclass every year" },
+];
+
+const learnCards = [
+  {
+    to: "/articles",
+    title: "Why your videos look dark",
+    brief: "The exposure and placement mistakes that flatten a good camera.",
+  },
+  {
+    to: "/articles",
+    title: "What is wattage in lighting?",
+    brief: "Power, output and dimming explained without the spec sheet.",
+  },
+  {
+    to: "/courses",
+    title: "Courses",
+    brief: "Structured lighting lessons, from first light to full set.",
+  },
+];
 
 const Index = () => {
   const { hash } = useLocation();
