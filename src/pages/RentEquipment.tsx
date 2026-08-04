@@ -664,7 +664,40 @@ const RentEquipment = () => {
             </p>
           )}
 
-          <div className="mt-10 flex flex-col lg:flex-row lg:items-center gap-6">
+          <div className="sticky top-0 z-40 -mx-8 mt-10 border-b border-border bg-background/95 px-8 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+          <div className="flex flex-wrap items-center gap-3">
+            <Button
+              variant="outline"
+              onClick={() => setPropsOpen(true)}
+              className="gap-2 rounded-full px-5"
+            >
+              <Package className="w-4 h-4" />
+              Props
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => setManageOpen(true)}
+              className="gap-2 rounded-full px-5"
+            >
+              <KeyRound className="w-4 h-4" />
+              Manage Booking
+            </Button>
+            <Button
+              onClick={() => setSheetOpen(true)}
+              className="relative gap-2 rounded-full px-5"
+            >
+              <ShoppingBag className="w-4 h-4" />
+              Gear List
+              <ArrowRight className="w-4 h-4 -rotate-45" />
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 min-w-[1.25rem] h-5 px-1 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center border border-background">
+                  {cartCount}
+                </span>
+              )}
+            </Button>
+          </div>
+
+          <div className="mt-4 flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6">
             <div className="relative w-full lg:w-[360px]">
               <Search
                 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/50"
@@ -694,19 +727,19 @@ const RentEquipment = () => {
           </div>
 
           {suggestions.length > 0 && (
-            <section className="mt-8 rounded-xl border border-border bg-[hsl(var(--surface))] p-5">
+            <section className="mt-4 rounded-xl border border-border bg-[hsl(var(--surface))] p-4">
               <div className="flex items-center gap-2 text-sm">
                 <Sparkles className="w-4 h-4 text-primary" />
                 <span className="font-medium">Suggested with your lights</span>
-                <span className="text-foreground/50">
+                <span className="hidden sm:inline text-foreground/50">
                   · support, power and cable you'll likely need on set
                 </span>
               </div>
-              <div className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div className="mt-3 flex gap-3 overflow-x-auto pb-1">
                 {suggestions.map((s) => (
                   <div
                     key={s.id}
-                    className="flex items-center gap-3 rounded-lg border border-border bg-background p-3"
+                    className="flex w-[280px] shrink-0 items-center gap-3 rounded-lg border border-border bg-background p-3"
                   >
                     <div className="w-12 h-12 rounded bg-white flex items-center justify-center p-1 shrink-0">
                       <img src={s.image} alt={s.name} className="w-full h-full object-contain" />
@@ -728,6 +761,7 @@ const RentEquipment = () => {
               </div>
             </section>
           )}
+          </div>
 
           <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
             {filtered.map((item) => (
