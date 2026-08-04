@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { format } from "date-fns";
 import {
   ArrowRight,
-  ArrowUp,
   CalendarIcon,
   CheckCircle2,
   KeyRound,
@@ -167,17 +166,9 @@ const RentEquipment = () => {
   const [amending, setAmending] = useState(false);
   const [savedCart, setSavedCart] = useState<Cart | null>(null);
   const [payingDiff, setPayingDiff] = useState(false);
-  const [showBackToTop, setShowBackToTop] = useState(false);
   const [propsOpen, setPropsOpen] = useState(false);
   const [termsOpen, setTermsOpen] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setShowBackToTop(window.scrollY > 400);
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
