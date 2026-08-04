@@ -18,6 +18,9 @@ All colors MUST be HSL.
     --cta: 224 100% 55%;
     --cta-foreground: 0 0% 100%;
 
+    /* High-visibility success/confirmation text on dark surfaces (#f3ff9b) */
+    --ux-success: 71 100% 80%;
+
     /* Light page surface for specific pages */
     --page-light: 0 0% 100%;
     --page-light-foreground: 0 0% 7%;

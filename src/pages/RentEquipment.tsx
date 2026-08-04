@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { format } from "date-fns";
 import {
   ArrowRight,
-  ArrowUp,
   CalendarIcon,
   CheckCircle2,
   KeyRound,
@@ -167,17 +166,9 @@ const RentEquipment = () => {
   const [amending, setAmending] = useState(false);
   const [savedCart, setSavedCart] = useState<Cart | null>(null);
   const [payingDiff, setPayingDiff] = useState(false);
-  const [showBackToTop, setShowBackToTop] = useState(false);
   const [propsOpen, setPropsOpen] = useState(false);
   const [termsOpen, setTermsOpen] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setShowBackToTop(window.scrollY > 400);
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
@@ -535,37 +526,6 @@ const RentEquipment = () => {
                 with a lighting operator.
               </p>
             </div>
-            <div className="flex flex-wrap items-center gap-3 self-start lg:self-auto">
-              <Button
-                variant="outline"
-                onClick={() => setPropsOpen(true)}
-                className="gap-2 rounded-full px-5"
-              >
-                <Package className="w-4 h-4" />
-                Props
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => setManageOpen(true)}
-                className="gap-2 rounded-full px-5"
-              >
-                <KeyRound className="w-4 h-4" />
-                Manage Booking
-              </Button>
-              <Button
-                onClick={() => setSheetOpen(true)}
-                className="relative gap-2 rounded-full px-5"
-              >
-                <ShoppingBag className="w-4 h-4" />
-                Gear List
-                <ArrowRight className="w-4 h-4 -rotate-45" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2 min-w-[1.25rem] h-5 px-1 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center border border-background">
-                    {cartCount}
-                  </span>
-                )}
-              </Button>
-            </div>
           </header>
 
           <ManageBookingDialog
@@ -695,7 +655,40 @@ const RentEquipment = () => {
             </p>
           )}
 
-          <div className="mt-10 flex flex-col lg:flex-row lg:items-center gap-6">
+          <div className="sticky top-0 z-40 -mx-8 mt-10 border-b border-border bg-background/95 px-8 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+          <div className="flex flex-wrap items-center gap-3">
+            <Button
+              variant="outline"
+              onClick={() => setPropsOpen(true)}
+              className="gap-2 rounded-full px-5"
+            >
+              <Package className="w-4 h-4" />
+              Props
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => setManageOpen(true)}
+              className="gap-2 rounded-full px-5"
+            >
+              <KeyRound className="w-4 h-4" />
+              Manage Booking
+            </Button>
+            <Button
+              onClick={() => setSheetOpen(true)}
+              className="relative gap-2 rounded-full px-5"
+            >
+              <ShoppingBag className="w-4 h-4" />
+              Gear List
+              <ArrowRight className="w-4 h-4 -rotate-45" />
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 min-w-[1.25rem] h-5 px-1 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center border border-background">
+                  {cartCount}
+                </span>
+              )}
+            </Button>
+          </div>
+
+          <div className="mt-4 flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6">
             <div className="relative w-full lg:w-[360px]">
               <Search
                 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/50"
@@ -725,19 +718,19 @@ const RentEquipment = () => {
           </div>
 
           {suggestions.length > 0 && (
-            <section className="mt-8 rounded-xl border border-border bg-[hsl(var(--surface))] p-5">
+            <section className="mt-4 rounded-xl border border-border bg-[hsl(var(--surface))] p-4">
               <div className="flex items-center gap-2 text-sm">
                 <Sparkles className="w-4 h-4 text-primary" />
                 <span className="font-medium">Suggested with your lights</span>
-                <span className="text-foreground/50">
+                <span className="hidden sm:inline text-foreground/50">
                   · support, power and cable you'll likely need on set
                 </span>
               </div>
-              <div className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div className="mt-3 flex gap-3 overflow-x-auto pb-1">
                 {suggestions.map((s) => (
                   <div
                     key={s.id}
-                    className="flex items-center gap-3 rounded-lg border border-border bg-background p-3"
+                    className="flex w-[280px] shrink-0 items-center gap-3 rounded-lg border border-border bg-background p-3"
                   >
                     <div className="w-12 h-12 rounded bg-white flex items-center justify-center p-1 shrink-0">
                       <img src={s.image} alt={s.name} className="w-full h-full object-contain" />
@@ -759,6 +752,7 @@ const RentEquipment = () => {
               </div>
             </section>
           )}
+          </div>
 
           <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
             {filtered.map((item) => (
@@ -1143,13 +1137,13 @@ const RentEquipment = () => {
                     <div
                       className={`mt-4 rounded-lg border p-3 text-xs leading-relaxed ${
                         perksUnlocked
-                          ? "border-primary/40 bg-primary/5 text-foreground/80"
+                          ? "border-[hsl(var(--ux-success))]/40 bg-[hsl(var(--ux-success))]/5 text-foreground/80"
                           : "border-border bg-[hsl(var(--surface))] text-foreground/65"
                       }`}
                     >
                       {perksUnlocked ? (
                         <>
-                          <span className="font-semibold text-primary">Perks unlocked.</span> A Lighting
+                          <span className="font-semibold text-[hsl(var(--ux-success))]">Perks unlocked.</span> A Lighting
                           Operator follows your gear to set, and props are free on this booking.
                         </>
                       ) : (
@@ -1487,7 +1481,7 @@ const RentEquipment = () => {
 
               {!amending && step === "payment" && (
                 <>
-                  <div className="flex items-center gap-2 text-sm text-primary">
+                  <div className="flex items-center gap-2 text-sm text-[hsl(var(--ux-success))]">
                     <CheckCircle2 className="w-4 h-4" /> Identity verified
                   </div>
                   <div className="rounded-lg border border-border p-4 text-sm space-y-2">
@@ -1577,16 +1571,6 @@ const RentEquipment = () => {
         accepted={termsAccepted}
         onAccept={() => setTermsAccepted(true)}
       />
-      {showBackToTop && (
-        <button
-          type="button"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-cta text-cta-foreground shadow-lg flex items-center justify-center hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-foreground/30"
-          aria-label="Back to top"
-        >
-          <ArrowUp className="w-5 h-5" />
-        </button>
-      )}
     </div>
   );
 };
