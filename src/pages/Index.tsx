@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import collage from "@/assets/collage.png";
 import logo from "@/assets/logo.png";
+import masterclassHero from "@/assets/masterclass-hero.jpg";
+import equipmentOptions from "@/assets/lighting-equipment-options.png";
+import lightProduct from "@/assets/light-product.png";
 import SiteNav from "@/components/SiteNav";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
