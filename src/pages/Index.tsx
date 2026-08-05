@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "@/assets/logo.png";
-import masterclassHero from "@/assets/masterclass-hero.png.asset.json";
+import masterclassBand from "@/assets/landing/masterclass-band.png.asset.json";
+import comingSoonSticker from "@/assets/landing/coming-soon-sticker.png.asset.json";
 import heroCollage from "@/assets/landing/hero-collage.png.asset.json";
 import singleLightFood from "@/assets/landing/single-light-food.png.asset.json";
 import setupDiagram from "@/assets/landing/setup-diagram.png.asset.json";
@@ -121,19 +122,19 @@ const Index = () => {
         </section>
 
         {/* Control apps band */}
-        <section className="px-8 py-14 border-t border-foreground/10 bg-[hsl(var(--surface))]">
-          <div className="max-w-[1400px] mx-auto grid lg:grid-cols-3 gap-8 items-center">
+        <section className="px-8 py-24 border-t border-foreground/10 bg-[hsl(var(--surface))]">
+          <div className="max-w-[1400px] mx-auto grid lg:grid-cols-[1fr_auto] gap-x-12 gap-y-8 items-center">
             <h2 className="text-3xl sm:text-4xl font-medium tracking-tight leading-[1.15]">
               Control lights easily on your phone
             </h2>
-            <p className="text-sm text-foreground/60 leading-relaxed max-w-sm">
-              Simultaneously control multiple lights from the comfort of your phone even if they are
-              at a distant away.
-            </p>
-            <div className="lg:justify-self-end">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8">
+              <p className="text-sm text-foreground/60 leading-relaxed max-w-sm">
+                Simultaneously control multiple lights from the comfort of your phone even if they are
+                at a distant away.
+              </p>
               <Link
                 to="/control-apps"
-                className="inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
+                className="shrink-0 inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
               >
                 Browse Control Apps
               </Link>
@@ -171,12 +172,14 @@ const Index = () => {
                 </p>
               </div>
 
-              <Link
-                to="/articles"
-                className="self-start rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
-              >
-                Read Articles on Lighting
-              </Link>
+              <div className="mt-auto">
+                <Link
+                  to="/articles"
+                  className="inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
+                >
+                  Read Articles on Lighting
+                </Link>
+              </div>
             </div>
 
             <div className="rounded-2xl overflow-hidden bg-[hsl(var(--surface))]">
@@ -221,13 +224,12 @@ const Index = () => {
           className="relative px-8 py-20 bg-[hsl(var(--band-soft-lime))] text-[hsl(var(--page-light-foreground))] scroll-mt-24"
         >
           <div className="max-w-[1400px] mx-auto text-center">
-            <div className="absolute left-8 lg:left-24 top-10 w-24 h-24 rounded-full bg-[hsl(var(--accent-lime))] flex items-center justify-center -rotate-12 shadow-lg">
-              <span className="text-sm font-semibold italic leading-tight text-center">
-                COMING
-                <br />
-                SOON
-              </span>
-            </div>
+            <img
+              src={comingSoonSticker.url}
+              alt="Coming soon"
+              className="absolute left-4 lg:left-16 top-4 w-32 lg:w-40 h-auto object-contain -rotate-12 pointer-events-none select-none"
+              loading="lazy"
+            />
 
             <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-medium tracking-tight leading-[1.2] max-w-2xl mx-auto">
               Access the right courses on Lighting to fit every of your productions
@@ -268,8 +270,14 @@ const Index = () => {
 
         {/* Masterclass band */}
         <section className="relative bg-[hsl(var(--band-navy))] overflow-hidden">
-          <div className="max-w-[1400px] mx-auto grid lg:grid-cols-2 items-center">
-            <div className="px-8 py-20 space-y-8">
+          <img
+            src={masterclassBand.url}
+            alt="Creator lit in blue light at the ShiftTheLight masterclass"
+            className="absolute inset-0 w-full h-full object-cover object-right"
+            loading="lazy"
+          />
+          <div className="relative max-w-[1400px] mx-auto grid lg:grid-cols-2 items-center">
+            <div className="px-8 py-24 space-y-8">
               <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-medium tracking-tight leading-[1.2]">
                 Be a part of this year's
                 <br />
@@ -284,14 +292,7 @@ const Index = () => {
                 Book Your Entry
               </Link>
             </div>
-            <div className="h-64 lg:h-full min-h-[320px]">
-              <img
-                src={masterclassHero.url}
-                alt="Creator lit in blue light at the ShiftTheLight masterclass"
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
+            <div className="hidden lg:block min-h-[320px]" aria-hidden="true" />
           </div>
         </section>
 
