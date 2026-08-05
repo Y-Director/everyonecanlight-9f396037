@@ -224,13 +224,12 @@ const Index = () => {
           className="relative px-8 py-20 bg-[hsl(var(--band-soft-lime))] text-[hsl(var(--page-light-foreground))] scroll-mt-24"
         >
           <div className="max-w-[1400px] mx-auto text-center">
-            <div className="absolute left-8 lg:left-24 top-10 w-24 h-24 rounded-full bg-[hsl(var(--accent-lime))] flex items-center justify-center -rotate-12 shadow-lg">
-              <span className="text-sm font-semibold italic leading-tight text-center">
-                COMING
-                <br />
-                SOON
-              </span>
-            </div>
+            <img
+              src={comingSoonSticker.url}
+              alt="Coming soon"
+              className="absolute left-4 lg:left-16 top-4 w-32 lg:w-40 h-auto object-contain -rotate-12 pointer-events-none select-none"
+              loading="lazy"
+            />
 
             <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-medium tracking-tight leading-[1.2] max-w-2xl mx-auto">
               Access the right courses on Lighting to fit every of your productions
@@ -271,8 +270,14 @@ const Index = () => {
 
         {/* Masterclass band */}
         <section className="relative bg-[hsl(var(--band-navy))] overflow-hidden">
-          <div className="max-w-[1400px] mx-auto grid lg:grid-cols-2 items-center">
-            <div className="px-8 py-20 space-y-8">
+          <img
+            src={masterclassBand.url}
+            alt="Creator lit in blue light at the ShiftTheLight masterclass"
+            className="absolute inset-0 w-full h-full object-cover object-right"
+            loading="lazy"
+          />
+          <div className="relative max-w-[1400px] mx-auto grid lg:grid-cols-2 items-center">
+            <div className="px-8 py-24 space-y-8">
               <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-medium tracking-tight leading-[1.2]">
                 Be a part of this year's
                 <br />
@@ -287,14 +292,7 @@ const Index = () => {
                 Book Your Entry
               </Link>
             </div>
-            <div className="h-64 lg:h-full min-h-[320px]">
-              <img
-                src={masterclassHero.url}
-                alt="Creator lit in blue light at the ShiftTheLight masterclass"
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
+            <div className="hidden lg:block min-h-[320px]" aria-hidden="true" />
           </div>
         </section>
 
