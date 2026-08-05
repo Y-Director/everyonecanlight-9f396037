@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "@/assets/logo.png";
-import masterclassHero from "@/assets/masterclass-hero.png.asset.json";
+import masterclassBand from "@/assets/landing/masterclass-band.png.asset.json";
+import comingSoonSticker from "@/assets/landing/coming-soon-sticker.png.asset.json";
 import heroCollage from "@/assets/landing/hero-collage.png.asset.json";
 import singleLightFood from "@/assets/landing/single-light-food.png.asset.json";
 import setupDiagram from "@/assets/landing/setup-diagram.png.asset.json";
@@ -121,19 +122,19 @@ const Index = () => {
         </section>
 
         {/* Control apps band */}
-        <section className="px-8 py-14 border-t border-foreground/10 bg-[hsl(var(--surface))]">
-          <div className="max-w-[1400px] mx-auto grid lg:grid-cols-3 gap-8 items-center">
+        <section className="px-8 py-24 border-t border-foreground/10 bg-[hsl(var(--surface))]">
+          <div className="max-w-[1400px] mx-auto grid lg:grid-cols-[1fr_auto] gap-x-12 gap-y-8 items-center">
             <h2 className="text-3xl sm:text-4xl font-medium tracking-tight leading-[1.15]">
               Control lights easily on your phone
             </h2>
-            <p className="text-sm text-foreground/60 leading-relaxed max-w-sm">
-              Simultaneously control multiple lights from the comfort of your phone even if they are
-              at a distant away.
-            </p>
-            <div className="lg:justify-self-end">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8">
+              <p className="text-sm text-foreground/60 leading-relaxed max-w-sm">
+                Simultaneously control multiple lights from the comfort of your phone even if they are
+                at a distant away.
+              </p>
               <Link
                 to="/control-apps"
-                className="inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
+                className="shrink-0 inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
               >
                 Browse Control Apps
               </Link>
@@ -171,12 +172,14 @@ const Index = () => {
                 </p>
               </div>
 
-              <Link
-                to="/articles"
-                className="self-start rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
-              >
-                Read Articles on Lighting
-              </Link>
+              <div className="mt-auto">
+                <Link
+                  to="/articles"
+                  className="inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
+                >
+                  Read Articles on Lighting
+                </Link>
+              </div>
             </div>
 
             <div className="rounded-2xl overflow-hidden bg-[hsl(var(--surface))]">
