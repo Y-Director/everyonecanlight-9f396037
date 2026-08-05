@@ -21,6 +21,10 @@ All colors MUST be HSL.
     /* High-visibility success/confirmation text on dark surfaces (#f3ff9b) */
     --ux-success: 71 100% 80%;
 
+    /* Landing page bands */
+    --band-soft-lime: 75 80% 94%;
+    --band-navy: 226 70% 12%;
+
     /* Light page surface for specific pages */
     --page-light: 0 0% 100%;
     --page-light-foreground: 0 0% 7%;
