@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { Video, FileText } from "lucide-react";
-import logo from "@/assets/logo.png";
+import { Video, FileText, ArrowRight } from "lucide-react";
 import coursesHero from "@/assets/courses-hero.png";
 import SiteNav from "@/components/SiteNav";
+import SiteFooter from "@/components/SiteFooter";
 
 type Item = { label: string; icon: "video" | "doc" };
 
@@ -25,7 +25,34 @@ const items: Item[] = [
   { label: "Choosing the Right Light", icon: "video" },
 ];
 
-const Courses = () => {
+const learnCards = [
+  {
+    header: "📖  Articles",
+    body: "Learn lighting concepts in minutes.",
+    cta: "Explore Articles",
+    to: "/articles",
+  },
+  {
+    header: "🎥 Courses (Coming Soon)",
+    body: "Structured learning paths.",
+    cta: "Join Waitlist",
+    to: "/#notify",
+  },
+  {
+    header: "🎬 Shift The Light Masterclass",
+    body: "Hands-on practical training.",
+    cta: "Reserve Your Spot",
+    to: "/masterclass",
+  },
+  {
+    header: "💡 Lighting Diagrams",
+    body: "Study real lighting setups.",
+    cta: "Explore Diagrams",
+    to: "/articles",
+  },
+];
+
+const Learn = () => {
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       {/* Grid background */}
@@ -52,13 +79,39 @@ const Courses = () => {
               className="w-full h-auto object-cover"
             />
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-              <h1 className="font-medium tracking-tight text-[hsl(var(--foreground))] text-6xl md:text-8xl lg:text-9xl drop-shadow-lg">
-                50+ Videos
+              <h1 className="font-medium tracking-tight text-[hsl(var(--foreground))] text-3xl sm:text-5xl lg:text-7xl drop-shadow-lg max-w-3xl">
+                Learn lighting, one lesson at a time.
               </h1>
-              <p className="mt-4 text-base md:text-xl text-foreground/90">
-                Perfectly designed Curriculum from Beginner Levels to Advanced
+              <p className="mt-4 text-sm md:text-lg text-foreground/90 max-w-xl">
+                Perfectly designed curriculum from beginner levels to advanced.
               </p>
+              <Link
+                to="/articles"
+                className="mt-7 inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
+              >
+                Explore Free Guides
+              </Link>
             </div>
+          </section>
+
+          {/* Learning paths */}
+          <section className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {learnCards.map((c) => (
+              <div
+                key={c.header}
+                className="flex flex-col rounded-2xl border border-foreground/10 bg-[hsl(var(--surface))] p-7"
+              >
+                <h2 className="text-lg font-medium tracking-tight">{c.header}</h2>
+                <p className="mt-3 text-sm text-foreground/60 leading-relaxed">{c.body}</p>
+                <Link
+                  to={c.to}
+                  className="mt-auto pt-6 inline-flex items-center gap-2 text-sm font-medium text-foreground hover:gap-3 transition-all"
+                >
+                  {c.cta}
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </Link>
+              </div>
+            ))}
           </section>
 
           {/* What you will learn */}
@@ -93,23 +146,12 @@ const Courses = () => {
           </section>
         </main>
 
-        {/* Footer */}
-        <footer className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 py-6 px-8 mt-20 border-t border-foreground/10 text-sm bg-[hsl(var(--surface))]">
-          <div className="flex items-center gap-3 text-foreground/70">
-            <img src={logo} alt="EveryoneCanLight logo" className="w-6 h-6 rounded object-contain" />
-            © 2026 Everyone Can Light Technologies
-          </div>
-          <div className="flex items-center gap-6">
-            <span className="text-foreground/50">Social</span>
-            <a href="https://www.instagram.com/everyonecanlight" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Instagram</a>
-            <a href="https://www.youtube.com/@everyonecanlight" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">YouTube</a>
-            <a href="https://www.tiktok.com/@everyonecanlight" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">TikTok</a>
-            <a href="https://www.linkedin.com/company/everyone-can-light/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">LinkedIn</a>
-          </div>
-        </footer>
+        <div className="mt-20">
+          <SiteFooter />
+        </div>
       </div>
     </div>
   );
 };
 
-export default Courses;
+export default Learn;

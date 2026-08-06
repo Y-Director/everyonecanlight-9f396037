@@ -6,12 +6,10 @@ import logo from "@/assets/logo.png";
 type Variant = "dark" | "light";
 
 const links = [
-  { to: "/articles", label: "Articles" },
   { to: "/rent-equipment", label: "Rent Equipment" },
   { to: "/lighting-equipment", label: "Equipment Database" },
   { to: "/control-apps", label: "Control Apps" },
-  { to: "/courses", label: "Courses" },
-  { to: "/masterclass", label: "Masterclass" },
+  { to: "/learn", label: "Learn" },
 ];
 
 interface SiteNavProps {

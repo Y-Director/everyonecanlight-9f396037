@@ -127,7 +127,7 @@ const LightingEquipmentDetail = () => {
                 </section>
 
                 <Link
-                  to="/courses"
+                  to="/learn"
                   className="mt-6 inline-block text-sky-600 hover:text-sky-700 underline-offset-2 hover:underline"
                 >
                   See Related Courses

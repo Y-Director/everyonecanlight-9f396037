@@ -8,7 +8,7 @@ import Articles from "./pages/Articles.tsx";
 import ArticleDetail from "./pages/ArticleDetail.tsx";
 import LightingEquipment from "./pages/LightingEquipment.tsx";
 import LightingEquipmentDetail from "./pages/LightingEquipmentDetail.tsx";
-import Courses from "./pages/Courses.tsx";
+import Learn from "./pages/Learn.tsx";
 import ControlApps from "./pages/ControlApps.tsx";
 import Masterclass from "./pages/Masterclass.tsx";
 import RentEquipment from "./pages/RentEquipment.tsx";
@@ -32,7 +32,8 @@ const App = () => (
           <Route path="/rent-equipment" element={<RentEquipment />} />
           <Route path="/lighting-equipment" element={<LightingEquipment />} />
           <Route path="/lighting-equipment/:slug" element={<LightingEquipmentDetail />} />
-          <Route path="/courses" element={<Courses />} />
+          <Route path="/learn" element={<Learn />} />
+          <Route path="/courses" element={<Learn />} />
           <Route path="/control-apps" element={<ControlApps />} />
           <Route path="/masterclass" element={<Masterclass />} />
           <Route path="/admin" element={<AdminLogin />} />
