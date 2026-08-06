@@ -1,22 +1,60 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import logo from "@/assets/logo.png";
 import masterclassBand from "@/assets/landing/masterclass-band.png.asset.json";
-import comingSoonSticker from "@/assets/landing/coming-soon-sticker.png.asset.json";
-import heroCollage from "@/assets/landing/hero-collage.png.asset.json";
+import heroStatsDesktop from "@/assets/landing/hero-stats-desktop.png.asset.json";
+import heroStatsMobile from "@/assets/landing/hero-stats-mobile.png.asset.json";
+import controlAppsIllustration from "@/assets/landing/control-apps-illustration.png.asset.json";
 import singleLightFood from "@/assets/landing/single-light-food.png.asset.json";
 import setupDiagram from "@/assets/landing/setup-diagram.png.asset.json";
 import equipmentAnnotated from "@/assets/landing/equipment-annotated.png.asset.json";
+import trust1 from "@/assets/trust/trust-1.jpg.asset.json";
+import trust2 from "@/assets/trust/trust-2.jpg.asset.json";
+import trust3 from "@/assets/trust/trust-3.jpg.asset.json";
+import trust4 from "@/assets/trust/trust-4.jpg.asset.json";
+import trust5 from "@/assets/trust/trust-5.jpg.asset.json";
 import SiteNav from "@/components/SiteNav";
+import SiteFooter from "@/components/SiteFooter";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import { Video } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
-const courseTopics = [
-  "Talking Head Lighting",
-  "Podcast Lighting",
-  "Lighting For Products",
-  "Lighting For Interviews",
+const bentoCards = [
+  {
+    header: "Rent",
+    sub: "Get the gear.",
+    body: "Professional lighting equipment when your production needs it.",
+    cta: "Explore Rentals",
+    to: "/rent-equipment",
+  },
+  {
+    header: "Learn",
+    sub: "Understand the light.",
+    body: "Practical lessons, breakdowns and techniques you can use immediately.",
+    cta: "Start Learning",
+    to: "/learn",
+  },
+  {
+    header: "Discover",
+    sub: "Know your gear.",
+    body: "Compare specifications and understand which lights work for different productions.",
+    cta: "Explore Equipment",
+    to: "/lighting-equipment",
+  },
+  {
+    header: "Control",
+    sub: "Take control.",
+    body: "Find the right apps to control your lighting fixtures from your phone.",
+    cta: "Explore Apps",
+    to: "/control-apps",
+  },
+];
+
+const trustImages = [
+  { src: trust1.url, alt: "Softbox lighting a seated subject on a talking-head set" },
+  { src: trust2.url, alt: "Stage lighting setup during a live worship production" },
+  { src: trust3.url, alt: "Film crew lighting a wide studio set with a cyclorama" },
+  { src: trust4.url, alt: "Interview set lit with overhead Godox flexible LED panels" },
+  { src: trust5.url, alt: "Music video shoot lit with a large diffusion frame on set" },
 ];
 
 const Index = () => {
@@ -96,55 +134,106 @@ const Index = () => {
         <SiteNav />
 
         {/* Hero */}
-        <section className="px-8 max-w-[1400px] mx-auto w-full pt-10 pb-20 text-center">
-          <h1 className="font-medium tracking-tight leading-[1.05] text-4xl sm:text-5xl lg:text-[64px] max-w-4xl mx-auto">
-            Everything you need
+        <section className="px-8 max-w-[1400px] mx-auto w-full pt-6 pb-12 sm:pt-10 sm:pb-20 text-center">
+          <h1 className="font-medium tracking-tight leading-[1.05] text-[32px] sm:text-5xl lg:text-[64px] max-w-4xl mx-auto">
+            Everything a Creator Needs
             <br />
-            to light <span className="text-[hsl(var(--accent-lime))]">better</span>
+            for <span className="text-[hsl(var(--accent-lime))]">Lighting</span>
           </h1>
-          <p className="mt-6 text-sm sm:text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
-            We've built every tool in one place, whether you're learning, renting, or preparing for
-            your next production.
+          <p className="mt-4 sm:mt-6 text-sm sm:text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
+            Learn lighting. Find the right gear. Rent what you need. Create better images.
           </p>
 
+          {/* Desktop / tablet collage */}
           <img
-            src={heroCollage.url}
-            alt="Lighting equipment, learning videos and equipment specs available on Everyone Can Light"
-            className="mt-12 w-full max-w-5xl mx-auto h-auto object-contain"
+            src={heroStatsDesktop.url}
+            alt="Lighting gear available to rent, lighting lessons and equipment explainers on Everyone Can Light"
+            className="hidden sm:block mt-10 w-full max-w-5xl mx-auto h-auto object-contain"
+          />
+          {/* Mobile collage */}
+          <img
+            src={heroStatsMobile.url}
+            alt="Lighting gear available to rent, lighting lessons and equipment explainers on Everyone Can Light"
+            className="sm:hidden mt-6 w-full max-w-xs mx-auto h-auto object-contain"
           />
 
-          <Link
-            to="/rent-equipment"
-            className="mt-10 inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
-          >
-            Start Renting Light Gears
-          </Link>
+          <div className="mt-7 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <Link
+              to="/rent-equipment"
+              className="w-full sm:w-auto rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
+            >
+              Explore Rental Gear
+            </Link>
+            <Link
+              to="/learn"
+              className="w-full sm:w-auto rounded-md border border-[hsl(var(--cta))] text-foreground px-5 py-2.5 text-sm font-medium hover:bg-[hsl(var(--cta))]/10 transition"
+            >
+              Learn Lighting
+            </Link>
+          </div>
         </section>
 
-        {/* Control apps band */}
-        <section className="px-8 py-24 border-t border-foreground/10 bg-[hsl(var(--surface))]">
-          <div className="max-w-[1400px] mx-auto grid lg:grid-cols-[1fr_auto] gap-x-12 gap-y-8 items-center">
-            <h2 className="text-3xl sm:text-4xl font-medium tracking-tight leading-[1.15]">
-              Control lights easily on your phone
-            </h2>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8">
-              <p className="text-sm text-foreground/60 leading-relaxed max-w-sm">
-                Simultaneously control multiple lights from the comfort of your phone even if they are
-                at a distant away.
-              </p>
+        {/* Bento: four ways in */}
+        <section className="px-8 max-w-[1400px] mx-auto w-full pb-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {bentoCards.map((c) => (
+            <div
+              key={c.header}
+              className="flex flex-col rounded-2xl border border-foreground/10 bg-[hsl(var(--surface))] p-7"
+            >
+              <h2 className="text-2xl font-medium tracking-tight">{c.header}</h2>
+              <p className="mt-1 text-sm text-[hsl(var(--accent-lime))]">{c.sub}</p>
+              <p className="mt-4 text-sm text-foreground/55 leading-relaxed">{c.body}</p>
               <Link
-                to="/control-apps"
-                className="shrink-0 inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
+                to={c.to}
+                className="mt-auto pt-6 inline-flex items-center gap-2 text-sm font-medium text-foreground hover:gap-3 transition-all"
               >
-                Browse Control Apps
+                {c.cta}
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
+            </div>
+          ))}
+        </section>
+
+        {/* Trust */}
+        <section className="px-8 py-20 border-t border-foreground/10 bg-[hsl(var(--surface))]">
+          <div className="max-w-[1400px] mx-auto">
+            <h2 className="text-3xl sm:text-4xl font-medium tracking-tight max-w-2xl">
+              Built by people who actually light sets
+            </h2>
+            <p className="mt-5 text-sm text-foreground/60 leading-relaxed max-w-2xl">
+              Everyone Can Light brings practical lighting knowledge from real productions into one
+              accessible platform for filmmakers and creators.
+            </p>
+
+            <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[160px] sm:auto-rows-[200px]">
+              {trustImages.map((img, i) => (
+                <div
+                  key={img.src}
+                  className={`rounded-2xl overflow-hidden bg-background ${
+                    i === 0 ? "row-span-2" : ""
+                  } ${i === 4 ? "col-span-2" : ""}`}
+                >
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
         {/* One single light */}
         <section className="px-8 max-w-[1400px] mx-auto w-full py-16">
-          <div className="grid lg:grid-cols-[1.1fr_1.2fr_1fr] gap-6 items-stretch">
+          <div className="max-w-2xl">
+            <p className="text-sm uppercase tracking-[0.18em] text-[hsl(var(--accent-lime))]">
+              Lighting changes everything
+            </p>
+          </div>
+
+          <div className="mt-8 grid lg:grid-cols-[1.1fr_1.2fr_1fr] gap-6 items-stretch">
             <div className="rounded-2xl overflow-hidden bg-[hsl(var(--surface))]">
               <img
                 src={singleLightFood.url}
@@ -158,17 +247,18 @@ const Index = () => {
               <div className="rounded-2xl bg-[hsl(var(--surface))] border border-foreground/10 p-7">
                 <h3 className="text-2xl sm:text-[28px] font-medium tracking-tight leading-snug">
                   It starts with knowing how to work with{" "}
-                  <span className="text-[hsl(var(--accent-lime))]">one single light.</span>
+                  <span className="text-[hsl(var(--accent-lime))]">one light source.</span>
                 </h3>
                 <p className="mt-4 text-sm text-foreground/55 leading-relaxed">
-                  Don't fall into the trap of many lights makes the image finer. The direction,
-                  intensity and modification of 1 light can shape an entire scene.
+                  More lights don't always create better images. Understanding direction, intensity,
+                  quality and modification can transform what a single light can do.
                 </p>
               </div>
 
-              <div className="rounded-2xl bg-[hsl(var(--band-soft-lime))] text-[hsl(var(--page-light-foreground))] p-7">
-                <p className="text-sm leading-relaxed">
-                  Understand how to read lighting setup diagrams and replicate them in your space.
+              <div className="rounded-2xl bg-[hsl(var(--surface))] border border-foreground/10 p-7">
+                <p className="text-sm leading-relaxed text-foreground/70">
+                  Understand real lighting setups, study the diagrams behind them, and recreate them
+                  for your own productions.
                 </p>
               </div>
 
@@ -177,7 +267,7 @@ const Index = () => {
                   to="/articles"
                   className="inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
                 >
-                  Read Articles on Lighting
+                  Explore Lighting Guides
                 </Link>
               </div>
             </div>
@@ -224,25 +314,12 @@ const Index = () => {
           className="relative px-8 py-20 bg-[hsl(var(--band-soft-lime))] text-[hsl(var(--page-light-foreground))] scroll-mt-24"
         >
           <div className="max-w-[1400px] mx-auto text-center">
-            <img
-              src={comingSoonSticker.url}
-              alt="Coming soon"
-              className="absolute left-4 lg:left-16 top-4 w-32 lg:w-40 h-auto object-contain -rotate-12 pointer-events-none select-none"
-              loading="lazy"
-            />
-
             <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-medium tracking-tight leading-[1.2] max-w-2xl mx-auto">
-              Access the right courses on Lighting to fit every of your productions
+              Practical lighting courses for real productions
             </h2>
-
-            <ul className="mt-10 flex flex-wrap justify-center gap-x-10 gap-y-4">
-              {courseTopics.map((t) => (
-                <li key={t} className="flex items-center gap-2 text-sm">
-                  <Video className="w-4 h-4" aria-hidden="true" />
-                  {t}
-                </li>
-              ))}
-            </ul>
+            <p className="mt-5 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed text-[hsl(var(--page-light-foreground))]/70">
+              Learn how to light interviews, podcasts, products, music videos and more, step by step.
+            </p>
 
             <form
               className="mt-10 flex flex-col sm:flex-row gap-2 justify-center max-w-md mx-auto"
@@ -262,7 +339,7 @@ const Index = () => {
                 disabled={submitting}
                 className="rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition disabled:opacity-60"
               >
-                {submitting ? "Submitting..." : "Get Early Access"}
+                {submitting ? "Submitting..." : "Join the Waitlist"}
               </button>
             </form>
           </div>
@@ -277,39 +354,56 @@ const Index = () => {
             loading="lazy"
           />
           <div className="relative max-w-[1400px] mx-auto grid lg:grid-cols-2 items-center">
-            <div className="px-8 py-24 space-y-8">
+            <div className="px-8 py-24 space-y-6">
               <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-medium tracking-tight leading-[1.2]">
-                Be a part of this year's
-                <br />
-                <span className="text-[hsl(var(--accent-lime))]">ShiftTheLight</span> Masterclass
-                <br />
-                in Lagos.
+                Learn lighting by{" "}
+                <span className="text-[hsl(var(--accent-lime))]">actually lighting</span>
               </h2>
+              <p className="text-sm sm:text-base text-foreground/70 leading-relaxed max-w-md">
+                Join us in Lagos for this year's Shift The Light Masterclass: an immersive, hands-on
+                lighting experience built around real production scenarios.
+              </p>
               <Link
                 to="/masterclass"
                 className="inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
               >
-                Book Your Entry
+                Reserve Your Spot
               </Link>
             </div>
             <div className="hidden lg:block min-h-[320px]" aria-hidden="true" />
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 py-6 px-8 border-t border-foreground/10 text-sm bg-[hsl(var(--surface))]">
-          <div className="flex items-center gap-3 text-foreground/70">
-            <img src={logo} alt="EveryoneCanLight logo" className="w-6 h-6 rounded object-contain" />
-            © 2026 Everyone Can Light Technologies
+        {/* Control apps */}
+        <section className="px-8 py-24 border-t border-foreground/10 bg-[hsl(var(--surface))]">
+          <div className="max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <h2 className="text-3xl sm:text-4xl font-medium tracking-tight leading-[1.15]">
+                Control lights easily on your phone
+              </h2>
+              <p className="text-sm text-foreground/60 leading-relaxed max-w-md">
+                Discover the apps that let you control compatible lights, adjust settings and manage
+                multiple fixtures straight from your phone.
+              </p>
+              <Link
+                to="/control-apps"
+                className="inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
+              >
+                Browse Control Apps
+              </Link>
+            </div>
+            <img
+              src={controlAppsIllustration.url}
+              alt="Phone running a lighting control app connected wirelessly to an LED fixture"
+              className="w-full h-auto rounded-2xl object-contain"
+              loading="lazy"
+              width={1200}
+              height={912}
+            />
           </div>
-          <div className="flex items-center gap-6">
-            <span className="text-foreground/50">Social</span>
-            <a href="https://www.instagram.com/everyonecanlight" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Instagram</a>
-            <a href="https://www.youtube.com/@everyonecanlight" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">YouTube</a>
-            <a href="https://www.tiktok.com/@everyonecanlight" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">TikTok</a>
-            <a href="https://www.linkedin.com/company/everyone-can-light/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">LinkedIn</a>
-          </div>
-        </footer>
+        </section>
+
+        <SiteFooter />
       </div>
     </div>
   );
