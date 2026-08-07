@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 type Variant = "dark" | "light";
@@ -9,7 +9,13 @@ const links = [
   { to: "/rent-equipment", label: "Rent Equipment" },
   { to: "/lighting-equipment", label: "Equipment Database" },
   { to: "/control-apps", label: "Control Apps" },
-  { to: "/learn", label: "Learn" },
+];
+
+const learnItems = [
+  { to: "/articles", label: "Articles" },
+  { to: "/masterclass", label: "Masterclass" },
+  { to: "/#notify", label: "Courses" },
+  { to: "/articles", label: "Diagrams" },
 ];
 
 interface SiteNavProps {
@@ -46,6 +52,31 @@ const SiteNav = ({ variant = "dark" }: SiteNavProps) => {
               </Link>
             </li>
           ))}
+          <li className="relative group">
+            <Link
+              to="/learn"
+              className={`inline-flex items-center gap-1 ${
+                isActive("/learn") ? "text-foreground" : "text-foreground/60 hover:text-foreground"
+              }`}
+            >
+              Learn
+              <ChevronDown className="w-4 h-4" aria-hidden="true" />
+            </Link>
+            <div className="absolute right-0 top-full pt-3 hidden group-hover:block group-focus-within:block z-50">
+              <ul className="min-w-[180px] rounded-xl border border-foreground/10 bg-[hsl(var(--surface))] py-2 shadow-lg">
+                {learnItems.map((item) => (
+                  <li key={item.label}>
+                    <Link
+                      to={item.to}
+                      className="block px-4 py-2 text-sm text-foreground/70 hover:text-foreground hover:bg-foreground/5"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </li>
         </ul>
 
         {/* Hamburger (mobile) */}
@@ -76,6 +107,28 @@ const SiteNav = ({ variant = "dark" }: SiteNavProps) => {
                   }`}
                 >
                   {l.label}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link
+                to="/learn"
+                onClick={() => setOpen(false)}
+                className={`block px-8 py-3 text-sm ${
+                  isActive("/learn") ? "text-foreground" : "text-foreground/70 hover:text-foreground"
+                }`}
+              >
+                Learn
+              </Link>
+            </li>
+            {learnItems.map((item) => (
+              <li key={item.label}>
+                <Link
+                  to={item.to}
+                  onClick={() => setOpen(false)}
+                  className="block pl-12 pr-8 py-2.5 text-sm text-foreground/55 hover:text-foreground"
+                >
+                  {item.label}
                 </Link>
               </li>
             ))}
