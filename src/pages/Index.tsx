@@ -6,12 +6,16 @@ import heroStatsMobile from "@/assets/landing/hero-stats-mobile.png.asset.json";
 import controlAppsIllustration from "@/assets/landing/control-apps-illustration.png.asset.json";
 import singleLightFood from "@/assets/landing/single-light-food.png.asset.json";
 import setupDiagram from "@/assets/landing/setup-diagram.png.asset.json";
+import oneLightVideo from "@/assets/landing/one-light-food.mp4.asset.json";
 import equipmentAnnotated from "@/assets/landing/equipment-annotated.png.asset.json";
 import trust1 from "@/assets/trust/trust-1.jpg.asset.json";
 import trust2 from "@/assets/trust/trust-2.jpg.asset.json";
 import trust3 from "@/assets/trust/trust-3.jpg.asset.json";
 import trust4 from "@/assets/trust/trust-4.jpg.asset.json";
 import trust5 from "@/assets/trust/trust-5.jpg.asset.json";
+import trust6 from "@/assets/trust/trust-6.jpg.asset.json";
+import trust7 from "@/assets/trust/trust-7.jpg.asset.json";
+import trust8 from "@/assets/trust/trust-8.jpg.asset.json";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import { supabase } from "@/integrations/supabase/client";
@@ -55,6 +59,9 @@ const trustImages = [
   { src: trust3.url, alt: "Film crew lighting a wide studio set with a cyclorama" },
   { src: trust4.url, alt: "Interview set lit with overhead Godox flexible LED panels" },
   { src: trust5.url, alt: "Music video shoot lit with a large diffusion frame on set" },
+  { src: trust6.url, alt: "Vintage green room set lit with warm practical lamps and window light" },
+  { src: trust7.url, alt: "Interview shoot in a bright apartment with softbox and crew silhouettes" },
+  { src: trust8.url, alt: "Dining scene lit with overhead LED panels and a blue rim light" },
 ];
 
 const Index = () => {
@@ -136,9 +143,16 @@ const Index = () => {
         {/* Hero */}
         <section className="px-8 max-w-[1400px] mx-auto w-full pt-6 pb-12 sm:pt-10 sm:pb-20 text-center">
           <h1 className="font-medium tracking-tight leading-[1.05] text-[32px] sm:text-5xl lg:text-[64px] max-w-4xl mx-auto">
-            Everything a Creator Needs
-            <br />
-            for <span className="text-[hsl(var(--accent-lime))]">Lighting</span>
+            <span className="sm:hidden">
+              Everything a Creator
+              <br />
+              Needs for <span className="text-[hsl(var(--accent-lime))]">Lighting</span>
+            </span>
+            <span className="hidden sm:inline">
+              Everything a Creator Needs
+              <br />
+              for <span className="text-[hsl(var(--accent-lime))]">Lighting</span>
+            </span>
           </h1>
           <p className="mt-4 sm:mt-6 text-sm sm:text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
             Learn lighting. Find the right gear. Rent what you need. Create better images.
