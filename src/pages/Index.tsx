@@ -332,13 +332,13 @@ const Index = () => {
         {/* Courses — coming soon */}
         <section
           id="notify"
-          className="relative px-8 py-20 bg-[hsl(var(--band-soft-lime))] text-[hsl(var(--page-light-foreground))] scroll-mt-24"
+          className="relative px-8 py-20 border-t border-foreground/10 bg-background text-foreground scroll-mt-24"
         >
           <div className="max-w-[1400px] mx-auto text-center">
             <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-medium tracking-tight leading-[1.2] max-w-2xl mx-auto">
               Practical lighting courses for real productions
             </h2>
-            <p className="mt-5 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed text-[hsl(var(--page-light-foreground))]/70">
+            <p className="mt-5 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed text-foreground/60">
               Learn how to light interviews, podcasts, products, music videos and more, step by step.
             </p>
 
@@ -353,7 +353,7 @@ const Index = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 aria-label="Email address"
-                className="flex-1 rounded-md bg-[hsl(var(--page-light))] border border-[hsl(var(--page-light-foreground))]/20 text-[hsl(var(--page-light-foreground))] px-4 py-2.5 text-sm placeholder:text-[hsl(var(--page-light-foreground))]/40 focus:outline-none focus:border-[hsl(var(--cta))]"
+                className="flex-1 rounded-md bg-[hsl(var(--surface))] border border-foreground/20 text-foreground px-4 py-2.5 text-sm placeholder:text-foreground/40 focus:outline-none focus:border-[hsl(var(--cta))]"
               />
               <button
                 type="submit"
@@ -367,15 +367,15 @@ const Index = () => {
         </section>
 
         {/* Masterclass band */}
-        <section className="relative bg-[hsl(var(--band-navy))] overflow-hidden">
+        <section className="relative bg-[hsl(var(--band-navy))] overflow-hidden min-h-[600px] lg:min-h-[820px] flex items-center">
           <img
             src={masterclassBand.url}
             alt="Creator lit in blue light at the ShiftTheLight masterclass"
             className="absolute inset-0 w-full h-full object-cover object-right"
             loading="lazy"
           />
-          <div className="relative max-w-[1400px] mx-auto grid lg:grid-cols-2 items-center">
-            <div className="px-8 py-24 space-y-6">
+          <div className="relative w-full max-w-[1400px] mx-auto grid lg:grid-cols-2 items-center">
+            <div className="px-8 py-28 lg:py-40 space-y-6">
               <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-medium tracking-tight leading-[1.2]">
                 Learn lighting by{" "}
                 <span className="text-[hsl(var(--accent-lime))]">actually lighting</span>
@@ -391,7 +391,7 @@ const Index = () => {
                 Reserve Your Spot
               </Link>
             </div>
-            <div className="hidden lg:block min-h-[320px]" aria-hidden="true" />
+            <div className="hidden lg:block min-h-[520px]" aria-hidden="true" />
           </div>
         </section>
 
