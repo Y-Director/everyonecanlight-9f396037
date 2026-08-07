@@ -220,12 +220,10 @@ const Index = () => {
             </p>
 
             <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[160px] sm:auto-rows-[200px]">
-              {trustImages.map((img, i) => (
+              {trustImages.map((img) => (
                 <div
                   key={img.src}
-                  className={`rounded-2xl overflow-hidden bg-background ${
-                    i === 0 ? "row-span-2" : ""
-                  } ${i === 4 ? "col-span-2" : ""}`}
+                  className="rounded-2xl overflow-hidden bg-background"
                 >
                   <img
                     src={img.src}
@@ -270,9 +268,14 @@ const Index = () => {
               </div>
 
               <div className="rounded-2xl bg-[hsl(var(--surface))] border border-foreground/10 p-7">
-                <p className="text-sm leading-relaxed text-foreground/70">
-                  Understand real lighting setups, study the diagrams behind them, and recreate them
-                  for your own productions.
+                <h4 className="text-base font-medium tracking-tight">
+                  Lighting is easier when you understand the setup.
+                </h4>
+                <p className="mt-3 text-sm leading-relaxed text-foreground/70">
+                  Explore real production lighting diagrams complete with equipment lists, light
+                  placement, camera settings, and practical explanations. Study how professional
+                  scenes are built, then recreate them using the gear you have or discover better
+                  alternatives from our equipment database.
                 </p>
               </div>
 
