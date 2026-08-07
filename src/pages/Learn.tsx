@@ -71,31 +71,33 @@ const Learn = () => {
 
         {/* Content */}
         <main className="flex-1 px-8 max-w-[1400px] mx-auto w-full py-12">
-          {/* Hero */}
-          <section className="relative rounded-[2rem] overflow-hidden">
+          {/* Hero copy */}
+          <section className="text-center max-w-3xl mx-auto">
+            <h1 className="font-medium tracking-tight text-[32px] sm:text-5xl lg:text-[64px] leading-[1.05]">
+              Learn lighting, one lesson at a time.
+            </h1>
+            <p className="mt-5 text-sm sm:text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
+              Perfectly designed curriculum from beginner levels to advanced.
+            </p>
+            <Link
+              to="/articles"
+              className="mt-7 inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
+            >
+              Explore Free Guides
+            </Link>
+          </section>
+
+          {/* Hero image */}
+          <section className="mt-12 rounded-[2rem] overflow-hidden">
             <img
               src={coursesHero}
-              alt="Creator learning lighting"
+              alt="Creator learning lighting on a lit set"
               className="w-full h-auto object-cover"
             />
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-              <h1 className="font-medium tracking-tight text-[hsl(var(--foreground))] text-3xl sm:text-5xl lg:text-7xl drop-shadow-lg max-w-3xl">
-                Learn lighting, one lesson at a time.
-              </h1>
-              <p className="mt-4 text-sm md:text-lg text-foreground/90 max-w-xl">
-                Perfectly designed curriculum from beginner levels to advanced.
-              </p>
-              <Link
-                to="/articles"
-                className="mt-7 inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
-              >
-                Explore Free Guides
-              </Link>
-            </div>
           </section>
 
           {/* Learning paths */}
-          <section className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <section className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {learnCards.map((c) => (
               <div
                 key={c.header}
