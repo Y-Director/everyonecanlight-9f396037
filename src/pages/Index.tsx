@@ -5,13 +5,16 @@ import heroStatsDesktop from "@/assets/landing/hero-stats-desktop.png.asset.json
 import heroStatsMobile from "@/assets/landing/hero-stats-mobile.png.asset.json";
 import controlAppsIllustration from "@/assets/landing/control-apps-illustration.png.asset.json";
 import singleLightFood from "@/assets/landing/single-light-food.png.asset.json";
-import setupDiagram from "@/assets/landing/setup-diagram.png.asset.json";
+import oneLightVideo from "@/assets/landing/one-light-food.mp4.asset.json";
 import equipmentAnnotated from "@/assets/landing/equipment-annotated.png.asset.json";
 import trust1 from "@/assets/trust/trust-1.jpg.asset.json";
 import trust2 from "@/assets/trust/trust-2.jpg.asset.json";
 import trust3 from "@/assets/trust/trust-3.jpg.asset.json";
 import trust4 from "@/assets/trust/trust-4.jpg.asset.json";
 import trust5 from "@/assets/trust/trust-5.jpg.asset.json";
+import trust6 from "@/assets/trust/trust-6.jpg.asset.json";
+import trust7 from "@/assets/trust/trust-7.jpg.asset.json";
+import trust8 from "@/assets/trust/trust-8.jpg.asset.json";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import { supabase } from "@/integrations/supabase/client";
@@ -55,6 +58,9 @@ const trustImages = [
   { src: trust3.url, alt: "Film crew lighting a wide studio set with a cyclorama" },
   { src: trust4.url, alt: "Interview set lit with overhead Godox flexible LED panels" },
   { src: trust5.url, alt: "Music video shoot lit with a large diffusion frame on set" },
+  { src: trust6.url, alt: "Vintage green room set lit with warm practical lamps and window light" },
+  { src: trust7.url, alt: "Interview shoot in a bright apartment with softbox and crew silhouettes" },
+  { src: trust8.url, alt: "Dining scene lit with overhead LED panels and a blue rim light" },
 ];
 
 const Index = () => {
@@ -136,9 +142,16 @@ const Index = () => {
         {/* Hero */}
         <section className="px-8 max-w-[1400px] mx-auto w-full pt-6 pb-12 sm:pt-10 sm:pb-20 text-center">
           <h1 className="font-medium tracking-tight leading-[1.05] text-[32px] sm:text-5xl lg:text-[64px] max-w-4xl mx-auto">
-            Everything a Creator Needs
-            <br />
-            for <span className="text-[hsl(var(--accent-lime))]">Lighting</span>
+            <span className="sm:hidden">
+              Everything a Creator
+              <br />
+              Needs for <span className="text-[hsl(var(--accent-lime))]">Lighting</span>
+            </span>
+            <span className="hidden sm:inline">
+              Everything a Creator Needs
+              <br />
+              for <span className="text-[hsl(var(--accent-lime))]">Lighting</span>
+            </span>
           </h1>
           <p className="mt-4 sm:mt-6 text-sm sm:text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
             Learn lighting. Find the right gear. Rent what you need. Create better images.
@@ -206,12 +219,10 @@ const Index = () => {
             </p>
 
             <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[160px] sm:auto-rows-[200px]">
-              {trustImages.map((img, i) => (
+              {trustImages.map((img) => (
                 <div
                   key={img.src}
-                  className={`rounded-2xl overflow-hidden bg-background ${
-                    i === 0 ? "row-span-2" : ""
-                  } ${i === 4 ? "col-span-2" : ""}`}
+                  className="rounded-2xl overflow-hidden bg-background"
                 >
                   <img
                     src={img.src}
@@ -256,9 +267,14 @@ const Index = () => {
               </div>
 
               <div className="rounded-2xl bg-[hsl(var(--surface))] border border-foreground/10 p-7">
-                <p className="text-sm leading-relaxed text-foreground/70">
-                  Understand real lighting setups, study the diagrams behind them, and recreate them
-                  for your own productions.
+                <h4 className="text-base font-medium tracking-tight">
+                  Lighting is easier when you understand the setup.
+                </h4>
+                <p className="mt-3 text-sm leading-relaxed text-foreground/70">
+                  Explore real production lighting diagrams complete with equipment lists, light
+                  placement, camera settings, and practical explanations. Study how professional
+                  scenes are built, then recreate them using the gear you have or discover better
+                  alternatives from our equipment database.
                 </p>
               </div>
 
@@ -273,11 +289,15 @@ const Index = () => {
             </div>
 
             <div className="rounded-2xl overflow-hidden bg-[hsl(var(--surface))]">
-              <img
-                src={setupDiagram.url}
-                alt="Overhead lighting setup diagram showing key light, subject and camera position"
+              <video
+                src={oneLightVideo.url}
                 className="w-full h-full object-cover"
-                loading="lazy"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                aria-label="Behind the scenes video of a food scene lit with one single light"
               />
             </div>
           </div>
@@ -311,13 +331,13 @@ const Index = () => {
         {/* Courses — coming soon */}
         <section
           id="notify"
-          className="relative px-8 py-20 bg-[hsl(var(--band-soft-lime))] text-[hsl(var(--page-light-foreground))] scroll-mt-24"
+          className="relative px-8 py-20 border-t border-foreground/10 bg-background text-foreground scroll-mt-24"
         >
           <div className="max-w-[1400px] mx-auto text-center">
             <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-medium tracking-tight leading-[1.2] max-w-2xl mx-auto">
               Practical lighting courses for real productions
             </h2>
-            <p className="mt-5 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed text-[hsl(var(--page-light-foreground))]/70">
+            <p className="mt-5 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed text-foreground/60">
               Learn how to light interviews, podcasts, products, music videos and more, step by step.
             </p>
 
@@ -332,7 +352,7 @@ const Index = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 aria-label="Email address"
-                className="flex-1 rounded-md bg-[hsl(var(--page-light))] border border-[hsl(var(--page-light-foreground))]/20 text-[hsl(var(--page-light-foreground))] px-4 py-2.5 text-sm placeholder:text-[hsl(var(--page-light-foreground))]/40 focus:outline-none focus:border-[hsl(var(--cta))]"
+                className="flex-1 rounded-md bg-[hsl(var(--surface))] border border-foreground/20 text-foreground px-4 py-2.5 text-sm placeholder:text-foreground/40 focus:outline-none focus:border-[hsl(var(--cta))]"
               />
               <button
                 type="submit"
@@ -346,15 +366,15 @@ const Index = () => {
         </section>
 
         {/* Masterclass band */}
-        <section className="relative bg-[hsl(var(--band-navy))] overflow-hidden">
+        <section className="relative bg-[hsl(var(--band-navy))] overflow-hidden min-h-[600px] lg:min-h-[820px] flex items-center">
           <img
             src={masterclassBand.url}
             alt="Creator lit in blue light at the ShiftTheLight masterclass"
             className="absolute inset-0 w-full h-full object-cover object-right"
             loading="lazy"
           />
-          <div className="relative max-w-[1400px] mx-auto grid lg:grid-cols-2 items-center">
-            <div className="px-8 py-24 space-y-6">
+          <div className="relative w-full max-w-[1400px] mx-auto grid lg:grid-cols-2 items-center">
+            <div className="px-8 py-28 lg:py-40 space-y-6">
               <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-medium tracking-tight leading-[1.2]">
                 Learn lighting by{" "}
                 <span className="text-[hsl(var(--accent-lime))]">actually lighting</span>
@@ -370,7 +390,7 @@ const Index = () => {
                 Reserve Your Spot
               </Link>
             </div>
-            <div className="hidden lg:block min-h-[320px]" aria-hidden="true" />
+            <div className="hidden lg:block min-h-[520px]" aria-hidden="true" />
           </div>
         </section>
 
