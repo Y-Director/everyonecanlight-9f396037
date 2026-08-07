@@ -5,7 +5,6 @@ import heroStatsDesktop from "@/assets/landing/hero-stats-desktop.png.asset.json
 import heroStatsMobile from "@/assets/landing/hero-stats-mobile.png.asset.json";
 import controlAppsIllustration from "@/assets/landing/control-apps-illustration.png.asset.json";
 import singleLightFood from "@/assets/landing/single-light-food.png.asset.json";
-import setupDiagram from "@/assets/landing/setup-diagram.png.asset.json";
 import oneLightVideo from "@/assets/landing/one-light-food.mp4.asset.json";
 import equipmentAnnotated from "@/assets/landing/equipment-annotated.png.asset.json";
 import trust1 from "@/assets/trust/trust-1.jpg.asset.json";
