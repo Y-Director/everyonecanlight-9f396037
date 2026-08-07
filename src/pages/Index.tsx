@@ -290,11 +290,15 @@ const Index = () => {
             </div>
 
             <div className="rounded-2xl overflow-hidden bg-[hsl(var(--surface))]">
-              <img
-                src={setupDiagram.url}
-                alt="Overhead lighting setup diagram showing key light, subject and camera position"
+              <video
+                src={oneLightVideo.url}
                 className="w-full h-full object-cover"
-                loading="lazy"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                aria-label="Behind the scenes video of a food scene lit with one single light"
               />
             </div>
           </div>
