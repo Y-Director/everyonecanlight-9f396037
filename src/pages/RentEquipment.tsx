@@ -674,6 +674,7 @@ const RentEquipment = () => {
               Manage Booking
             </Button>
             <Button
+              variant="action"
               onClick={() => setSheetOpen(true)}
               className="relative gap-2 rounded-full px-5"
             >
@@ -681,7 +682,7 @@ const RentEquipment = () => {
               Gear List
               <ArrowRight className="w-4 h-4 -rotate-45" />
               {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 min-w-[1.25rem] h-5 px-1 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center border border-background">
+                <span className="absolute -top-2 -right-2 min-w-[1.25rem] h-5 px-1 rounded-full bg-foreground text-background text-xs flex items-center justify-center border border-background">
                   {cartCount}
                 </span>
               )}
@@ -1160,6 +1161,7 @@ const RentEquipment = () => {
                   </div>
 
                   <Button
+                    variant="action"
                     className="w-full"
                     onClick={() => {
                       if (!detailsValid) {
@@ -1457,6 +1459,7 @@ const RentEquipment = () => {
                       Back
                     </Button>
                     <Button
+                      variant="action"
                       className="flex-1"
                       disabled={
                         !kycValid ||
@@ -1536,7 +1539,7 @@ const RentEquipment = () => {
                         <button
                           type="button"
                           onClick={() => setTermsOpen(true)}
-                          className="font-medium text-primary underline decoration-primary underline-offset-2"
+                          className="font-medium text-[hsl(var(--action))] underline decoration-[hsl(var(--action))] underline-offset-2"
                         >
                           Terms &amp; Conditions
                         </button>
@@ -1551,7 +1554,12 @@ const RentEquipment = () => {
                       <FileText className="w-3.5 h-3.5" /> View / download the T&amp;C document
                     </button>
                   </div>
-                  <Button className="w-full" disabled={paying || !termsAccepted} onClick={startPayment}>
+                  <Button
+                    variant="action"
+                    className="w-full"
+                    disabled={paying || !termsAccepted}
+                    onClick={startPayment}
+                  >
                     {paying && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
                     Pay {formatNaira(total)}
                   </Button>
