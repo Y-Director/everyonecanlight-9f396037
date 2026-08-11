@@ -68,6 +68,16 @@ import parabolic120 from "@/assets/rental/Parabolic_Softbox_120cm.png.asset.json
 import parabolic150 from "@/assets/rental/Parabolic_Softbox_150cm.png.asset.json";
 import sandbag10kg from "@/assets/rental/Sandbag_10kg.png.asset.json";
 import extensionCable15 from "@/assets/rental/15_ft_Extension_Cable.png.asset.json";
+import spotlightSe19 from "@/assets/rental/Aputure_Spotlight_Mount_SE_19°_Lens.png.asset.json";
+import spotlightSe26 from "@/assets/rental/Aputure_Spotlight_Mount_SE_26°_Lens.png.asset.json";
+import spotlightSe36 from "@/assets/rental/Aputure_Spotlight_Mount_SE_36°_Lens.png.asset.json";
+import lantern90 from "@/assets/rental/Bulb_Lantern_Modifier_90cm.png.asset.json";
+import lantern120 from "@/assets/rental/Bulb_Lantern_Modifier_120cm.png.asset.json";
+import fresnelBowens from "@/assets/rental/Fresnel_Lens_Adapter_Bowens_Mount_Generic.png.asset.json";
+import scrim8Flag from "@/assets/rental/8x8_ft_Scrim_Frame_Black_Solid_Flag.png.asset.json";
+import scrim8Half from "@/assets/rental/8x8_ft_Scrim_Frame_Half_Diffusion.png.asset.json";
+import scrim8SilverGold from "@/assets/rental/8x8_ft_Scrim_Frame_Silver_Gold_Reflector.png.asset.json";
+import foamCoreBounce from "@/assets/rental/Foam_Core_White_Bounce_Board_Large_and_Small.png.asset.json";
 
 export type RentalCategory =
   | "Lights"
@@ -171,6 +181,16 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
     parabolic150,
     sandbag10kg,
     extensionCable15,
+    spotlightSe19,
+    spotlightSe26,
+    spotlightSe36,
+    lantern90,
+    lantern120,
+    fresnelBowens,
+    scrim8Flag,
+    scrim8Half,
+    scrim8SilverGold,
+    foamCoreBounce,
   ].map((a) => [norm(a.original_filename.replace(/\.png$/i, "")), a.url])
 );
 
