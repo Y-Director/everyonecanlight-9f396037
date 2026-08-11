@@ -18,6 +18,10 @@ All colors MUST be HSL.
     --cta: 224 100% 55%;
     --cta-foreground: 0 0% 100%;
 
+    /* High-visibility action buttons on dark surfaces (#ddff35) */
+    --action: 71 100% 60%;
+    --action-foreground: 0 0% 8%;
+
     /* High-visibility success/confirmation text on dark surfaces (#f3ff9b) */
     --ux-success: 71 100% 80%;
 
