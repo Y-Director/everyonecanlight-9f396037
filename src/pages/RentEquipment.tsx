@@ -867,6 +867,20 @@ const RentEquipment = () => {
             </SheetTitle>
           </SheetHeader>
 
+          {!amending && lineItems.length > 0 && (
+            <div className="mt-3 flex justify-end">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="gap-2 text-foreground/70 hover:text-destructive"
+                onClick={clearGearList}
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                Clear gear list
+              </Button>
+            </div>
+          )}
+
           {lineItems.length === 0 ? (
             <p className="mt-8 text-sm text-foreground/60">
               Your gear list is empty. Add equipment to get started.
@@ -1532,7 +1546,7 @@ const RentEquipment = () => {
                         type="checkbox"
                         checked={termsAccepted}
                         onChange={(e) => setTermsAccepted(e.target.checked)}
-                        className="mt-0.5 h-4 w-4 accent-[hsl(var(--primary))]"
+                        className="mt-0.5 h-4 w-4 accent-[hsl(var(--action))]"
                       />
                       <span>
                         I have read and accept the rental{" "}
