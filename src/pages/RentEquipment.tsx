@@ -15,6 +15,7 @@ import {
   Package,
   FileText,
   Upload,
+  Trash2,
   X,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -173,6 +174,14 @@ const RentEquipment = () => {
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
   }, [cart]);
+
+  const clearGearList = () => {
+    setCart({});
+    localStorage.removeItem(STORAGE_KEY);
+    setStep("details");
+    setSheetOpen(false);
+    toast("Gear list cleared", { description: "Your list is now empty.", duration: 2500 });
+  };
 
   // Verify payment when Paystack redirects back.
   useEffect(() => {
