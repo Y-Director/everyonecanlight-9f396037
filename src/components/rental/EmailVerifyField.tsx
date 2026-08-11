@@ -137,7 +137,7 @@ const EmailVerifyField = ({ email, onEmailChange, verified, onVerified, onUnveri
         {!verified && (
           <Button
             type="button"
-            variant={codeSent ? "outline" : "default"}
+            variant={codeSent ? "outline" : "action"}
             onClick={sendCode}
             disabled={sending || !valid || resendIn > 0}
             className="shrink-0"
