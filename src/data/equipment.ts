@@ -1,6 +1,16 @@
 import godoxVl150 from "@/assets/lights/godox-vl150.png";
 import colbor220r from "@/assets/lights/colbor-cl220r.png";
 import amaran200xs from "@/assets/lights/amaran-200xs.png";
+import babyPlateAsset from "@/assets/equipment/baby-plate.webp.asset.json";
+import ls600cProAsset from "@/assets/equipment/aputure-ls-600c-pro.jpg.asset.json";
+import ls600dProAsset from "@/assets/equipment/aputure-ls-600d-pro.webp.asset.json";
+import ls600xProAsset from "@/assets/equipment/aputure-ls-600x-pro.png.asset.json";
+import mcProAsset from "@/assets/equipment/aputure-mc-pro.webp.asset.json";
+import ballHeadMountAsset from "@/assets/equipment/ball-head-mount.webp.asset.json";
+import babyPinAdapterAsset from "@/assets/equipment/baby-pin-adapter.jpg.asset.json";
+import beamProjectorAsset from "@/assets/equipment/beam-projector-attachment.webp.asset.json";
+import beautyDishAsset from "@/assets/equipment/beauty-dish-reflector.png.asset.json";
+import barndoors8LeafAsset from "@/assets/equipment/barndoors-8-leaf.png.asset.json";
 
 // Each equipment item has its own dedicated placeholder file so editing one
 // image will never affect any other item.
@@ -456,6 +466,7 @@ const namedEntries: NamedEntry[] = [
     typeKind: "COB Light",
     bestUseCase: "“Key Light”, “Creative Color”",
     productDetails: "A full-color 600W RGBWW COB light for ultimate color control on set.",
+    brandedImage: ls600cProAsset.url,
   },
   {
     slug: "aputure-ls-600d-pro",
@@ -468,6 +479,7 @@ const namedEntries: NamedEntry[] = [
     typeKind: "COB Light",
     bestUseCase: "“Key Light”, “Sun Simulation”",
     productDetails: "The industry standard 600W daylight COB light for professional production.",
+    brandedImage: ls600dProAsset.url,
   },
   {
     slug: "aputure-ls-600x-pro",
@@ -480,6 +492,7 @@ const namedEntries: NamedEntry[] = [
     typeKind: "COB Light",
     bestUseCase: "“Key Light”, “Versatile Studio”",
     productDetails: "Powerful 600W bi-color COB light with weather resistance and high output.",
+    brandedImage: ls600xProAsset.url,
   },
   {
     slug: "aputure-mc-pro",
@@ -492,6 +505,7 @@ const namedEntries: NamedEntry[] = [
     typeKind: "Pocket Panel Light",
     bestUseCase: "“Accent Light”, “Practical”",
     productDetails: "A rugged, waterproof version of the original MC pocket light with more output.",
+    brandedImage: mcProAsset.url,
   },
   {
     slug: "baby-plate",
@@ -500,6 +514,57 @@ const namedEntries: NamedEntry[] = [
     typeKind: "Grip Equipment",
     bestUseCase: "“Mounting”, “Wall Rigging”",
     productDetails: "A standard baby pin plate for mounting lights to walls, floors, or other surfaces.",
+    brandedImage: babyPlateAsset.url,
+  },
+  {
+    slug: "ball-head-mount",
+    name: "Ball Head Mount",
+    category: "Stands & Grips",
+    typeKind: "Grip Equipment",
+    bestUseCase: "“Mounting”, “Fine Angle Control”",
+    productDetails:
+      "A compact ball head mount with a 1/4\" screw and cold shoe base, giving quick and precise angle adjustment for small lights, monitors, and accessories.",
+    brandedImage: ballHeadMountAsset.url,
+  },
+  {
+    slug: "baby-pin-adapter",
+    name: "Baby Pin Adapter",
+    category: "Stands & Grips",
+    typeKind: "Grip Equipment",
+    bestUseCase: "“Mounting”, “Stand Adaptation”",
+    productDetails:
+      "A chrome 5/8\" baby pin adapter used to bridge stands, clamps, and grip heads so lights can be rigged onto almost any support.",
+    brandedImage: babyPinAdapterAsset.url,
+  },
+  {
+    slug: "beam-projector-attachment",
+    name: "Beam Projector Attachment",
+    category: "Others",
+    typeKind: "Light Modifier",
+    bestUseCase: "“Focused Beam”, “Gobo Patterns”",
+    productDetails:
+      "A projection attachment that turns a point-source light into a focusable spotlight, with gobo slot support for hard-edged shapes and patterns.",
+    brandedImage: beamProjectorAsset.url,
+  },
+  {
+    slug: "beauty-dish-reflector",
+    name: "Beauty Dish Reflector",
+    category: "Others",
+    typeKind: "Light Modifier",
+    bestUseCase: "“Beauty Light”, “Portraits”",
+    productDetails:
+      "A wide beauty dish with honeycomb grid that produces crisp yet flattering light with controlled spill — a favourite for beauty and portrait keys.",
+    brandedImage: beautyDishAsset.url,
+  },
+  {
+    slug: "barndoors-8-leaf",
+    name: "Barndoors 8 Leaf",
+    category: "Others",
+    typeKind: "Light Modifier",
+    bestUseCase: "“Spill Control”, “Shaping”",
+    productDetails:
+      "An eight-leaf barndoor set for Bowens-style reflectors, giving fine control over spill and letting you flag light off walls, lenses, and backgrounds.",
+    brandedImage: barndoors8LeafAsset.url,
   },
 ];
 
