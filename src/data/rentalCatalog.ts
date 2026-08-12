@@ -315,7 +315,6 @@ const RAW: Raw[] = [
   ["6x6 ft Scrim Frame + Silver/Gold Reflector", 15000, "Scrims & Diffusion"],
   ["8x8 ft Scrim Frame + Black Solid Flag", 20000, "Scrims & Diffusion"],
   ["8x8 ft Scrim Frame + Full Diffusion", 20000, "Scrims & Diffusion"],
-  ["8x8 ft Scrim Frame + Half Diffusion", 20000, "Scrims & Diffusion"],
   ["8x8 ft Scrim Frame + Silver/Gold Reflector", 20000, "Scrims & Diffusion"],
   ["Black Wrap / Cinefoil Roll", 5000, "Scrims & Diffusion"],
   ["Foam Core White Bounce Board (Large and Small)", 5000, "Scrims & Diffusion"],
@@ -341,7 +340,6 @@ const RAW: Raw[] = [
   ["Godox AD600 Pro TTL Portable Flash", 20000, "Flash & Strobe", undefined, true],
   ["Godox DP400III Studio Strobe", 10000, "Flash & Strobe", undefined, true],
   ["Godox DP600III Studio Strobe", 15000, "Flash & Strobe", undefined, true],
-  ["Godox QT1200IIM Studio Strobe", 25000, "Flash & Strobe", undefined, true],
 ];
 
 export const rentalCatalog: RentalItem[] = RAW.map(
