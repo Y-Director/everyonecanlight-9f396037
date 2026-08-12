@@ -1,6 +1,16 @@
 import godoxVl150 from "@/assets/lights/godox-vl150.png";
 import colbor220r from "@/assets/lights/colbor-cl220r.png";
 import amaran200xs from "@/assets/lights/amaran-200xs.png";
+import babyPlateAsset from "@/assets/equipment/baby-plate.webp.asset.json";
+import ls600cProAsset from "@/assets/equipment/aputure-ls-600c-pro.jpg.asset.json";
+import ls600dProAsset from "@/assets/equipment/aputure-ls-600d-pro.webp.asset.json";
+import ls600xProAsset from "@/assets/equipment/aputure-ls-600x-pro.png.asset.json";
+import mcProAsset from "@/assets/equipment/aputure-mc-pro.webp.asset.json";
+import ballHeadMountAsset from "@/assets/equipment/ball-head-mount.webp.asset.json";
+import babyPinAdapterAsset from "@/assets/equipment/baby-pin-adapter.jpg.asset.json";
+import beamProjectorAsset from "@/assets/equipment/beam-projector-attachment.webp.asset.json";
+import beautyDishAsset from "@/assets/equipment/beauty-dish-reflector.png.asset.json";
+import barndoors8LeafAsset from "@/assets/equipment/barndoors-8-leaf.png.asset.json";
 
 // Each equipment item has its own dedicated placeholder file so editing one
 // image will never affect any other item.
