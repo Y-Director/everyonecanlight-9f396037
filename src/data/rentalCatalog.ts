@@ -78,6 +78,16 @@ import scrim8Flag from "@/assets/rental/8x8_ft_Scrim_Frame_Black_Solid_Flag.png.
 import scrim8Half from "@/assets/rental/8x8_ft_Scrim_Frame_Half_Diffusion.png.asset.json";
 import scrim8SilverGold from "@/assets/rental/8x8_ft_Scrim_Frame_Silver_Gold_Reflector.png.asset.json";
 import foamCoreBounce from "@/assets/rental/Foam_Core_White_Bounce_Board_Large_and_Small.png.asset.json";
+import cstand20 from "@/assets/rental/C-Stand_Heavy_Duty_20_ft_with_Arm.png.asset.json";
+import lightStand13 from "@/assets/rental/Light_Stand_Heavy_Duty_13_ft.png.asset.json";
+import gridClamp from "@/assets/rental/Grid_Clamp_Matthellini_Clamp.png.asset.json";
+import blackWrap from "@/assets/rental/Black_Wrap_Cinefoil_Roll.png.asset.json";
+import godoxAd300Pro from "@/assets/rental/Godox_AD300_Pro_TTL_Portable_Flash.png.asset.json";
+import godoxAd400Pro from "@/assets/rental/Godox_AD400_Pro_TTL_Portable_Flash.png.asset.json";
+import godoxAd600Pro from "@/assets/rental/Godox_AD600_Pro_TTL_Portable_Flash.png.asset.json";
+import godoxAd1200Pro from "@/assets/rental/Godox_AD1200_Pro_TTL_Portable_Flash.png.asset.json";
+import godoxDp400 from "@/assets/rental/Godox_DP400III_Studio_Strobe.png.asset.json";
+import godoxDp600 from "@/assets/rental/Godox_DP600III_Studio_Strobe.png.asset.json";
 
 export type RentalCategory =
   | "Lights"
@@ -191,6 +201,16 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
     scrim8Half,
     scrim8SilverGold,
     foamCoreBounce,
+    cstand20,
+    lightStand13,
+    gridClamp,
+    blackWrap,
+    godoxAd300Pro,
+    godoxAd400Pro,
+    godoxAd600Pro,
+    godoxAd1200Pro,
+    godoxDp400,
+    godoxDp600,
   ].map((a) => [norm(a.original_filename.replace(/\.png$/i, "")), a.url])
 );
 
