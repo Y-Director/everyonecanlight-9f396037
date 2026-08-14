@@ -130,3 +130,37 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+/* Starlight mascot micro-interactions */
+@keyframes starlight-bounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  30% { transform: translateY(-8px) rotate(-6deg); }
+  60% { transform: translateY(-2px) rotate(5deg); }
+}
+@keyframes starlight-dance {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-12deg) scale(1.05); }
+  50% { transform: rotate(0deg) scale(0.96); }
+  75% { transform: rotate(12deg) scale(1.05); }
+}
+@keyframes starlight-glow {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.15); }
+}
+@keyframes starlight-eyes {
+  0%, 70%, 100% { transform: translateX(0) rotate(0deg); }
+  80% { transform: translateX(2px) rotate(8deg); }
+  90% { transform: translateX(-2px) rotate(-8deg); }
+}
+
+.starlight-bounce { animation: starlight-bounce 2.8s ease-in-out infinite; }
+.starlight-glow { animation: starlight-glow 3s ease-in-out infinite; }
+.starlight-eyes { animation: starlight-eyes 5s ease-in-out infinite; }
+.group:hover .group-hover\:starlight-dance { animation: starlight-dance 0.9s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .starlight-bounce,
+  .starlight-glow,
+  .starlight-eyes,
+  .group:hover .group-hover\:starlight-dance { animation: none; }
+}
