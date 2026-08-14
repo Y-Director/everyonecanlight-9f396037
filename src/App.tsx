@@ -17,6 +17,7 @@ import AdminLogin from "./pages/admin/AdminLogin.tsx";
 import AdminRentals from "./pages/admin/AdminRentals.tsx";
 import Unsubscribe from "./pages/Unsubscribe.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import StarlightWidget from "./components/StarlightWidget.tsx";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +53,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <StarlightWidget />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

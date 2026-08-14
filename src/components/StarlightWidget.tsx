@@ -1,0 +1,215 @@
+import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
+import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { X } from "lucide-react";
+import starlight from "@/assets/starlight.png.asset.json";
+import { cn } from "@/lib/utils";
+import {
+  Conversation,
+  ConversationContent,
+  ConversationScrollButton,
+} from "@/components/ai-elements/conversation";
+import {
+  Message,
+  MessageContent,
+  MessageResponse,
+} from "@/components/ai-elements/message";
+import {
+  PromptInput,
+  PromptInputTextarea,
+  PromptInputFooter,
+  PromptInputSubmit,
+  type PromptInputMessage,
+} from "@/components/ai-elements/prompt-input";
+import { Shimmer } from "@/components/ai-elements/shimmer";
+
+const FAQS = [
+  "What light should I start with?",
+  "How do I light a talking head video?",
+  "Why does my video look dark?",
+  "What is CRI and does it matter?",
+  "Softbox or umbrella first?",
+  "How do I rent equipment here?",
+  "What is the Shift The Light Masterclass?",
+];
+
+const PAGE_LABELS: Record<string, string> = {
+  "/": "the home page",
+  "/rent-equipment": "the Rent Equipment page (rental catalogue, gear list, props, booking)",
+  "/lighting-equipment": "the Equipment Database",
+  "/control-apps": "the Control Apps page",
+  "/learn": "the Learn page",
+  "/courses": "the Learn page",
+  "/articles": "the Articles page",
+  "/masterclass": "the Shift The Light Masterclass page",
+};
+
+const describePage = (pathname: string) => {
+  if (PAGE_LABELS[pathname]) return PAGE_LABELS[pathname];
+  if (pathname.startsWith("/articles/")) return "an article page in Learn";
+  if (pathname.startsWith("/lighting-equipment/")) return "an equipment detail page in the Equipment Database";
+  return "the Everyone Can Light website";
+};
+
+const StarlightWidget = () => {
+  const { pathname } = useLocation();
+  const [open, setOpen] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [input, setInput] = useState("");
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const focusInput = () =>
+    panelRef.current?.querySelector<HTMLTextAreaElement>("textarea")?.focus();
+
+  const { messages, sendMessage, status, error, stop } = useChat({
+    transport: new DefaultChatTransport({
+      api: `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/starlight-chat`,
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        "Content-Type": "application/json",
+      },
+    }),
+  });
+
+  const busy = status === "submitted" || status === "streaming";
+
+  useEffect(() => {
+    if (open) {
+      const t = setTimeout(() => focusInput(), 120);
+      return () => clearTimeout(t);
+    }
+  }, [open]);
+
+  useEffect(() => {
+    if (open && status === "ready") focusInput();
+  }, [open, status]);
+
+  const ask = (text: string) => {
+    const value = text.trim();
+    if (!value || busy) return;
+    setInput("");
+    sendMessage({ text: value }, { body: { pageContext: describePage(pathname) } });
+  };
+
+  const handleSubmit = (message: PromptInputMessage) => {
+    ask(message.text ?? input);
+  };
+
+  return (
+    <>
+      {/* Floating mascot */}
+      <div className="fixed bottom-5 left-5 z-50 flex items-end gap-3">
+        <button
+          type="button"
+          aria-label="Chat with Starlight"
+          onClick={() => setOpen((v) => !v)}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+          className={cn(
+            "group relative h-16 w-16 rounded-full outline-none transition-transform duration-300",
+            "hover:scale-110 focus-visible:ring-2 focus-visible:ring-ring",
+            !open && "starlight-bounce",
+          )}
+        >
+          <span className="absolute inset-0 rounded-full bg-[#ddff35]/25 blur-xl starlight-glow" />
+          <img
+            src={starlight.url}
+            alt="Starlight, the Everyone Can Light AI lighting companion"
+            className="relative h-16 w-16 select-none object-contain group-hover:starlight-dance"
+            draggable={false}
+          />
+        </button>
+
+        {hovered && !open && (
+          <div className="mb-2 max-w-[15rem] animate-in fade-in slide-in-from-left-2 rounded-2xl border border-border bg-popover px-3 py-2 text-sm text-popover-foreground shadow-lg">
+            Hello creator, I'm Starlight. Ready to guide you.
+          </div>
+        )}
+      </div>
+
+      {/* Chat panel */}
+      {open && (
+        <div
+          ref={panelRef}
+          className="fixed bottom-24 left-4 z-50 flex h-[min(34rem,calc(100vh-8rem))] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-3xl border border-border bg-background shadow-2xl"
+        >
+          <header className="flex items-center gap-3 border-b border-border px-4 py-3">
+            <img src={starlight.url} alt="" className="h-9 w-9 object-contain starlight-eyes" />
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-semibold">Starlight</p>
+              <p className="truncate text-xs text-muted-foreground">Your AI lighting companion</p>
+            </div>
+            <button
+              type="button"
+              aria-label="Close Starlight"
+              onClick={() => setOpen(false)}
+              className="rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            >
+              <X className="size-4" />
+            </button>
+          </header>
+
+          <Conversation className="flex-1">
+            <ConversationContent className="gap-5 p-4">
+              {messages.length === 0 && (
+                <div className="space-y-3">
+                  <p className="text-sm text-muted-foreground">
+                    Hey creator ✨ Ask me anything about lighting, gear or getting around Everyone Can Light.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {FAQS.map((faq) => (
+                      <button
+                        key={faq}
+                        type="button"
+                        onClick={() => ask(faq)}
+                        className="rounded-full border border-border px-3 py-1.5 text-left text-xs text-foreground transition-colors hover:border-[#ddff35] hover:bg-muted"
+                      >
+                        {faq}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {messages.map((message) => (
+                <Message from={message.role} key={message.id}>
+                  <MessageContent>
+                    {message.parts.map((part, index) =>
+                      part.type === "text" ? (
+                        <MessageResponse key={index}>{part.text}</MessageResponse>
+                      ) : null,
+                    )}
+                  </MessageContent>
+                </Message>
+              ))}
+
+              {status === "submitted" && <Shimmer className="text-sm">Thinking...</Shimmer>}
+
+              {error && (
+                <p className="text-sm text-destructive">
+                  Starlight couldn't answer that just now. Please try again in a moment.
+                </p>
+              )}
+            </ConversationContent>
+            <ConversationScrollButton />
+          </Conversation>
+
+          <div className="border-t border-border p-3">
+            <PromptInput onSubmit={handleSubmit}>
+              <PromptInputTextarea
+                value={input}
+                onChange={(e) => setInput(e.currentTarget.value)}
+                placeholder="Ask Starlight about lighting..."
+              />
+              <PromptInputFooter className="justify-end">
+                <PromptInputSubmit status={status} onStop={stop} disabled={!input.trim() && !busy} />
+              </PromptInputFooter>
+            </PromptInput>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default StarlightWidget;
