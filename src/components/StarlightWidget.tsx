@@ -57,7 +57,9 @@ const StarlightWidget = () => {
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [input, setInput] = useState("");
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const focusInput = () =>
+    panelRef.current?.querySelector<HTMLTextAreaElement>("textarea")?.focus();
 
   const { messages, sendMessage, status, error, stop } = useChat({
     transport: new DefaultChatTransport({
@@ -73,13 +75,13 @@ const StarlightWidget = () => {
 
   useEffect(() => {
     if (open) {
-      const t = setTimeout(() => textareaRef.current?.focus(), 120);
+      const t = setTimeout(() => focusInput(), 120);
       return () => clearTimeout(t);
     }
   }, [open]);
 
   useEffect(() => {
-    if (open && status === "ready") textareaRef.current?.focus();
+    if (open && status === "ready") focusInput();
   }, [open, status]);
 
   const ask = (text: string) => {
@@ -127,7 +129,10 @@ const StarlightWidget = () => {
 
       {/* Chat panel */}
       {open && (
-        <div className="fixed bottom-24 left-4 z-50 flex h-[min(34rem,calc(100vh-8rem))] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-3xl border border-border bg-background shadow-2xl">
+        <div
+          ref={panelRef}
+          className="fixed bottom-24 left-4 z-50 flex h-[min(34rem,calc(100vh-8rem))] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-3xl border border-border bg-background shadow-2xl"
+        >
           <header className="flex items-center gap-3 border-b border-border px-4 py-3">
             <img src={starlight.url} alt="" className="h-9 w-9 object-contain starlight-eyes" />
             <div className="min-w-0 flex-1">
@@ -192,7 +197,6 @@ const StarlightWidget = () => {
           <div className="border-t border-border p-3">
             <PromptInput onSubmit={handleSubmit}>
               <PromptInputTextarea
-                ref={textareaRef}
                 value={input}
                 onChange={(e) => setInput(e.currentTarget.value)}
                 placeholder="Ask Starlight about lighting..."
