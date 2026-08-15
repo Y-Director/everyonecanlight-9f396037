@@ -376,6 +376,47 @@ export type Database = {
           },
         ]
       }
+      prop_charges: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          paid_at: string | null
+          prop_ids: string[]
+          reference: string
+          reservation_id: string
+          status: string
+        }
+        Insert: {
+          amount?: number
+          created_at?: string
+          id?: string
+          paid_at?: string | null
+          prop_ids?: string[]
+          reference: string
+          reservation_id: string
+          status?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          paid_at?: string | null
+          prop_ids?: string[]
+          reference?: string
+          reservation_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prop_charges_reservation_id_fkey"
+            columns: ["reservation_id"]
+            isOneToOne: false
+            referencedRelation: "rental_reservations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       prop_items: {
         Row: {
           created_at: string
@@ -383,6 +424,7 @@ export type Database = {
           image_url: string | null
           name: string
           notes: string | null
+          price_naira: number
           reservation_id: string | null
           slug: string
           status: string
@@ -395,6 +437,7 @@ export type Database = {
           image_url?: string | null
           name: string
           notes?: string | null
+          price_naira?: number
           reservation_id?: string | null
           slug: string
           status?: string
@@ -407,6 +450,7 @@ export type Database = {
           image_url?: string | null
           name?: string
           notes?: string | null
+          price_naira?: number
           reservation_id?: string | null
           slug?: string
           status?: string
@@ -830,6 +874,7 @@ export type Database = {
           id: string | null
           image_url: string | null
           name: string | null
+          price_naira: number | null
           slug: string | null
           status: string | null
           unit_label: string | null
@@ -838,6 +883,7 @@ export type Database = {
           id?: string | null
           image_url?: string | null
           name?: string | null
+          price_naira?: number | null
           slug?: string | null
           status?: string | null
           unit_label?: string | null
@@ -846,6 +892,7 @@ export type Database = {
           id?: string | null
           image_url?: string | null
           name?: string | null
+          price_naira?: number | null
           slug?: string | null
           status?: string | null
           unit_label?: string | null
