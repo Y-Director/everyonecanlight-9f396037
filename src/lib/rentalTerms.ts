@@ -4,6 +4,9 @@ import termsPdf from "@/assets/docs/rental-terms.pdf.asset.json";
 export const PERK_THRESHOLD = 60000;
 export const qualifiesForPerks = (total: number) => (total ?? 0) >= PERK_THRESHOLD;
 
+/** Props given out free once the rental qualifies; extras are paid for. */
+export const FREE_PROP_LIMIT = 3;
+
 export const TERMS_PDF_URL = termsPdf.url;
 
 export type TermsSection = { title: string; body: string };
