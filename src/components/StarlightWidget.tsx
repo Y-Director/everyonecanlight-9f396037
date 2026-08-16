@@ -2,7 +2,7 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { X } from "lucide-react";
+import { RotateCcw, X } from "lucide-react";
 import starlight from "@/assets/starlight.png.asset.json";
 import { cn } from "@/lib/utils";
 import {
@@ -61,7 +61,7 @@ const StarlightWidget = () => {
   const focusInput = () =>
     panelRef.current?.querySelector<HTMLTextAreaElement>("textarea")?.focus();
 
-  const { messages, sendMessage, status, error, stop } = useChat({
+  const { messages, sendMessage, setMessages, status, error, stop } = useChat({
     transport: new DefaultChatTransport({
       api: `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/starlight-chat`,
       headers: {
@@ -141,6 +141,20 @@ const StarlightWidget = () => {
             </div>
             <button
               type="button"
+              aria-label="Clear chat"
+              title="Clear chat"
+              onClick={() => {
+                if (busy) stop();
+                setMessages([]);
+                setInput("");
+                setTimeout(() => focusInput(), 60);
+              }}
+              className="rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            >
+              <RotateCcw className="size-4" />
+            </button>
+            <button
+              type="button"
               aria-label="Close Starlight"
               onClick={() => setOpen(false)}
               className="rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
@@ -162,7 +176,7 @@ const StarlightWidget = () => {
                         key={faq}
                         type="button"
                         onClick={() => ask(faq)}
-                        className="rounded-full border border-border px-3 py-1.5 text-left text-xs text-foreground transition-colors hover:border-[#ddff35] hover:bg-muted"
+                        className="rounded-full border border-border bg-transparent px-3 py-1.5 text-left text-xs text-foreground transition-colors hover:border-[#ddff35] hover:bg-[#ddff35]/15 hover:text-foreground"
                       >
                         {faq}
                       </button>
@@ -173,7 +187,7 @@ const StarlightWidget = () => {
 
               {messages.map((message) => (
                 <Message from={message.role} key={message.id}>
-                  <MessageContent>
+                  <MessageContent className="[&_a]:font-medium [&_a]:text-[#ddff35] [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-[#eaff7a]">
                     {message.parts.map((part, index) =>
                       part.type === "text" ? (
                         <MessageResponse key={index}>{part.text}</MessageResponse>
@@ -183,7 +197,23 @@ const StarlightWidget = () => {
                 </Message>
               ))}
 
-              {status === "submitted" && <Shimmer className="text-sm">Thinking...</Shimmer>}
+              {status === "submitted" && (
+                <Shimmer className="text-sm">Starlight is thinking...</Shimmer>
+              )}
+
+              {messages.length > 0 && !busy && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMessages([]);
+                    setInput("");
+                    focusInput();
+                  }}
+                  className="self-start text-xs text-muted-foreground underline decoration-[#ddff35] underline-offset-4 transition-colors hover:text-foreground"
+                >
+                  Clear chat & ask something new
+                </button>
+              )}
 
               {error && (
                 <p className="text-sm text-destructive">
