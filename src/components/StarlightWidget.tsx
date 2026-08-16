@@ -197,7 +197,9 @@ const StarlightWidget = () => {
                 </Message>
               ))}
 
-              {busy && <Shimmer className="text-sm">Starlight is thinking...</Shimmer>}
+              {status === "submitted" && (
+                <Shimmer className="text-sm">Starlight is thinking...</Shimmer>
+              )}
 
               {messages.length > 0 && !busy && (
                 <button
