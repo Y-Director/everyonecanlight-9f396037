@@ -161,7 +161,8 @@ All colors MUST be HSL.
 /* Streamdown applies its own link theme, so Starlight links need an explicit
    high-contrast treatment that wins in normal, visited, and hover states. */
 .starlight-response a,
-.starlight-response a:visited {
+.starlight-response a:visited,
+.starlight-response [data-streamdown="link"] {
   color: hsl(var(--action)) !important;
   font-weight: 600;
   text-decoration: underline;
@@ -170,7 +171,9 @@ All colors MUST be HSL.
 }
 
 .starlight-response a:hover,
-.starlight-response a:focus-visible {
+.starlight-response a:focus-visible,
+.starlight-response [data-streamdown="link"]:hover,
+.starlight-response [data-streamdown="link"]:focus-visible {
   color: hsl(var(--ux-success)) !important;
 }
 
