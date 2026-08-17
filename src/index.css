@@ -158,6 +158,22 @@ All colors MUST be HSL.
 .starlight-eyes { animation: starlight-eyes 5s ease-in-out infinite; }
 .group:hover .group-hover\:starlight-dance { animation: starlight-dance 0.9s ease-in-out infinite; }
 
+/* Streamdown applies its own link theme, so Starlight links need an explicit
+   high-contrast treatment that wins in normal, visited, and hover states. */
+.starlight-response a,
+.starlight-response a:visited {
+  color: hsl(var(--action)) !important;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.starlight-response a:hover,
+.starlight-response a:focus-visible {
+  color: hsl(var(--ux-success)) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .starlight-bounce,
   .starlight-glow,

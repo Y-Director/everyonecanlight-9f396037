@@ -202,14 +202,18 @@ const StarlightWidget = () => {
                 <Message from={message.role} key={message.id}>
                   <MessageContent
                     className={cn(
-                      "[&_a]:!font-medium [&_a]:!text-[#ddff35] [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:!text-[#eaff7a]",
                       message.role === "user" &&
                         "!bg-[#ddff35] !text-[#12140a] [&_*]:!text-[#12140a] font-medium",
                     )}
                   >
                     {message.parts.map((part, index) =>
                       part.type === "text" ? (
-                        <MessageResponse key={index}>{part.text}</MessageResponse>
+                        <MessageResponse
+                          className={message.role === "assistant" ? "starlight-response" : undefined}
+                          key={index}
+                        >
+                          {part.text}
+                        </MessageResponse>
                       ) : null,
                     )}
                   </MessageContent>
