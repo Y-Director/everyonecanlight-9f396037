@@ -22,7 +22,20 @@ import {
   PromptInputSubmit,
   type PromptInputMessage,
 } from "@/components/ai-elements/prompt-input";
-import { Shimmer } from "@/components/ai-elements/shimmer";
+const ThinkingIndicator = ({ label }: { label: string }) => (
+  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+    <span className="flex gap-1">
+      {[0, 1, 2].map((i) => (
+        <span
+          key={i}
+          className="h-1.5 w-1.5 rounded-full bg-[#ddff35] animate-bounce"
+          style={{ animationDelay: `${i * 0.15}s` }}
+        />
+      ))}
+    </span>
+    <span className="animate-pulse">{label}</span>
+  </div>
+);
 
 const FAQS = [
   "What light should I start with?",
@@ -187,7 +200,13 @@ const StarlightWidget = () => {
 
               {messages.map((message) => (
                 <Message from={message.role} key={message.id}>
-                  <MessageContent className="[&_a]:font-medium [&_a]:text-[#ddff35] [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-[#eaff7a]">
+                  <MessageContent
+                    className={cn(
+                      "[&_a]:!font-medium [&_a]:!text-[#ddff35] [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:!text-[#eaff7a]",
+                      message.role === "user" &&
+                        "!bg-[#ddff35] !text-[#12140a] [&_*]:!text-[#12140a] font-medium",
+                    )}
+                  >
                     {message.parts.map((part, index) =>
                       part.type === "text" ? (
                         <MessageResponse key={index}>{part.text}</MessageResponse>
@@ -197,9 +216,22 @@ const StarlightWidget = () => {
                 </Message>
               ))}
 
-              {status === "submitted" && (
-                <Shimmer className="text-sm">Starlight is thinking...</Shimmer>
-              )}
+              {busy &&
+                !(
+                  status === "streaming" &&
+                  messages[messages.length - 1]?.role === "assistant" &&
+                  messages[messages.length - 1]?.parts.some(
+                    (p) => p.type === "text" && p.text.length > 0,
+                  )
+                ) && (
+                  <ThinkingIndicator
+                    label={
+                      status === "submitted"
+                        ? "Starlight is thinking..."
+                        : "Starlight is finding answers..."
+                    }
+                  />
+                )}
 
               {messages.length > 0 && !busy && (
                 <button
