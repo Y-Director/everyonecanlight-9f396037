@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from "react-router-dom";
-import { useMemo } from "react";
-import { Search, ArrowLeft, ArrowRight, ArrowUpDown } from "lucide-react";
+import { useMemo, useState } from "react";
+import { Search, ArrowLeft, ArrowRight, ArrowUpDown, Check, X } from "lucide-react";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
 import { equipment as EQUIPMENT, type EquipmentCategory } from "@/data/equipment";
@@ -26,6 +26,18 @@ const LightingEquipment = () => {
   const category = (searchParams.get("cat") as Category) || "All Equipment";
   const sortAsc = searchParams.get("sort") !== "desc";
   const page = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10) || 1);
+
+  const [compare, setCompare] = useState<string[]>([]);
+
+  const toggleCompare = (slug: string) => {
+    setCompare((prev) =>
+      prev.includes(slug)
+        ? prev.filter((s) => s !== slug)
+        : prev.length >= 2
+          ? [prev[1], slug]
+          : [...prev, slug]
+    );
+  };
 
   const update = (patch: Record<string, string | null>) => {
     const next = new URLSearchParams(searchParams);
@@ -128,9 +140,11 @@ const LightingEquipment = () => {
           </div>
 
           <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
-            {pageItems.map((item) => (
+            {pageItems.map((item) => {
+              const selected = compare.includes(item.slug);
+              return (
+              <div key={item.slug} className="relative">
               <Link
-                key={item.slug}
                 to={detailHref(item.slug)}
                 className="group block overflow-hidden rounded-sm bg-card transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-foreground/30"
               >
@@ -146,7 +160,22 @@ const LightingEquipment = () => {
                   {item.name}
                 </div>
               </Link>
-            ))}
+              <button
+                type="button"
+                onClick={() => toggleCompare(item.slug)}
+                aria-pressed={selected}
+                className={`absolute top-2 left-2 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs border transition-colors ${
+                  selected
+                    ? "bg-foreground text-background border-foreground"
+                    : "bg-white/85 text-neutral-700 border-neutral-300 hover:bg-white"
+                }`}
+              >
+                {selected ? <Check className="w-3 h-3" /> : null}
+                {selected ? "Selected" : "Compare"}
+              </button>
+              </div>
+              );
+            })}
           </div>
 
           {pageItems.length === 0 && (
@@ -186,6 +215,33 @@ const LightingEquipment = () => {
                 aria-label="Next page"
               >
                 <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+
+          {compare.length > 0 && (
+            <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex flex-wrap items-center gap-4 rounded-full border border-border bg-[hsl(var(--surface))] shadow-lg px-5 py-3 text-sm">
+              <span className="text-foreground/70">
+                {compare.length} selected{compare.length === 1 ? " — pick one more" : ""}
+              </span>
+              <Link
+                to={`/lighting-equipment/compare?a=${compare[0]}${compare[1] ? `&b=${compare[1]}` : ""}${
+                  listingQuery ? `&from=${encodeURIComponent(listingQuery)}` : ""
+                }`}
+                className={`rounded-full px-4 py-1.5 transition-colors ${
+                  compare.length === 2
+                    ? "bg-foreground text-background hover:opacity-90"
+                    : "pointer-events-none opacity-40 bg-foreground text-background"
+                }`}
+              >
+                Compare
+              </Link>
+              <button
+                onClick={() => setCompare([])}
+                className="inline-flex items-center gap-1 text-foreground/60 hover:text-foreground"
+                aria-label="Clear comparison selection"
+              >
+                <X className="w-4 h-4" /> Clear
               </button>
             </div>
           )}
