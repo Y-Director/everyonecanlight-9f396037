@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from "react-router-dom";
-import { useMemo } from "react";
-import { Search, ArrowLeft, ArrowRight, ArrowUpDown } from "lucide-react";
+import { useMemo, useState } from "react";
+import { Search, ArrowLeft, ArrowRight, ArrowUpDown, Check, X } from "lucide-react";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
 import { equipment as EQUIPMENT, type EquipmentCategory } from "@/data/equipment";
