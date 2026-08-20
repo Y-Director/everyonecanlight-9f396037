@@ -140,9 +140,11 @@ const LightingEquipment = () => {
           </div>
 
           <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
-            {pageItems.map((item) => (
+            {pageItems.map((item) => {
+              const selected = compare.includes(item.slug);
+              return (
+              <div key={item.slug} className="relative">
               <Link
-                key={item.slug}
                 to={detailHref(item.slug)}
                 className="group block overflow-hidden rounded-sm bg-card transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-foreground/30"
               >
@@ -158,7 +160,22 @@ const LightingEquipment = () => {
                   {item.name}
                 </div>
               </Link>
-            ))}
+              <button
+                type="button"
+                onClick={() => toggleCompare(item.slug)}
+                aria-pressed={selected}
+                className={`absolute top-2 left-2 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs border transition-colors ${
+                  selected
+                    ? "bg-foreground text-background border-foreground"
+                    : "bg-white/85 text-neutral-700 border-neutral-300 hover:bg-white"
+                }`}
+              >
+                {selected ? <Check className="w-3 h-3" /> : null}
+                {selected ? "Selected" : "Compare"}
+              </button>
+              </div>
+              );
+            })}
           </div>
 
           {pageItems.length === 0 && (
