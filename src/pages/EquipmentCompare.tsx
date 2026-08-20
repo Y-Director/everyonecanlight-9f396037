@@ -1,5 +1,5 @@
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
-import { X, ArrowLeftRight, ArrowLeft } from "lucide-react";
+import { X, ArrowLeftRight, ArrowLeft, ChevronDown } from "lucide-react";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
 import { equipment, getEquipmentBySlug, type Equipment } from "@/data/equipment";
@@ -51,15 +51,15 @@ const EquipmentCompare = () => {
       <div className="flex flex-col min-h-screen">
         <SiteNav />
 
-        <main className="flex-1 max-w-[1400px] mx-auto w-full px-8 py-8">
-          <div className="flex flex-wrap items-center justify-between gap-4">
+        <main className="flex-1 max-w-[1400px] mx-auto w-full px-4 sm:px-8 py-6 sm:py-8">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <Link
               to={backHref}
               className="inline-flex items-center gap-2 text-sm text-foreground/70 hover:text-foreground transition-colors px-3 py-2 rounded-md border border-border hover:border-foreground/40"
             >
-              <ArrowLeft className="w-4 h-4" /> Back to Equipment Database
+              <ArrowLeft className="w-4 h-4" /> <span className="hidden sm:inline">Back to Equipment Database</span><span className="sm:hidden">Back</span>
             </Link>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <button
                 onClick={swap}
                 disabled={!a || !b}
@@ -72,62 +72,75 @@ const EquipmentCompare = () => {
                 className="inline-flex items-center gap-2 text-sm px-3 py-2 rounded-md border border-border text-foreground/80 hover:text-foreground hover:border-foreground/40"
                 aria-label="Close comparison"
               >
-                <X className="w-4 h-4" /> Close comparison
+                <X className="w-4 h-4" /> <span className="hidden sm:inline">Close comparison</span>
               </button>
             </div>
           </div>
 
-          <h1 className="mt-8 text-3xl md:text-4xl font-medium tracking-tight">Compare Equipment</h1>
+          <h1 className="mt-6 sm:mt-8 text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight">Compare Equipment</h1>
           <p className="mt-2 text-foreground/60 text-sm">
             Pick any two items to see their specs side by side. Change either selection at any time.
           </p>
 
-          <div className="mt-8 grid md:grid-cols-2 gap-6">
+          {/* Selection + product heads: always side by side */}
+          <div className="mt-6 sm:mt-8 grid grid-cols-2 gap-3 sm:gap-6">
             {columns.map(({ slot, item }) => (
-              <div key={slot} className="bg-white text-neutral-900 rounded-sm p-6">
-                <select
-                  value={item?.slug ?? ""}
-                  onChange={(e) => setSlot(slot, e.target.value)}
-                  className="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm bg-white"
-                  aria-label={`Select equipment ${slot === "a" ? "one" : "two"}`}
-                >
-                  <option value="">Select equipment…</option>
-                  {equipment.map((e) => (
-                    <option key={e.slug} value={e.slug}>
-                      {e.name}
-                    </option>
-                  ))}
-                </select>
+              <div key={slot} className="bg-white text-neutral-900 rounded-sm p-3 sm:p-6 flex flex-col">
+                <label className="text-[10px] sm:text-xs uppercase tracking-wider text-neutral-500">
+                  {slot === "a" ? "Item 1" : "Item 2"}
+                </label>
+                <div className="relative mt-1.5">
+                  <select
+                    value={item?.slug ?? ""}
+                    onChange={(e) => setSlot(slot, e.target.value)}
+                    className="w-full appearance-none border border-neutral-300 rounded-md pl-3 pr-8 py-2.5 text-[13px] sm:text-sm bg-white truncate focus:outline-none focus:ring-2 focus:ring-sky-500/40 focus:border-sky-500"
+                    aria-label={`Select equipment ${slot === "a" ? "one" : "two"}`}
+                  >
+                    <option value="">Select equipment…</option>
+                    {equipment.map((e) => (
+                      <option key={e.slug} value={e.slug}>
+                        {e.name}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="w-4 h-4 absolute right-2.5 top-1/2 -translate-y-1/2 text-neutral-500 pointer-events-none" />
+                </div>
 
                 {item ? (
                   <>
-                    <div className="mt-5 h-[240px] flex items-center justify-center">
-                      <img src={item.image} alt={item.name} className="max-h-[240px] w-auto object-contain" />
+                    <div className="mt-4 h-[120px] sm:h-[240px] flex items-center justify-center">
+                      <img src={item.image} alt={item.name} className="max-h-full w-auto object-contain" />
                     </div>
-                    <h2 className="mt-4 text-xl font-medium text-center">{item.name}</h2>
-                    <dl className="mt-5 divide-y divide-neutral-200">
-                      {ROWS.map((r) => (
-                        <div key={r.label} className="py-3">
-                          <dt className="text-xs uppercase tracking-wider text-neutral-500">{r.label}</dt>
-                          <dd className="mt-1 text-sm text-neutral-800">{r.get(item)}</dd>
-                        </div>
-                      ))}
-                    </dl>
+                    <h2 className="mt-3 text-sm sm:text-xl font-medium text-center leading-snug">{item.name}</h2>
                     <Link
                       to={`/lighting-equipment/${item.slug}`}
-                      className="mt-5 inline-block text-sky-600 hover:text-sky-700 hover:underline underline-offset-2 text-sm"
+                      className="mt-2 text-center text-sky-600 hover:text-sky-700 hover:underline underline-offset-2 text-xs sm:text-sm"
                     >
-                      View full details
+                      View details
                     </Link>
                   </>
                 ) : (
-                  <p className="mt-10 mb-10 text-center text-neutral-500 text-sm">
-                    Nothing selected yet.
-                  </p>
+                  <p className="my-10 text-center text-neutral-500 text-xs sm:text-sm">Nothing selected yet.</p>
                 )}
               </div>
             ))}
           </div>
+
+          {/* Spec rows: label above, two values side by side */}
+          {(a || b) && (
+            <div className="mt-4 sm:mt-6 bg-white text-neutral-900 rounded-sm divide-y divide-neutral-200">
+              {ROWS.map((r) => (
+                <div key={r.label} className="px-3 sm:px-6 py-3">
+                  <p className="text-[10px] sm:text-xs uppercase tracking-wider text-neutral-500">{r.label}</p>
+                  <div className="mt-1.5 grid grid-cols-2 gap-3 sm:gap-6">
+                    <p className="text-[13px] sm:text-sm text-neutral-800 break-words">{a ? r.get(a) : "—"}</p>
+                    <p className="text-[13px] sm:text-sm text-neutral-800 break-words">{b ? r.get(b) : "—"}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
         </main>
 
         <footer className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 py-6 px-8 border-t border-border text-sm bg-[hsl(var(--surface))] text-foreground mt-16">
