@@ -27,6 +27,18 @@ const LightingEquipment = () => {
   const sortAsc = searchParams.get("sort") !== "desc";
   const page = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10) || 1);
 
+  const [compare, setCompare] = useState<string[]>([]);
+
+  const toggleCompare = (slug: string) => {
+    setCompare((prev) =>
+      prev.includes(slug)
+        ? prev.filter((s) => s !== slug)
+        : prev.length >= 2
+          ? [prev[1], slug]
+          : [...prev, slug]
+    );
+  };
+
   const update = (patch: Record<string, string | null>) => {
     const next = new URLSearchParams(searchParams);
     Object.entries(patch).forEach(([k, v]) => {
