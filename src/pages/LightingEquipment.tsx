@@ -218,6 +218,33 @@ const LightingEquipment = () => {
               </button>
             </div>
           )}
+
+          {compare.length > 0 && (
+            <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex flex-wrap items-center gap-4 rounded-full border border-border bg-[hsl(var(--surface))] shadow-lg px-5 py-3 text-sm">
+              <span className="text-foreground/70">
+                {compare.length} selected{compare.length === 1 ? " — pick one more" : ""}
+              </span>
+              <Link
+                to={`/lighting-equipment/compare?a=${compare[0]}${compare[1] ? `&b=${compare[1]}` : ""}${
+                  listingQuery ? `&from=${encodeURIComponent(listingQuery)}` : ""
+                }`}
+                className={`rounded-full px-4 py-1.5 transition-colors ${
+                  compare.length === 2
+                    ? "bg-foreground text-background hover:opacity-90"
+                    : "pointer-events-none opacity-40 bg-foreground text-background"
+                }`}
+              >
+                Compare
+              </Link>
+              <button
+                onClick={() => setCompare([])}
+                className="inline-flex items-center gap-1 text-foreground/60 hover:text-foreground"
+                aria-label="Clear comparison selection"
+              >
+                <X className="w-4 h-4" /> Clear
+              </button>
+            </div>
+          )}
         </main>
 
         <footer className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 py-6 px-8 border-t border-border text-sm bg-[hsl(var(--surface))] text-foreground mt-12">
