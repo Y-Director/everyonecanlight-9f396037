@@ -9,6 +9,7 @@ import Articles from "./pages/Articles.tsx";
 import ArticleDetail from "./pages/ArticleDetail.tsx";
 import LightingEquipment from "./pages/LightingEquipment.tsx";
 import LightingEquipmentDetail from "./pages/LightingEquipmentDetail.tsx";
+import EquipmentCompare from "./pages/EquipmentCompare.tsx";
 import Learn from "./pages/Learn.tsx";
 import ControlApps from "./pages/ControlApps.tsx";
 import Masterclass from "./pages/Masterclass.tsx";
