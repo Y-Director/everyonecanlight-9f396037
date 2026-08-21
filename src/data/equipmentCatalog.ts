@@ -1,6 +1,6 @@
 // Auto-generated from the EveryoneCanLight 250-item catalog document.
-// Images are intentionally left out here — each entry falls back to its own
-// dedicated placeholder until a real product image is supplied.
+// Images are intentionally omitted: each entry falls back to its own dedicated
+// placeholder until a real product image is supplied.
 import type { EquipmentCategory } from "./equipment";
 
 export type CatalogEntry = {
@@ -412,6 +412,14 @@ export const catalogEntries: CatalogEntry[] = [
   {
     "slug": "eggcrate-120cm",
     "name": "Eggcrate 120cm",
+    "category": "Others",
+    "typeKind": "Light Modifier",
+    "bestUseCase": "Shaping, softening, bouncing or controlling light.",
+    "productDetails": "Modifier or light-control accessory used to diffuse, reflect, flag, shape or contain illumination."
+  },
+  {
+    "slug": "eggcrate-150cm",
+    "name": "Eggcrate 150cm",
     "category": "Others",
     "typeKind": "Light Modifier",
     "bestUseCase": "Shaping, softening, bouncing or controlling light.",
@@ -1186,6 +1194,14 @@ export const catalogEntries: CatalogEntry[] = [
     "productDetails": "Mechanical support or rigging accessory used to position, secure or extend lighting equipment safely."
   },
   {
+    "slug": "nanlite-alien-300c",
+    "name": "Nanlite Alien 300C",
+    "category": "Others",
+    "typeKind": "Accessory",
+    "bestUseCase": "General film, photo, studio or lighting production.",
+    "productDetails": "Production item for lighting, grip, rigging, set dressing or accessory workflows; confirm exact model specifications before publication."
+  },
+  {
     "slug": "nanlite-fc120b",
     "name": "Nanlite FC120B",
     "category": "Others",
@@ -1373,6 +1389,14 @@ export const catalogEntries: CatalogEntry[] = [
   {
     "slug": "octabox-120cm",
     "name": "Octabox 120cm",
+    "category": "Others",
+    "typeKind": "Light Modifier",
+    "bestUseCase": "Shaping, softening, bouncing or controlling light.",
+    "productDetails": "Modifier or light-control accessory used to diffuse, reflect, flag, shape or contain illumination."
+  },
+  {
+    "slug": "octabox-150cm",
+    "name": "Octabox 150cm",
     "category": "Others",
     "typeKind": "Light Modifier",
     "bestUseCase": "Shaping, softening, bouncing or controlling light.",
@@ -1799,6 +1823,14 @@ export const catalogEntries: CatalogEntry[] = [
   {
     "slug": "umbrella-deep-parabolic-105cm",
     "name": "Umbrella Deep Parabolic 105cm",
+    "category": "Others",
+    "typeKind": "Light Modifier",
+    "bestUseCase": "Shaping, softening, bouncing or controlling light.",
+    "productDetails": "Modifier or light-control accessory used to diffuse, reflect, flag, shape or contain illumination."
+  },
+  {
+    "slug": "umbrella-deep-parabolic-150cm",
+    "name": "Umbrella Deep Parabolic 150cm",
     "category": "Others",
     "typeKind": "Light Modifier",
     "bestUseCase": "Shaping, softening, bouncing or controlling light.",
