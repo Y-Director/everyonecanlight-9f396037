@@ -70,6 +70,9 @@ const StarlightWidget = () => {
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [input, setInput] = useState("");
+  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
+  const [dragging, setDragging] = useState(false);
+  const dragRef = useRef<{ moved: boolean }>({ moved: false });
   const panelRef = useRef<HTMLDivElement | null>(null);
   const focusInput = () =>
     panelRef.current?.querySelector<HTMLTextAreaElement>("textarea")?.focus();
@@ -108,20 +111,83 @@ const StarlightWidget = () => {
     ask(message.text ?? input);
   };
 
+  const MASCOT = 64;
+
+  const startDrag = (e: React.PointerEvent<HTMLButtonElement>) => {
+    if (e.button !== 0 && e.pointerType === "mouse") return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left;
+    const offsetY = e.clientY - rect.top;
+    dragRef.current = { moved: false };
+
+    const move = (ev: PointerEvent) => {
+      if (
+        !dragRef.current.moved &&
+        Math.abs(ev.clientX - e.clientX) < 4 &&
+        Math.abs(ev.clientY - e.clientY) < 4
+      )
+        return;
+      dragRef.current.moved = true;
+      setDragging(true);
+      setHovered(false);
+      const x = Math.min(
+        Math.max(ev.clientX - offsetX, 8),
+        window.innerWidth - MASCOT - 8,
+      );
+      const y = Math.min(
+        Math.max(ev.clientY - offsetY, 8),
+        window.innerHeight - MASCOT - 8,
+      );
+      setPos({ x, y });
+    };
+
+    const up = () => {
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+      setDragging(false);
+      if (!dragRef.current.moved) setOpen((v) => !v);
+      dragRef.current.moved = false;
+    };
+
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", up);
+  };
+
+  const panelStyle = (() => {
+    if (!pos) return undefined;
+    const width = Math.min(384, window.innerWidth - 32);
+    const height = Math.min(544, window.innerHeight - 128);
+    const left = Math.min(Math.max(pos.x, 8), window.innerWidth - width - 8);
+    const spaceAbove = pos.y - 8;
+    const top =
+      spaceAbove >= height
+        ? pos.y - height - 8
+        : Math.min(pos.y + MASCOT + 8, window.innerHeight - height - 8);
+    return { left, top: Math.max(top, 8) } as React.CSSProperties;
+  })();
+
   return (
     <>
       {/* Floating mascot */}
-      <div className="fixed bottom-5 left-5 z-50 flex items-end gap-3">
+      <div
+        className={cn(
+          "fixed z-50 flex items-end gap-3",
+          !pos && "bottom-5 left-5",
+        )}
+        style={pos ? { left: pos.x, top: pos.y } : undefined}
+      >
         <button
           type="button"
-          aria-label="Chat with Starlight"
-          onClick={() => setOpen((v) => !v)}
+          aria-label="Chat with Starlight (drag to move)"
+          title="Drag me anywhere"
+          onPointerDown={startDrag}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
           className={cn(
-            "group relative h-16 w-16 rounded-full outline-none transition-transform duration-300",
+            "group relative h-16 w-16 shrink-0 touch-none rounded-full outline-none transition-transform duration-300",
             "hover:scale-110 focus-visible:ring-2 focus-visible:ring-ring",
-            !open && "starlight-bounce",
+            dragging ? "scale-105 cursor-grabbing" : "cursor-grab",
+            !open && !dragging && "starlight-bounce",
           )}
         >
           <span className="absolute inset-0 rounded-full bg-[#ddff35]/25 blur-xl starlight-glow" />
@@ -133,7 +199,7 @@ const StarlightWidget = () => {
           />
         </button>
 
-        {hovered && !open && (
+        {hovered && !open && !dragging && (
           <div className="mb-2 max-w-[15rem] animate-in fade-in slide-in-from-left-2 rounded-2xl border border-border bg-popover px-3 py-2 text-sm text-popover-foreground shadow-lg">
             Hello creator, I'm Starlight. Ready to guide you.
           </div>
@@ -144,8 +210,13 @@ const StarlightWidget = () => {
       {open && (
         <div
           ref={panelRef}
-          className="fixed bottom-24 left-4 z-50 flex h-[min(34rem,calc(100vh-8rem))] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-3xl border border-border bg-background shadow-2xl"
+          style={panelStyle}
+          className={cn(
+            "fixed z-50 flex h-[min(34rem,calc(100vh-8rem))] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-3xl border border-border bg-background shadow-2xl",
+            !pos && "bottom-24 left-4",
+          )}
         >
+
           <header className="flex items-center gap-3 border-b border-border px-4 py-3">
             <img src={starlight.url} alt="" className="h-9 w-9 object-contain starlight-eyes" />
             <div className="min-w-0 flex-1">
