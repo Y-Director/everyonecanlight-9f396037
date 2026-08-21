@@ -220,29 +220,33 @@ const LightingEquipment = () => {
           )}
 
           {compare.length > 0 && (
-            <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex flex-wrap items-center gap-4 rounded-full border border-border bg-[hsl(var(--surface))] shadow-lg px-5 py-3 text-sm">
-              <span className="text-foreground/70">
-                {compare.length} selected{compare.length === 1 ? " — pick one more" : ""}
-              </span>
-              <Link
-                to={`/lighting-equipment/compare?a=${compare[0]}${compare[1] ? `&b=${compare[1]}` : ""}${
-                  listingQuery ? `&from=${encodeURIComponent(listingQuery)}` : ""
-                }`}
-                className={`rounded-full px-4 py-1.5 transition-colors ${
-                  compare.length === 2
-                    ? "bg-foreground text-background hover:opacity-90"
-                    : "pointer-events-none opacity-40 bg-foreground text-background"
-                }`}
-              >
-                Compare
-              </Link>
-              <button
-                onClick={() => setCompare([])}
-                className="inline-flex items-center gap-1 text-foreground/60 hover:text-foreground"
-                aria-label="Clear comparison selection"
-              >
-                <X className="w-4 h-4" /> Clear
-              </button>
+            <div className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] sm:w-auto max-w-sm sm:max-w-none rounded-lg border border-border bg-[hsl(var(--surface))] shadow-lg px-4 py-3 text-sm">
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-foreground/70 whitespace-nowrap">
+                  {compare.length} selected{compare.length === 1 ? " — pick one more" : ""}
+                </span>
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <Link
+                    to={`/lighting-equipment/compare?a=${compare[0]}${compare[1] ? `&b=${compare[1]}` : ""}${
+                      listingQuery ? `&from=${encodeURIComponent(listingQuery)}` : ""
+                    }`}
+                    className={`rounded-md px-3 sm:px-4 py-1.5 transition-colors whitespace-nowrap ${
+                      compare.length === 2
+                        ? "bg-foreground text-background hover:opacity-90"
+                        : "pointer-events-none opacity-40 bg-foreground text-background"
+                    }`}
+                  >
+                    Compare
+                  </Link>
+                  <button
+                    onClick={() => setCompare([])}
+                    className="inline-flex items-center gap-1 text-foreground/60 hover:text-foreground whitespace-nowrap"
+                    aria-label="Clear comparison selection"
+                  >
+                    <X className="w-4 h-4" /> <span className="hidden sm:inline">Clear</span>
+                  </button>
+                </div>
+              </div>
             </div>
           )}
         </main>
