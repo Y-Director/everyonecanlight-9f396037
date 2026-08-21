@@ -70,6 +70,9 @@ const StarlightWidget = () => {
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [input, setInput] = useState("");
+  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
+  const [dragging, setDragging] = useState(false);
+  const dragRef = useRef<{ moved: boolean }>({ moved: false });
   const panelRef = useRef<HTMLDivElement | null>(null);
   const focusInput = () =>
     panelRef.current?.querySelector<HTMLTextAreaElement>("textarea")?.focus();
