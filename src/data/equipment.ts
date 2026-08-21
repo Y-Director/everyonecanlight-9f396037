@@ -568,41 +568,35 @@ const namedEntries: NamedEntry[] = [
   },
 ];
 
-const TOTAL_EQUIPMENT = 250;
+// Catalogue entries sourced from the full 250-item equipment document. Any item
+// already covered by `namedEntries` above is skipped so curated copy and images
+// are never overwritten.
+const PLACEHOLDER_COUNT = 250;
 
-export const equipment: Equipment[] = Array.from({ length: TOTAL_EQUIPMENT }, (_, i) => {
-  const n = i + 1;
-  const named = namedEntries[i];
+const allEntries: NamedEntry[] = [
+  ...namedEntries,
+  ...catalogEntries.filter(
+    (entry) => !namedEntries.some((named) => named.slug === entry.slug)
+  ),
+];
+
+export const equipment: Equipment[] = allEntries.map((entry, i) => {
   // Each item gets its OWN dedicated image file so any edit is fully isolated.
-  const ownImage = named?.brandedImage ?? placeholder(n);
+  const ownImage = entry.brandedImage ?? placeholder((i % PLACEHOLDER_COUNT) + 1);
 
-  if (named) {
-    return {
-      slug: named.slug,
-      name: named.name,
-      image: ownImage,
-      images: [ownImage],
-      category: named.category,
-      color: named.color,
-      cri: named.cri,
-      watts: named.watts,
-      app: named.app,
-      typeKind: named.typeKind,
-      bestUseCase: named.bestUseCase,
-      productDetails: named.productDetails,
-    };
-  }
-
-  const number = String(n).padStart(3, "0");
   return {
-    slug: `equipment-${number}`,
-    name: `Equipment ${number}`,
+    slug: entry.slug,
+    name: entry.name,
     image: ownImage,
     images: [ownImage],
-    category: CATEGORIES_POOL[i % CATEGORIES_POOL.length],
-    typeKind: "Lighting Equipment",
-    bestUseCase: "Placeholder — to be filled in.",
-    productDetails: defaultProductDetails,
+    category: entry.category,
+    color: entry.color,
+    cri: entry.cri,
+    watts: entry.watts,
+    app: entry.app,
+    typeKind: entry.typeKind,
+    bestUseCase: entry.bestUseCase,
+    productDetails: entry.productDetails,
   };
 });
 
