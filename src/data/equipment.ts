@@ -11,6 +11,7 @@ import babyPinAdapterAsset from "@/assets/equipment/baby-pin-adapter.jpg.asset.j
 import beamProjectorAsset from "@/assets/equipment/beam-projector-attachment.webp.asset.json";
 import beautyDishAsset from "@/assets/equipment/beauty-dish-reflector.png.asset.json";
 import barndoors8LeafAsset from "@/assets/equipment/barndoors-8-leaf.png.asset.json";
+import { catalogEntries } from "./equipmentCatalog";
 
 // Each equipment item has its own dedicated placeholder file so editing one
 // image will never affect any other item.
