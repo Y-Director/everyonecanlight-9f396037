@@ -1,3 +1,5 @@
+import falconEyesV2Icon from "@/assets/apps/falcon-eyes-v2.webp.asset.json";
+
 export type ControlApp = {
   brand: string;
   appName: string;
