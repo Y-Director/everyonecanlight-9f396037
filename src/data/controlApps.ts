@@ -59,7 +59,7 @@ export const controlApps: ControlApp[] = [
     accent: "bg-[#7C3AED]",
     ios: "https://apps.apple.com/us/app/falconeyes-v2/id1470899020",
     android: "https://play.google.com/store/apps/details?id=cn.light.falconeyes.v2",
-    iconUrl: "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/09/6d/b5/096db537-55cd-8ba9-5f4a-6d3fe5bdcea8/AppIcon-1x_U007emarketing-0-8-0-0-85-220-0.png/512x512bb.jpg",
+    iconUrl: falconEyesV2Icon.url,
   },
   {
     brand: "Kino Flo",
