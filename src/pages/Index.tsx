@@ -17,6 +17,8 @@ import trust7 from "@/assets/trust/trust-7.jpg.asset.json";
 import trust8 from "@/assets/trust/trust-8.jpg.asset.json";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import BrandVideo from "@/components/BrandVideo";
+
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { ArrowRight } from "lucide-react";
