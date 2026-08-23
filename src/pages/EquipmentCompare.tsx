@@ -3,6 +3,7 @@ import { X, ArrowLeftRight, ArrowLeft, ChevronDown } from "lucide-react";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
 import { equipment, getEquipmentBySlug, type Equipment } from "@/data/equipment";
+import Seo from "@/components/Seo";
 
 const ROWS: { label: string; get: (e: Equipment) => string }[] = [
   { label: "Category", get: (e) => e.category },
@@ -49,6 +50,12 @@ const EquipmentCompare = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="flex flex-col min-h-screen">
+        <Seo
+          title="Compare Lighting Equipment — Everyone Can Light"
+          description="Compare any two lights side by side: CRI, wattage, colour temperature, output, mounting and app control, so you can pick the right fixture for your shoot."
+          path="/lighting-equipment/compare"
+          noindex
+        />
         <SiteNav />
 
         <main className="flex-1 max-w-[1400px] mx-auto w-full px-4 sm:px-8 py-6 sm:py-8">

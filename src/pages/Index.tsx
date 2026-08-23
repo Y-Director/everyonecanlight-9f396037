@@ -22,6 +22,7 @@ import BrandVideo from "@/components/BrandVideo";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { ArrowRight } from "lucide-react";
+import Seo from "@/components/Seo";
 
 const bentoCards = [
   {
@@ -139,6 +140,19 @@ const Index = () => {
       />
 
       <div className="relative z-10 flex flex-col min-h-screen">
+        <Seo
+          title="Everyone Can Light — Learn Lighting, Rent Gear"
+          description="Learn lighting with practical guides, compare 250+ lights in our equipment database, find control apps and rent professional lighting gear in Lagos."
+          path="/"
+          jsonLd={{
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Everyone Can Light",
+            url: "https://everyonecanlight.lovable.app/",
+            description:
+              "Lighting education, equipment database and gear rentals for filmmakers and creators.",
+          }}
+        />
         <SiteNav />
 
         {/* Hero */}

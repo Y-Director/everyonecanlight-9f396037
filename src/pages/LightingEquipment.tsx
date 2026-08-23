@@ -4,6 +4,7 @@ import { Search, ArrowLeft, ArrowRight, ArrowUpDown, Check, X } from "lucide-rea
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
 import { equipment as EQUIPMENT, type EquipmentCategory } from "@/data/equipment";
+import Seo from "@/components/Seo";
 
 type Category = "All Equipment" | EquipmentCategory;
 
@@ -97,6 +98,17 @@ const LightingEquipment = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="flex flex-col min-h-screen">
+        <Seo
+          title="Lighting Equipment Database — Specs & Comparisons"
+          description="Browse 250+ lighting fixtures, stands and modifiers with CRI, wattage, colour temperature and control-app support. Search, filter and compare any two lights."
+          path="/lighting-equipment"
+          jsonLd={{
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: "Lighting Equipment Database",
+            url: "https://everyonecanlight.lovable.app/lighting-equipment",
+          }}
+        />
         <SiteNav />
 
         <main className="flex-1 px-8 max-w-[1400px] mx-auto w-full py-12">

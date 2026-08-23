@@ -3,6 +3,7 @@ import { Search, Smartphone, Globe } from "lucide-react";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
 import { controlApps, type ControlApp } from "@/data/controlApps";
+import Seo from "@/components/Seo";
 
 // Apple company logo — outline only (no fill), stroke follows currentColor.
 const AppleLogo = ({ className }: { className?: string }) => (
@@ -106,6 +107,17 @@ const ControlApps = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="flex flex-col min-h-screen">
+        <Seo
+          title="Lighting Control Apps by Manufacturer — ECL"
+          description="Find and download the official control apps for Aputure, Godox, Nanlite, Amaran, Falcon Eyes and more, so you can run your lights from your phone."
+          path="/control-apps"
+          jsonLd={{
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: "Lighting Control Apps",
+            url: "https://everyonecanlight.lovable.app/control-apps",
+          }}
+        />
         <SiteNav />
 
         <main className="flex-1 max-w-[1400px] mx-auto w-full px-8 py-12">

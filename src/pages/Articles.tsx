@@ -3,6 +3,7 @@ import { useState } from "react";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
 import { articles, fixDarkVideosArticle, differentTypesArticle, talkingHead1LightArticle, whatIsWattageArticle } from "@/data/articles";
+import Seo from "@/components/Seo";
 
 const Articles = () => {
   const [expanded, setExpanded] = useState(false);
@@ -22,6 +23,17 @@ const Articles = () => {
       />
 
       <div className="relative z-10 flex flex-col min-h-screen">
+        <Seo
+          title="Lighting Guides and Articles — Everyone Can Light"
+          description="Practical lighting guides from real productions: wattage explained, talking-head setups with one light, fixing dark video and choosing your first modifier."
+          path="/articles"
+          jsonLd={{
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: "Lighting Guides and Articles",
+            url: "https://everyonecanlight.lovable.app/articles",
+          }}
+        />
         <SiteNav />
 
         {/* Content */}
