@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
+import Seo from "@/components/Seo";
 import { getArticleBySlug } from "@/data/articles";
 import NotFound from "./NotFound";
 
@@ -24,6 +25,17 @@ const ArticleDetail = () => {
 
   if (!article) return <NotFound />;
 
+  const isoDate = (() => {
+    const d = new Date(article.date);
+    return Number.isNaN(d.getTime()) ? undefined : d.toISOString().slice(0, 10);
+  })();
+  const firstParagraph = article.content.find((b) => b.type === "paragraph") as
+    | { type: "paragraph"; text: string }
+    | undefined;
+  const description = (firstParagraph?.text ?? `${article.title} — a practical lighting guide from Everyone Can Light.`)
+    .slice(0, 155)
+    .trim();
+
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       {/* Grid background */}
@@ -38,6 +50,22 @@ const ArticleDetail = () => {
       />
 
       <div className="relative z-10 flex flex-col min-h-screen">
+        <Seo
+          title={`${article.title} — Everyone Can Light`}
+          description={description}
+          path={`/articles/${article.slug}`}
+          type="article"
+          jsonLd={{
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: article.title,
+            image: article.image,
+            datePublished: isoDate,
+            author: article.authors.map((a) => ({ "@type": "Person", name: a.name })),
+            publisher: { "@type": "Organization", name: "Everyone Can Light" },
+            mainEntityOfPage: `https://everyonecanlight.lovable.app/articles/${article.slug}`,
+          }}
+        />
         <SiteNav />
 
         <main className="flex-1 px-6 md:px-8 max-w-3xl mx-auto w-full py-12 md:py-16">

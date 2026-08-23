@@ -4,6 +4,7 @@ import { Search, ArrowLeft, ArrowRight, ArrowUpDown, Check, X } from "lucide-rea
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
 import { equipment as EQUIPMENT, type EquipmentCategory } from "@/data/equipment";
+import Seo from "@/components/Seo";
 
 type Category = "All Equipment" | EquipmentCategory;
 
@@ -97,10 +98,30 @@ const LightingEquipment = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="flex flex-col min-h-screen">
+        <Seo
+          title="Lighting Equipment Database — Specs & Comparisons"
+          description="Browse 250+ lighting fixtures, stands and modifiers with CRI, wattage, colour temperature and control-app support. Search, filter and compare any two lights."
+          path="/lighting-equipment"
+          jsonLd={{
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: "Lighting Equipment Database",
+            url: "https://everyonecanlight.lovable.app/lighting-equipment",
+          }}
+        />
         <SiteNav />
 
         <main className="flex-1 px-8 max-w-[1400px] mx-auto w-full py-12">
-          <div className="flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-8">
+          <header className="max-w-2xl">
+            <h1 className="text-3xl md:text-4xl font-medium tracking-tight">Equipment Database</h1>
+            <p className="mt-3 text-sm md:text-base text-foreground/60">
+              Specifications, comparisons and use cases for 250+ lights, stands, grips and
+              modifiers — so you know exactly what a fixture does before you buy or rent it.
+            </p>
+          </header>
+
+          <h2 className="sr-only">Search and filter lighting equipment</h2>
+          <div className="mt-8 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-8">
             <div className="relative w-full lg:w-[360px]">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/50" aria-hidden="true" />
               <input
@@ -139,6 +160,7 @@ const LightingEquipment = () => {
             </button>
           </div>
 
+          <h2 className="sr-only">Lighting equipment listings</h2>
           <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
             {pageItems.map((item) => {
               const selected = compare.includes(item.slug);

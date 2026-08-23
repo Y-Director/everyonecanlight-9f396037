@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import Seo from "@/components/Seo";
 
 const heroImg = heroAsset.url;
 
@@ -180,6 +181,21 @@ const Masterclass = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="flex flex-col min-h-screen">
+        <Seo
+          title="Shift The Light Masterclass 2026 — Lagos"
+          description="Join Shift The Light in Lagos this November: an immersive, hands-on lighting masterclass built around real production scenarios for creators and filmmakers."
+          path="/masterclass"
+          jsonLd={{
+            "@context": "https://schema.org",
+            "@type": "Event",
+            name: "Shift The Light 2 (Creator Residency)",
+            startDate: "2026-11",
+            eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+            location: { "@type": "Place", name: "Lagos, Nigeria", address: "Lagos, Nigeria" },
+            organizer: { "@type": "Organization", name: "Everyone Can Light" },
+            url: "https://everyonecanlight.lovable.app/masterclass",
+          }}
+        />
         <SiteNav />
 
         <main className="flex-1 max-w-[1400px] mx-auto w-full px-8 py-12">

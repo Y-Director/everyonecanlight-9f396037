@@ -3,6 +3,7 @@ import { Video, FileText, ArrowRight } from "lucide-react";
 import coursesHero from "@/assets/courses-hero.png";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import Seo from "@/components/Seo";
 
 type Item = { label: string; icon: "video" | "doc" };
 
@@ -67,6 +68,18 @@ const Learn = () => {
       />
 
       <div className="relative z-10 flex flex-col min-h-screen">
+        <Seo
+          title="Learn Lighting — Courses, Guides & Diagrams"
+          description="A lighting curriculum for creators: free guides, video courses, the Shift The Light masterclass and real production lighting diagrams you can recreate."
+          path="/learn"
+          jsonLd={{
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: "Learn Lighting",
+            url: "https://everyonecanlight.lovable.app/learn",
+            about: "Lighting courses, guides and diagrams for filmmakers and creators",
+          }}
+        />
         <SiteNav />
 
         {/* Content */}

@@ -43,6 +43,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import {
+import Seo from "@/components/Seo";
   RENTAL_CATEGORIES,
   formatNaira,
   getRentalItem,
@@ -524,6 +525,20 @@ const RentEquipment = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="flex flex-col min-h-screen">
+        <Seo
+          title="Rent Lighting Equipment in Lagos — ECL Light Bank"
+          description="Rent professional lights, stands, grips and modifiers from the ECL Light Bank. Build a gear list, pick your dates and get it delivered with a lighting operator."
+          path="/rent-equipment"
+          jsonLd={{
+            "@context": "https://schema.org",
+            "@type": "Service",
+            name: "Lighting Equipment Rental",
+            serviceType: "Lighting equipment rental",
+            areaServed: "Lagos, Nigeria",
+            provider: { "@type": "Organization", name: "Everyone Can Light" },
+            url: "https://everyonecanlight.lovable.app/rent-equipment",
+          }}
+        />
         <SiteNav />
 
         <main className="flex-1 px-8 max-w-[1400px] mx-auto w-full py-12">
