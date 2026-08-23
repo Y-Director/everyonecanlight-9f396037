@@ -39,7 +39,7 @@ const Articles = () => {
         {/* Content */}
         <main className="flex-1 px-8 max-w-[1400px] mx-auto w-full py-16">
           <header className="mb-12">
-            <h1 className="text-5xl md:text-6xl font-medium tracking-tight">Useful Information</h1>
+            <h1 className="text-5xl md:text-6xl font-medium tracking-tight">Lighting Guides and Articles</h1>
             <p className="mt-3 text-xs tracking-[0.2em] text-foreground/60 uppercase font-thin">For all creators</p>
           </header>
 
