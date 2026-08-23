@@ -1,0 +1,21 @@
+# Everyone Can Light
+
+> Lighting education, an equipment database, control-app guides and gear rentals for filmmakers and creators.
+
+Everyone Can Light helps creators learn lighting, understand gear specifications, find the right control apps and rent professional lighting equipment for productions.
+
+## Pages
+
+- [Home](/): Overview of lighting lessons, the equipment database and rentals.
+- [Rent Equipment](/rent-equipment): Rental catalogue of professional lighting gear, stands, grips and props.
+- [Equipment Database](/lighting-equipment): Specifications, reviews and comparisons for 250+ lighting fixtures and accessories.
+- [Compare Equipment](/lighting-equipment/compare): Side-by-side specification comparison of two lights.
+- [Control Apps](/control-apps): Manufacturer apps for controlling LED lights from a phone.
+- [Learn](/learn): Learning paths covering articles, courses, masterclass and lighting diagrams.
+- [Articles](/articles): Practical lighting guides written from real production experience.
+- [Masterclass](/masterclass): Shift The Light, the annual hands-on lighting masterclass in Lagos.
+
+## Optional
+
+- [What is Wattage in Lighting?](/articles/what-is-wattage-in-lighting): Example lighting guide.
+- [Why Your Videos Look Dark (And How to Fix It)](/articles/why-your-videos-look-dark-and-how-to-fix-it): Example problem-solving guide.
