@@ -42,8 +42,8 @@ import {
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
-import {
 import Seo from "@/components/Seo";
+import {
   RENTAL_CATEGORIES,
   formatNaira,
   getRentalItem,

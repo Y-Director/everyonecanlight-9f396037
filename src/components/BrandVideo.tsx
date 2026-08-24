@@ -10,12 +10,47 @@ const fmt = (s: number) => {
   return `${m}:${sec.toString().padStart(2, "0")}`;
 };
 
+type FsVideo = HTMLVideoElement & {
+  webkitEnterFullscreen?: () => void;
+  webkitSupportsFullscreen?: boolean;
+};
+type FsElement = HTMLElement & {
+  webkitRequestFullscreen?: () => Promise<void> | void;
+};
+
 const BrandVideo = () => {
   const ref = useRef<HTMLVideoElement>(null);
+  const shellRef = useRef<HTMLDivElement>(null);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(0);
+
+  const goFullscreen = useCallback(async () => {
+    const v = ref.current as FsVideo | null;
+    const shell = shellRef.current as FsElement | null;
+    try {
+      if (document.fullscreenElement) {
+        await document.exitFullscreen();
+        return;
+      }
+      if (shell?.requestFullscreen) {
+        await shell.requestFullscreen();
+      } else if (shell?.webkitRequestFullscreen) {
+        await shell.webkitRequestFullscreen();
+      } else if (v?.requestFullscreen) {
+        await v.requestFullscreen();
+      } else if (v?.webkitEnterFullscreen) {
+        // iOS Safari: only the video element can go fullscreen, and it must be loaded
+        v.webkitEnterFullscreen();
+      }
+    } catch {
+      const vv = ref.current as FsVideo | null;
+      vv?.webkitEnterFullscreen?.();
+    }
+    void ref.current?.play();
+  }, []);
+
 
   const toggle = useCallback(() => {
     const v = ref.current;
@@ -60,10 +95,13 @@ const BrandVideo = () => {
         </p>
       </div>
 
-      <div className="mt-8 relative overflow-hidden rounded-3xl border border-foreground/10 bg-[hsl(var(--surface))]">
+      <div
+        ref={shellRef}
+        className="mt-8 relative overflow-hidden rounded-3xl border border-foreground/10 bg-[hsl(var(--surface))]"
+      >
         <video
           ref={ref}
-          className="w-full aspect-video object-cover bg-black"
+          className="w-full aspect-video object-cover bg-black [&:fullscreen]:h-full [&:fullscreen]:object-contain"
           src={brandVideo.url}
           poster={brandPoster.url}
           playsInline
@@ -150,7 +188,7 @@ const BrandVideo = () => {
             </button>
             <button
               type="button"
-              onClick={() => void ref.current?.requestFullscreen?.()}
+              onClick={() => void goFullscreen()}
               aria-label="Play video fullscreen"
               className="ml-auto flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25"
             >
