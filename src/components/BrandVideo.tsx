@@ -95,7 +95,10 @@ const BrandVideo = () => {
         </p>
       </div>
 
-      <div className="mt-8 relative overflow-hidden rounded-3xl border border-foreground/10 bg-[hsl(var(--surface))]">
+      <div
+        ref={shellRef}
+        className="mt-8 relative overflow-hidden rounded-3xl border border-foreground/10 bg-[hsl(var(--surface))] fullscreen:rounded-none fullscreen:border-0"
+      >
         <video
           ref={ref}
           className="w-full aspect-video object-cover bg-black"
