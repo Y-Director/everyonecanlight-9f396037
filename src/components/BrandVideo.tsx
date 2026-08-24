@@ -97,11 +97,11 @@ const BrandVideo = () => {
 
       <div
         ref={shellRef}
-        className="mt-8 relative overflow-hidden rounded-3xl border border-foreground/10 bg-[hsl(var(--surface))] fullscreen:rounded-none fullscreen:border-0"
+        className="mt-8 relative overflow-hidden rounded-3xl border border-foreground/10 bg-[hsl(var(--surface))]"
       >
         <video
           ref={ref}
-          className="w-full aspect-video object-cover bg-black"
+          className="w-full aspect-video object-cover bg-black [&:fullscreen]:h-full [&:fullscreen]:object-contain"
           src={brandVideo.url}
           poster={brandPoster.url}
           playsInline
@@ -188,7 +188,7 @@ const BrandVideo = () => {
             </button>
             <button
               type="button"
-              onClick={() => void ref.current?.requestFullscreen?.()}
+              onClick={() => void goFullscreen()}
               aria-label="Play video fullscreen"
               className="ml-auto flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25"
             >
