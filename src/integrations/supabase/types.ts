@@ -89,6 +89,117 @@ export type Database = {
         }
         Relationships: []
       }
+      contributor_notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          kind: string
+          read_at: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          read_at?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          read_at?: string | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      contributor_posts: {
+        Row: {
+          author_id: string
+          blocks: Json
+          cover_image_url: string | null
+          created_at: string
+          id: string
+          kind: string
+          published_at: string | null
+          review_note: string | null
+          slug: string | null
+          status: string
+          tags: string[]
+          title: string
+          updated_at: string
+          view_count: number
+        }
+        Insert: {
+          author_id: string
+          blocks?: Json
+          cover_image_url?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          published_at?: string | null
+          review_note?: string | null
+          slug?: string | null
+          status?: string
+          tags?: string[]
+          title?: string
+          updated_at?: string
+          view_count?: number
+        }
+        Update: {
+          author_id?: string
+          blocks?: Json
+          cover_image_url?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          published_at?: string | null
+          review_note?: string | null
+          slug?: string | null
+          status?: string
+          tags?: string[]
+          title?: string
+          updated_at?: string
+          view_count?: number
+        }
+        Relationships: []
+      }
+      contributor_profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          display_name: string
+          email: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          display_name?: string
+          email?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          display_name?: string
+          email?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       course_purchases: {
         Row: {
           amount: number
@@ -917,6 +1028,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      increment_post_view: { Args: { _slug: string }; Returns: undefined }
       move_to_dlq: {
         Args: {
           dlq_name: string
