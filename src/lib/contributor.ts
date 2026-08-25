@@ -1,0 +1,95 @@
+import { supabase } from "@/integrations/supabase/client";
+
+export const ARTICLE_TAGS = [
+  "Comparison",
+  "Guides",
+  "How-to",
+  "Lighting News",
+  "Beginner",
+  "Advanced",
+  "Setup",
+  "Problem-Solving",
+  "Gear",
+  "Budget",
+  "Studio Lighting",
+  "Natural Light",
+  "Indoor Lighting",
+  "Outdoor Lighting",
+  "Lighting Psychology",
+  "Lighting technique",
+  "Storytelling",
+  "Brand Perception",
+  "Case Study",
+] as const;
+
+export type PostBlock =
+  | { id: string; type: "title" | "subtitle" | "body"; text: string }
+  | { id: string; type: "image"; src: string; alt: string };
+
+export type PostStatus = "draft" | "in_review" | "published" | "needs_revision";
+
+export type ContributorPost = {
+  id: string;
+  author_id: string;
+  kind: "article" | "course";
+  slug: string | null;
+  title: string;
+  cover_image_url: string | null;
+  tags: string[];
+  blocks: PostBlock[];
+  status: PostStatus;
+  review_note: string | null;
+  view_count: number;
+  published_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export const STATUS_LABEL: Record<PostStatus, string> = {
+  draft: "Draft",
+  in_review: "In review",
+  published: "Published",
+  needs_revision: "Needs review",
+};
+
+export const newBlockId = () =>
+  `b_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`;
+
+export const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .slice(0, 80) || `post-${Date.now().toString(36)}`;
+
+const BUCKET = "contributor-media";
+const TEN_YEARS = 60 * 60 * 24 * 365 * 10;
+
+/** Uploads to the contributor media bucket and returns a long-lived readable URL. */
+export const uploadContributorMedia = async (userId: string, file: File) => {
+  const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
+  const path = `${userId}/${Date.now().toString(36)}-${Math.random()
+    .toString(36)
+    .slice(2, 8)}.${ext}`;
+
+  const { error } = await supabase.storage.from(BUCKET).upload(path, file, {
+    cacheControl: "31536000",
+    upsert: false,
+  });
+  if (error) throw error;
+
+  const { data, error: signError } = await supabase.storage
+    .from(BUCKET)
+    .createSignedUrl(path, TEN_YEARS);
+  if (signError || !data?.signedUrl) throw signError ?? new Error("Could not read uploaded file");
+  return data.signedUrl;
+};
+
+export const plainTextExcerpt = (blocks: PostBlock[], length = 160) => {
+  const body = blocks.find((b) => b.type === "body" && b.text.trim()) as
+    | { text: string }
+    | undefined;
+  return (body?.text ?? "").slice(0, length).trim();
+};
