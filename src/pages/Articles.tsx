@@ -1,14 +1,21 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Eye } from "lucide-react";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
 import { articles, fixDarkVideosArticle, differentTypesArticle, talkingHead1LightArticle, whatIsWattageArticle } from "@/data/articles";
 import Seo from "@/components/Seo";
+import { fetchPublishedPosts, type PublishedPost } from "@/lib/contributor";
 
 const Articles = () => {
   const [expanded, setExpanded] = useState(false);
+  const [community, setCommunity] = useState<PublishedPost[]>([]);
   const usefulArticles = [talkingHead1LightArticle, whatIsWattageArticle, articles[2], fixDarkVideosArticle, differentTypesArticle];
   const visibleUseful = expanded ? usefulArticles.slice(0, 5) : usefulArticles.slice(0, 3);
+
+  useEffect(() => {
+    void fetchPublishedPosts("article").then(setCommunity);
+  }, []);
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       {/* Grid background */}
