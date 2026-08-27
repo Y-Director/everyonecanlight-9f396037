@@ -4,7 +4,7 @@ import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
 import Seo from "@/components/Seo";
 import { getArticleBySlug } from "@/data/articles";
-import NotFound from "./NotFound";
+import ContributorArticleDetail from "./ContributorArticleDetail";
 
 const initials = (name: string) =>
   name
@@ -23,7 +23,7 @@ const ArticleDetail = () => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [slug]);
 
-  if (!article) return <NotFound />;
+  if (!article) return <ContributorArticleDetail slug={slug} />;
 
   const isoDate = (() => {
     const d = new Date(article.date);

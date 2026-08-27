@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -16,6 +16,9 @@ import Masterclass from "./pages/Masterclass.tsx";
 import RentEquipment from "./pages/RentEquipment.tsx";
 import AdminLogin from "./pages/admin/AdminLogin.tsx";
 import AdminRentals from "./pages/admin/AdminRentals.tsx";
+import ContributorAuth from "./pages/contributors/ContributorAuth.tsx";
+import ContributorDashboard from "./pages/contributors/ContributorDashboard.tsx";
+import ContributorEditor from "./pages/contributors/ContributorEditor.tsx";
 import Unsubscribe from "./pages/Unsubscribe.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import StarlightWidget from "./components/StarlightWidget.tsx";
@@ -30,6 +33,20 @@ const ScrollToTop = () => {
   return null;
 };
 
+/** contributors.everyonecanlight.co serves the contributor portal at its root. */
+const SubdomainRedirect = () => {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const host = window.location.hostname;
+    if (!host.startsWith("contributors.")) return;
+    if (!pathname.startsWith("/contributors")) {
+      navigate(`/contributors${pathname === "/" ? "" : pathname}`, { replace: true });
+    }
+  }, [pathname, navigate]);
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -37,6 +54,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
+        <SubdomainRedirect />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/articles" element={<Articles />} />
@@ -51,6 +69,9 @@ const App = () => (
           <Route path="/masterclass" element={<Masterclass />} />
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin/rentals" element={<AdminRentals />} />
+          <Route path="/contributors" element={<ContributorDashboard />} />
+          <Route path="/contributors/auth" element={<ContributorAuth />} />
+          <Route path="/contributors/editor/:id" element={<ContributorEditor />} />
           <Route path="/unsubscribe" element={<Unsubscribe />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
