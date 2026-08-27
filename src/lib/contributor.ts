@@ -93,3 +93,51 @@ export const plainTextExcerpt = (blocks: PostBlock[], length = 160) => {
     | undefined;
   return (body?.text ?? "").slice(0, length).trim();
 };
+
+export type PublishedPost = {
+  id: string;
+  slug: string;
+  title: string;
+  cover_image_url: string | null;
+  tags: string[];
+  blocks: PostBlock[];
+  kind: "article" | "course";
+  view_count: number;
+  published_at: string | null;
+  author_id: string;
+};
+
+/** Published contributor posts, newest first. */
+export const fetchPublishedPosts = async (kind: "article" | "course" = "article") => {
+  const { data, error } = await supabase
+    .from("contributor_posts")
+    .select("id, slug, title, cover_image_url, tags, blocks, kind, view_count, published_at, author_id")
+    .eq("status", "published")
+    .eq("kind", kind)
+    .order("published_at", { ascending: false });
+  if (error) return [];
+  return (data ?? []).filter((p) => p.slug) as unknown as PublishedPost[];
+};
+
+export const fetchPublishedPostBySlug = async (slug: string) => {
+  const { data } = await supabase
+    .from("contributor_posts")
+    .select("id, slug, title, cover_image_url, tags, blocks, kind, view_count, published_at, author_id")
+    .eq("slug", slug)
+    .eq("status", "published")
+    .maybeSingle();
+  return (data as unknown as PublishedPost) ?? null;
+};
+
+export const fetchContributorAuthor = async (userId: string) => {
+  const { data } = await supabase
+    .from("contributor_profiles")
+    .select("display_name, avatar_url")
+    .eq("user_id", userId)
+    .maybeSingle();
+  return (data as { display_name: string; avatar_url: string | null } | null) ?? null;
+};
+
+export const registerPostView = async (slug: string) => {
+  await supabase.rpc("increment_post_view", { _slug: slug });
+};
