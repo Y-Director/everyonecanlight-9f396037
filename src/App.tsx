@@ -33,6 +33,20 @@ const ScrollToTop = () => {
   return null;
 };
 
+/** contributors.everyonecanlight.co serves the contributor portal at its root. */
+const SubdomainRedirect = () => {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const host = window.location.hostname;
+    if (!host.startsWith("contributors.")) return;
+    if (!pathname.startsWith("/contributors")) {
+      navigate(`/contributors${pathname === "/" ? "" : pathname}`, { replace: true });
+    }
+  }, [pathname, navigate]);
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -40,6 +54,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
+        <SubdomainRedirect />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/articles" element={<Articles />} />
@@ -54,6 +69,9 @@ const App = () => (
           <Route path="/masterclass" element={<Masterclass />} />
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin/rentals" element={<AdminRentals />} />
+          <Route path="/contributors" element={<ContributorDashboard />} />
+          <Route path="/contributors/auth" element={<ContributorAuth />} />
+          <Route path="/contributors/editor/:id" element={<ContributorEditor />} />
           <Route path="/unsubscribe" element={<Unsubscribe />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
