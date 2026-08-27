@@ -362,9 +362,13 @@ const ContributorEditor = () => {
                     onChange={(e) => {
                       mark();
                       const type = e.target.value as TextKind;
-                      setBlocks((b) => b.map((x) => (x.id === block.id ? { ...x, type } : x)));
+                      setBlocks((b) =>
+                        b.map((x) =>
+                          x.id === block.id && x.type !== "image" ? { ...x, type } : x,
+                        ),
+                      );
                     }}
-                    className="mt-1 shrink-0 rounded-md bg-transparent border border-[hsl(var(--page-light-foreground))]/15 text-[11px] px-1.5 py-1 opacity-0 group-hover:opacity-100 focus:opacity-100 transition"
+                    className="mt-1 shrink-0 rounded-md bg-transparent border border-[hsl(var(--page-light-foreground))]/15 text-[11px] px-1.5 py-1 opacity-70 md:opacity-0 md:group-hover:opacity-100 focus:opacity-100 transition"
                     aria-label="Text size"
                   >
                     <option value="title">Title</option>
