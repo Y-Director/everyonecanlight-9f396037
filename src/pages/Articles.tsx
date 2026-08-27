@@ -122,6 +122,62 @@ const Articles = () => {
               </Link>
             ))}
           </div>
+
+          {community.length > 0 && (
+            <>
+              <header className="mt-24 mb-12">
+                <h2 className="text-5xl md:text-6xl font-medium tracking-tight">From Our Contributors</h2>
+                <p className="mt-3 text-xs tracking-[0.2em] text-foreground/60 uppercase">
+                  Published by creators in the Everyone Can Light community
+                </p>
+              </header>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {community.map((p) => (
+                  <Link
+                    key={p.id}
+                    to={`/articles/${p.slug}`}
+                    className="group space-y-4 block focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/40 rounded-xl"
+                  >
+                    <article className="space-y-4">
+                      <div className="rounded-xl overflow-hidden aspect-[2/1] bg-[hsl(var(--surface))]">
+                        {p.cover_image_url && (
+                          <img
+                            src={p.cover_image_url}
+                            alt={p.title}
+                            loading="lazy"
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                          />
+                        )}
+                      </div>
+                      <div className="flex flex-wrap items-center gap-3 text-sm text-foreground/80">
+                        {p.tags.slice(0, 3).map((t) => (
+                          <span key={t}>{t}</span>
+                        ))}
+                      </div>
+                      <h3 className="text-2xl font-medium leading-snug group-hover:text-foreground/90">
+                        {p.title}
+                      </h3>
+                      <p className="flex items-center gap-4 text-sm text-foreground/60">
+                        <span>
+                          {p.published_at
+                            ? new Date(p.published_at).toLocaleDateString("en-GB", {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric",
+                              })
+                            : ""}
+                        </span>
+                        <span className="inline-flex items-center gap-1.5">
+                          <Eye className="w-3.5 h-3.5" /> {p.view_count}
+                        </span>
+                      </p>
+                    </article>
+                  </Link>
+                ))}
+              </div>
+            </>
+          )}
         </main>
 
         {/* Footer */}
