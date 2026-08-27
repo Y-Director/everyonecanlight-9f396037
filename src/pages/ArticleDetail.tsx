@@ -23,7 +23,7 @@ const ArticleDetail = () => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [slug]);
 
-  if (!article) return <NotFound />;
+  if (!article) return <ContributorArticleDetail slug={slug} />;
 
   const isoDate = (() => {
     const d = new Date(article.date);
