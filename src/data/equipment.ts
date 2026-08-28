@@ -608,7 +608,9 @@ const allEntries: NamedEntry[] = [
 
 export const equipment: Equipment[] = allEntries.map((entry, i) => {
   // Each item gets its OWN dedicated image file so any edit is fully isolated.
-  const ownImage = entry.brandedImage ?? placeholder((i % PLACEHOLDER_COUNT) + 1);
+  const ownImage =
+    entry.brandedImage ?? catalogImages[entry.slug] ?? placeholder((i % PLACEHOLDER_COUNT) + 1);
+
 
   return {
     slug: entry.slug,
