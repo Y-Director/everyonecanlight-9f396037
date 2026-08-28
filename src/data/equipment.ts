@@ -31,6 +31,10 @@ import cStand20Asset from "@/assets/equipment/c-stand-20.jpeg.asset.json";
 import cStand40Asset from "@/assets/equipment/c-stand-40.webp.asset.json";
 import cardelliniClampAsset from "@/assets/equipment/cardellini-clamp.png.asset.json";
 import cheesePlateAsset from "@/assets/equipment/cheese-plate.webp.asset.json";
+import condorGripHeadAsset from "@/assets/equipment/condor-grip-head.jpg.asset.json";
+import comboStandAsset from "@/assets/equipment/combo-stand.png.asset.json";
+import lowBoyStandAsset from "@/assets/equipment/low-boy-stand.png.asset.json";
+import clampMountBabyAsset from "@/assets/equipment/clamp-mount-baby.jpg.asset.json";
 import { catalogEntries } from "./equipmentCatalog";
 
 // Real product images supplied for catalogue entries, keyed by slug.
