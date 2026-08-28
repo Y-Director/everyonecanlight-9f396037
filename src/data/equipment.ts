@@ -59,6 +59,10 @@ const catalogImages: Record<string, string> = {
   "c-stand-40": cStand40Asset.url,
   "cardellini-clamp": cardelliniClampAsset.url,
   "cheese-plate": cheesePlateAsset.url,
+  "condor-grip-head": condorGripHeadAsset.url,
+  "combo-stand": comboStandAsset.url,
+  "low-boy-stand": lowBoyStandAsset.url,
+  "clamp-mount-baby": clampMountBabyAsset.url,
 };
 
 
