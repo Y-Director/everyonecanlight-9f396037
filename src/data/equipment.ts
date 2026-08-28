@@ -45,6 +45,16 @@ const catalogImages: Record<string, string> = {
   "arri-skypanel-x23": skypanelX23Asset.url,
   "astera-helios-tube": asteraHeliosAsset.url,
   "astera-hyperion-tube": asteraHyperionAsset.url,
+  "astera-lunabulb": asteraLunaBulbAsset.url,
+  "astera-plutofresnel": asteraPlutoFresnelAsset.url,
+  "astera-titan-tube": asteraTitanTubeAsset.url,
+  "boom-arm": boomArmAsset.url,
+  "butterfly-frame-12x12": butterfly12Asset.url,
+  "butterfly-frame-8x8": butterfly8Asset.url,
+  "c-stand-20": cStand20Asset.url,
+  "c-stand-40": cStand40Asset.url,
+  "cardellini-clamp": cardelliniClampAsset.url,
+  "cheese-plate": cheesePlateAsset.url,
 };
 
 
