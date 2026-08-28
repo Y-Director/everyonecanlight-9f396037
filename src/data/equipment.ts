@@ -35,6 +35,15 @@ import condorGripHeadAsset from "@/assets/equipment/condor-grip-head.jpg.asset.j
 import comboStandAsset from "@/assets/equipment/combo-stand.png.asset.json";
 import lowBoyStandAsset from "@/assets/equipment/low-boy-stand.png.asset.json";
 import clampMountBabyAsset from "@/assets/equipment/clamp-mount-baby.jpg.asset.json";
+import arriL7cAsset from "@/assets/equipment/arri-l7-c-fresnel.webp.asset.json";
+import arriL5cAsset from "@/assets/equipment/arri-l5-c-fresnel.png.asset.json";
+import dedolightDled7Asset from "@/assets/equipment/dedolight-dled7.webp.asset.json";
+import crossbarSupportAsset from "@/assets/equipment/crossbar-support.webp.asset.json";
+import crankStandAsset from "@/assets/equipment/crank-stand.png.asset.json";
+import boomStandAsset from "@/assets/equipment/boom-stand.jpeg.asset.json";
+import boomArmNewAsset from "@/assets/equipment/boom-arm-new.jpeg.asset.json";
+import diffusion4x4Asset from "@/assets/equipment/diffusion-frame-4x4.png.asset.json";
+import diffusion6x6Asset from "@/assets/equipment/diffusion-frame-6x6.png.asset.json";
 import { catalogEntries } from "./equipmentCatalog";
 
 // Real product images supplied for catalogue entries, keyed by slug.
@@ -63,6 +72,15 @@ const catalogImages: Record<string, string> = {
   "combo-stand": comboStandAsset.url,
   "low-boy-stand": lowBoyStandAsset.url,
   "clamp-mount-baby": clampMountBabyAsset.url,
+  "arri-l7-c-fresnel": arriL7cAsset.url,
+  "arri-l5-c-fresnel": arriL5cAsset.url,
+  "dedolight-dled7": dedolightDled7Asset.url,
+  "crossbar-support": crossbarSupportAsset.url,
+  "crank-stand": crankStandAsset.url,
+  "boom-stand": boomStandAsset.url,
+  "boom-arm": boomArmNewAsset.url,
+  "diffusion-frame-4x4": diffusion4x4Asset.url,
+  "diffusion-frame-6x6": diffusion6x6Asset.url,
 };
 
 
