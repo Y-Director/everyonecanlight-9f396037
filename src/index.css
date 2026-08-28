@@ -131,6 +131,25 @@ All colors MUST be HSL.
   }
 }
 
+/* Contributors portal runs on the site's dark surface: remap the light-page
+   tokens so every existing surface/border/text utility flips to dark. */
+.contributor-shell {
+  --page-light: 0 0% 7%;
+  --page-light-foreground: 0 0% 100%;
+  --page-light-grid: 0 0% 16%;
+  --card-sky: 210 30% 20%;
+  --card-mint: 150 30% 20%;
+
+  /* shadcn primitives (Input/Button/Label) inside the portal */
+  --border: 0 0% 20%;
+  --input: 0 0% 22%;
+  --ring: 224 100% 55%;
+  --primary: 224 100% 55%;
+  --primary-foreground: 0 0% 100%;
+  --muted-foreground: 0 0% 65%;
+}
+
+
 /* Starlight mascot micro-interactions */
 @keyframes starlight-bounce {
   0%, 100% { transform: translateY(0) rotate(0deg); }
