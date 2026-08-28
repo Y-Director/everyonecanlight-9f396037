@@ -11,7 +11,32 @@ import babyPinAdapterAsset from "@/assets/equipment/baby-pin-adapter.jpg.asset.j
 import beamProjectorAsset from "@/assets/equipment/beam-projector-attachment.webp.asset.json";
 import beautyDishAsset from "@/assets/equipment/beauty-dish-reflector.png.asset.json";
 import barndoors8LeafAsset from "@/assets/equipment/barndoors-8-leaf.png.asset.json";
+import accentB7cAsset from "@/assets/equipment/aputure-accent-b7c.avif.asset.json";
+import storm1000cAsset from "@/assets/equipment/aputure-storm-1000c.webp.asset.json";
+import storm80cAsset from "@/assets/equipment/aputure-storm-80c.webp.asset.json";
+import arriM18Asset from "@/assets/equipment/arri-m18-hmi.jpeg.asset.json";
+import arriM40Asset from "@/assets/equipment/arri-m40-hmi.jpeg.asset.json";
+import arriOrbiterAsset from "@/assets/equipment/arri-orbiter.jpeg.asset.json";
+import skypanelX21Asset from "@/assets/equipment/arri-skypanel-x21.png.asset.json";
+import skypanelX23Asset from "@/assets/equipment/arri-skypanel-x23.webp.asset.json";
+import asteraHeliosAsset from "@/assets/equipment/astera-helios-tube.webp.asset.json";
+import asteraHyperionAsset from "@/assets/equipment/astera-hyperion-tube.webp.asset.json";
 import { catalogEntries } from "./equipmentCatalog";
+
+// Real product images supplied for catalogue entries, keyed by slug.
+const catalogImages: Record<string, string> = {
+  "aputure-accent-b7c": accentB7cAsset.url,
+  "aputure-storm-1000c": storm1000cAsset.url,
+  "aputure-storm-80c": storm80cAsset.url,
+  "arri-m18-hmi": arriM18Asset.url,
+  "arri-m40-hmi": arriM40Asset.url,
+  "arri-orbiter": arriOrbiterAsset.url,
+  "arri-skypanel-x21": skypanelX21Asset.url,
+  "arri-skypanel-x23": skypanelX23Asset.url,
+  "astera-helios-tube": asteraHeliosAsset.url,
+  "astera-hyperion-tube": asteraHyperionAsset.url,
+};
+
 
 // Each equipment item has its own dedicated placeholder file so editing one
 // image will never affect any other item.
