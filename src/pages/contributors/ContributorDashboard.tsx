@@ -157,7 +157,11 @@ const ContributorDashboard = () => {
                 </h3>
                 {p.status === "published" && p.slug && (
                   <a
-                    href={`/articles/${p.slug}`}
+                    href={
+                      typeof window !== "undefined" && window.location.hostname.startsWith("contributors.")
+                        ? `${window.location.protocol}//${window.location.hostname.replace(/^contributors\./, "")}/articles/${p.slug}`
+                        : `/articles/${p.slug}`
+                    }
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-1.5 text-xs underline underline-offset-4 decoration-2 decoration-[hsl(var(--cta))]"
