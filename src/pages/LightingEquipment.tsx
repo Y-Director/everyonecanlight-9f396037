@@ -115,9 +115,9 @@ const LightingEquipment = () => {
         <main className="flex-1 px-8 max-w-[1400px] mx-auto w-full py-12">
           <header className="max-w-2xl">
             <h1 className="text-3xl md:text-4xl font-medium tracking-tight">Equipment Database</h1>
-            <p className="mt-3 text-sm md:text-base text-foreground/60">
-              Specifications, comparisons and use cases for 250+ lights, stands, grips and
-              modifiers — so you know exactly what a fixture does before you buy or rent it.
+            <p className="mt-3 whitespace-pre-line text-sm md:text-base text-foreground/60">
+              Specifications, comparisons and use cases for 250+ lights, stands, grips and modifiers,{"\n"}
+              so you know exactly what a fixture does before you buy or rent it.
             </p>
           </header>
 
