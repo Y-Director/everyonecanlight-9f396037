@@ -196,14 +196,6 @@ export const catalogEntries: CatalogEntry[] = [
     "app": "AsteraApp"
   },
   {
-    "slug": "background-support-stand",
-    "name": "Background Support Stand",
-    "category": "Stands & Grips",
-    "typeKind": "Grip / Stand",
-    "bestUseCase": "Support, rigging and positioning of lighting equipment.",
-    "productDetails": "Mechanical support or rigging accessory used to position, secure or extend lighting equipment safely."
-  },
-  {
     "slug": "black-wrap-cinefoil",
     "name": "Black Wrap Cinefoil",
     "category": "Others",
@@ -268,36 +260,12 @@ export const catalogEntries: CatalogEntry[] = [
     "productDetails": "Grip hardware used to attach, position or support lights, modifiers, flags and production accessories."
   },
   {
-    "slug": "century-stand-sliding-leg",
-    "name": "Century Stand Sliding Leg",
-    "category": "Stands & Grips",
-    "typeKind": "Grip / Stand",
-    "bestUseCase": "Support, rigging and positioning of lighting equipment.",
-    "productDetails": "Mechanical support or rigging accessory used to position, secure or extend lighting equipment safely."
-  },
-  {
     "slug": "cheese-plate",
     "name": "Cheese Plate",
     "category": "Stands & Grips",
     "typeKind": "Grip / Rigging",
     "bestUseCase": "Mounting, clamping and securing fixtures or accessories.",
     "productDetails": "Grip hardware used to attach, position or support lights, modifiers, flags and production accessories."
-  },
-  {
-    "slug": "chimera-softbox-large",
-    "name": "Chimera Softbox Large",
-    "category": "Others",
-    "typeKind": "Light Modifier",
-    "bestUseCase": "Shaping, softening, bouncing or controlling light.",
-    "productDetails": "Modifier or light-control accessory used to diffuse, reflect, flag, shape or contain illumination."
-  },
-  {
-    "slug": "chimera-softbox-medium",
-    "name": "Chimera Softbox Medium",
-    "category": "Others",
-    "typeKind": "Light Modifier",
-    "bestUseCase": "Shaping, softening, bouncing or controlling light.",
-    "productDetails": "Modifier or light-control accessory used to diffuse, reflect, flag, shape or contain illumination."
   },
   {
     "slug": "clamp-mount-baby",
@@ -322,14 +290,6 @@ export const catalogEntries: CatalogEntry[] = [
     "typeKind": "Grip / Rigging",
     "bestUseCase": "Mounting, clamping and securing fixtures or accessories.",
     "productDetails": "Grip hardware used to attach, position or support lights, modifiers, flags and production accessories."
-  },
-  {
-    "slug": "corner-frame-diffusion",
-    "name": "Corner Frame Diffusion",
-    "category": "Others",
-    "typeKind": "Light Modifier",
-    "bestUseCase": "Shaping, softening, bouncing or controlling light.",
-    "productDetails": "Modifier or light-control accessory used to diffuse, reflect, flag, shape or contain illumination."
   },
   {
     "slug": "crank-stand",

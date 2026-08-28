@@ -24,7 +24,6 @@ import asteraHyperionAsset from "@/assets/equipment/astera-hyperion-tube.webp.as
 import asteraLunaBulbAsset from "@/assets/equipment/astera-lunabulb.webp.asset.json";
 import asteraPlutoFresnelAsset from "@/assets/equipment/astera-plutofresnel.webp.asset.json";
 import asteraTitanTubeAsset from "@/assets/equipment/astera-titan-tube.webp.asset.json";
-import boomArmAsset from "@/assets/equipment/boom-arm.webp.asset.json";
 import butterfly12Asset from "@/assets/equipment/butterfly-frame-12x12.jpg.asset.json";
 import butterfly8Asset from "@/assets/equipment/butterfly-frame-8x8.jpg.asset.json";
 import cStand20Asset from "@/assets/equipment/c-stand-20.jpeg.asset.json";
@@ -35,6 +34,15 @@ import condorGripHeadAsset from "@/assets/equipment/condor-grip-head.jpg.asset.j
 import comboStandAsset from "@/assets/equipment/combo-stand.png.asset.json";
 import lowBoyStandAsset from "@/assets/equipment/low-boy-stand.png.asset.json";
 import clampMountBabyAsset from "@/assets/equipment/clamp-mount-baby.jpg.asset.json";
+import arriL7cAsset from "@/assets/equipment/arri-l7-c-fresnel.webp.asset.json";
+import arriL5cAsset from "@/assets/equipment/arri-l5-c-fresnel.png.asset.json";
+import dedolightDled7Asset from "@/assets/equipment/dedolight-dled7.webp.asset.json";
+import crossbarSupportAsset from "@/assets/equipment/crossbar-support.webp.asset.json";
+import crankStandAsset from "@/assets/equipment/crank-stand.png.asset.json";
+import boomStandAsset from "@/assets/equipment/boom-stand.jpeg.asset.json";
+import boomArmNewAsset from "@/assets/equipment/boom-arm-new.jpeg.asset.json";
+import diffusion4x4Asset from "@/assets/equipment/diffusion-frame-4x4.png.asset.json";
+import diffusion6x6Asset from "@/assets/equipment/diffusion-frame-6x6.png.asset.json";
 import { catalogEntries } from "./equipmentCatalog";
 
 // Real product images supplied for catalogue entries, keyed by slug.
@@ -52,7 +60,6 @@ const catalogImages: Record<string, string> = {
   "astera-lunabulb": asteraLunaBulbAsset.url,
   "astera-plutofresnel": asteraPlutoFresnelAsset.url,
   "astera-titan-tube": asteraTitanTubeAsset.url,
-  "boom-arm": boomArmAsset.url,
   "butterfly-frame-12x12": butterfly12Asset.url,
   "butterfly-frame-8x8": butterfly8Asset.url,
   "c-stand-20": cStand20Asset.url,
@@ -63,6 +70,15 @@ const catalogImages: Record<string, string> = {
   "combo-stand": comboStandAsset.url,
   "low-boy-stand": lowBoyStandAsset.url,
   "clamp-mount-baby": clampMountBabyAsset.url,
+  "arri-l7-c-fresnel": arriL7cAsset.url,
+  "arri-l5-c-fresnel": arriL5cAsset.url,
+  "dedolight-dled7": dedolightDled7Asset.url,
+  "crossbar-support": crossbarSupportAsset.url,
+  "crank-stand": crankStandAsset.url,
+  "boom-stand": boomStandAsset.url,
+  "boom-arm": boomArmNewAsset.url,
+  "diffusion-frame-4x4": diffusion4x4Asset.url,
+  "diffusion-frame-6x6": diffusion6x6Asset.url,
 };
 
 

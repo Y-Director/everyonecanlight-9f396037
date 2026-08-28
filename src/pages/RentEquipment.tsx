@@ -18,6 +18,7 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import { matchesSearch } from "@/lib/searchMatch";
 import { toast } from "sonner";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
@@ -312,11 +313,11 @@ const RentEquipment = () => {
   };
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
+    const q = query.trim();
     return rentalCatalog.filter(
       (i) =>
         (category === "All Gear" || i.category === category) &&
-        (!q || i.name.toLowerCase().includes(q))
+        matchesSearch(i.name, q)
     );
   }, [query, category]);
 
