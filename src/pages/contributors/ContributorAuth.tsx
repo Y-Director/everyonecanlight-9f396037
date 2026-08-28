@@ -70,7 +70,7 @@ const ContributorAuth = () => {
   };
 
   return (
-    <main className="min-h-screen bg-[hsl(var(--page-light))] text-[hsl(var(--page-light-foreground))] flex items-center justify-center px-6 py-16">
+    <main className="contributor-shell min-h-screen bg-[hsl(var(--page-light))] text-[hsl(var(--page-light-foreground))] flex items-center justify-center px-6 py-16">
       <Seo
         title="Contributor sign in — Everyone Can Light"
         description="Sign in to write and publish lighting articles and courses on Everyone Can Light."

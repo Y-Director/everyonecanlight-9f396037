@@ -235,7 +235,7 @@ const ContributorEditor = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[hsl(var(--page-light))] text-[hsl(var(--page-light-foreground))] pb-40">
+    <div className="contributor-shell min-h-screen bg-[hsl(var(--page-light))] text-[hsl(var(--page-light-foreground))] pb-40">
       <ContributorTopBar
         profile={profile}
         notifications={notifications}

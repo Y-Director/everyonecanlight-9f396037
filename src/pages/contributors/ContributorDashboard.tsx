@@ -66,7 +66,7 @@ const ContributorDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[hsl(var(--page-light))] text-[hsl(var(--page-light-foreground))]">
+    <div className="contributor-shell min-h-screen bg-[hsl(var(--page-light))] text-[hsl(var(--page-light-foreground))]">
       <Seo
         title="Contributor dashboard — Everyone Can Light"
         description="Create articles and courses and track how many people are reading your work."
