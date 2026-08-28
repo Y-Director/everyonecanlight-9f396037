@@ -52,7 +52,7 @@ const LightingEquipment = () => {
   const filtered = useMemo(() => {
     const list = EQUIPMENT.filter((e) => {
       const matchCat = category === "All Equipment" || e.category === category;
-      const matchQuery = e.name.toLowerCase().includes(query.toLowerCase());
+      const matchQuery = matchesSearch(e.name, query);
       return matchCat && matchQuery;
     });
     return [...list].sort((a, b) =>
