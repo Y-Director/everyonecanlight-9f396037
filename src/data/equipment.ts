@@ -21,6 +21,16 @@ import skypanelX21Asset from "@/assets/equipment/arri-skypanel-x21.png.asset.jso
 import skypanelX23Asset from "@/assets/equipment/arri-skypanel-x23.webp.asset.json";
 import asteraHeliosAsset from "@/assets/equipment/astera-helios-tube.webp.asset.json";
 import asteraHyperionAsset from "@/assets/equipment/astera-hyperion-tube.webp.asset.json";
+import asteraLunaBulbAsset from "@/assets/equipment/astera-lunabulb.webp.asset.json";
+import asteraPlutoFresnelAsset from "@/assets/equipment/astera-plutofresnel.webp.asset.json";
+import asteraTitanTubeAsset from "@/assets/equipment/astera-titan-tube.webp.asset.json";
+import boomArmAsset from "@/assets/equipment/boom-arm.webp.asset.json";
+import butterfly12Asset from "@/assets/equipment/butterfly-frame-12x12.jpg.asset.json";
+import butterfly8Asset from "@/assets/equipment/butterfly-frame-8x8.jpg.asset.json";
+import cStand20Asset from "@/assets/equipment/c-stand-20.jpeg.asset.json";
+import cStand40Asset from "@/assets/equipment/c-stand-40.webp.asset.json";
+import cardelliniClampAsset from "@/assets/equipment/cardellini-clamp.png.asset.json";
+import cheesePlateAsset from "@/assets/equipment/cheese-plate.webp.asset.json";
 import { catalogEntries } from "./equipmentCatalog";
 
 // Real product images supplied for catalogue entries, keyed by slug.
@@ -35,6 +45,16 @@ const catalogImages: Record<string, string> = {
   "arri-skypanel-x23": skypanelX23Asset.url,
   "astera-helios-tube": asteraHeliosAsset.url,
   "astera-hyperion-tube": asteraHyperionAsset.url,
+  "astera-lunabulb": asteraLunaBulbAsset.url,
+  "astera-plutofresnel": asteraPlutoFresnelAsset.url,
+  "astera-titan-tube": asteraTitanTubeAsset.url,
+  "boom-arm": boomArmAsset.url,
+  "butterfly-frame-12x12": butterfly12Asset.url,
+  "butterfly-frame-8x8": butterfly8Asset.url,
+  "c-stand-20": cStand20Asset.url,
+  "c-stand-40": cStand40Asset.url,
+  "cardellini-clamp": cardelliniClampAsset.url,
+  "cheese-plate": cheesePlateAsset.url,
 };
 
 
