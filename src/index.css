@@ -139,6 +139,14 @@ All colors MUST be HSL.
   --page-light-grid: 0 0% 16%;
   --card-sky: 210 30% 20%;
   --card-mint: 150 30% 20%;
+
+  /* shadcn primitives (Input/Button/Label) inside the portal */
+  --border: 0 0% 20%;
+  --input: 0 0% 22%;
+  --ring: 224 100% 55%;
+  --primary: 224 100% 55%;
+  --primary-foreground: 0 0% 100%;
+  --muted-foreground: 0 0% 65%;
 }
 
 
