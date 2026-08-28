@@ -40,9 +40,15 @@ const SubdomainRedirect = () => {
   useEffect(() => {
     const host = window.location.hostname;
     if (!host.startsWith("contributors.")) return;
-    if (!pathname.startsWith("/contributors")) {
+    if (pathname.startsWith("/contributors")) return;
+    // Only map contributor-portal paths onto the subdomain; anything else belongs to the main site.
+    if (pathname === "/" || pathname === "/auth" || pathname.startsWith("/editor/")) {
       navigate(`/contributors${pathname === "/" ? "" : pathname}`, { replace: true });
+      return;
     }
+    window.location.replace(
+      `${window.location.protocol}//${host.replace(/^contributors\./, "")}${pathname}${window.location.search}${window.location.hash}`
+    );
   }, [pathname, navigate]);
   return null;
 };
