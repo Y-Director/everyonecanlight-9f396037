@@ -5,6 +5,7 @@ import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
 import { equipment as EQUIPMENT, type EquipmentCategory } from "@/data/equipment";
 import Seo from "@/components/Seo";
+import { matchesSearch } from "@/lib/searchMatch";
 
 type Category = "All Equipment" | EquipmentCategory;
 

@@ -24,7 +24,6 @@ import asteraHyperionAsset from "@/assets/equipment/astera-hyperion-tube.webp.as
 import asteraLunaBulbAsset from "@/assets/equipment/astera-lunabulb.webp.asset.json";
 import asteraPlutoFresnelAsset from "@/assets/equipment/astera-plutofresnel.webp.asset.json";
 import asteraTitanTubeAsset from "@/assets/equipment/astera-titan-tube.webp.asset.json";
-import boomArmAsset from "@/assets/equipment/boom-arm.webp.asset.json";
 import butterfly12Asset from "@/assets/equipment/butterfly-frame-12x12.jpg.asset.json";
 import butterfly8Asset from "@/assets/equipment/butterfly-frame-8x8.jpg.asset.json";
 import cStand20Asset from "@/assets/equipment/c-stand-20.jpeg.asset.json";
@@ -61,7 +60,6 @@ const catalogImages: Record<string, string> = {
   "astera-lunabulb": asteraLunaBulbAsset.url,
   "astera-plutofresnel": asteraPlutoFresnelAsset.url,
   "astera-titan-tube": asteraTitanTubeAsset.url,
-  "boom-arm": boomArmAsset.url,
   "butterfly-frame-12x12": butterfly12Asset.url,
   "butterfly-frame-8x8": butterfly8Asset.url,
   "c-stand-20": cStand20Asset.url,
