@@ -1,6 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, Plus, Loader2, ExternalLink } from "lucide-react";
+import { Eye, Plus, Loader2, ExternalLink, Trash2 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -26,6 +36,22 @@ const ContributorDashboard = () => {
   const { notifications, unreadCount, markAllRead } = useContributorNotifications(user?.id);
   const [posts, setPosts] = useState<ContributorPost[]>([]);
   const [creating, setCreating] = useState<null | "article" | "course">(null);
+  const [pendingDelete, setPendingDelete] = useState<ContributorPost | null>(null);
+  const [deleting, setDeleting] = useState(false);
+
+  const confirmDelete = async () => {
+    if (!pendingDelete) return;
+    setDeleting(true);
+    const { error } = await supabase.from("contributor_posts").delete().eq("id", pendingDelete.id);
+    setDeleting(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    setPosts((prev) => prev.filter((p) => p.id !== pendingDelete.id));
+    toast.success(`"${pendingDelete.title}" deleted`);
+    setPendingDelete(null);
+  };
 
   useEffect(() => {
     if (!loading && !user) navigate("/contributors/auth", { replace: true });
@@ -159,6 +185,15 @@ const ContributorDashboard = () => {
                     <Eye className="w-3.5 h-3.5" />
                     {p.view_count}
                   </span>
+                  <button
+                    type="button"
+                    onClick={() => setPendingDelete(p)}
+                    aria-label={`Delete ${p.title}`}
+                    title="Delete"
+                    className="p-1.5 rounded-md text-[hsl(var(--page-light-foreground))]/50 hover:text-[hsl(var(--destructive))] hover:bg-[hsl(var(--page-light-foreground))]/5 transition"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
                 </div>
                 <h3 className="text-base font-medium leading-snug">
                   <Link to={`/contributors/editor/${p.id}`}>{p.title}</Link>
@@ -185,6 +220,32 @@ const ContributorDashboard = () => {
           </div>
         )}
       </main>
+
+      <AlertDialog open={Boolean(pendingDelete)} onOpenChange={(o) => !o && setPendingDelete(null)}>
+        <AlertDialogContent className="contributor-shell bg-[hsl(var(--page-light))] text-[hsl(var(--page-light-foreground))] border-[hsl(var(--page-light-foreground))]/15">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete “{pendingDelete?.title}”?</AlertDialogTitle>
+            <AlertDialogDescription>
+              {pendingDelete?.status === "published"
+                ? "This is live on Everyone Can Light. Deleting it removes the article from the live page for good, along with its view count. This can't be undone."
+                : "All your progress in this draft — text, images and tags — will be permanently lost. This can't be undone."}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={deleting}>Keep it</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={(e) => {
+                e.preventDefault();
+                void confirmDelete();
+              }}
+              disabled={deleting}
+              className="bg-[hsl(var(--destructive))] text-[hsl(var(--destructive-foreground))] hover:bg-[hsl(var(--destructive))]/90"
+            >
+              {deleting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Delete permanently"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
