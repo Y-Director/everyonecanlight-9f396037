@@ -177,6 +177,9 @@ export type Database = {
           created_at: string
           display_name: string
           email: string | null
+          status: string
+          suspended_at: string | null
+          suspension_reason: string | null
           updated_at: string
           user_id: string
         }
@@ -186,6 +189,9 @@ export type Database = {
           created_at?: string
           display_name?: string
           email?: string | null
+          status?: string
+          suspended_at?: string | null
+          suspension_reason?: string | null
           updated_at?: string
           user_id: string
         }
@@ -195,6 +201,9 @@ export type Database = {
           created_at?: string
           display_name?: string
           email?: string | null
+          status?: string
+          suspended_at?: string | null
+          suspension_reason?: string | null
           updated_at?: string
           user_id?: string
         }
@@ -1012,6 +1021,7 @@ export type Database = {
       }
     }
     Functions: {
+      contributor_is_active: { Args: { _user_id: string }; Returns: boolean }
       delete_email: {
         Args: { message_id: number; queue_name: string }
         Returns: boolean
