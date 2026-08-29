@@ -220,10 +220,16 @@ All colors MUST be HSL.
   0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
   50% { transform: translate3d(-18px, -20px, 0) rotate(-2deg); }
 }
+@keyframes drift-e {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(14px, 24px, 0) rotate(-4deg); }
+}
 .drift-a { animation: drift-a 22s ease-in-out infinite; }
 .drift-b { animation: drift-b 27s ease-in-out infinite; }
 .drift-c { animation: drift-c 31s ease-in-out infinite; }
 .drift-d { animation: drift-d 25s ease-in-out infinite; }
+.drift-e { animation: drift-e 29s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) {
-  .drift-a, .drift-b, .drift-c, .drift-d { animation: none; }
+  .drift-a, .drift-b, .drift-c, .drift-d, .drift-e { animation: none; }
 }
+
