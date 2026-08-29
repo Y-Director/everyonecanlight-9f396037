@@ -15,6 +15,7 @@ import trust5 from "@/assets/trust/trust-5.jpg.asset.json";
 import trust6 from "@/assets/trust/trust-6.jpg.asset.json";
 import trust7 from "@/assets/trust/trust-7.jpg.asset.json";
 import trust8 from "@/assets/trust/trust-8.jpg.asset.json";
+import contributorBanner from "@/assets/contributors/contributor-banner.png.asset.json";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import BrandVideo from "@/components/BrandVideo";
