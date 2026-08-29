@@ -47,7 +47,15 @@ const ContributorDashboard = () => {
 
   const create = async (kind: "article" | "course") => {
     if (!user) return;
+    if (kind === "course") {
+      toast("Courses arrive December 2026", {
+        description: "Course creation isn't open yet — keep an eye on your notifications for updates.",
+        duration: 6000,
+      });
+      return;
+    }
     setCreating(kind);
+
     const { data, error } = await supabase
       .from("contributor_posts")
       .insert({
