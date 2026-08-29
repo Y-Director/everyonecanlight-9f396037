@@ -19,6 +19,7 @@ import AdminRentals from "./pages/admin/AdminRentals.tsx";
 import ContributorAuth from "./pages/contributors/ContributorAuth.tsx";
 import ContributorDashboard from "./pages/contributors/ContributorDashboard.tsx";
 import ContributorEditor from "./pages/contributors/ContributorEditor.tsx";
+import ResetPassword from "./pages/ResetPassword.tsx";
 import Unsubscribe from "./pages/Unsubscribe.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import StarlightWidget from "./components/StarlightWidget.tsx";
@@ -42,6 +43,7 @@ const SubdomainRedirect = () => {
     if (!host.startsWith("contributors.")) return;
     if (pathname.startsWith("/contributors")) return;
     // Only map contributor-portal paths onto the subdomain; anything else belongs to the main site.
+    if (pathname === "/reset-password") return;
     if (pathname === "/" || pathname === "/auth" || pathname.startsWith("/editor/")) {
       navigate(`/contributors${pathname === "/" ? "" : pathname}`, { replace: true });
       return;
@@ -78,6 +80,7 @@ const App = () => (
           <Route path="/contributors" element={<ContributorDashboard />} />
           <Route path="/contributors/auth" element={<ContributorAuth />} />
           <Route path="/contributors/editor/:id" element={<ContributorEditor />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/unsubscribe" element={<Unsubscribe />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
