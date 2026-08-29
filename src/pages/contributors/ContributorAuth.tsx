@@ -3,11 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Check, Loader2, MailCheck, X } from "lucide-react";
 import { toast } from "sonner";
 import logoAsset from "@/assets/contributors/ecl-logoasset3.png.asset.json";
-import avatar1 from "@/assets/contributors/hex-1.webp.asset.json";
-import avatar2 from "@/assets/contributors/hex-2.webp.asset.json";
-import avatar3 from "@/assets/contributors/hex-3.webp.asset.json";
-import avatar4 from "@/assets/contributors/hex-4.webp.asset.json";
-import avatar5 from "@/assets/contributors/hex-5.webp.asset.json";
+import bgDesktop from "@/assets/contributors/contributors-bg.png.asset.json";
+import bgMobile from "@/assets/contributors/contributors-bg-mobile.png.asset.json";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { useContributorSession } from "@/hooks/useContributor";
@@ -17,23 +14,21 @@ import { Label } from "@/components/ui/label";
 import Seo from "@/components/Seo";
 import { NAME_MIN, checkDisplayNameAvailable } from "@/lib/contributor";
 
-const FLOATERS = [
-  { src: avatar1.url, className: "left-[3%] top-[12%] w-20 md:w-28", drift: "drift-a" },
-  { src: avatar2.url, className: "right-[5%] top-[8%] w-16 md:w-24", drift: "drift-b" },
-  { src: avatar3.url, className: "left-[8%] bottom-[10%] w-16 md:w-24", drift: "drift-c" },
-  { src: avatar4.url, className: "right-[4%] bottom-[14%] w-20 md:w-28", drift: "drift-d" },
-  { src: avatar5.url, className: "right-[16%] top-[46%] w-14 md:w-20", drift: "drift-e" },
-];
-
-const FloatingAvatars = () => (
+const AuthBackground = () => (
   <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-    {FLOATERS.map((f) => (
-      <div key={f.src} className={`absolute hidden sm:block opacity-80 ${f.className} ${f.drift}`}>
-        <img src={f.src} alt="" loading="lazy" className="w-full h-auto object-contain" />
-      </div>
-    ))}
+    <img
+      src={bgMobile.url}
+      alt=""
+      className="md:hidden absolute inset-0 w-full h-full object-cover"
+    />
+    <img
+      src={bgDesktop.url}
+      alt=""
+      className="hidden md:block absolute inset-0 w-full h-full object-cover"
+    />
   </div>
 );
+
 
 const ContributorAuth = () => {
   const navigate = useNavigate();
@@ -155,7 +150,7 @@ const ContributorAuth = () => {
         description="Sign in to write and publish lighting articles and courses on Everyone Can Light."
         path="/contributors/auth"
       />
-      <FloatingAvatars />
+      <AuthBackground />
 
       <div className="relative w-full max-w-sm">
         <div className="flex items-center gap-2 mb-8">
