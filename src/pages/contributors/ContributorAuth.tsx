@@ -29,7 +29,7 @@ const FloatingAvatars = () => (
     {FLOATERS.map((f) => (
       <div
         key={f.src}
-        className={`absolute hidden sm:block opacity-60 ${f.className} ${f.drift}`}
+        className={`absolute hidden sm:block opacity-80 ${f.className} ${f.drift}`}
         style={{ animationDuration: f.size }}
       >
         <div
