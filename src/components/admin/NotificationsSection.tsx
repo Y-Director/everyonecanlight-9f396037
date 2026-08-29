@@ -60,6 +60,7 @@ const CATEGORIES = [
   "inventory",
   "team",
   "admins",
+  "contributors",
 ];
 
 const severityStyle = (s: string) =>
