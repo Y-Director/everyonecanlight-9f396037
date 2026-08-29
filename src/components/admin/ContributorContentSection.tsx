@@ -105,7 +105,8 @@ const ContributorContentSection = () => {
       rows.filter(
         (r) =>
           (status === "all" || r.status === status) &&
-          (!q.trim() || matchesSearch(q, [r.title, authors[r.author_id] ?? "", ...r.tags])),
+          (!q.trim() ||
+            matchesSearch([r.title, authors[r.author_id] ?? "", ...r.tags].join(" "), q)),
       ),
     [rows, status, q, authors],
   );
