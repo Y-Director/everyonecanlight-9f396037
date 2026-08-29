@@ -150,7 +150,7 @@ const ContributorAuth = () => {
         description="Sign in to write and publish lighting articles and courses on Everyone Can Light."
         path="/contributors/auth"
       />
-      <FloatingAvatars />
+      <AuthBackground />
 
       <div className="relative w-full max-w-sm">
         <div className="flex items-center gap-2 mb-8">
