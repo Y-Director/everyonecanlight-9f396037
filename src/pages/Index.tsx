@@ -15,6 +15,7 @@ import trust5 from "@/assets/trust/trust-5.jpg.asset.json";
 import trust6 from "@/assets/trust/trust-6.jpg.asset.json";
 import trust7 from "@/assets/trust/trust-7.jpg.asset.json";
 import trust8 from "@/assets/trust/trust-8.jpg.asset.json";
+import contributorBanner from "@/assets/contributors/contributor-banner.png.asset.json";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import BrandVideo from "@/components/BrandVideo";
@@ -323,6 +324,39 @@ const Index = () => {
             </div>
           </div>
         </section>
+
+        {/* Become a contributor */}
+        <section className="px-8 max-w-[1400px] mx-auto w-full pb-16">
+          <div className="relative overflow-hidden rounded-2xl border border-foreground/10 bg-[hsl(var(--surface))] grid lg:grid-cols-[0.9fr_1.1fr] items-center gap-8 p-8 sm:p-10">
+            <img
+              src={contributorBanner.url}
+              alt="Contributor portrait lit with blue and orange light beside a plus symbol"
+              className="w-full max-w-sm mx-auto lg:mx-0 h-auto object-contain object-left"
+              loading="lazy"
+            />
+            <div className="space-y-5">
+              <p className="text-sm uppercase tracking-[0.18em] text-[hsl(var(--accent-lime))]">
+                Become a contributor
+              </p>
+              <h2 className="text-3xl sm:text-4xl font-medium tracking-tight leading-[1.15]">
+                Share what you know about{" "}
+                <span className="text-[hsl(var(--accent-lime))]">lighting</span>
+              </h2>
+              <p className="text-sm text-foreground/60 leading-relaxed max-w-md">
+                Publish your own articles, lighting breakdowns and behind-the-scenes lessons on
+                Everyone Can Light, and track how many creators your work reaches.
+              </p>
+              <Link
+                to="/contributors/auth"
+                className="inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
+              >
+                Start Contributing
+              </Link>
+            </div>
+          </div>
+        </section>
+
+
 
         {/* Equipment database */}
         <section className="px-8 max-w-[1400px] mx-auto w-full py-16 grid lg:grid-cols-2 gap-12 items-center border-t border-foreground/10">
