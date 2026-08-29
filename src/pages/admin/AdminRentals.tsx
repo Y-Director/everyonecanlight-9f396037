@@ -25,6 +25,7 @@ import TeamSection from "@/components/admin/TeamSection";
 import InventorySection from "@/components/admin/InventorySection";
 import NotificationsSection from "@/components/admin/NotificationsSection";
 import ContributorContentSection from "@/components/admin/ContributorContentSection";
+import ContributorAccountsSection from "@/components/admin/ContributorAccountsSection";
 
 type Account = {
   email: string;
@@ -42,11 +43,13 @@ type TabKey =
   | "admins"
   | "inventory"
   | "notifications"
-  | "contributors";
+  | "contributors"
+  | "contributorAccounts";
 
 const TABS: { key: TabKey; label: string; icon: typeof Package }[] = [
   { key: "admins", label: "Admins", icon: UserCog },
   { key: "contributors", label: "Contributor Content", icon: FileText },
+  { key: "contributorAccounts", label: "Contributor Accounts", icon: Users },
   { key: "courses", label: "Courses", icon: GraduationCap },
   { key: "inventory", label: "Inventory", icon: Boxes },
   { key: "operators", label: "Lighting Operators", icon: Zap },
@@ -93,6 +96,7 @@ const AdminRentals = () => {
     return TABS.filter(
       (t) =>
         t.key !== "admins" &&
+        t.key !== "contributorAccounts" &&
         (t.key === "notifications" ||
           account.sections.includes(t.key === "operators" ? "team" : t.key)),
     ).map((t) => t.key);
@@ -189,6 +193,7 @@ const AdminRentals = () => {
         {tab === "inventory" && <InventorySection />}
         {tab === "notifications" && <NotificationsSection />}
         {tab === "contributors" && <ContributorContentSection />}
+        {tab === "contributorAccounts" && account.is_super && <ContributorAccountsSection />}
         {tab === "admins" && account.is_super && <AdminsSection />}
       </div>
     </main>
