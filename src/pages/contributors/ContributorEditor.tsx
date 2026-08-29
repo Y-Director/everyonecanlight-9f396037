@@ -241,7 +241,7 @@ const ContributorEditor = () => {
         notifications={notifications}
         unreadCount={unreadCount}
         onMarkAllRead={markAllRead}
-        onProfileUpdated={(avatar_url) => setProfile((p) => (p ? { ...p, avatar_url } : p))}
+        onProfileUpdated={(patch) => setProfile((p) => (p ? { ...p, ...patch } : p))}
         action={
           <div className="flex items-center gap-2 md:gap-3">
             <span className="hidden sm:inline text-[11px] text-[hsl(var(--page-light-foreground))]/50">

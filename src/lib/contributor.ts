@@ -141,3 +141,31 @@ export const fetchContributorAuthor = async (userId: string) => {
 export const registerPostView = async (slug: string) => {
   await supabase.rpc("increment_post_view", { _slug: slug });
 };
+
+export const NAME_MIN = 3;
+
+/**
+ * Checks whether a contributor display name is free.
+ * Returns true (available), false (taken) or null when the check couldn't run.
+ */
+export const checkDisplayNameAvailable = async (name: string, excludeUserId?: string) => {
+  const trimmed = name.trim();
+  if (trimmed.length < NAME_MIN) return null;
+  let query = supabase
+    .from("contributor_profiles")
+    .select("user_id")
+    .ilike("display_name", trimmed)
+    .limit(1);
+  if (excludeUserId) query = query.neq("user_id", excludeUserId);
+  const { data, error } = await query;
+  if (error) return null;
+  return (data ?? []).length === 0;
+};
+
+export const updateContributorProfile = async (
+  userId: string,
+  patch: { display_name?: string; avatar_url?: string | null },
+) => {
+  const { error } = await supabase.from("contributor_profiles").update(patch).eq("user_id", userId);
+  if (error) throw error;
+};

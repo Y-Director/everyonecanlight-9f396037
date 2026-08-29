@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Loader2, MailCheck } from "lucide-react";
+import { Check, Loader2, MailCheck, X } from "lucide-react";
 import { toast } from "sonner";
 import logoAsset from "@/assets/contributors/ecl-logoasset3.png.asset.json";
-import avatar1 from "@/assets/contributors/dsc6415.jpg.asset.json";
-import avatar2 from "@/assets/contributors/dsc6421.jpg.asset.json";
-import avatar3 from "@/assets/contributors/dsc6428.jpg.asset.json";
-import avatar4 from "@/assets/contributors/dsc6435.jpg.asset.json";
+import avatar1 from "@/assets/contributors/hex-1.webp.asset.json";
+import avatar2 from "@/assets/contributors/hex-2.webp.asset.json";
+import avatar3 from "@/assets/contributors/hex-3.webp.asset.json";
+import avatar4 from "@/assets/contributors/hex-4.webp.asset.json";
+import avatar5 from "@/assets/contributors/hex-5.webp.asset.json";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { useContributorSession } from "@/hooks/useContributor";
@@ -14,36 +15,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Seo from "@/components/Seo";
-
-const HEX_CLIP = "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)";
+import { NAME_MIN, checkDisplayNameAvailable } from "@/lib/contributor";
 
 const FLOATERS = [
-  { src: avatar1.url, className: "left-[4%] top-[14%] w-20 md:w-28", drift: "drift-a", size: "22s" },
-  { src: avatar2.url, className: "right-[6%] top-[10%] w-16 md:w-24", drift: "drift-b", size: "27s" },
-  { src: avatar3.url, className: "left-[9%] bottom-[12%] w-16 md:w-24", drift: "drift-c", size: "31s" },
-  { src: avatar4.url, className: "right-[5%] bottom-[16%] w-20 md:w-28", drift: "drift-d", size: "25s" },
+  { src: avatar1.url, className: "left-[3%] top-[12%] w-20 md:w-28", drift: "drift-a" },
+  { src: avatar2.url, className: "right-[5%] top-[8%] w-16 md:w-24", drift: "drift-b" },
+  { src: avatar3.url, className: "left-[8%] bottom-[10%] w-16 md:w-24", drift: "drift-c" },
+  { src: avatar4.url, className: "right-[4%] bottom-[14%] w-20 md:w-28", drift: "drift-d" },
+  { src: avatar5.url, className: "right-[16%] top-[46%] w-14 md:w-20", drift: "drift-e" },
 ];
 
 const FloatingAvatars = () => (
   <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
     {FLOATERS.map((f) => (
-      <div
-        key={f.src}
-        className={`absolute hidden sm:block opacity-80 ${f.className} ${f.drift}`}
-        style={{ animationDuration: f.size }}
-      >
-        <div
-          className="w-full aspect-[0.9] bg-[hsl(var(--cta))]/25 p-[2px]"
-          style={{ clipPath: HEX_CLIP }}
-        >
-          <img
-            src={f.src}
-            alt=""
-            loading="lazy"
-            className="w-full h-full object-cover"
-            style={{ clipPath: HEX_CLIP }}
-          />
-        </div>
+      <div key={f.src} className={`absolute hidden sm:block opacity-80 ${f.className} ${f.drift}`}>
+        <img src={f.src} alt="" loading="lazy" className="w-full h-auto object-contain" />
       </div>
     ))}
   </div>
@@ -59,6 +45,25 @@ const ContributorAuth = () => {
   const [busy, setBusy] = useState(false);
   const [checkEmail, setCheckEmail] = useState(false);
   const [resetSent, setResetSent] = useState(false);
+  const [nameState, setNameState] = useState<"idle" | "checking" | "free" | "taken">("idle");
+
+  const trimmedName = name.trim();
+
+  useEffect(() => {
+    if (mode !== "signup") return setNameState("idle");
+    if (trimmedName.length < NAME_MIN) return setNameState("idle");
+    setNameState("checking");
+    let active = true;
+    const t = setTimeout(async () => {
+      const available = await checkDisplayNameAvailable(trimmedName);
+      if (!active) return;
+      setNameState(available === null ? "idle" : available ? "free" : "taken");
+    }, 450);
+    return () => {
+      active = false;
+      clearTimeout(t);
+    };
+  }, [trimmedName, mode]);
 
   useEffect(() => {
     if (!loading && session) navigate("/contributors", { replace: true });
@@ -79,6 +84,11 @@ const ContributorAuth = () => {
     }
 
     if (mode === "signup") {
+      if (nameState === "taken") {
+        setBusy(false);
+        toast.error("That display name is already taken — try another one.");
+        return;
+      }
       const { data, error } = await supabase.auth.signUp({
         email: email.trim(),
         password,
@@ -236,12 +246,55 @@ const ContributorAuth = () => {
               {mode === "signup" && (
                 <div className="space-y-2">
                   <Label htmlFor="c-name">Display name</Label>
-                  <Input
-                    id="c-name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="How readers will see you"
-                  />
+                  <div className="relative">
+                    <Input
+                      id="c-name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="How readers will see you"
+                      aria-invalid={nameState === "taken"}
+                      className={`pr-10 ${
+                        nameState === "taken"
+                          ? "border-red-500/70 focus-visible:ring-red-500/40"
+                          : nameState === "free"
+                            ? "border-emerald-500/70 focus-visible:ring-emerald-500/40"
+                            : ""
+                      }`}
+                    />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2">
+                      {nameState === "checking" && (
+                        <Loader2 className="w-4 h-4 animate-spin text-[hsl(var(--page-light-foreground))]/40" />
+                      )}
+                      {nameState === "free" && (
+                        <span className="w-5 h-5 rounded-full grid place-items-center bg-emerald-500 text-white">
+                          <Check className="w-3 h-3" strokeWidth={3} />
+                        </span>
+                      )}
+                      {nameState === "taken" && (
+                        <span className="w-5 h-5 rounded-full grid place-items-center bg-red-500 text-white">
+                          <X className="w-3 h-3" strokeWidth={3} />
+                        </span>
+                      )}
+                    </span>
+                  </div>
+                  <p
+                    aria-live="polite"
+                    className={`text-xs ${
+                      nameState === "taken"
+                        ? "text-red-400"
+                        : nameState === "free"
+                          ? "text-emerald-400"
+                          : "text-[hsl(var(--page-light-foreground))]/50"
+                    }`}
+                  >
+                    {nameState === "free"
+                      ? `"${trimmedName}" is available`
+                      : nameState === "taken"
+                        ? `"${trimmedName}" is already taken`
+                        : nameState === "checking"
+                          ? "Checking availability…"
+                          : `At least ${NAME_MIN} characters.`}
+                  </p>
                 </div>
               )}
               <div className="space-y-2">
@@ -280,7 +333,11 @@ const ContributorAuth = () => {
                   />
                 </div>
               )}
-              <Button type="submit" disabled={busy} className="w-full rounded-full">
+              <Button
+                type="submit"
+                disabled={busy || (mode === "signup" && (nameState === "taken" || nameState === "checking"))}
+                className="w-full rounded-full"
+              >
                 {busy ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
                 ) : mode === "signin" ? (
