@@ -36,6 +36,22 @@ const ContributorDashboard = () => {
   const { notifications, unreadCount, markAllRead } = useContributorNotifications(user?.id);
   const [posts, setPosts] = useState<ContributorPost[]>([]);
   const [creating, setCreating] = useState<null | "article" | "course">(null);
+  const [pendingDelete, setPendingDelete] = useState<ContributorPost | null>(null);
+  const [deleting, setDeleting] = useState(false);
+
+  const confirmDelete = async () => {
+    if (!pendingDelete) return;
+    setDeleting(true);
+    const { error } = await supabase.from("contributor_posts").delete().eq("id", pendingDelete.id);
+    setDeleting(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    setPosts((prev) => prev.filter((p) => p.id !== pendingDelete.id));
+    toast.success(`"${pendingDelete.title}" deleted`);
+    setPendingDelete(null);
+  };
 
   useEffect(() => {
     if (!loading && !user) navigate("/contributors/auth", { replace: true });
