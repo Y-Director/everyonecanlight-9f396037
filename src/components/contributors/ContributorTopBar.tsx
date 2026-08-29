@@ -1,18 +1,28 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Bell, LogOut, Camera } from "lucide-react";
+import { Bell, LogOut, Camera, Check, Loader2, X } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { supabase } from "@/integrations/supabase/client";
-import { uploadContributorMedia } from "@/lib/contributor";
+import {
+  NAME_MIN,
+  checkDisplayNameAvailable,
+  updateContributorProfile,
+  uploadContributorMedia,
+} from "@/lib/contributor";
 import type { ContributorNotification, ContributorProfile } from "@/hooks/useContributor";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+type ProfilePatch = { display_name?: string; avatar_url?: string | null };
 
 type Props = {
   profile: ContributorProfile | null;
   notifications: ContributorNotification[];
   unreadCount: number;
   onMarkAllRead: () => void;
-  onProfileUpdated?: (avatarUrl: string) => void;
+  onProfileUpdated?: (patch: ProfilePatch) => void;
   action?: React.ReactNode;
 };
 
@@ -34,20 +44,71 @@ const ContributorTopBar = ({
   action,
 }: Props) => {
   const [openBell, setOpenBell] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
+  const [name, setName] = useState(profile?.display_name ?? "");
+  const [preview, setPreview] = useState<string | null>(null);
+  const [pendingFile, setPendingFile] = useState<File | null>(null);
+  const [nameState, setNameState] = useState<"idle" | "checking" | "free" | "taken">("idle");
+  const [saving, setSaving] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  const onPickAvatar = async (file?: File | null) => {
-    if (!file || !profile) return;
+  const trimmed = name.trim();
+  const nameChanged = Boolean(profile && trimmed && trimmed !== profile.display_name);
+  const dirty = nameChanged || Boolean(pendingFile);
+
+  const reset = () => {
+    setName(profile?.display_name ?? "");
+    setPendingFile(null);
+    setPreview(null);
+    setNameState("idle");
+  };
+
+  useEffect(() => {
+    if (openProfile) reset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openProfile, profile?.display_name]);
+
+  useEffect(() => {
+    if (!openProfile || !profile) return;
+    if (!nameChanged || trimmed.length < NAME_MIN) return setNameState("idle");
+    setNameState("checking");
+    let active = true;
+    const t = setTimeout(async () => {
+      const available = await checkDisplayNameAvailable(trimmed, profile.user_id);
+      if (!active) return;
+      setNameState(available === null ? "idle" : available ? "free" : "taken");
+    }, 450);
+    return () => {
+      active = false;
+      clearTimeout(t);
+    };
+  }, [trimmed, nameChanged, openProfile, profile]);
+
+  const onPickFile = (file?: File | null) => {
+    if (!file) return;
+    setPendingFile(file);
+    setPreview(URL.createObjectURL(file));
+  };
+
+  const approve = async () => {
+    if (!profile || !dirty) return;
+    if (nameState === "taken") {
+      toast.error("That display name is already taken.");
+      return;
+    }
+    setSaving(true);
     try {
-      const url = await uploadContributorMedia(profile.user_id, file);
-      await supabase
-        .from("contributor_profiles")
-        .update({ avatar_url: url })
-        .eq("user_id", profile.user_id);
-      onProfileUpdated?.(url);
-      toast.success("Profile image updated");
+      const patch: ProfilePatch = {};
+      if (nameChanged) patch.display_name = trimmed;
+      if (pendingFile) patch.avatar_url = await uploadContributorMedia(profile.user_id, pendingFile);
+      await updateContributorProfile(profile.user_id, patch);
+      onProfileUpdated?.(patch);
+      toast.success("Profile updated");
+      setOpenProfile(false);
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Upload failed");
+      toast.error(e instanceof Error ? e.message : "Could not update profile");
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -104,28 +165,144 @@ const ContributorTopBar = ({
             )}
           </div>
 
-          <button
-            type="button"
-            onClick={() => fileRef.current?.click()}
-            title="Change profile image"
-            className="group relative w-10 h-10 rounded-full overflow-hidden bg-[hsl(var(--card-mint))] text-[hsl(var(--page-light-foreground))] text-xs font-semibold grid place-items-center"
-          >
-            {profile?.avatar_url ? (
-              <img src={profile.avatar_url} alt={profile.display_name} className="w-full h-full object-cover" />
-            ) : (
-              initials(profile?.display_name || "C")
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setOpenProfile((v) => !v)}
+              title="Edit your profile"
+              aria-label="Edit your profile"
+              className="group relative w-10 h-10 rounded-full overflow-hidden bg-[hsl(var(--card-mint))] text-[hsl(var(--page-light-foreground))] text-xs font-semibold grid place-items-center"
+            >
+              {profile?.avatar_url ? (
+                <img src={profile.avatar_url} alt={profile.display_name} className="w-full h-full object-cover" />
+              ) : (
+                initials(profile?.display_name || "C")
+              )}
+              <span className="absolute inset-0 hidden group-hover:grid place-items-center bg-[hsl(var(--page-light-foreground))]/60 text-[hsl(var(--page-light))]">
+                <Camera className="w-4 h-4" />
+              </span>
+            </button>
+
+            {openProfile && profile && (
+              <div className="absolute right-0 mt-2 w-[20rem] max-w-[90vw] rounded-2xl border border-[hsl(var(--page-light-foreground))]/10 bg-[hsl(var(--page-light))] shadow-2xl p-5 space-y-4">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-semibold">Your profile</p>
+                  <button
+                    type="button"
+                    aria-label="Close"
+                    onClick={() => setOpenProfile(false)}
+                    className="text-[hsl(var(--page-light-foreground))]/50 hover:text-[hsl(var(--page-light-foreground))]"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <button
+                    type="button"
+                    onClick={() => fileRef.current?.click()}
+                    className="relative w-16 h-16 rounded-full overflow-hidden bg-[hsl(var(--card-mint))] grid place-items-center text-sm font-semibold"
+                  >
+                    {preview || profile.avatar_url ? (
+                      <img
+                        src={preview ?? profile.avatar_url ?? ""}
+                        alt=""
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      initials(profile.display_name)
+                    )}
+                    <span className="absolute inset-0 grid place-items-center bg-[hsl(var(--page-light-foreground))]/45 text-[hsl(var(--page-light))] opacity-0 hover:opacity-100 transition">
+                      <Camera className="w-4 h-4" />
+                    </span>
+                  </button>
+                  <div className="text-xs text-[hsl(var(--page-light-foreground))]/60">
+                    Tap the photo to pick a new profile picture.
+                  </div>
+                </div>
+                <input
+                  ref={fileRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => onPickFile(e.target.files?.[0])}
+                />
+
+                <div className="space-y-2">
+                  <Label htmlFor="p-name">Display name</Label>
+                  <div className="relative">
+                    <Input
+                      id="p-name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className={`pr-10 ${
+                        nameState === "taken"
+                          ? "border-red-500/70"
+                          : nameState === "free"
+                            ? "border-emerald-500/70"
+                            : ""
+                      }`}
+                    />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2">
+                      {nameState === "checking" && (
+                        <Loader2 className="w-4 h-4 animate-spin text-[hsl(var(--page-light-foreground))]/40" />
+                      )}
+                      {nameState === "free" && (
+                        <span className="w-5 h-5 rounded-full grid place-items-center bg-emerald-500 text-white">
+                          <Check className="w-3 h-3" strokeWidth={3} />
+                        </span>
+                      )}
+                      {nameState === "taken" && (
+                        <span className="w-5 h-5 rounded-full grid place-items-center bg-red-500 text-white">
+                          <X className="w-3 h-3" strokeWidth={3} />
+                        </span>
+                      )}
+                    </span>
+                  </div>
+                  <p
+                    aria-live="polite"
+                    className={`text-xs ${
+                      nameState === "taken"
+                        ? "text-red-400"
+                        : nameState === "free"
+                          ? "text-emerald-400"
+                          : "text-[hsl(var(--page-light-foreground))]/50"
+                    }`}
+                  >
+                    {nameState === "free"
+                      ? `"${trimmed}" is available`
+                      : nameState === "taken"
+                        ? `"${trimmed}" is already taken`
+                        : nameState === "checking"
+                          ? "Checking availability…"
+                          : "Readers will see this name on your work."}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 pt-1">
+                  <Button
+                    type="button"
+                    onClick={approve}
+                    disabled={!dirty || saving || nameState === "taken" || nameState === "checking"}
+                    className="flex-1 rounded-full h-9 text-xs"
+                  >
+                    {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : "Approve"}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      reset();
+                      setOpenProfile(false);
+                    }}
+                    className="flex-1 rounded-full h-9 text-xs"
+                  >
+                    Discard
+                  </Button>
+                </div>
+              </div>
             )}
-            <span className="absolute inset-0 hidden group-hover:grid place-items-center bg-[hsl(var(--page-light-foreground))]/60 text-[hsl(var(--page-light))]">
-              <Camera className="w-4 h-4" />
-            </span>
-          </button>
-          <input
-            ref={fileRef}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => onPickAvatar(e.target.files?.[0])}
-          />
+          </div>
 
           <button
             type="button"
