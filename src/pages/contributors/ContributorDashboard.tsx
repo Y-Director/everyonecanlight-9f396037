@@ -77,7 +77,7 @@ const ContributorDashboard = () => {
         notifications={notifications}
         unreadCount={unreadCount}
         onMarkAllRead={markAllRead}
-        onProfileUpdated={(avatar_url) => setProfile((p) => (p ? { ...p, avatar_url } : p))}
+        onProfileUpdated={(patch) => setProfile((p) => (p ? { ...p, ...patch } : p))}
       />
 
       <main className="max-w-[1200px] mx-auto px-5 md:px-8 py-10 md:py-14">
