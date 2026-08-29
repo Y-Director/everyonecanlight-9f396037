@@ -202,3 +202,28 @@ All colors MUST be HSL.
   .starlight-eyes,
   .group:hover .group-hover\:starlight-dance { animation: none; }
 }
+
+/* Slow ambient drift for the contributor welcome-screen avatars */
+@keyframes drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(18px, -22px, 0) rotate(3deg); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(-22px, 18px, 0) rotate(-3deg); }
+}
+@keyframes drift-c {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(20px, 20px, 0) rotate(2deg); }
+}
+@keyframes drift-d {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(-18px, -20px, 0) rotate(-2deg); }
+}
+.drift-a { animation: drift-a 22s ease-in-out infinite; }
+.drift-b { animation: drift-b 27s ease-in-out infinite; }
+.drift-c { animation: drift-c 31s ease-in-out infinite; }
+.drift-d { animation: drift-d 25s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .drift-a, .drift-b, .drift-c, .drift-d { animation: none; }
+}

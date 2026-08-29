@@ -12,6 +12,7 @@ import {
   UserCog,
   Users,
   Contact,
+  FileText,
   Zap,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -23,6 +24,7 @@ import AdminsSection from "@/components/admin/AdminsSection";
 import TeamSection from "@/components/admin/TeamSection";
 import InventorySection from "@/components/admin/InventorySection";
 import NotificationsSection from "@/components/admin/NotificationsSection";
+import ContributorContentSection from "@/components/admin/ContributorContentSection";
 
 type Account = {
   email: string;
@@ -39,10 +41,12 @@ type TabKey =
   | "operators"
   | "admins"
   | "inventory"
-  | "notifications";
+  | "notifications"
+  | "contributors";
 
 const TABS: { key: TabKey; label: string; icon: typeof Package }[] = [
   { key: "admins", label: "Admins", icon: UserCog },
+  { key: "contributors", label: "Contributor Content", icon: FileText },
   { key: "courses", label: "Courses", icon: GraduationCap },
   { key: "inventory", label: "Inventory", icon: Boxes },
   { key: "operators", label: "Lighting Operators", icon: Zap },
@@ -184,6 +188,7 @@ const AdminRentals = () => {
         {tab === "operators" && <TeamSection view="operators" />}
         {tab === "inventory" && <InventorySection />}
         {tab === "notifications" && <NotificationsSection />}
+        {tab === "contributors" && <ContributorContentSection />}
         {tab === "admins" && account.is_super && <AdminsSection />}
       </div>
     </main>
