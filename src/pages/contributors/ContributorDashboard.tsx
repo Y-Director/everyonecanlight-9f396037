@@ -185,6 +185,15 @@ const ContributorDashboard = () => {
                     <Eye className="w-3.5 h-3.5" />
                     {p.view_count}
                   </span>
+                  <button
+                    type="button"
+                    onClick={() => setPendingDelete(p)}
+                    aria-label={`Delete ${p.title}`}
+                    title="Delete"
+                    className="p-1.5 rounded-md text-[hsl(var(--page-light-foreground))]/50 hover:text-[hsl(var(--destructive))] hover:bg-[hsl(var(--page-light-foreground))]/5 transition"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
                 </div>
                 <h3 className="text-base font-medium leading-snug">
                   <Link to={`/contributors/editor/${p.id}`}>{p.title}</Link>
