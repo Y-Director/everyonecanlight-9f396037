@@ -218,6 +218,12 @@ const ContributorEditor = () => {
     [title, cover, tags, blocks],
   );
 
+  const saveProgress = async () => {
+    if (!post || locked) return;
+    const result = await save();
+    if (result) toast.success("Progress saved — your work is safe as a draft.");
+  };
+
   const publishForReview = async () => {
     if (!post) return;
     if (!canPublish) {
@@ -247,6 +253,15 @@ const ContributorEditor = () => {
             <span className="hidden sm:inline text-[11px] text-[hsl(var(--page-light-foreground))]/50">
               {saving ? "Saving…" : savedAt ? `Saved ${savedAt}` : STATUS_LABEL[status]}
             </span>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => void saveProgress()}
+              disabled={saving || locked}
+              className="rounded-full h-9 px-4 text-xs border-[hsl(var(--page-light-foreground))]/25 bg-transparent hover:bg-[hsl(var(--page-light-foreground))]/5"
+            >
+              {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : "Save progress"}
+            </Button>
             <Button
               type="button"
               onClick={publishForReview}

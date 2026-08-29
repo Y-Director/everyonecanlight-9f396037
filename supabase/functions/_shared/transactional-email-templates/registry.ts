@@ -5,6 +5,8 @@ import { template as paymentIssue } from './payment-issue.tsx'
 import { template as identityApproved } from './identity-approved.tsx'
 import { template as identityRejected } from './identity-rejected.tsx'
 import { template as rentalOtp } from './rental-otp.tsx'
+import { template as contributorSuspended } from './contributor-suspended.tsx'
+import { template as contributorReinstated } from './contributor-reinstated.tsx'
 
 export interface TemplateEntry {
   // deno-lint-ignore no-explicit-any
@@ -24,4 +26,6 @@ export const TEMPLATES: Record<string, TemplateEntry> = {
   'identity-approved': identityApproved,
   'identity-rejected': identityRejected,
   'rental-otp': rentalOtp,
+  'contributor-suspended': contributorSuspended,
+  'contributor-reinstated': contributorReinstated,
 }
