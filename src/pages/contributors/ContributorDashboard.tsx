@@ -220,6 +220,32 @@ const ContributorDashboard = () => {
           </div>
         )}
       </main>
+
+      <AlertDialog open={Boolean(pendingDelete)} onOpenChange={(o) => !o && setPendingDelete(null)}>
+        <AlertDialogContent className="contributor-shell bg-[hsl(var(--page-light))] text-[hsl(var(--page-light-foreground))] border-[hsl(var(--page-light-foreground))]/15">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete “{pendingDelete?.title}”?</AlertDialogTitle>
+            <AlertDialogDescription>
+              {pendingDelete?.status === "published"
+                ? "This is live on Everyone Can Light. Deleting it removes the article from the live page for good, along with its view count. This can't be undone."
+                : "All your progress in this draft — text, images and tags — will be permanently lost. This can't be undone."}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={deleting}>Keep it</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={(e) => {
+                e.preventDefault();
+                void confirmDelete();
+              }}
+              disabled={deleting}
+              className="bg-[hsl(var(--destructive))] text-[hsl(var(--destructive-foreground))] hover:bg-[hsl(var(--destructive))]/90"
+            >
+              {deleting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Delete permanently"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
