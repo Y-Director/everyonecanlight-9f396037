@@ -1,6 +1,8 @@
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
-import { X, ArrowLeftRight, ArrowLeft, ChevronDown } from "lucide-react";
+import { X, ArrowLeftRight, ArrowLeft, ChevronDown, Sparkles } from "lucide-react";
 import logo from "@/assets/logo.png";
+import starlightIcon from "@/assets/starlight.png.asset.json";
+import { compareVerdict } from "@/lib/compareVerdict";
 import SiteNav from "@/components/SiteNav";
 import { equipment, getEquipmentBySlug, type Equipment } from "@/data/equipment";
 import Seo from "@/components/Seo";
