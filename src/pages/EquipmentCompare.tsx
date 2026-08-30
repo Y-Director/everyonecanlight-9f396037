@@ -156,7 +156,7 @@ const EquipmentCompare = () => {
             <section className="mt-4 sm:mt-6">
               <h2 className="text-lg sm:text-xl font-medium tracking-tight">The final call</h2>
               <p className="mt-1 text-sm text-foreground/60">
-                A plain-language read on which one belongs in your kit.
+                A plain language read on which one belongs in your kit.
               </p>
               <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
                 {columns.map(({ slot, item }) => (
