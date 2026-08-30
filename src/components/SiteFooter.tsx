@@ -43,9 +43,7 @@ const SiteFooter = () => (
           <ul className="mt-4 space-y-2.5">
             <li><Link to="/privacy" className={linkClass}>Privacy &amp; Data Protection</Link></li>
             <li>
-              <a href={TERMS_PDF_URL} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                Rental Terms
-              </a>
+              <Link to="/rental-terms" className={linkClass}>Rental Terms</Link>
             </li>
           </ul>
         </div>
