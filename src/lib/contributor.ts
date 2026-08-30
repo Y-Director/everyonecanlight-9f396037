@@ -151,15 +151,12 @@ export const NAME_MIN = 3;
 export const checkDisplayNameAvailable = async (name: string, excludeUserId?: string) => {
   const trimmed = name.trim();
   if (trimmed.length < NAME_MIN) return null;
-  let query = supabase
-    .from("contributor_profiles")
-    .select("user_id")
-    .ilike("display_name", trimmed)
-    .limit(1);
-  if (excludeUserId) query = query.neq("user_id", excludeUserId);
-  const { data, error } = await query;
+  const { data, error } = await supabase.rpc("contributor_display_name_available", {
+    _name: trimmed,
+    _exclude_user_id: excludeUserId ?? null,
+  });
   if (error) return null;
-  return (data ?? []).length === 0;
+  return data === true;
 };
 
 export const updateContributorProfile = async (
