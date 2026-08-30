@@ -229,6 +229,7 @@ const RentEquipment = () => {
     [cartIds, cart]
   );
   const suggestions = useMemo(() => getSuggestions(cartIds), [cartIds]);
+  const [privacyOpen, setPrivacyOpen] = useState(false);
 
   const days = useMemo(() => {
     if (dates && dates.length > 0) return dates.length;
