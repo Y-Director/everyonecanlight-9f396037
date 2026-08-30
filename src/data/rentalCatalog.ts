@@ -376,12 +376,32 @@ const SUGGEST_UNDER_600 = [
   "C-Stand Heavy Duty 10.5 ft with Arm",
   "15 ft Extension Cable",
   "V-Mount Battery",
+  "Parabolic Softbox 120cm",
 ].map(norm);
 
 const SUGGEST_OVER_600 = [
   "Combo Stand / Turtle Base Stand",
   "15 ft Extension Cable",
+  "Parabolic Softbox 150cm",
 ].map(norm);
+
+/** Starlight's short, friendly reason for each add-on she suggests. */
+const SUGGESTION_REASONS: Record<string, string> = {
+  [norm("C-Stand Heavy Duty 10.5 ft with Arm")]:
+    "Your light needs somewhere safe to live. This one holds it steady and gets it up high.",
+  [norm("Combo Stand / Turtle Base Stand")]:
+    "A heavier light deserves a heavier stand. This one takes the weight without wobbling.",
+  [norm("15 ft Extension Cable")]:
+    "Wall sockets are never where you want them. This gives you room to place the light properly.",
+  [norm("V-Mount Battery")]: "For when you shoot away from power, or outdoors.",
+  [norm("Parabolic Softbox 120cm")]:
+    "A COB light is bare and hard on skin. Soften it and faces instantly look kinder.",
+  [norm("Parabolic Softbox 150cm")]:
+    "Bigger light, bigger softbox. Beautiful soft wrap for portraits and interviews.",
+};
+
+export const getSuggestionReason = (id: string) =>
+  SUGGESTION_REASONS[id] ?? "A little extra that makes the setup easier on set.";
 
 /**
  * Suggested add-ons based on the lights already in the gear list.

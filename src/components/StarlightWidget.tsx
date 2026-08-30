@@ -111,6 +111,18 @@ const StarlightWidget = () => {
     ask(message.text ?? input);
   };
 
+  /** Lets any page open Starlight, optionally with a question already asked. */
+  useEffect(() => {
+    const onExternalAsk = (e: Event) => {
+      const text = (e as CustomEvent<{ text?: string }>).detail?.text;
+      setOpen(true);
+      if (text) setTimeout(() => ask(text), 150);
+    };
+    window.addEventListener("starlight:ask", onExternalAsk);
+    return () => window.removeEventListener("starlight:ask", onExternalAsk);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [busy, pathname]);
+
   const MASCOT = 64;
 
   const startDrag = (e: React.PointerEvent<HTMLButtonElement>) => {

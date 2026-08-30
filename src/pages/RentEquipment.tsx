@@ -1,3 +1,4 @@
+import SiteFooter from "@/components/SiteFooter";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { format } from "date-fns";
 import {
@@ -17,6 +18,8 @@ import {
   Upload,
   Trash2,
   X,
+  ShieldCheck,
+  ChevronDown,
 } from "lucide-react";
 import { matchesSearch } from "@/lib/searchMatch";
 import { toast } from "sonner";
@@ -44,10 +47,13 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import Seo from "@/components/Seo";
+import starlightIcon from "@/assets/starlight.png.asset.json";
+import PrivacyPolicyDialog from "@/components/PrivacyPolicyDialog";
 import {
   RENTAL_CATEGORIES,
   formatNaira,
   getRentalItem,
+  getSuggestionReason,
   getSuggestions,
   rentalCatalog,
   type RentalCategory,
@@ -226,6 +232,7 @@ const RentEquipment = () => {
     [cartIds, cart]
   );
   const suggestions = useMemo(() => getSuggestions(cartIds), [cartIds]);
+  const [privacyOpen, setPrivacyOpen] = useState(false);
 
   const days = useMemo(() => {
     if (dates && dates.length > 0) return dates.length;
@@ -744,34 +751,64 @@ const RentEquipment = () => {
 
           {suggestions.length > 0 && (
             <section className="mt-4 rounded-xl border border-border bg-[hsl(var(--surface))] p-4">
-              <div className="flex items-center gap-2 text-sm">
-                <Sparkles className="w-4 h-4 text-primary" />
-                <span className="font-medium">Suggested with your lights</span>
-                <span className="hidden sm:inline text-foreground/50">
-                  · support, power and cable you'll likely need on set
-                </span>
+              <div className="flex items-start gap-3">
+                <img
+                  src={starlightIcon.url}
+                  alt="Starlight, your lighting companion"
+                  className="h-9 w-9 shrink-0 object-contain"
+                />
+                <div className="min-w-0">
+                  <p className="text-sm">
+                    <span className="font-medium">Starlight suggests</span>
+                    <span className="text-foreground/60">
+                      {" "}· “I looked at the lights in your gear list — here's what I'd bring along
+                      so nothing slows you down on set.”
+                    </span>
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      window.dispatchEvent(
+                        new CustomEvent("starlight:ask", {
+                          detail: {
+                            text: "Based on the lights in my gear list, what else should I rent and why?",
+                          },
+                        })
+                      )
+                    }
+                    className="mt-1 text-xs text-primary underline decoration-primary/60 underline-offset-4 hover:decoration-primary"
+                  >
+                    Not sure what you need? Ask Starlight
+                  </button>
+                </div>
               </div>
               <div className="mt-3 flex gap-3 overflow-x-auto pb-1">
                 {suggestions.map((s) => (
                   <div
                     key={s.id}
-                    className="flex w-[280px] shrink-0 items-center gap-3 rounded-lg border border-border bg-background p-3"
+                    className="flex w-[300px] shrink-0 flex-col gap-2 rounded-lg border border-border bg-background p-3"
                   >
-                    <div className="w-12 h-12 rounded bg-white flex items-center justify-center p-1 shrink-0">
-                      <img src={s.image} alt={s.name} className="w-full h-full object-contain" />
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded bg-white flex items-center justify-center p-1 shrink-0">
+                        <img src={s.image} alt={s.name} className="w-full h-full object-contain" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm truncate">{s.name}</p>
+                        <p className="text-xs text-foreground/55">{formatNaira(s.price)} / day</p>
+                      </div>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="rounded-full"
+                        onClick={() => setQty(s.id, (cart[s.id] ?? 0) + 1, s.name)}
+                      >
+                        Add
+                      </Button>
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm truncate">{s.name}</p>
-                      <p className="text-xs text-foreground/55">{formatNaira(s.price)} / day</p>
-                    </div>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="rounded-full"
-                      onClick={() => setQty(s.id, (cart[s.id] ?? 0) + 1, s.name)}
-                    >
-                      Add
-                    </Button>
+                    <p className="flex items-start gap-1.5 text-xs leading-relaxed text-foreground/60">
+                      <Sparkles className="mt-0.5 h-3 w-3 shrink-0 text-primary" />
+                      {getSuggestionReason(s.id)}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -825,19 +862,7 @@ const RentEquipment = () => {
           )}
         </main>
 
-        <footer className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 py-6 px-8 border-t border-border text-sm bg-[hsl(var(--surface))] text-foreground mt-12">
-          <div className="flex items-center gap-3 text-foreground/70">
-            <img src={logo} alt="EveryoneCanLight logo" className="w-6 h-6 rounded object-contain" />
-            © 2026 Everyone Can Light Technologies
-          </div>
-          <div className="flex items-center gap-6">
-            <span className="text-foreground/50">Social</span>
-            <a href="https://www.instagram.com/everyonecanlight" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Instagram</a>
-            <a href="https://www.youtube.com/@everyonecanlight" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">YouTube</a>
-            <a href="https://www.tiktok.com/@everyonecanlight" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">TikTok</a>
-            <a href="https://www.linkedin.com/company/everyone-can-light/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">LinkedIn</a>
-          </div>
-        </footer>
+        <SiteFooter />
       </div>
 
       {amending && booking && !sheetOpen && (
@@ -1233,6 +1258,29 @@ const RentEquipment = () => {
                   <p className="text-xs text-foreground/65">
                     Fields marked <span className="text-destructive">*</span> are required.
                   </p>
+
+                  <div className="rounded-lg border border-border bg-muted/30 p-3">
+                    <details className="group">
+                      <summary className="flex cursor-pointer list-none items-center gap-2 text-xs font-medium text-foreground">
+                        <ShieldCheck className="h-3.5 w-3.5 text-primary" />
+                        Why do we need this information?
+                        <ChevronDown className="ml-auto h-3.5 w-3.5 text-foreground/50 transition-transform group-open:rotate-180" />
+                      </summary>
+                      <p className="mt-2 text-xs leading-relaxed text-foreground/70">
+                        We verify first-time renters to protect you, our equipment owners, and the
+                        equipment you rent. Your information is handled securely and used only for
+                        verification and rental-related purposes.
+                      </p>
+                    </details>
+                    <button
+                      type="button"
+                      onClick={() => setPrivacyOpen(true)}
+                      className="mt-3 text-xs text-foreground/60 underline decoration-foreground/30 underline-offset-4 transition-colors hover:text-foreground hover:decoration-foreground/60"
+                    >
+                      View Privacy &amp; Data Protection Policy
+                    </button>
+                  </div>
+                  <PrivacyPolicyDialog open={privacyOpen} onOpenChange={setPrivacyOpen} />
                   <div className="grid gap-4">
                     <div>
                       <EmailVerifyField

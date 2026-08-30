@@ -19,6 +19,7 @@ import AdminRentals from "./pages/admin/AdminRentals.tsx";
 import ContributorAuth from "./pages/contributors/ContributorAuth.tsx";
 import ContributorDashboard from "./pages/contributors/ContributorDashboard.tsx";
 import ContributorEditor from "./pages/contributors/ContributorEditor.tsx";
+import Privacy from "./pages/Privacy.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import Unsubscribe from "./pages/Unsubscribe.tsx";
 import NotFound from "./pages/NotFound.tsx";
@@ -82,6 +83,7 @@ const App = () => (
           <Route path="/contributors/editor/:id" element={<ContributorEditor />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/unsubscribe" element={<Unsubscribe />} />
+          <Route path="/privacy" element={<Privacy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,6 +1,9 @@
+import SiteFooter from "@/components/SiteFooter";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
-import { X, ArrowLeftRight, ArrowLeft, ChevronDown } from "lucide-react";
+import { X, ArrowLeftRight, ArrowLeft, ChevronDown, Sparkles } from "lucide-react";
 import logo from "@/assets/logo.png";
+import starlightIcon from "@/assets/starlight.png.asset.json";
+import { compareVerdict } from "@/lib/compareVerdict";
 import SiteNav from "@/components/SiteNav";
 import { equipment, getEquipmentBySlug, type Equipment } from "@/data/equipment";
 import Seo from "@/components/Seo";
@@ -148,21 +151,74 @@ const EquipmentCompare = () => {
             </div>
           )}
 
+          {/* Final verdict */}
+          {(a || b) && (
+            <section className="mt-4 sm:mt-6">
+              <h2 className="text-lg sm:text-xl font-medium tracking-tight">The final call</h2>
+              <p className="mt-1 text-sm text-foreground/60">
+                A plain-language read on which one belongs in your kit.
+              </p>
+              <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
+                {columns.map(({ slot, item }) => (
+                  <div
+                    key={slot}
+                    className="rounded-sm border border-border bg-[hsl(var(--surface))] p-4 sm:p-6"
+                  >
+                    {item ? (
+                      <>
+                        <p className="text-sm sm:text-base font-medium">
+                          Choose the {item.name} if:
+                        </p>
+                        <p className="mt-2 text-sm leading-relaxed text-foreground/70">
+                          {compareVerdict(item, slot === "a" ? b : a)}
+                        </p>
+                      </>
+                    ) : (
+                      <p className="text-sm text-foreground/50">
+                        Select a second item to see the verdict.
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-3 rounded-sm border border-primary/30 bg-primary/5 p-4">
+                <img
+                  src={starlightIcon.url}
+                  alt="Starlight, your lighting companion"
+                  className="h-10 w-10 shrink-0 object-contain"
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium">Still not sure? Ask Starlight</p>
+                  <p className="text-xs text-foreground/60">
+                    Tell her what you're shooting and she'll pick one for you.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() =>
+                    window.dispatchEvent(
+                      new CustomEvent("starlight:ask", {
+                        detail: {
+                          text:
+                            a && b
+                              ? `I'm comparing the ${a.name} and the ${b.name}. Which one should I choose and why?`
+                              : "Help me choose between two lights — what should I be comparing?",
+                        },
+                      })
+                    )
+                  }
+                  className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition"
+                >
+                  <Sparkles className="h-4 w-4" /> Ask Starlight
+                </button>
+              </div>
+            </section>
+          )}
+
         </main>
 
-        <footer className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 py-6 px-8 border-t border-border text-sm bg-[hsl(var(--surface))] text-foreground mt-16">
-          <div className="flex items-center gap-3 text-foreground/70">
-            <img src={logo} alt="EveryoneCanLight logo" className="w-6 h-6 rounded object-contain" />
-            © 2026 Everyone Can Light Technologies
-          </div>
-          <div className="flex items-center gap-6">
-            <span className="text-foreground/50">Social</span>
-            <a href="https://www.instagram.com/everyonecanlight" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Instagram</a>
-            <a href="https://www.youtube.com/@everyonecanlight" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">YouTube</a>
-            <a href="https://www.tiktok.com/@everyonecanlight" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">TikTok</a>
-            <a href="https://www.linkedin.com/company/everyone-can-light/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">LinkedIn</a>
-          </div>
-        </footer>
+        <SiteFooter />
       </div>
     </div>
   );
