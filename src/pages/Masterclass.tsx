@@ -228,9 +228,17 @@ const Masterclass = () => {
                     (Creator Residency)
                   </span>
                 </h1>
-                <p className="mt-5 text-sm md:text-base text-foreground/75 max-w-lg">
-                  A hands-on masterclass with Adeyinka Ibidapo for creators
-                  ready to master lighting for video, photo and studio work.
+                <p className="mt-5 text-sm md:text-base text-foreground/75 max-w-lg whitespace-pre-line">
+                  {`A hands-on masterclass with Adeyinka Ibidapo for creators ready to master lighting for video, photo and studio work.
+
+
+
+
+NOV 19–21, 2026 · LAGOS
+
+3 DAYS · 20 CREATORS · HANDS-ON
+
+₦250,000 — Full Residency`}
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -239,7 +247,7 @@ const Masterclass = () => {
                     onClick={() => setRegisterOpen(true)}
                     className="inline-flex items-center rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-6 py-3 text-sm font-medium hover:opacity-90 transition"
                   >
-                    Register
+                    Reserve Your Spot
                   </button>
                   <button
                     type="button"
