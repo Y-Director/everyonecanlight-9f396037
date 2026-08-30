@@ -40,7 +40,7 @@ const RentalTermsDialog = ({ open, onOpenChange, onAccept, accepted }: Props) =>
         <a
           href={TERMS_PDF_URL}
           download="ECL-Rental-Terms-and-Conditions.pdf"
-          className="inline-flex items-center gap-2 text-sm font-medium text-primary underline decoration-primary underline-offset-4"
+          className="inline-flex items-center gap-2 text-sm font-medium text-foreground/50 underline decoration-foreground/30 underline-offset-4 transition-colors hover:text-foreground/70"
         >
           <Download className="h-4 w-4" /> Download PDF
         </a>
