@@ -1,4 +1,6 @@
 import godoxVl150Asset from "@/assets/equipment/godox-vl-150.jpg.asset.json";
+import ls1200xAsset from "@/assets/equipment/aputure-ls-1200x.jpg.asset.json";
+import blackWrapCinefoilAsset from "@/assets/equipment/black-wrap-cinefoil.jpg.asset.json";
 import reflectorDishAsset from "@/assets/equipment/reflector-dish.png.asset.json";
 import colbor220r from "@/assets/lights/colbor-cl220r.png";
 import amaran200xs from "@/assets/lights/amaran-200xs.png";
