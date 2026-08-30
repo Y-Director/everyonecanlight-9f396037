@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
-import { TERMS_PDF_URL } from "@/lib/rentalTerms";
 
 const linkClass = "text-foreground/60 hover:text-foreground transition-colors";
 
