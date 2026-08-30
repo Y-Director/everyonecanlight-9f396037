@@ -311,7 +311,7 @@ const ContributorAuth = () => {
                       <button
                         type="button"
                         onClick={() => setMode("forgot")}
-                        className="text-xs underline underline-offset-4 decoration-2 decoration-[hsl(var(--cta))]"
+                        className="text-xs underline underline-offset-4 decoration-[0.5px] decoration-[hsl(var(--cta))]"
                       >
                         Forgot password?
                       </button>
@@ -348,7 +348,7 @@ const ContributorAuth = () => {
             <button
               type="button"
               onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-              className="mt-6 w-full text-center text-sm underline underline-offset-4 decoration-2 decoration-[hsl(var(--cta))]"
+              className="mt-6 w-full text-center text-sm underline underline-offset-4 decoration-[0.5px] decoration-[hsl(var(--cta))]"
             >
               {mode === "signin" ? "New here? Create an account" : "I already have an account"}
             </button>
