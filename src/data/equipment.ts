@@ -51,6 +51,8 @@ import { catalogEntries } from "./equipmentCatalog";
 // Real product images supplied for catalogue entries, keyed by slug.
 const catalogImages: Record<string, string> = {
   "aputure-accent-b7c": accentB7cAsset.url,
+  "aputure-ls-1200x": ls1200xAsset.url,
+  "black-wrap-cinefoil": blackWrapCinefoilAsset.url,
   "aputure-storm-1000c": storm1000cAsset.url,
   "aputure-storm-80c": storm80cAsset.url,
   "arri-m18-hmi": arriM18Asset.url,
