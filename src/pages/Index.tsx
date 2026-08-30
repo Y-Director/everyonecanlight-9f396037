@@ -167,7 +167,7 @@ const Index = () => {
             <span className="hidden sm:inline">
               Everything You Need
               <br />
-              for <span className="text-[hsl(var(--accent-lime))]">Lighting</span>
+              For <span className="text-[hsl(var(--accent-lime))]">Lighting</span>
             </span>
           </h1>
           <p className="mt-4 sm:mt-6 text-sm sm:text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
