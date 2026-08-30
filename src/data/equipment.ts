@@ -1,4 +1,5 @@
-import godoxVl150 from "@/assets/lights/godox-vl150.png";
+import godoxVl150Asset from "@/assets/equipment/godox-vl-150.jpg.asset.json";
+import reflectorDishAsset from "@/assets/equipment/reflector-dish.png.asset.json";
 import colbor220r from "@/assets/lights/colbor-cl220r.png";
 import amaran200xs from "@/assets/lights/amaran-200xs.png";
 import babyPlateAsset from "@/assets/equipment/baby-plate.webp.asset.json";
@@ -164,7 +165,7 @@ const namedEntries: NamedEntry[] = [
     bestUseCase: "“Key Light”, “Interview Light”",
     productDetails:
       "Tuned for portraits and interviews at 150W daylight. Quiet operation, consistent colour, and Bowens mount compatibility make it ideal for sit-down talking heads and brand interviews.",
-    brandedImage: godoxVl150,
+    brandedImage: godoxVl150Asset.url,
   },
   {
     slug: "amaran-f21c",
@@ -214,6 +215,7 @@ const namedEntries: NamedEntry[] = [
     bestUseCase: "“Focused Beam”, “Hard Light”",
     productDetails:
       "A Bowens-mount reflector dish that focuses your COB's output into a tighter, more directional beam. Great for hard-light looks and longer throw distances.",
+    brandedImage: reflectorDishAsset.url,
   },
   {
     slug: "amaran-150c",

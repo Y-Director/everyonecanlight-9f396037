@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
-import { TERMS_PDF_URL } from "@/lib/rentalTerms";
 
 const linkClass = "text-foreground/60 hover:text-foreground transition-colors";
 
@@ -43,9 +42,7 @@ const SiteFooter = () => (
           <ul className="mt-4 space-y-2.5">
             <li><Link to="/privacy" className={linkClass}>Privacy &amp; Data Protection</Link></li>
             <li>
-              <a href={TERMS_PDF_URL} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                Rental Terms
-              </a>
+              <Link to="/rental-terms" className={linkClass}>Rental Terms</Link>
             </li>
           </ul>
         </div>

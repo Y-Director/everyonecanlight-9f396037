@@ -19,6 +19,7 @@ import AdminRentals from "./pages/admin/AdminRentals.tsx";
 import ContributorAuth from "./pages/contributors/ContributorAuth.tsx";
 import ContributorDashboard from "./pages/contributors/ContributorDashboard.tsx";
 import ContributorEditor from "./pages/contributors/ContributorEditor.tsx";
+import RentalTerms from "./pages/RentalTerms";
 import Privacy from "./pages/Privacy.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import Unsubscribe from "./pages/Unsubscribe.tsx";
@@ -84,6 +85,7 @@ const App = () => (
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/unsubscribe" element={<Unsubscribe />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/rental-terms" element={<RentalTerms />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
