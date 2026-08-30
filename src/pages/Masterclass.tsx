@@ -268,8 +268,9 @@ NOV 19–21, 2026 · LAGOS
                 <p className="text-xs uppercase tracking-[0.2em] text-foreground/50">
                   Testimonials
                 </p>
-                <h2 className="mt-2 text-3xl md:text-4xl font-medium tracking-tight">
-                  Voices from past Masterclasses
+                <h2 className="mt-2 text-3xl md:text-4xl font-medium tracking-tight whitespace-pre-line">
+                  {`Voices from past Masterclasses
+`}
                 </h2>
               </div>
               <div className="flex items-center gap-2">
