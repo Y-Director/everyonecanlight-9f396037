@@ -272,6 +272,7 @@ NOV 19–21, 2026 · LAGOS
                   {`Voices from past Masterclasses
 `}
                 </h2>
+                <p className="mt-1 text-sm text-foreground/60">11+ creators trained</p>
               </div>
               <div className="flex items-center gap-2">
                 <button
