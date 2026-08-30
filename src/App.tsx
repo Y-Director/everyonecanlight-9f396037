@@ -19,6 +19,7 @@ import AdminRentals from "./pages/admin/AdminRentals.tsx";
 import ContributorAuth from "./pages/contributors/ContributorAuth.tsx";
 import ContributorDashboard from "./pages/contributors/ContributorDashboard.tsx";
 import ContributorEditor from "./pages/contributors/ContributorEditor.tsx";
+import Privacy from "./pages/Privacy.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import Unsubscribe from "./pages/Unsubscribe.tsx";
 import NotFound from "./pages/NotFound.tsx";
