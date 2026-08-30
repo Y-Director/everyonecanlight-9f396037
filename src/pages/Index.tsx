@@ -41,7 +41,7 @@ const bentoCards = [
     to: "/learn",
   },
   {
-    header: "Discover",
+    header: "Explore",
     sub: "Know your gear.",
     body: "Compare specifications and understand which lights work for different productions.",
     cta: "Explore Equipment",
@@ -165,7 +165,7 @@ const Index = () => {
               Needs for <span className="text-[hsl(var(--accent-lime))]">Lighting</span>
             </span>
             <span className="hidden sm:inline">
-              Everything a Creator Needs
+              Everything You Need
               <br />
               for <span className="text-[hsl(var(--accent-lime))]">Lighting</span>
             </span>
