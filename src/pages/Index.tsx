@@ -142,7 +142,7 @@ const Index = () => {
 
       <div className="relative z-10 flex flex-col min-h-screen">
         <Seo
-          title="Everyone Can Light — Learn Lighting, Rent Gear"
+          title="Learn Lighting. Find Gear. Create Better - Everyone Can Light"
           description="Learn lighting with practical guides, compare 250+ lights in our equipment database, find control apps and rent professional lighting gear in Lagos."
           path="/"
           jsonLd={{
