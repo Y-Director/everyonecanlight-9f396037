@@ -253,6 +253,37 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Masterclass */}
+        <section className="px-8 max-w-[1400px] mx-auto w-full py-16">
+          <div className="relative overflow-hidden rounded-2xl border border-foreground/10 bg-[hsl(var(--surface))] grid lg:grid-cols-[1fr_1.1fr] items-center gap-8 p-8 sm:p-10">
+            <div className="space-y-5">
+              <p className="text-sm uppercase tracking-[0.18em] text-[hsl(var(--accent-lime))]">
+                Shift The Light Masterclass
+              </p>
+              <h2 className="text-3xl sm:text-4xl font-medium tracking-tight leading-[1.15]">
+                Learn lighting by{" "}
+                <span className="text-[hsl(var(--accent-lime))]">actually lighting</span>
+              </h2>
+              <p className="text-sm text-foreground/60 leading-relaxed max-w-md">
+                Join us in Lagos for this year's Shift The Light Masterclass: an immersive, hands-on
+                lighting experience built around real production scenarios.
+              </p>
+              <Link
+                to="/masterclass"
+                className="inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
+              >
+                Reserve Your Spot
+              </Link>
+            </div>
+            <img
+              src={masterclassSection.url}
+              alt="Masterclass subject lit on a green backdrop beside the behind-the-scenes studio setup"
+              className="w-full h-auto object-contain"
+              loading="lazy"
+            />
+          </div>
+        </section>
+
         {/* One single light */}
         <section className="px-8 max-w-[1400px] mx-auto w-full py-16">
           <div className="max-w-2xl">
