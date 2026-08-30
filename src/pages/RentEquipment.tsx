@@ -1252,7 +1252,7 @@ const RentEquipment = () => {
               {!amending && step === "kyc" && (
                 <>
                   <p className="text-sm text-foreground/75">
-                    Start with your email address — we'll send you a 6-digit code to confirm it,
+                    Start with your email address, we'll send you a 6-digit code to confirm it,
                     then only ask for what's still missing.
                   </p>
                   <p className="text-xs text-foreground/65">
