@@ -17,6 +17,8 @@ import {
   Upload,
   Trash2,
   X,
+  ShieldCheck,
+  ChevronDown,
 } from "lucide-react";
 import { matchesSearch } from "@/lib/searchMatch";
 import { toast } from "sonner";
