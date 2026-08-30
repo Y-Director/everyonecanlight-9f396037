@@ -547,8 +547,7 @@ const RentEquipment = () => {
             <div className="max-w-2xl">
               <h1 className="text-3xl md:text-4xl font-semibold">Rent Equipment</h1>
               <p className="mt-3 text-foreground/60 text-sm md:text-base">
-                The ECL Light Bank. Build your gear list, pick your dates, and we'll send it out
-                with a lighting operator.
+                Build your gear list, choose your dates, and get the lighting equipment you need for your production.
               </p>
             </div>
           </header>
