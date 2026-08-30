@@ -96,7 +96,7 @@ const Learn = () => {
               to="/articles"
               className="mt-7 inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
             >
-              Explore Free Guides
+              Start with Free Guides
             </Link>
           </section>
 
@@ -131,7 +131,7 @@ const Learn = () => {
 
           {/* What you will learn */}
           <section className="mt-20">
-            <h2 className="text-center text-4xl md:text-5xl font-medium">What You Will Learn</h2>
+            <h2 className="text-center text-4xl md:text-5xl font-medium">Explore what you can learn.</h2>
 
             <ul className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6">
               {items.map((item, i) => (
@@ -151,12 +151,12 @@ const Learn = () => {
 
           {/* Coming soon CTA */}
           <section className="mt-20 flex items-center justify-center gap-6">
-            <p className="text-xl md:text-2xl font-medium">Coming Soon To You</p>
+            <p className="text-xl md:text-2xl font-medium">Courses are coming soon.</p>
             <Link
               to="/#notify"
               className="rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-6 py-3 text-sm font-medium hover:opacity-90 transition"
             >
-              Notify me
+              Join the Waitlist
             </Link>
           </section>
         </main>
