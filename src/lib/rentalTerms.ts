@@ -20,7 +20,7 @@ export const RENTAL_TERMS: TermsSection[] = [
   {
     title: "Lighting Operators",
     body:
-      "Lighting Operators follow the equipment to set to ensure its safety. They have the right to disagree with the Renter where the safety of the lighting equipment is not guaranteed on set. Lighting Operators do not work as gaffers or grips on your set — they only monitor the equipment. For gaffer services, reach out to us at hello@everyonecanlight.co.",
+      "Lighting Operators follow the equipment to set to ensure its safety. They have the right to disagree with the Renter where the safety of the lighting equipment is not guaranteed on set. Lighting Operators do not work as gaffers or grips on your set. They only monitor the equipment. For gaffer services, reach out to us at hello@everyonecanlight.co",
   },
   {
     title: "Refunds and swaps",
