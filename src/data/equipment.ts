@@ -1,4 +1,6 @@
 import godoxVl150Asset from "@/assets/equipment/godox-vl-150.jpg.asset.json";
+import ls1200xAsset from "@/assets/equipment/aputure-ls-1200x.jpg.asset.json";
+import blackWrapCinefoilAsset from "@/assets/equipment/black-wrap-cinefoil.jpg.asset.json";
 import reflectorDishAsset from "@/assets/equipment/reflector-dish.png.asset.json";
 import colbor220r from "@/assets/lights/colbor-cl220r.png";
 import amaran200xs from "@/assets/lights/amaran-200xs.png";
@@ -49,6 +51,8 @@ import { catalogEntries } from "./equipmentCatalog";
 // Real product images supplied for catalogue entries, keyed by slug.
 const catalogImages: Record<string, string> = {
   "aputure-accent-b7c": accentB7cAsset.url,
+  "aputure-ls-1200x": ls1200xAsset.url,
+  "black-wrap-cinefoil": blackWrapCinefoilAsset.url,
   "aputure-storm-1000c": storm1000cAsset.url,
   "aputure-storm-80c": storm80cAsset.url,
   "arri-m18-hmi": arriM18Asset.url,
