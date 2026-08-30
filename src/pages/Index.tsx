@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import masterclassBand from "@/assets/landing/masterclass-band.png.asset.json";
+import masterclassSection from "@/assets/landing/masterclass-section.png.asset.json";
 import heroStatsDesktop from "@/assets/landing/hero-stats-desktop.png.asset.json";
 import heroStatsMobile from "@/assets/landing/hero-stats-mobile.png.asset.json";
 import controlAppsIllustration from "@/assets/landing/control-apps-illustration.png.asset.json";
