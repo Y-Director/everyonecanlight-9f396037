@@ -76,7 +76,7 @@ const Index = () => {
     if (hash === "#notify") {
       const el = document.getElementById("notify");
       if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
         const input = el.querySelector("input[type=email]") as HTMLInputElement | null;
         input?.focus({ preventScroll: true });
       }
