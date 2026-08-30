@@ -744,34 +744,64 @@ const RentEquipment = () => {
 
           {suggestions.length > 0 && (
             <section className="mt-4 rounded-xl border border-border bg-[hsl(var(--surface))] p-4">
-              <div className="flex items-center gap-2 text-sm">
-                <Sparkles className="w-4 h-4 text-primary" />
-                <span className="font-medium">Suggested with your lights</span>
-                <span className="hidden sm:inline text-foreground/50">
-                  · support, power and cable you'll likely need on set
-                </span>
+              <div className="flex items-start gap-3">
+                <img
+                  src={starlightIcon.url}
+                  alt="Starlight, your lighting companion"
+                  className="h-9 w-9 shrink-0 object-contain"
+                />
+                <div className="min-w-0">
+                  <p className="text-sm">
+                    <span className="font-medium">Starlight suggests</span>
+                    <span className="text-foreground/60">
+                      {" "}· “I looked at the lights in your gear list — here's what I'd bring along
+                      so nothing slows you down on set.”
+                    </span>
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      window.dispatchEvent(
+                        new CustomEvent("starlight:ask", {
+                          detail: {
+                            text: "Based on the lights in my gear list, what else should I rent and why?",
+                          },
+                        })
+                      )
+                    }
+                    className="mt-1 text-xs text-primary underline decoration-primary/60 underline-offset-4 hover:decoration-primary"
+                  >
+                    Not sure what you need? Ask Starlight
+                  </button>
+                </div>
               </div>
               <div className="mt-3 flex gap-3 overflow-x-auto pb-1">
                 {suggestions.map((s) => (
                   <div
                     key={s.id}
-                    className="flex w-[280px] shrink-0 items-center gap-3 rounded-lg border border-border bg-background p-3"
+                    className="flex w-[300px] shrink-0 flex-col gap-2 rounded-lg border border-border bg-background p-3"
                   >
-                    <div className="w-12 h-12 rounded bg-white flex items-center justify-center p-1 shrink-0">
-                      <img src={s.image} alt={s.name} className="w-full h-full object-contain" />
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded bg-white flex items-center justify-center p-1 shrink-0">
+                        <img src={s.image} alt={s.name} className="w-full h-full object-contain" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm truncate">{s.name}</p>
+                        <p className="text-xs text-foreground/55">{formatNaira(s.price)} / day</p>
+                      </div>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="rounded-full"
+                        onClick={() => setQty(s.id, (cart[s.id] ?? 0) + 1, s.name)}
+                      >
+                        Add
+                      </Button>
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm truncate">{s.name}</p>
-                      <p className="text-xs text-foreground/55">{formatNaira(s.price)} / day</p>
-                    </div>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="rounded-full"
-                      onClick={() => setQty(s.id, (cart[s.id] ?? 0) + 1, s.name)}
-                    >
-                      Add
-                    </Button>
+                    <p className="flex items-start gap-1.5 text-xs leading-relaxed text-foreground/60">
+                      <Sparkles className="mt-0.5 h-3 w-3 shrink-0 text-primary" />
+                      {getSuggestionReason(s.id)}
+                    </p>
                   </div>
                 ))}
               </div>
