@@ -1021,6 +1021,10 @@ export type Database = {
       }
     }
     Functions: {
+      contributor_display_name_available: {
+        Args: { _exclude_user_id?: string; _name: string }
+        Returns: boolean
+      }
       contributor_is_active: { Args: { _user_id: string }; Returns: boolean }
       delete_email: {
         Args: { message_id: number; queue_name: string }
