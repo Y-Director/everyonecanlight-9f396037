@@ -44,10 +44,13 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import Seo from "@/components/Seo";
+import starlightIcon from "@/assets/starlight.png.asset.json";
+import PrivacyPolicyDialog from "@/components/PrivacyPolicyDialog";
 import {
   RENTAL_CATEGORIES,
   formatNaira,
   getRentalItem,
+  getSuggestionReason,
   getSuggestions,
   rentalCatalog,
   type RentalCategory,
