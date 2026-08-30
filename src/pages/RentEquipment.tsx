@@ -1267,6 +1267,29 @@ const RentEquipment = () => {
                   <p className="text-xs text-foreground/65">
                     Fields marked <span className="text-destructive">*</span> are required.
                   </p>
+
+                  <div className="rounded-lg border border-border bg-muted/30 p-3">
+                    <details className="group">
+                      <summary className="flex cursor-pointer list-none items-center gap-2 text-xs font-medium text-foreground">
+                        <ShieldCheck className="h-3.5 w-3.5 text-primary" />
+                        Why do we need this information?
+                        <ChevronDown className="ml-auto h-3.5 w-3.5 text-foreground/50 transition-transform group-open:rotate-180" />
+                      </summary>
+                      <p className="mt-2 text-xs leading-relaxed text-foreground/70">
+                        We verify first-time renters to protect you, our equipment owners, and the
+                        equipment you rent. Your information is handled securely and used only for
+                        verification and rental-related purposes.
+                      </p>
+                    </details>
+                    <button
+                      type="button"
+                      onClick={() => setPrivacyOpen(true)}
+                      className="mt-3 text-xs text-foreground/60 underline decoration-foreground/30 underline-offset-4 transition-colors hover:text-foreground hover:decoration-foreground/60"
+                    >
+                      View Privacy &amp; Data Protection Policy
+                    </button>
+                  </div>
+                  <PrivacyPolicyDialog open={privacyOpen} onOpenChange={setPrivacyOpen} />
                   <div className="grid gap-4">
                     <div>
                       <EmailVerifyField
