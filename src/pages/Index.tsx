@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import masterclassBand from "@/assets/landing/masterclass-band.png.asset.json";
+import masterclassSection from "@/assets/landing/masterclass-section.png.asset.json";
 import heroStatsDesktop from "@/assets/landing/hero-stats-desktop.png.asset.json";
 import heroStatsMobile from "@/assets/landing/hero-stats-mobile.png.asset.json";
 import controlAppsIllustration from "@/assets/landing/control-apps-illustration.png.asset.json";
@@ -224,11 +224,6 @@ const Index = () => {
           ))}
         </section>
 
-        {/* Brand refresh video */}
-        <BrandVideo />
-
-
-
         {/* Trust */}
         <section className="px-8 py-20 border-t border-foreground/10 bg-[hsl(var(--surface))]">
           <div className="max-w-[1400px] mx-auto">
@@ -255,6 +250,37 @@ const Index = () => {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Masterclass */}
+        <section className="px-8 max-w-[1400px] mx-auto w-full py-16">
+          <div className="relative overflow-hidden rounded-2xl border border-foreground/10 bg-[hsl(var(--surface))] grid lg:grid-cols-[1fr_1.1fr] items-center gap-8 p-8 sm:p-10">
+            <div className="space-y-5">
+              <p className="text-sm uppercase tracking-[0.18em] text-[hsl(var(--accent-lime))]">
+                Shift The Light Masterclass
+              </p>
+              <h2 className="text-3xl sm:text-4xl font-medium tracking-tight leading-[1.15]">
+                Learn lighting by{" "}
+                <span className="text-[hsl(var(--accent-lime))]">actually lighting</span>
+              </h2>
+              <p className="text-sm text-foreground/60 leading-relaxed max-w-md">
+                Join us in Lagos for this year's Shift The Light Masterclass: an immersive, hands-on
+                lighting experience built around real production scenarios.
+              </p>
+              <Link
+                to="/masterclass"
+                className="inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
+              >
+                Reserve Your Spot
+              </Link>
+            </div>
+            <img
+              src={masterclassSection.url}
+              alt="Masterclass subject lit on a green backdrop beside the behind-the-scenes studio setup"
+              className="w-full h-auto object-contain"
+              loading="lazy"
+            />
           </div>
         </section>
 
@@ -356,7 +382,8 @@ const Index = () => {
           </div>
         </section>
 
-
+        {/* Brand refresh video */}
+        <BrandVideo />
 
         {/* Equipment database */}
         <section className="px-8 max-w-[1400px] mx-auto w-full py-16 grid lg:grid-cols-2 gap-12 items-center border-t border-foreground/10">
@@ -380,6 +407,36 @@ const Index = () => {
             >
               Explore Equipment Database
             </Link>
+          </div>
+        </section>
+
+
+        {/* Control apps */}
+        <section className="px-8 py-24 border-t border-foreground/10 bg-[hsl(var(--surface))]">
+          <div className="max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <h2 className="text-3xl sm:text-4xl font-medium tracking-tight leading-[1.15]">
+                Control lights easily on your phone
+              </h2>
+              <p className="text-sm text-foreground/60 leading-relaxed max-w-md">
+                Discover the apps that let you control compatible lights, adjust settings and manage
+                multiple fixtures straight from your phone.
+              </p>
+              <Link
+                to="/control-apps"
+                className="inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
+              >
+                Browse Control Apps
+              </Link>
+            </div>
+            <img
+              src={controlAppsIllustration.url}
+              alt="Phone running a lighting control app connected wirelessly to an LED fixture"
+              className="w-full h-auto rounded-2xl object-contain"
+              loading="lazy"
+              width={1200}
+              height={912}
+            />
           </div>
         </section>
 
@@ -417,64 +474,6 @@ const Index = () => {
                 {submitting ? "Submitting..." : "Join the Waitlist"}
               </button>
             </form>
-          </div>
-        </section>
-
-        {/* Masterclass band */}
-        <section className="relative bg-[hsl(var(--band-navy))] overflow-hidden min-h-[600px] lg:min-h-[820px] flex items-center">
-          <img
-            src={masterclassBand.url}
-            alt="Creator lit in blue light at the ShiftTheLight masterclass"
-            className="absolute inset-0 w-full h-full object-cover object-right"
-            loading="lazy"
-          />
-          <div className="relative w-full max-w-[1400px] mx-auto grid lg:grid-cols-2 items-center">
-            <div className="px-8 py-28 lg:py-40 space-y-6">
-              <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-medium tracking-tight leading-[1.2]">
-                Learn lighting by{" "}
-                <span className="text-[hsl(var(--accent-lime))]">actually lighting</span>
-              </h2>
-              <p className="text-sm sm:text-base text-foreground/70 leading-relaxed max-w-md">
-                Join us in Lagos for this year's Shift The Light Masterclass: an immersive, hands-on
-                lighting experience built around real production scenarios.
-              </p>
-              <Link
-                to="/masterclass"
-                className="inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
-              >
-                Reserve Your Spot
-              </Link>
-            </div>
-            <div className="hidden lg:block min-h-[520px]" aria-hidden="true" />
-          </div>
-        </section>
-
-        {/* Control apps */}
-        <section className="px-8 py-24 border-t border-foreground/10 bg-[hsl(var(--surface))]">
-          <div className="max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <h2 className="text-3xl sm:text-4xl font-medium tracking-tight leading-[1.15]">
-                Control lights easily on your phone
-              </h2>
-              <p className="text-sm text-foreground/60 leading-relaxed max-w-md">
-                Discover the apps that let you control compatible lights, adjust settings and manage
-                multiple fixtures straight from your phone.
-              </p>
-              <Link
-                to="/control-apps"
-                className="inline-block rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
-              >
-                Browse Control Apps
-              </Link>
-            </div>
-            <img
-              src={controlAppsIllustration.url}
-              alt="Phone running a lighting control app connected wirelessly to an LED fixture"
-              className="w-full h-auto rounded-2xl object-contain"
-              loading="lazy"
-              width={1200}
-              height={912}
-            />
           </div>
         </section>
 
