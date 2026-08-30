@@ -440,6 +440,43 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Courses — coming soon */}
+        <section
+          id="notify"
+          className="relative px-8 py-20 border-t border-foreground/10 bg-background text-foreground scroll-mt-24"
+        >
+          <div className="max-w-[1400px] mx-auto text-center">
+            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-medium tracking-tight leading-[1.2] max-w-2xl mx-auto">
+              Practical lighting courses for real productions
+            </h2>
+            <p className="mt-5 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed text-foreground/60">
+              Learn how to light interviews, podcasts, products, music videos and more, step by step.
+            </p>
+
+            <form
+              className="mt-10 flex flex-col sm:flex-row gap-2 justify-center max-w-md mx-auto"
+              onSubmit={handleSubmit}
+            >
+              <input
+                type="email"
+                placeholder="Enter Your Email Address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                aria-label="Email address"
+                className="flex-1 rounded-md bg-[hsl(var(--surface))] border border-foreground/20 text-foreground px-4 py-2.5 text-sm placeholder:text-foreground/40 focus:outline-none focus:border-[hsl(var(--cta))]"
+              />
+              <button
+                type="submit"
+                disabled={submitting}
+                className="rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition disabled:opacity-60"
+              >
+                {submitting ? "Submitting..." : "Join the Waitlist"}
+              </button>
+            </form>
+          </div>
+        </section>
+
         <SiteFooter />
       </div>
     </div>
