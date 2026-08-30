@@ -224,11 +224,6 @@ const Index = () => {
           ))}
         </section>
 
-        {/* Brand refresh video */}
-        <BrandVideo />
-
-
-
         {/* Trust */}
         <section className="px-8 py-20 border-t border-foreground/10 bg-[hsl(var(--surface))]">
           <div className="max-w-[1400px] mx-auto">
