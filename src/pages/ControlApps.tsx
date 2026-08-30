@@ -123,11 +123,10 @@ const ControlApps = () => {
         <main className="flex-1 max-w-[1400px] mx-auto w-full px-8 py-12">
           <header className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-medium tracking-tight">
-              Control Apps
+              Control your lights from your phone
             </h1>
             <p className="mt-4 text-foreground/70 text-base md:text-lg">
-              The official companion apps for major lighting manufacturers. Find,
-              download, and pair the right one for your fixtures.
+              Find the apps you need to connect, control and manage compatible lighting fixtures.
             </p>
           </header>
 
