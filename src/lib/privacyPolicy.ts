@@ -66,6 +66,6 @@ export const PRIVACY_POLICY: PolicySection[] = [
   {
     title: "Contact us",
     body:
-      "Questions about this policy, or about how your information is handled, can be sent to privacy@everyonecanlight.co or hello@everyonecanlight.co. Everyone Can Light Technologies Ltd., Lagos, Nigeria.",
+      "Questions about this policy, or about how your information is handled, can be sent to hello@everyonecanlight.co. Everyone Can Light Technologies Ltd., Lagos, Nigeria.",
   },
 ];

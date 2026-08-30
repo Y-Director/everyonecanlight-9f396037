@@ -12,7 +12,7 @@ const PrivacyPolicyDialog = ({ open, onOpenChange }: Props) => (
       <DialogHeader>
         <DialogTitle>Privacy &amp; Data Protection Policy</DialogTitle>
         <DialogDescription>
-          Everyone Can Light Technologies Ltd. — last updated {PRIVACY_POLICY_UPDATED}.
+          Everyone Can Light Technologies Ltd. ( last updated {PRIVACY_POLICY_UPDATED} )
         </DialogDescription>
       </DialogHeader>
 
