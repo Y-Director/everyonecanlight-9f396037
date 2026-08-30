@@ -25,7 +25,7 @@ const RentalTerms = () => (
       <a
         href={TERMS_PDF_URL}
         download="ECL-Rental-Terms-and-Conditions.pdf"
-        className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-primary underline decoration-primary underline-offset-4"
+        className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-foreground/50 underline decoration-foreground/30 underline-offset-4 transition-colors hover:text-foreground/70"
       >
         <Download className="h-4 w-4" aria-hidden="true" /> Download PDF
       </a>
