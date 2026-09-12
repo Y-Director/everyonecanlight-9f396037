@@ -88,6 +88,9 @@ import godoxAd600Pro from "@/assets/rental/Godox_AD600_Pro_TTL_Portable_Flash.pn
 import godoxAd1200Pro from "@/assets/rental/Godox_AD1200_Pro_TTL_Portable_Flash.png.asset.json";
 import godoxDp400 from "@/assets/rental/Godox_DP400III_Studio_Strobe.png.asset.json";
 import godoxDp600 from "@/assets/rental/Godox_DP600III_Studio_Strobe.png.asset.json";
+import amaranHalo100x from "@/assets/rental/amaranHalo100x-13.webp.asset.json";
+import amaranHalo300x from "@/assets/rental/amaranHalo300x-7.webp.asset.json";
+import amaranHalo600x from "@/assets/rental/amaranHalo600x-1.webp.asset.json";
 
 export type RentalCategory =
   | "Lights"
@@ -211,7 +214,10 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
     godoxAd1200Pro,
     godoxDp400,
     godoxDp600,
-  ].map((a) => [norm(a.original_filename.replace(/\.png$/i, "")), a.url])
+    amaranHalo100x,
+    amaranHalo300x,
+    amaranHalo600x,
+  ].map((a) => [norm(a.original_filename.replace(/\.(?:png|jpe?g|webp|avif)$/i, "").replace(/-\d+$/, "")), a.url])
 );
 
 const pickImage = (name: string, index: number) =>
@@ -228,6 +234,7 @@ const RAW: Raw[] = [
   ["Amaran 200d S", 15000, "Lights", 200],
   ["Amaran Halo 100x", 10000, "Lights", 100],
   ["Amaran Halo 300x", 20000, "Lights", 300],
+  ["Amaran Halo 600x", 35000, "Lights", 600],
   ["Amaran 150c", 15000, "Lights", 150],
   ["Amaran 300c", 20000, "Lights", 300],
   ["Amaran Ray 360c", 22000, "Lights", 360],
@@ -355,6 +362,7 @@ const AVAILABLE_NAMES = new Set(
     "Amaran 300c",
     "Amaran Halo 100x",
     "Amaran Halo 300x",
+    "Amaran Halo 600x",
     // C-stands
     "C-Stand Heavy Duty 10.5 ft with Arm",
     "C-Stand Heavy Duty 20 ft with Arm",
