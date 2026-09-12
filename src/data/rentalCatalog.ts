@@ -344,6 +344,29 @@ const RAW: Raw[] = [
   ["Godox DP600III Studio Strobe", 15000, "Flash & Strobe", undefined, true],
 ];
 
+/**
+ * Items currently available for rent. Everything else in the catalogue is
+ * shown as "coming soon" until the full light bank is ready.
+ */
+const AVAILABLE_NAMES = new Set(
+  [
+    "Amaran Ray 360c",
+    "Amaran Ray 660c",
+    "Amaran 300c",
+    "Amaran Halo 100x",
+    "Amaran Halo 300x",
+    // C-stands
+    "C-Stand Heavy Duty 10.5 ft with Arm",
+    "C-Stand Heavy Duty 20 ft with Arm",
+    // Softboxes
+    "Octabox 55cm",
+    "Octabox 90cm",
+    "Octabox 95cm",
+    "Parabolic Softbox 120cm",
+    "Parabolic Softbox 150cm",
+  ].map(norm)
+);
+
 export const rentalCatalog: RentalItem[] = RAW.map(
   ([name, price, category, watts, comingSoon], i) => ({
     id: norm(name),
@@ -351,7 +374,7 @@ export const rentalCatalog: RentalItem[] = RAW.map(
     price,
     category,
     watts,
-    comingSoon,
+    comingSoon: comingSoon || !AVAILABLE_NAMES.has(norm(name)),
     image: pickImage(name, i),
   })
 );
