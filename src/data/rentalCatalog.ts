@@ -226,6 +226,8 @@ const RAW: Raw[] = [
   ["Amaran 100d S", 10000, "Lights", 100],
   ["Amaran 100x S", 10000, "Lights", 100],
   ["Amaran 200d S", 15000, "Lights", 200],
+  ["Amaran Halo 100x", 10000, "Lights", 100],
+  ["Amaran Halo 300x", 20000, "Lights", 300],
   ["Amaran 150c", 15000, "Lights", 150],
   ["Amaran 300c", 20000, "Lights", 300],
   ["Amaran Ray 360c", 22000, "Lights", 360],
