@@ -6,7 +6,7 @@ import logo from "@/assets/logo.png";
 type Variant = "dark" | "light";
 
 const links = [
-  { to: "/rent-equipment", label: "Rent Equipment" },
+  { to: "/rent-equipment", label: "Light House" },
   { to: "/lighting-equipment", label: "Equipment Database" },
   { to: "/control-apps", label: "Control Apps" },
 ];
