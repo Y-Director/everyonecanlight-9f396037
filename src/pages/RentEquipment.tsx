@@ -321,11 +321,17 @@ const RentEquipment = () => {
 
   const filtered = useMemo(() => {
     const q = query.trim();
-    return rentalCatalog.filter(
-      (i) =>
-        (category === "All Gear" || i.category === category) &&
-        matchesSearch(i.name, q)
-    );
+    return rentalCatalog
+      .filter(
+        (i) =>
+          (category === "All Gear" || i.category === category) &&
+          matchesSearch(i.name, q)
+      )
+      .sort((a, b) => {
+        // Available items first, then alphabetically within each group.
+        if (a.comingSoon === b.comingSoon) return a.name.localeCompare(b.name);
+        return a.comingSoon ? 1 : -1;
+      });
   }, [query, category]);
 
   const setQty = (id: string, next: number, itemName: string) => {
