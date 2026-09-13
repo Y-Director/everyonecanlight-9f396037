@@ -805,10 +805,11 @@ const RentEquipment = () => {
                       <Button
                         size="sm"
                         variant="outline"
-                        className="rounded-full"
+                        className="rounded-full disabled:opacity-50"
+                        disabled={s.comingSoon}
                         onClick={() => setQty(s.id, (cart[s.id] ?? 0) + 1, s.name)}
                       >
-                        Add
+                        {s.comingSoon ? "Not yet available" : "Add"}
                       </Button>
                     </div>
                     <p className="flex items-start gap-1.5 text-xs leading-relaxed text-foreground/60">
