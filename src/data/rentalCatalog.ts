@@ -454,9 +454,8 @@ export const getSuggestions = (ids: string[]): RentalItem[] => {
   });
 
   return [...suggestions]
-    .filter((id) => !inList.has(id))
     .map((id) => byId.get(id))
-    .filter(Boolean) as RentalItem[];
+    .filter((item): item is RentalItem => Boolean(item) && !item.comingSoon && !inList.has(item.id));
 };
 
 export const formatNaira = (n: number) => `₦${n.toLocaleString("en-NG")}`;
