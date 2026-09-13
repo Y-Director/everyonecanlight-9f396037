@@ -192,7 +192,7 @@ const Index = () => {
               to="/rent-equipment"
               className="w-full sm:w-auto rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
             >
-              Explore Rental Gear
+              Explore Light House
             </Link>
             <Link
               to="/learn"
