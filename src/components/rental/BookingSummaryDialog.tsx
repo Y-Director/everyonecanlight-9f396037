@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { toJpeg } from "html-to-image";
-import { CheckCircle2, Download, Loader2 } from "lucide-react";
+import { CheckCircle2, Download, Loader2, MapPin } from "lucide-react";
 import { toast } from "sonner";
 import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
@@ -112,9 +112,24 @@ const BookingSummaryDialog = ({
                   : ""}
               </div>
             </div>
-            <div>
-              <div className="text-white/45">Location</div>
+          <div>
+              <div className="text-white/45">Shoot location</div>
               <div className="mt-0.5">{reservation.location}</div>
+            </div>
+          </div>
+
+          <div className="mt-4 rounded-lg border border-amber-400/20 bg-amber-400/10 p-3 text-xs">
+            <div className="flex items-start gap-2">
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-amber-300" />
+              <div>
+                <div className="font-medium text-amber-200">Pick-up &amp; return address</div>
+                <div className="mt-0.5 text-white/80">
+                  Foursquare Gospel Church, Ogunyemi Street, Ketu, Lagos
+                </div>
+                <p className="mt-1.5 text-white/60">
+                  You are responsible for transporting the equipment to and from this location.
+                </p>
+              </div>
             </div>
           </div>
 
