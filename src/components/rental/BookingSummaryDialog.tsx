@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { toJpeg } from "html-to-image";
-import { CheckCircle2, Download, Loader2 } from "lucide-react";
+import { CheckCircle2, Download, Loader2, MapPin } from "lucide-react";
 import { toast } from "sonner";
 import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
