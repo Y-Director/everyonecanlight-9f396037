@@ -31,7 +31,7 @@ const bentoCards = [
     sub: "Get the gear.",
     body: "Professional lighting equipment when your production needs it.",
     cta: "Explore Rentals",
-    to: "/rent-equipment",
+    to: "/light-house",
   },
   {
     header: "Learn",
@@ -189,7 +189,7 @@ const Index = () => {
 
           <div className="mt-7 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
-              to="/rent-equipment"
+              to="/light-house"
               className="w-full sm:w-auto rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
             >
               Explore Light House

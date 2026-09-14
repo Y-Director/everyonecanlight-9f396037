@@ -222,7 +222,7 @@ const RentEquipment = () => {
       .catch(() => toast.error("We could not confirm your payment."))
       .finally(() => {
         setCheckingPayment(false);
-        window.history.replaceState({}, "", "/rent-equipment");
+        window.history.replaceState({}, "", "/light-house");
       });
   }, []);
 
@@ -296,7 +296,7 @@ const RentEquipment = () => {
           bookingCode: booking.reservation.booking_code,
           email: booking.reservation.contact_email,
           items: lineItems.map((i) => ({ id: i.id, name: i.name, qty: i.qty })),
-          callbackUrl: `${window.location.origin}/rent-equipment`,
+          callbackUrl: `${window.location.origin}/light-house`,
         },
       });
       if (error && !data) throw error;
@@ -508,7 +508,7 @@ const RentEquipment = () => {
             ? format(sortedDates[sortedDates.length - 1], "yyyy-MM-dd")
             : null,
           items: lineItems.map((i) => ({ id: i.id, name: i.name, qty: i.qty })),
-          callbackUrl: `${window.location.origin}/rent-equipment`,
+          callbackUrl: `${window.location.origin}/light-house`,
         },
       });
       if (error) throw error;
@@ -542,7 +542,7 @@ const RentEquipment = () => {
         <Seo
           title="Rent Lighting Equipment in Lagos — ECL Light Bank"
           description="Rent professional lights, stands, grips and modifiers from the ECL Light Bank. Build a gear list, pick your dates and get it delivered with a lighting operator."
-          path="/rent-equipment"
+          path="/light-house"
           jsonLd={{
             "@context": "https://schema.org",
             "@type": "Service",
@@ -550,7 +550,7 @@ const RentEquipment = () => {
             serviceType: "Lighting equipment rental",
             areaServed: "Lagos, Nigeria",
             provider: { "@type": "Organization", name: "Everyone Can Light" },
-            url: "https://everyonecanlight.lovable.app/rent-equipment",
+            url: "https://everyonecanlight.lovable.app/light-house",
           }}
         />
         <SiteNav />

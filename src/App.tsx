@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { BrowserRouter, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -69,7 +69,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/articles" element={<Articles />} />
           <Route path="/articles/:slug" element={<ArticleDetail />} />
-          <Route path="/rent-equipment" element={<RentEquipment />} />
+          <Route path="/light-house" element={<RentEquipment />} />
+          <Route path="/rent-equipment" element={<Navigate to="/light-house" replace />} />
           <Route path="/lighting-equipment" element={<LightingEquipment />} />
           <Route path="/lighting-equipment/compare" element={<EquipmentCompare />} />
           <Route path="/lighting-equipment/:slug" element={<LightingEquipmentDetail />} />

@@ -49,7 +49,7 @@ const FAQS = [
 
 const PAGE_LABELS: Record<string, string> = {
   "/": "the home page",
-  "/rent-equipment": "the Rent Equipment page (rental catalogue, gear list, props, booking)",
+  "/light-house": "the Light House page (rental catalogue, gear list, props, booking)",
   "/lighting-equipment": "the Equipment Database",
   "/control-apps": "the Control Apps page",
   "/learn": "the Learn page",
