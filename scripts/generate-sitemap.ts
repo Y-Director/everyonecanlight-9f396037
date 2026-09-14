@@ -23,7 +23,7 @@ const articleSlugs = [
 
 const entries: SitemapEntry[] = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
-  { path: "/rent-equipment", changefreq: "weekly", priority: "0.9" },
+  { path: "/light-house", changefreq: "weekly", priority: "0.9" },
   { path: "/lighting-equipment", changefreq: "weekly", priority: "0.9" },
   { path: "/learn", changefreq: "monthly", priority: "0.8" },
   { path: "/articles", changefreq: "weekly", priority: "0.8" },

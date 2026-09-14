@@ -20,7 +20,7 @@ const SiteFooter = () => (
         <div>
           <p className="text-xs uppercase tracking-[0.18em] text-foreground/45">Explore</p>
           <ul className="mt-4 space-y-2.5">
-            <li><Link to="/rent-equipment" className={linkClass}>Rent Equipment</Link></li>
+            <li><Link to="/light-house" className={linkClass}>Light House</Link></li>
             <li><Link to="/lighting-equipment" className={linkClass}>Equipment Database</Link></li>
             <li><Link to="/learn" className={linkClass}>Learn</Link></li>
             <li><Link to="/control-apps" className={linkClass}>Control Apps</Link></li>
