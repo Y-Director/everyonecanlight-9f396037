@@ -220,6 +220,10 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
   ].map((a) => [norm(a.original_filename.replace(/\.(?:png|jpe?g|webp|avif)$/i, "").replace(/-\d+$/, "")), a.url])
 );
 
+// Reuse Aputure spotlight photos for the Amaran-branded variants.
+OVERRIDES[norm("Amaran SPOTLIGHT SE 19°")] = spotlightSe19.url;
+OVERRIDES[norm("Amaran SPOTLIGHT SE 36°")] = spotlightSe36.url;
+
 const pickImage = (name: string, index: number) =>
   OVERRIDES[norm(name)] ??
   imageByName.get(norm(name)) ??
@@ -231,12 +235,15 @@ const RAW: Raw[] = [
   // LIGHTS (COB / point source)
   ["Amaran 100d S", 10000, "Lights", 100],
   ["Amaran 100x S", 10000, "Lights", 100],
+  ["Amaran 60D", 8000, "Lights", 60],
   ["Amaran 200d S", 15000, "Lights", 200],
   ["Amaran Halo 100x", 10000, "Lights", 100],
   ["Amaran Halo 300x", 20000, "Lights", 300],
   ["Amaran Halo 600x", 35000, "Lights", 600],
   ["Amaran 150c", 15000, "Lights", 150],
+  ["Amaran Ace 25c", 8000, "Lights", 25],
   ["Amaran 300c", 20000, "Lights", 300],
+  ["Amaran Ray 120c", 12000, "Lights", 120],
   ["Amaran Ray 360c", 22000, "Lights", 360],
   ["Amaran Ray 660c", 40000, "Lights", 660],
   ["Aputure LS 300d", 25000, "Lights", 300],
@@ -291,6 +298,8 @@ const RAW: Raw[] = [
 
   // PRACTICAL LIGHTS
   ["Aputure B7C Set of 6", 50000, "Practical Lights", 7],
+  ["Aputure B7C (single unit)", 10000, "Practical Lights", 7],
+  ["Aputure MC", 5000, "Practical Lights", 5],
   ["Godox C7R Set of 6", 50000, "Practical Lights", 7],
   ["Nanlite Pavobulb Set of 4", 40000, "Practical Lights", 10],
 
@@ -308,6 +317,8 @@ const RAW: Raw[] = [
   ["Aputure Spotlight Mount SE 19° Lens", 10000, "Snoots & Projection"],
   ["Aputure Spotlight Mount SE 26° Lens", 10000, "Snoots & Projection"],
   ["Aputure Spotlight Mount SE 36° Lens", 10000, "Snoots & Projection"],
+  ["Amaran SPOTLIGHT SE 19°", 8000, "Snoots & Projection"],
+  ["Amaran SPOTLIGHT SE 36°", 8000, "Snoots & Projection"],
   ["Fresnel Lens Adapter Bowens Mount (Generic)", 8000, "Snoots & Projection"],
   ["Nanlite PJ-FZ60 Projection Spotlight for Forza 60", 10000, "Snoots & Projection"],
 
@@ -357,12 +368,22 @@ const RAW: Raw[] = [
  */
 const AVAILABLE_NAMES = new Set(
   [
+    "Amaran 150c",
+    "Amaran Ray 120c",
+    "Amaran 60D",
     "Amaran Ray 360c",
     "Amaran Ray 660c",
     "Amaran 300c",
     "Amaran Halo 100x",
     "Amaran Halo 300x",
     "Amaran Halo 600x",
+    "Amaran Ace 25c",
+    "Aputure MC",
+    "Aputure B7C (single unit)",
+    "Amaran SPOTLIGHT SE 19°",
+    "Amaran SPOTLIGHT SE 36°",
+    "Amaran F22c Mat 2x2 ft",
+    "Amaran PT2c RGBWW Pixel Tube 2 ft",
     // C-stands
     "C-Stand Heavy Duty 10.5 ft with Arm",
     "C-Stand Heavy Duty 20 ft with Arm",
