@@ -306,7 +306,7 @@ const RAW: Raw[] = [
   // MODIFIERS
   ["Aputure Fresnel 2X Lens Mount", 8000, "Modifiers"],
   ["Octabox 95cm", 5000, "Modifiers"],
-  ["Octabox 55cm", 5000, "Modifiers"],
+  ["Octabox 65cm", 5000, "Modifiers"],
   ["Octabox 90cm", 5000, "Modifiers"],
   ["Parabolic Softbox 120cm", 5000, "Modifiers"],
   ["Parabolic Softbox 150cm", 5000, "Modifiers"],
@@ -388,7 +388,7 @@ const AVAILABLE_NAMES = new Set(
     "C-Stand Heavy Duty 10.5 ft with Arm",
     "C-Stand Heavy Duty 20 ft with Arm",
     // Softboxes
-    "Octabox 55cm",
+    "Octabox 65cm",
     "Octabox 90cm",
     "Octabox 95cm",
     "Parabolic Softbox 120cm",
