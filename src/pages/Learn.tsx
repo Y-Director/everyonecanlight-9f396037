@@ -34,10 +34,10 @@ const learnCards = [
     to: "/articles",
   },
   {
-    header: "🎥 Courses (Coming Soon)",
-    body: "Structured learning paths.",
-    cta: "Join Waitlist",
-    to: "/#notify",
+    header: "🎥 Courses",
+    body: "Video lessons you can watch now.",
+    cta: "Watch Lessons",
+    to: "/courses",
   },
   {
     header: "🎬 Shift The Light Masterclass",
