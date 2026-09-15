@@ -91,6 +91,14 @@ import godoxDp600 from "@/assets/rental/Godox_DP600III_Studio_Strobe.png.asset.j
 import amaranHalo100x from "@/assets/rental/amaranHalo100x-13.webp.asset.json";
 import amaranHalo300x from "@/assets/rental/amaranHalo300x-7.webp.asset.json";
 import amaranHalo600x from "@/assets/rental/amaranHalo600x-1.webp.asset.json";
+import amaranAce25c from "@/assets/rental/Amaran_Ace_25c.webp.asset.json";
+import amaran60d from "@/assets/rental/Amaran_60D.webp.asset.json";
+import amaranRay120c from "@/assets/rental/Amaran_Ray_120c.webp.asset.json";
+import amaranSpotlightSe36 from "@/assets/rental/Amaran_SPOTLIGHT_SE_36deg.webp.asset.json";
+import amaranSpotlightSe19 from "@/assets/rental/Amaran_SPOTLIGHT_SE_19deg.webp.asset.json";
+import octabox65 from "@/assets/rental/Octabox_65cm.webp.asset.json";
+import aputureMc from "@/assets/rental/Aputure_MC.avif.asset.json";
+import aputureB7cSingle from "@/assets/rental/Aputure_B7C_single_unit.avif.asset.json";
 
 export type RentalCategory =
   | "Lights"
@@ -217,12 +225,17 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
     amaranHalo100x,
     amaranHalo300x,
     amaranHalo600x,
+    amaranAce25c,
+    amaran60d,
+    amaranRay120c,
+    octabox65,
+    aputureMc,
+    aputureB7cSingle,
   ].map((a) => [norm(a.original_filename.replace(/\.(?:png|jpe?g|webp|avif)$/i, "").replace(/-\d+$/, "")), a.url])
 );
 
-// Reuse Aputure spotlight photos for the Amaran-branded variants.
-OVERRIDES[norm("Amaran SPOTLIGHT SE 19°")] = spotlightSe19.url;
-OVERRIDES[norm("Amaran SPOTLIGHT SE 36°")] = spotlightSe36.url;
+OVERRIDES[norm("Amaran SPOTLIGHT SE 19°")] = amaranSpotlightSe19.url;
+OVERRIDES[norm("Amaran SPOTLIGHT SE 36°")] = amaranSpotlightSe36.url;
 
 const pickImage = (name: string, index: number) =>
   OVERRIDES[norm(name)] ??
