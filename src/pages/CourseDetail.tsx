@@ -88,9 +88,10 @@ const CourseDetail = () => {
                 <img
                   src={posterFor(video)}
                   alt={video.title}
-                  className="h-full w-full aspect-video object-cover"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  aria-hidden="true"
                 />
-                <div className="absolute inset-0 grid place-items-center bg-background/85 px-5 py-8 backdrop-blur-sm">
+                <div className="relative grid place-items-center bg-background/85 px-5 py-12 backdrop-blur-sm">
                   <SignInGate blurb="This lesson is free to watch — sign in to unlock it." />
                 </div>
               </div>
