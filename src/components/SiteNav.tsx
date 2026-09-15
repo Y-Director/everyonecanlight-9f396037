@@ -14,7 +14,7 @@ const links = [
 const learnItems = [
   { to: "/articles", label: "Articles" },
   { to: "/masterclass", label: "Masterclass" },
-  { to: "/#notify", label: "Courses" },
+  { to: "/courses", label: "Courses" },
   { to: "/articles", label: "Diagrams" },
 ];
 
