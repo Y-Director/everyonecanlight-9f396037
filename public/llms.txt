@@ -12,6 +12,7 @@ Everyone Can Light helps creators learn lighting, understand gear specifications
 - [Compare Equipment](/lighting-equipment/compare): Side-by-side specification comparison of two lights.
 - [Control Apps](/control-apps): Manufacturer apps for controlling LED lights from a phone.
 - [Learn](/learn): Learning paths covering articles, courses, masterclass and lighting diagrams.
+- [Courses](/courses): Free and paid video lessons with saved watch progress.
 - [Articles](/articles): Practical lighting guides written from real production experience.
 - [Masterclass](/masterclass): Shift The Light, the annual hands-on lighting masterclass in Lagos.
 

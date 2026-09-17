@@ -3,10 +3,18 @@ import { Play } from "lucide-react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import Seo from "@/components/Seo";
-import { courseCategories, courseVideos, posterFor } from "@/data/courses";
+import crownAsset from "@/assets/courses/course-crown.png.asset.json";
+import { courseVideos, posterFor } from "@/data/courses";
+import { useAuthSession } from "@/hooks/useAuthSession";
+
+const progressFor = (userId: string | undefined, slug: string) => {
+  if (typeof window === "undefined") return 0;
+  const stored = Number(window.localStorage.getItem(`course-progress:${userId ?? "guest"}:${slug}`));
+  return Number.isFinite(stored) ? Math.min(100, Math.max(0, stored)) : 0;
+};
 
 const Courses = () => {
-  const categories = courseCategories(courseVideos);
+  const { session } = useAuthSession();
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
@@ -48,19 +56,11 @@ const Courses = () => {
             </p>
           </header>
 
-          {categories.map((category, ci) => (
-            <section key={category} className={ci === 0 ? "" : "mt-24"}>
-              <header className="mb-12">
-                <h2 className="text-4xl md:text-5xl font-medium tracking-tight">{category}</h2>
-                <p className="mt-3 text-xs tracking-[0.2em] text-foreground/60 uppercase">
-                  Video lessons you can watch right now
-                </p>
-              </header>
-
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {courseVideos
-                  .filter((v) => v.category === category)
-                  .map((v) => (
+          <section aria-label="Course videos">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {courseVideos.map((v) => {
+                const progress = progressFor(session?.user.id, v.slug);
+                return (
                     <Link
                       key={v.slug}
                       to={`/courses/${v.slug}`}
@@ -74,6 +74,17 @@ const Courses = () => {
                             loading="lazy"
                             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                           />
+                          <span
+                            className="absolute left-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full bg-background/70 backdrop-blur-sm"
+                            aria-label={v.access === "free" ? "Free lesson" : "Paid lesson"}
+                            title={v.access === "free" ? "Free lesson" : "Paid lesson"}
+                          >
+                            <img
+                              src={crownAsset.url}
+                              alt=""
+                              className={`h-5 w-5 object-contain ${v.access === "free" ? "brightness-0 invert" : ""}`}
+                            />
+                          </span>
                           <span className="absolute inset-0 grid place-items-center bg-black/25 transition-colors group-hover:bg-black/15">
                             <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] shadow-xl transition-transform group-hover:scale-105">
                               <Play className="h-5 w-5 translate-x-px fill-current" aria-hidden="true" />
@@ -84,6 +95,12 @@ const Courses = () => {
                               {v.duration}
                             </span>
                           )}
+                          <span className="absolute inset-x-0 bottom-0 h-1 bg-foreground/20" aria-hidden="true">
+                            <span
+                              className="block h-full bg-[hsl(var(--cta))] transition-[width]"
+                              style={{ width: `${progress}%` }}
+                            />
+                          </span>
                         </div>
                         <div className="flex flex-wrap items-center gap-3 text-sm text-foreground/80">
                           {v.tags.map((t) => (
@@ -93,13 +110,12 @@ const Courses = () => {
                         <h3 className="text-2xl font-medium leading-snug group-hover:text-foreground/90">
                           {v.title}
                         </h3>
-                        <p className="text-sm text-foreground/60">{v.category}</p>
                       </article>
                     </Link>
-                  ))}
-              </div>
-            </section>
-          ))}
+                );
+              })}
+            </div>
+          </section>
         </main>
 
         <SiteFooter />
