@@ -21,6 +21,11 @@ const articleSlugs = [
   "what-is-wattage-in-lighting",
 ];
 
+const courseSlugs = [
+  "how-to-stand-out-from-background",
+  "lighting-placement-mistakes-to-avoid",
+];
+
 const entries: SitemapEntry[] = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
   { path: "/light-house", changefreq: "weekly", priority: "0.9" },
@@ -35,6 +40,11 @@ const entries: SitemapEntry[] = [
 
   ...articleSlugs.map((slug) => ({
     path: `/articles/${slug}`,
+    changefreq: "monthly" as const,
+    priority: "0.6",
+  })),
+  ...courseSlugs.map((slug) => ({
+    path: `/courses/${slug}`,
     changefreq: "monthly" as const,
     priority: "0.6",
   })),

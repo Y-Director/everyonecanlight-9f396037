@@ -1,16 +1,26 @@
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Loader2 } from "lucide-react";
+import { Stream, type StreamPlayerApi } from "@cloudflare/stream-react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import Seo from "@/components/Seo";
 import SignInGate from "@/components/SignInGate";
 import { useAuthSession } from "@/hooks/useAuthSession";
-import { findCourseVideo, posterFor, streamIframeSrc } from "@/data/courses";
+import { findCourseVideo, posterFor, STREAM_CUSTOMER_CODE } from "@/data/courses";
 
 const CourseDetail = () => {
   const { slug = "" } = useParams();
   const video = findCourseVideo(slug);
   const { session, loading } = useAuthSession();
+  const streamRef = useRef<StreamPlayerApi>();
+  const [resumeAt, setResumeAt] = useState(0);
+
+  useEffect(() => {
+    if (!video) return;
+    const savedSeconds = Number(window.localStorage.getItem(`course-position:${video.slug}`));
+    setResumeAt(Number.isFinite(savedSeconds) ? Math.max(0, savedSeconds) : 0);
+  }, [video]);
 
   if (!video) {
     return (
@@ -28,6 +38,22 @@ const CourseDetail = () => {
   }
 
   const hasSource = Boolean(video.streamId || video.playbackUrl);
+
+  const saveStreamProgress = () => {
+    if (!video || !streamRef.current) return;
+    const { currentTime, duration } = streamRef.current;
+    if (!Number.isFinite(duration) || duration <= 0) return;
+    const percent = Math.min(100, Math.max(0, (currentTime / duration) * 100));
+    window.localStorage.setItem(`course-position:${video.slug}`, String(currentTime));
+    window.localStorage.setItem(`course-progress:${video.slug}`, String(percent));
+  };
+
+  const saveNativeProgress = (element: HTMLVideoElement) => {
+    if (!video || !Number.isFinite(element.duration) || element.duration <= 0) return;
+    const percent = Math.min(100, Math.max(0, (element.currentTime / element.duration) * 100));
+    window.localStorage.setItem(`course-position:${video.slug}`, String(element.currentTime));
+    window.localStorage.setItem(`course-progress:${video.slug}`, String(percent));
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
@@ -98,13 +124,21 @@ const CourseDetail = () => {
             ) : hasSource ? (
               <div className="overflow-hidden rounded-2xl border border-foreground/10 bg-black">
                 {video.streamId ? (
-                  <iframe
-                    src={streamIframeSrc(video.streamId)}
+                  <Stream
+                    src={video.streamId}
+                    customerCode={STREAM_CUSTOMER_CODE}
+                    streamRef={streamRef}
                     title={video.title}
-                    loading="lazy"
-                    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-                    allowFullScreen
-                    className="w-full aspect-video border-0"
+                    poster={posterFor(video)}
+                    controls
+                    preload="metadata"
+                    primaryColor="hsl(224 100% 55%)"
+                    letterboxColor="transparent"
+                    startTime={resumeAt}
+                    onTimeUpdate={saveStreamProgress}
+                    onPause={saveStreamProgress}
+                    onEnded={saveStreamProgress}
+                    className="w-full aspect-video"
                   />
                 ) : (
                   <video
@@ -113,6 +147,12 @@ const CourseDetail = () => {
                     controls
                     playsInline
                     preload="metadata"
+                    onLoadedMetadata={(event) => {
+                      if (resumeAt > 0) event.currentTarget.currentTime = resumeAt;
+                    }}
+                    onTimeUpdate={(event) => saveNativeProgress(event.currentTarget)}
+                    onPause={(event) => saveNativeProgress(event.currentTarget)}
+                    onEnded={(event) => saveNativeProgress(event.currentTarget)}
                     className="w-full aspect-video bg-black"
                   />
                 )}
