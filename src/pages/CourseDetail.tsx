@@ -40,19 +40,19 @@ const CourseDetail = () => {
   const hasSource = Boolean(video.streamId || video.playbackUrl);
 
   const saveStreamProgress = () => {
-    if (!video || !streamRef.current) return;
+    if (!video || !streamRef.current || !session) return;
     const { currentTime, duration } = streamRef.current;
     if (!Number.isFinite(duration) || duration <= 0) return;
     const percent = Math.min(100, Math.max(0, (currentTime / duration) * 100));
-    window.localStorage.setItem(`course-position:${video.slug}`, String(currentTime));
-    window.localStorage.setItem(`course-progress:${video.slug}`, String(percent));
+    window.localStorage.setItem(`course-position:${session.user.id}:${video.slug}`, String(currentTime));
+    window.localStorage.setItem(`course-progress:${session.user.id}:${video.slug}`, String(percent));
   };
 
   const saveNativeProgress = (element: HTMLVideoElement) => {
-    if (!video || !Number.isFinite(element.duration) || element.duration <= 0) return;
+    if (!video || !session || !Number.isFinite(element.duration) || element.duration <= 0) return;
     const percent = Math.min(100, Math.max(0, (element.currentTime / element.duration) * 100));
-    window.localStorage.setItem(`course-position:${video.slug}`, String(element.currentTime));
-    window.localStorage.setItem(`course-progress:${video.slug}`, String(percent));
+    window.localStorage.setItem(`course-position:${session.user.id}:${video.slug}`, String(element.currentTime));
+    window.localStorage.setItem(`course-progress:${session.user.id}:${video.slug}`, String(percent));
   };
 
   return (

@@ -5,14 +5,17 @@ import SiteFooter from "@/components/SiteFooter";
 import Seo from "@/components/Seo";
 import crownAsset from "@/assets/courses/course-crown.png.asset.json";
 import { courseVideos, posterFor } from "@/data/courses";
+import { useAuthSession } from "@/hooks/useAuthSession";
 
-const progressFor = (slug: string) => {
+const progressFor = (userId: string | undefined, slug: string) => {
   if (typeof window === "undefined") return 0;
-  const stored = Number(window.localStorage.getItem(`course-progress:${slug}`));
+  const stored = Number(window.localStorage.getItem(`course-progress:${userId ?? "guest"}:${slug}`));
   return Number.isFinite(stored) ? Math.min(100, Math.max(0, stored)) : 0;
 };
 
 const Courses = () => {
+  const { session } = useAuthSession();
+
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       <div
@@ -56,7 +59,7 @@ const Courses = () => {
           <section aria-label="Course videos">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {courseVideos.map((v) => {
-                const progress = progressFor(v.slug);
+                const progress = progressFor(session?.user.id, v.slug);
                 return (
                     <Link
                       key={v.slug}
@@ -72,7 +75,7 @@ const Courses = () => {
                             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                           />
                           <span
-                            className="absolute left-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-background/70 backdrop-blur-sm"
+                            className="absolute left-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full bg-background/70 backdrop-blur-sm"
                             aria-label={v.access === "free" ? "Free lesson" : "Paid lesson"}
                             title={v.access === "free" ? "Free lesson" : "Paid lesson"}
                           >
