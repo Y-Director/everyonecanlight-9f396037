@@ -17,10 +17,12 @@ const CourseDetail = () => {
   const [resumeAt, setResumeAt] = useState(0);
 
   useEffect(() => {
-    if (!video) return;
-    const savedSeconds = Number(window.localStorage.getItem(`course-position:${video.slug}`));
+    if (!video || !session) return;
+    const savedSeconds = Number(
+      window.localStorage.getItem(`course-position:${session.user.id}:${video.slug}`),
+    );
     setResumeAt(Number.isFinite(savedSeconds) ? Math.max(0, savedSeconds) : 0);
-  }, [video]);
+  }, [session, video]);
 
   if (!video) {
     return (
