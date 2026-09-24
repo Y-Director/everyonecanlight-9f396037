@@ -63,7 +63,6 @@ import amaranF21c from "@/assets/rental/Amaran_F21c_Mat_2x1_ft.png.asset.json";
 import amaranF22c from "@/assets/rental/Amaran_F22c_Mat_2x2_ft.png.asset.json";
 import nanlitePjFz60 from "@/assets/rental/Nanlite_PJ-FZ60_Projection_Spotlight_for_Forza_60.png.asset.json";
 import octabox55 from "@/assets/rental/Octabox_55cm.png.asset.json";
-import octabox95 from "@/assets/rental/Octabox_95cm.png.asset.json";
 import parabolic120 from "@/assets/rental/Parabolic_Softbox_120cm.png.asset.json";
 import parabolic150 from "@/assets/rental/Parabolic_Softbox_150cm.png.asset.json";
 import sandbag10kg from "@/assets/rental/Sandbag_10kg.png.asset.json";
@@ -99,6 +98,7 @@ import amaranSpotlightSe19 from "@/assets/rental/Amaran_SPOTLIGHT_SE_19deg.webp.
 import octabox65 from "@/assets/rental/Octabox_65cm.webp.asset.json";
 import aputureMc from "@/assets/rental/Aputure_MC.avif.asset.json";
 import aputureB7cSingle from "@/assets/rental/Aputure_B7C_single_unit.avif.asset.json";
+import amaranPano60cKit from "@/assets/rental/Amaran_Pano_60c_2-Light_Kit.webp.asset.json";
 
 export type RentalCategory =
   | "Lights"
@@ -197,7 +197,6 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
     amaranF22c,
     nanlitePjFz60,
     octabox55,
-    octabox95,
     parabolic120,
     parabolic150,
     sandbag10kg,
@@ -231,6 +230,7 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
     octabox65,
     aputureMc,
     aputureB7cSingle,
+    amaranPano60cKit,
   ].map((a) => [norm(a.original_filename.replace(/\.(?:png|jpe?g|webp|avif)$/i, "").replace(/-\d+$/, "")), a.url])
 );
 
@@ -259,6 +259,7 @@ const RAW: Raw[] = [
   ["Amaran Ray 120c", 12000, "Lights", 120],
   ["Amaran Ray 360c", 22000, "Lights", 360],
   ["Amaran Ray 660c", 40000, "Lights", 660],
+  ["Amaran Pano 60c 2-Light Kit", 40000, "Panel Lights", 120],
   ["Aputure LS 300d", 25000, "Lights", 300],
   ["Aputure LS 300x", 25000, "Lights", 300],
   ["Aputure LS 600d Pro", 35000, "Lights", 600],
@@ -318,7 +319,6 @@ const RAW: Raw[] = [
 
   // MODIFIERS
   ["Aputure Fresnel 2X Lens Mount", 8000, "Modifiers"],
-  ["Octabox 95cm", 5000, "Modifiers"],
   ["Octabox 65cm", 5000, "Modifiers"],
   ["Octabox 90cm", 5000, "Modifiers"],
   ["Parabolic Softbox 120cm", 5000, "Modifiers"],
@@ -330,8 +330,8 @@ const RAW: Raw[] = [
   ["Aputure Spotlight Mount SE 19° Lens", 10000, "Snoots & Projection"],
   ["Aputure Spotlight Mount SE 26° Lens", 10000, "Snoots & Projection"],
   ["Aputure Spotlight Mount SE 36° Lens", 10000, "Snoots & Projection"],
-  ["Amaran SPOTLIGHT SE 19°", 8000, "Snoots & Projection"],
-  ["Amaran SPOTLIGHT SE 36°", 8000, "Snoots & Projection"],
+  ["Amaran SPOTLIGHT SE 19°", 20000, "Snoots & Projection"],
+  ["Amaran SPOTLIGHT SE 36°", 20000, "Snoots & Projection"],
   ["Fresnel Lens Adapter Bowens Mount (Generic)", 8000, "Snoots & Projection"],
   ["Nanlite PJ-FZ60 Projection Spotlight for Forza 60", 10000, "Snoots & Projection"],
 
@@ -386,15 +386,13 @@ const AVAILABLE_NAMES = new Set(
     "Amaran 60D",
     "Amaran Ray 360c",
     "Amaran Ray 660c",
+    "Amaran Pano 60c 2-Light Kit",
     "Amaran 300c",
     "Amaran Halo 100x",
     "Amaran Halo 300x",
     "Amaran Halo 600x",
     "Amaran Ace 25c",
-    "Aputure MC",
-    "Aputure B7C (single unit)",
     "Amaran SPOTLIGHT SE 19°",
-    "Amaran SPOTLIGHT SE 36°",
     "Amaran F22c Mat 2x2 ft",
     "Amaran PT2c RGBWW Pixel Tube 2 ft",
     // C-stands
@@ -403,9 +401,10 @@ const AVAILABLE_NAMES = new Set(
     // Softboxes
     "Octabox 65cm",
     "Octabox 90cm",
-    "Octabox 95cm",
     "Parabolic Softbox 120cm",
-    "Parabolic Softbox 150cm",
+    // Reflectors
+    "5-in-1 Collapsible Reflector 120cm",
+    "5-in-1 Collapsible Reflector 80cm",
   ].map(norm)
 );
 

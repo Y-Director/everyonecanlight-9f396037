@@ -128,6 +128,7 @@ const QtyStepper = ({
 const RentEquipment = () => {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<"All Gear" | RentalCategory>("All Gear");
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
   const [cart, setCart] = useState<Cart>(() => {
     try {
       return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "{}");
@@ -555,7 +556,7 @@ const RentEquipment = () => {
         />
         <SiteNav />
 
-        <main className="flex-1 px-8 max-w-[1400px] mx-auto w-full py-12">
+        <main className="flex-1 px-4 sm:px-8 max-w-[1400px] mx-auto w-full py-8 sm:py-12">
           <header className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <div className="max-w-2xl">
               <h1 className="text-3xl md:text-4xl font-semibold">Light House</h1>
@@ -692,7 +693,7 @@ const RentEquipment = () => {
             </p>
           )}
 
-          <div className="sticky top-0 z-40 -mx-8 mt-10 border-b border-border bg-background/95 px-8 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+          <div className="sticky top-0 z-40 -mx-4 sm:-mx-8 mt-10 border-b border-border bg-background/95 px-4 sm:px-8 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/80">
           <div className="flex flex-wrap items-center gap-3">
             <Button
               variant="outline"
@@ -740,7 +741,44 @@ const RentEquipment = () => {
                 className="w-full bg-muted/40 border border-border rounded-full pl-11 pr-4 py-3 text-sm placeholder:text-foreground/50 focus:outline-none focus:ring-1 focus:ring-foreground/30"
               />
             </div>
-            <nav className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
+            <div className="w-full md:hidden">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setCategoriesOpen((open) => !open)}
+                aria-expanded={categoriesOpen}
+                aria-controls="mobile-rental-categories"
+                className="w-full justify-between rounded-md px-4"
+              >
+                <span className="min-w-0 truncate text-left">
+                  Categories · {category}
+                  {cartCount > 0 ? ` · ${cartCount} in gear list` : ""}
+                </span>
+                <ChevronDown
+                  className={cn("h-4 w-4 shrink-0 transition-transform", categoriesOpen && "rotate-180")}
+                />
+              </Button>
+              {categoriesOpen && (
+                <nav id="mobile-rental-categories" className="mt-3 grid grid-cols-2 gap-2 text-sm">
+                  {RENTAL_CATEGORIES.map((c) => (
+                    <Button
+                      key={c}
+                      type="button"
+                      variant={category === c ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => {
+                        setCategory(c);
+                        setCategoriesOpen(false);
+                      }}
+                      className="h-auto min-h-9 justify-start whitespace-normal text-left"
+                    >
+                      {c}
+                    </Button>
+                  ))}
+                </nav>
+              )}
+            </div>
+            <nav className="hidden md:flex flex-wrap gap-x-5 gap-y-2 text-sm">
               {RENTAL_CATEGORIES.map((c) => (
                 <button
                   key={c}
