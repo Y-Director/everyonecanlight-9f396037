@@ -199,15 +199,15 @@ const Masterclass = () => {
         />
         <SiteNav />
 
-        <main className="flex-1 max-w-[1400px] mx-auto w-full px-8 py-12">
+        <main className="flex-1 max-w-[1400px] mx-auto w-full px-4 sm:px-8 py-6 sm:py-12">
           {/* Hero banner */}
-          <section className="relative rounded-[2rem] overflow-hidden border border-foreground/10">
+          <section className="relative min-h-[640px] sm:min-h-0 rounded-xl sm:rounded-[2rem] overflow-hidden border border-foreground/10">
             <img
               src={heroImg}
               alt="Shift The Light 2 Masterclass"
               width={1920}
               height={1080}
-              className="w-full h-[420px] md:h-[560px] object-cover"
+              className="absolute inset-0 h-full w-full object-cover object-[64%_center] sm:relative sm:h-[560px] sm:object-center"
             />
             <div
               className="absolute inset-0"
@@ -219,11 +219,11 @@ const Masterclass = () => {
             />
 
             <div className="absolute inset-0 flex items-center">
-              <div className="px-8 md:px-14 max-w-2xl">
+              <div className="w-full max-w-2xl px-5 py-8 sm:px-10 md:px-14">
                 <p className="text-xs md:text-sm uppercase tracking-[0.2em] text-foreground/70">
                   November 2026 · Creator Residency
                 </p>
-                <h1 className="mt-4 text-4xl md:text-6xl font-medium tracking-tight text-foreground leading-[1.05]">
+                <h1 className="mt-4 text-4xl md:text-6xl font-medium text-foreground leading-[1.05]">
                   Shift The Light 2
                   <span className="block text-foreground/80 text-2xl md:text-3xl font-normal mt-2">
                     (Creator Residency)
@@ -237,18 +237,18 @@ NOV 19–21, 2026 · LAGOS
 ₦250,000 — Full Residency`}
                 </p>
 
-                <div className="mt-8 flex flex-wrap items-center gap-3">
+                <div className="mt-8 grid grid-cols-1 gap-3 sm:flex sm:flex-wrap sm:items-center">
                   <button
                     type="button"
                     onClick={() => setRegisterOpen(true)}
-                    className="inline-flex items-center rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-6 py-3 text-sm font-medium hover:opacity-90 transition"
+                    className="inline-flex w-full items-center justify-center rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-6 py-3 text-sm font-medium hover:opacity-90 transition sm:w-auto"
                   >
                     Reserve Your Spot
                   </button>
                   <button
                     type="button"
                     onClick={() => setScheduleOpen(true)}
-                    className="inline-flex items-center rounded-md border border-foreground/30 text-foreground px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition"
+                    className="inline-flex w-full items-center justify-center rounded-md border border-foreground/30 text-foreground px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition sm:w-auto"
                   >
                     See Schedule
                   </button>
@@ -258,7 +258,7 @@ NOV 19–21, 2026 · LAGOS
           </section>
 
           {/* Testimonials */}
-          <section className="mt-20">
+          <section className="mt-14 sm:mt-20">
             <div className="flex items-end justify-between gap-6 flex-wrap">
               <div>
                 <p className="text-xs uppercase tracking-[0.2em] text-foreground/50">
@@ -292,12 +292,12 @@ NOV 19–21, 2026 · LAGOS
 
             <div
               ref={scrollerRef}
-              className="mt-8 flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4 -mx-8 px-8 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="mt-8 flex gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 sm:-mx-8 sm:px-8 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
               {testimonials.map((t, i) => (
                 <article
                   key={i}
-                  className="snap-start shrink-0 w-[85%] sm:w-[420px] rounded-2xl border border-foreground/10 bg-[hsl(var(--surface))] p-6 flex flex-col"
+                  className="snap-start shrink-0 w-[88%] sm:w-[420px] rounded-lg sm:rounded-2xl border border-foreground/10 bg-[hsl(var(--surface))] p-5 sm:p-6 flex flex-col"
                 >
                   <Quote className="w-6 h-6 text-foreground/40" aria-hidden="true" />
                   <p className="mt-4 text-base leading-relaxed text-foreground/85 flex-1">
@@ -323,7 +323,7 @@ NOV 19–21, 2026 · LAGOS
           </section>
 
           {/* Past masterclass gallery */}
-          <section className="mt-20">
+          <section className="mt-14 sm:mt-20">
             <p className="text-xs uppercase tracking-[0.2em] text-foreground/50">
               Gallery
             </p>
@@ -331,8 +331,8 @@ NOV 19–21, 2026 · LAGOS
               Moments from past Masterclasses
             </h2>
 
-            <div className="mt-8 relative rounded-2xl overflow-hidden border border-foreground/10 bg-[hsl(var(--surface))]">
-              <div className="relative h-[320px] md:h-[520px]">
+            <div className="mt-8 relative rounded-lg sm:rounded-2xl overflow-hidden border border-foreground/10 bg-[hsl(var(--surface))]">
+              <div className="relative h-[280px] sm:h-[320px] md:h-[520px]">
                 {galleryImages.map((img, i) => (
                   <img
                     key={i}
@@ -352,7 +352,7 @@ NOV 19–21, 2026 · LAGOS
                   }}
                   aria-hidden="true"
                 />
-                <p className="absolute left-6 bottom-6 text-sm text-foreground/90">
+                <p className="absolute inset-x-14 bottom-4 text-center text-xs text-foreground/90 sm:left-6 sm:right-auto sm:bottom-6 sm:text-left sm:text-sm">
                   {galleryImages[slide]?.caption}
                 </p>
 
@@ -363,7 +363,7 @@ NOV 19–21, 2026 · LAGOS
                     setPlaying(false);
                     setSlide((s) => (s - 1 + galleryImages.length) % galleryImages.length);
                   }}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-foreground/25 bg-background/50 backdrop-blur flex items-center justify-center hover:bg-foreground hover:text-background transition"
+                  className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-foreground/25 bg-background/50 backdrop-blur flex items-center justify-center hover:bg-foreground hover:text-background transition"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
@@ -374,13 +374,13 @@ NOV 19–21, 2026 · LAGOS
                     setPlaying(false);
                     setSlide((s) => (s + 1) % galleryImages.length);
                   }}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-foreground/25 bg-background/50 backdrop-blur flex items-center justify-center hover:bg-foreground hover:text-background transition"
+                  className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-foreground/25 bg-background/50 backdrop-blur flex items-center justify-center hover:bg-foreground hover:text-background transition"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
 
-              <div className="flex items-center justify-between gap-4 p-4 border-t border-foreground/10">
+              <div className="flex flex-col items-stretch gap-3 p-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:p-4 border-t border-foreground/10">
                 <div className="flex gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                   {galleryImages.map((img, i) => (
                     <button
@@ -402,7 +402,7 @@ NOV 19–21, 2026 · LAGOS
                 <button
                   type="button"
                   onClick={() => setPlaying((p) => !p)}
-                  className="shrink-0 text-xs uppercase tracking-[0.15em] text-foreground/70 hover:text-foreground transition"
+                   className="shrink-0 self-end text-xs uppercase tracking-[0.15em] text-foreground/70 hover:text-foreground transition"
                 >
                   {playing ? "Pause" : "Play"} slideshow
                 </button>
@@ -416,7 +416,7 @@ NOV 19–21, 2026 · LAGOS
 
       {/* Registration Dialog */}
       <Dialog open={registerOpen} onOpenChange={setRegisterOpen}>
-        <DialogContent className="max-w-lg bg-[hsl(var(--surface))] border-foreground/10">
+        <DialogContent className="max-h-[92vh] max-w-lg overflow-y-auto bg-[hsl(var(--surface))] border-foreground/10">
           <DialogHeader>
             <DialogTitle className="text-2xl">Register — Shift The Light 2</DialogTitle>
             <DialogDescription>
@@ -536,7 +536,7 @@ NOV 19–21, 2026 · LAGOS
 
       {/* Schedule Dialog */}
       <Dialog open={scheduleOpen} onOpenChange={setScheduleOpen}>
-        <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto bg-[hsl(var(--surface))] border-foreground/10">
+        <DialogContent className="max-w-3xl max-h-[92vh] overflow-y-auto bg-[hsl(var(--surface))] border-foreground/10">
           <DialogHeader>
             <DialogTitle className="text-2xl">
               ShiftTheLight Masterclass 2026 — Official Blueprint
