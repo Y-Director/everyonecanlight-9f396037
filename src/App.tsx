@@ -13,6 +13,13 @@ import EquipmentCompare from "./pages/EquipmentCompare.tsx";
 import Learn from "./pages/Learn.tsx";
 import Courses from "./pages/Courses.tsx";
 import CourseDetail from "./pages/CourseDetail.tsx";
+import CoursesAuth from "./pages/courses/CoursesAuth.tsx";
+
+/** Keeps ?reference=… from older Paystack return links. */
+const LegacyRentRedirect = () => {
+  const { search, hash } = useLocation();
+  return <Navigate to={`/light-house${search}${hash}`} replace />;
+};
 import ControlApps from "./pages/ControlApps.tsx";
 import Masterclass from "./pages/Masterclass.tsx";
 import RentEquipment from "./pages/RentEquipment.tsx";
@@ -72,12 +79,13 @@ const App = () => (
           <Route path="/articles" element={<Articles />} />
           <Route path="/articles/:slug" element={<ArticleDetail />} />
           <Route path="/light-house" element={<RentEquipment />} />
-          <Route path="/rent-equipment" element={<Navigate to="/light-house" replace />} />
+          <Route path="/rent-equipment" element={<LegacyRentRedirect />} />
           <Route path="/lighting-equipment" element={<LightingEquipment />} />
           <Route path="/lighting-equipment/compare" element={<EquipmentCompare />} />
           <Route path="/lighting-equipment/:slug" element={<LightingEquipmentDetail />} />
           <Route path="/learn" element={<Learn />} />
           <Route path="/courses" element={<Courses />} />
+          <Route path="/courses/auth" element={<CoursesAuth />} />
           <Route path="/courses/:slug" element={<CourseDetail />} />
           <Route path="/control-apps" element={<ControlApps />} />
           <Route path="/masterclass" element={<Masterclass />} />
