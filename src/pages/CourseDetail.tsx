@@ -128,7 +128,7 @@ const CourseDetail = () => {
                 {video.streamId ? (
                   <Stream
                     src={video.streamId}
-                    customerCode={STREAM_CUSTOMER_CODE}
+                    customerCode={STREAM_CUSTOMER_CODE.replace(/^customer-/, "")}
                     streamRef={streamRef}
                     title={video.title}
                     poster={posterFor(video)}
@@ -140,7 +140,7 @@ const CourseDetail = () => {
                     onTimeUpdate={saveStreamProgress}
                     onPause={saveStreamProgress}
                     onEnded={saveStreamProgress}
-                    className="w-full aspect-video"
+                    className="w-full"
                   />
                 ) : (
                   <video
