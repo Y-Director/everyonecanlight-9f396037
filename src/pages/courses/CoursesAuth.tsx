@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { Loader2, MailCheck } from "lucide-react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { ArrowLeft, Loader2, MailCheck } from "lucide-react";
 import { toast } from "sonner";
 import logo from "@/assets/logo.png";
 import { supabase } from "@/integrations/supabase/client";
@@ -105,6 +105,13 @@ const CoursesAuth = () => {
       />
 
       <div className="relative w-full max-w-sm">
+        <Link
+          to="/"
+          className="mb-6 inline-flex items-center gap-1.5 text-sm text-foreground/60 transition hover:text-foreground"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to home page
+        </Link>
         <div className="mb-8 flex items-center gap-2">
           <img src={logo} alt="Everyone Can Light logo" className="h-9 w-9 rounded-md object-contain" />
           <span className="font-semibold">Everyone Can Light</span>
