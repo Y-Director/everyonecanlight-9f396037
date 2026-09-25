@@ -116,7 +116,7 @@ const CoursesAuth = () => {
         <p className="mt-2 text-sm text-foreground/60">
           {mode === "forgot"
             ? "We'll email you a secure link to set a new password."
-            : "Free video lessons — sign in to watch and save your progress."}
+            : "Easy to understand video lessons. Sign in to watch and save your progress."}
         </p>
 
         {checkEmail ? (
