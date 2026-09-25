@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Loader2 } from "lucide-react";
-import { Stream, type StreamPlayerApi } from "@cloudflare/stream-react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import Seo from "@/components/Seo";
@@ -13,7 +12,8 @@ const CourseDetail = () => {
   const { slug = "" } = useParams();
   const video = findCourseVideo(slug);
   const { session, loading } = useAuthSession();
-  const streamRef = useRef<StreamPlayerApi>();
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const streamRef = useRef<any>();
   const [resumeAt, setResumeAt] = useState(0);
 
   useEffect(() => {
@@ -23,6 +23,35 @@ const CourseDetail = () => {
     );
     setResumeAt(Number.isFinite(savedSeconds) ? Math.max(0, savedSeconds) : 0);
   }, [session, video]);
+
+  useEffect(() => {
+    if (!video?.streamId || !session) return;
+    const SRC = "https://embed.cloudflarestream.com/embed/sdk.latest.js";
+    let cancelled = false;
+    const attach = () => {
+      const S = (window as any).Stream;
+      if (cancelled || !S || !iframeRef.current) return;
+      const player = S(iframeRef.current);
+      streamRef.current = player;
+      const save = () => {
+        const { currentTime, duration } = player;
+        if (!Number.isFinite(duration) || duration <= 0) return;
+        const pct = Math.min(100, Math.max(0, (currentTime / duration) * 100));
+        localStorage.setItem(`course-position:${session.user.id}:${video.slug}`, String(currentTime));
+        localStorage.setItem(`course-progress:${session.user.id}:${video.slug}`, String(pct));
+      };
+      player.addEventListener("timeupdate", save);
+      player.addEventListener("pause", save);
+      player.addEventListener("ended", save);
+    };
+    if ((window as any).Stream) attach();
+    else {
+      let el = document.querySelector<HTMLScriptElement>(`script[src="${SRC}"]`);
+      if (!el) { el = document.createElement("script"); el.src = SRC; el.async = true; document.head.appendChild(el); }
+      el.addEventListener("load", attach);
+    }
+    return () => { cancelled = true; };
+  }, [video, session, loading]);
 
   if (!video) {
     return (
@@ -126,22 +155,17 @@ const CourseDetail = () => {
             ) : hasSource ? (
               <div className="overflow-hidden rounded-2xl border border-foreground/10 bg-black">
                 {video.streamId ? (
-                  <Stream
-                    src={video.streamId}
-                    customerCode={STREAM_CUSTOMER_CODE.replace(/^customer-/, "")}
-                    streamRef={streamRef}
-                    title={video.title}
-                    poster={posterFor(video)}
-                    controls
-                    preload="metadata"
-                    primaryColor="hsl(224 100% 55%)"
-                    letterboxColor="transparent"
-                    startTime={resumeAt}
-                    onTimeUpdate={saveStreamProgress}
-                    onPause={saveStreamProgress}
-                    onEnded={saveStreamProgress}
-                    className="w-full"
-                  />
+                  <div className="relative w-full aspect-video">
+                    <iframe
+                      ref={iframeRef}
+                      key={video.streamId}
+                      src={`https://${STREAM_CUSTOMER_CODE}.cloudflarestream.com/${video.streamId}/iframe?preload=auto&letterboxColor=transparent&primaryColor=${encodeURIComponent("#1f5bff")}&poster=${encodeURIComponent(posterFor(video))}${resumeAt > 0 ? `&startTime=${Math.floor(resumeAt)}s` : ""}`}
+                      title={video.title}
+                      className="absolute inset-0 h-full w-full border-0"
+                      allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+                      allowFullScreen
+                    />
+                  </div>
                 ) : (
                   <video
                     src={video.playbackUrl}
