@@ -87,7 +87,7 @@ const BrandVideo = () => {
     <section className="px-8 pb-16 max-w-[1400px] mx-auto w-full">
       <div className="max-w-2xl">
         <h2 className="text-3xl sm:text-4xl font-medium tracking-tight">
-          Everyone Can Light — the brand refresh
+          Everyone Can Light : the brand refresh
         </h2>
         <p className="mt-3 text-sm sm:text-base text-foreground/55 leading-relaxed">
           A short look at who we are, what we build and why lighting should be simple for every
