@@ -121,6 +121,8 @@ export type RentalItem = {
   watts?: number;
   image: string;
   comingSoon?: boolean;
+  /** Units physically at the Light House (undefined = not tracked). */
+  stock?: number;
 };
 
 /** Look up a real product photo from the equipment database by name. */
@@ -255,6 +257,8 @@ const RAW: Raw[] = [
   ["Amaran Halo 600x", 35000, "Lights", 600],
   ["Amaran 150c", 15000, "Lights", 150],
   ["Amaran Ace 25c", 8000, "Lights", 25],
+  ["Amaran Ace 25x", 8000, "Lights", 25],
+  ["Amaran Ray 60c", 8000, "Lights", 60],
   ["Amaran 300c", 20000, "Lights", 300],
   ["Amaran Ray 120c", 12000, "Lights", 120],
   ["Amaran Ray 360c", 22000, "Lights", 360],
@@ -304,6 +308,7 @@ const RAW: Raw[] = [
   ["Amaran PT4c RGBWW Pixel Tube 4 ft", 15000, "Tube Lights", 40],
   ["Amaran T2c RGBWW Tube Bar 2 ft", 10000, "Tube Lights", 20],
   ["Amaran T4c RGBWW Tube Bar 4 ft", 15000, "Tube Lights", 40],
+  ["Suncrafter 10W Tube Light", 5000, "Tube Lights", 10],
   ["Godox TL30 RGB Tube Light", 10000, "Tube Lights", 13],
   ["Godox TL60 RGB Tube Light", 15000, "Tube Lights", 30],
   ["Nanlite Pavotube II 15C RGB Tube 1.5 ft", 8000, "Tube Lights", 15],
@@ -379,34 +384,45 @@ const RAW: Raw[] = [
  * Items currently available for rent. Everything else in the catalogue is
  * shown as "coming soon" until the full light bank is ready.
  */
-const AVAILABLE_NAMES = new Set(
-  [
-    "Amaran 150c",
-    "Amaran Ray 120c",
-    "Amaran 60D",
-    "Amaran Ray 360c",
-    "Amaran Ray 660c",
-    "Amaran Pano 60c 2-Light Kit",
-    "Amaran 300c",
-    "Amaran Halo 100x",
-    "Amaran Halo 300x",
-    "Amaran Halo 600x",
-    "Amaran Ace 25c",
-    "Amaran SPOTLIGHT SE 19°",
-    "Amaran F22c Mat 2x2 ft",
-    "Amaran PT2c RGBWW Pixel Tube 2 ft",
-    // C-stands
-    "C-Stand Heavy Duty 10.5 ft with Arm",
-    "C-Stand Heavy Duty 20 ft with Arm",
-    // Softboxes
-    "Octabox 65cm",
-    "Octabox 90cm",
-    "Parabolic Softbox 120cm",
-    // Reflectors
-    "5-in-1 Collapsible Reflector 120cm",
-    "5-in-1 Collapsible Reflector 80cm",
-  ].map(norm)
+/**
+ * Units received at the Light House (equipment list of 23 Sept 2026).
+ * Only these items are rentable; everything else shows as "coming soon".
+ */
+const STOCK: Record<string, number> = Object.fromEntries(
+  (
+    [
+      ["Amaran PT2c RGBWW Pixel Tube 2 ft", 1],
+      ["Amaran F22c Mat 2x2 ft", 1],
+      ["Amaran 300c", 1],
+      ["Amaran 150c", 2],
+      ["Amaran Ray 360c", 1],
+      ["Amaran Ray 660c", 1],
+      ["Amaran 60D", 1],
+      ["Amaran Pano 60c 2-Light Kit", 1],
+      ["Amaran Ray 120c", 1],
+      ["Amaran Ray 60c", 1],
+      ["Amaran Ace 25c", 2],
+      ["Amaran Ace 25x", 2],
+      ["Amaran SPOTLIGHT SE 19°", 1],
+      ["Suncrafter 10W Tube Light", 1],
+      ["Amaran Halo 600x", 1],
+      // Diffusers / softboxes
+      ["Bulb Lantern Modifier 90cm", 2],
+      ["Parabolic Softbox 120cm", 1],
+      ["Octabox 90cm", 1],
+      // Reflectors & mounts
+      ["5-in-1 Collapsible Reflector 120cm", 1],
+      ["5-in-1 Collapsible Reflector 80cm", 1],
+      ["Aputure Fresnel 2X Lens Mount", 1],
+      // Stands
+      ["C-Stand Heavy Duty 10.5 ft with Arm", 2],
+      ["Light Stand Heavy Duty 13 ft", 3],
+    ] as [string, number][]
+  ).map(([n, q]) => [norm(n), q])
 );
+
+/** Available but not stock-tracked. */
+const AVAILABLE_NAMES = new Set(["Octabox 65cm"].map(norm));
 
 export const rentalCatalog: RentalItem[] = RAW.map(
   ([name, price, category, watts, comingSoon], i) => ({
@@ -415,7 +431,8 @@ export const rentalCatalog: RentalItem[] = RAW.map(
     price,
     category,
     watts,
-    comingSoon: comingSoon || !AVAILABLE_NAMES.has(norm(name)),
+    comingSoon: comingSoon || !(STOCK[norm(name)] || AVAILABLE_NAMES.has(norm(name))),
+    stock: STOCK[norm(name)],
     image: pickImage(name, i),
   })
 );
