@@ -68,7 +68,10 @@ const CourseDetail = () => {
     );
   }
 
-  const initialStart = session
+  const savedPct = session
+    ? Number(window.localStorage.getItem(`course-progress:${session.user.id}:${video.slug}`)) || 0
+    : 0;
+  const initialStart = session && savedPct < 95
     ? Math.max(0, Number(window.localStorage.getItem(`course-position:${session.user.id}:${video.slug}`)) || 0)
     : 0;
   const hasSource = Boolean(video.streamId || video.playbackUrl);
