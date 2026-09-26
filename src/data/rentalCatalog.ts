@@ -332,9 +332,9 @@ const RAW: Raw[] = [
 
   // MODIFIERS
   ["Aputure Fresnel 2X Lens Mount", 8000, "Modifiers"],
-  ["Octabox 65cm", 5000, "Modifiers"],
-  ["Octabox 90cm", 5000, "Modifiers"],
-  ["Parabolic Softbox 120cm", 5000, "Modifiers"],
+  ["Octa dome 120cm", 5000, "Modifiers"],
+  ["Octa Dome 90cm", 5000, "Modifiers"],
+  ["Parabolic Softbox 65cm", 5000, "Modifiers"],
   ["Parabolic Softbox 150cm", 5000, "Modifiers"],
   ["Bulb Lantern Modifier 90cm", 5000, "Modifiers"],
   ["Bulb Lantern Modifier 120cm", 5000, "Modifiers"],
@@ -371,7 +371,7 @@ const RAW: Raw[] = [
   ["C-Stand Heavy Duty 20 ft with Arm", 10000, "Stands & Grip"],
   ["Combo Stand / Turtle Base Stand", 20000, "Stands & Grip"],
   ["Grid Clamp / Matthellini Clamp", 3000, "Stands & Grip"],
-  ["Light Stand Heavy Duty 13 ft", 3000, "Stands & Grip"],
+  ["Silver Light stand", 3000, "Stands & Grip"],
   ["Sandbag 10kg", 1000, "Stands & Grip"],
   ["Super Clamp with Stud", 2000, "Stands & Grip"],
 
