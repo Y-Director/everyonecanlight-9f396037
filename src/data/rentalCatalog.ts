@@ -46,6 +46,10 @@ import nanliteForza720b from "@/assets/rental/Nanlite_Forza_720B.png.asset.json"
 import nanlitePavobulb4 from "@/assets/rental/Nanlite_Pavobulb_Set_of_4.png.asset.json";
 import nanlitePavotube15c from "@/assets/rental/Nanlite_Pavotube_II_15C_RGB_Tube_1.5_ft.png.asset.json";
 import nanlitePavotube30c from "@/assets/rental/Nanlite_Pavotube_II_30C_RGB_Tube_3_ft.png.asset.json";
+import octaDome90 from "@/assets/rental/Octabox_90cm_dome.webp.asset.json";
+import suncrafterTl30 from "@/assets/rental/Suncrafter_TL30.png.asset.json";
+import amaranAce25x from "@/assets/rental/Amaran_Ace_25x.webp.asset.json";
+import amaranRay60c from "@/assets/rental/Amaran_Ray_60c_new.webp.asset.json";
 import octabox90 from "@/assets/rental/Octabox_90cm.png.asset.json";
 import superClampStud from "@/assets/rental/Super_Clamp_with_Stud.png.asset.json";
 import vMountBattery from "@/assets/rental/V-Mount_Battery.png.asset.json";
@@ -236,6 +240,10 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
   ].map((a) => [norm(a.original_filename.replace(/\.(?:png|jpe?g|webp|avif)$/i, "").replace(/-\d+$/, "")), a.url])
 );
 
+OVERRIDES[norm("Octabox 90cm")] = octaDome90.url;
+OVERRIDES[norm("Suncrafter 10W Tube Light")] = suncrafterTl30.url;
+OVERRIDES[norm("Amaran Ace 25x")] = amaranAce25x.url;
+OVERRIDES[norm("Amaran Ray 60c")] = amaranRay60c.url;
 OVERRIDES[norm("Amaran SPOTLIGHT SE 19°")] = amaranSpotlightSe19.url;
 OVERRIDES[norm("Amaran SPOTLIGHT SE 36°")] = amaranSpotlightSe36.url;
 
