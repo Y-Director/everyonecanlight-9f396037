@@ -68,6 +68,12 @@ const CourseDetail = () => {
     );
   }
 
+  const savedPct = session
+    ? Number(window.localStorage.getItem(`course-progress:${session.user.id}:${video.slug}`)) || 0
+    : 0;
+  const initialStart = session && savedPct < 95
+    ? Math.max(0, Number(window.localStorage.getItem(`course-position:${session.user.id}:${video.slug}`)) || 0)
+    : 0;
   const hasSource = Boolean(video.streamId || video.playbackUrl);
 
   const saveStreamProgress = () => {
@@ -159,7 +165,7 @@ const CourseDetail = () => {
                     <iframe
                       ref={iframeRef}
                       key={video.streamId}
-                      src={`https://${STREAM_CUSTOMER_CODE}.cloudflarestream.com/${video.streamId}/iframe?preload=auto&letterboxColor=transparent&primaryColor=${encodeURIComponent("#1f5bff")}&poster=${encodeURIComponent(posterFor(video))}${resumeAt > 0 ? `&startTime=${Math.floor(resumeAt)}s` : ""}`}
+                      src={`https://${STREAM_CUSTOMER_CODE}.cloudflarestream.com/${video.streamId}/iframe?preload=auto&letterboxColor=transparent&primaryColor=${encodeURIComponent("#1f5bff")}&poster=${encodeURIComponent(new URL(posterFor(video), window.location.origin).href)}${initialStart > 0 ? `&startTime=${Math.floor(initialStart)}s` : ""}`}
                       title={video.title}
                       className="absolute inset-0 h-full w-full border-0"
                       allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
