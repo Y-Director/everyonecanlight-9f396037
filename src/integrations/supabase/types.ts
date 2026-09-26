@@ -1061,6 +1061,13 @@ export type Database = {
           read_ct: number
         }[]
       }
+      rental_rented_out_counts: {
+        Args: never
+        Returns: {
+          item_id: string
+          qty: number
+        }[]
+      }
     }
     Enums: {
       app_role: "admin" | "staff" | "user"

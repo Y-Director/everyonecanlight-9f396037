@@ -335,7 +335,24 @@ const RentEquipment = () => {
       });
   }, [query, category]);
 
+  const [rentedOut, setRentedOut] = useState<Record<string, number>>({});
+  useEffect(() => {
+    supabase.rpc("rental_rented_out_counts" as never).then(({ data }) => {
+      const map: Record<string, number> = {};
+      ((data as { item_id: string; qty: number }[] | null) ?? []).forEach((r) => (map[r.item_id] = r.qty));
+      setRentedOut(map);
+    });
+  }, []);
+  const leftOf = (id: string, stock?: number) =>
+    stock === undefined ? undefined : Math.max(0, stock - (rentedOut[id] ?? 0));
+
   const setQty = (id: string, next: number, itemName: string) => {
+    const item = rentalCatalog.find((x) => x.id === id);
+    const left = leftOf(id, item?.stock);
+    if (left !== undefined && next > left && next > (cart[id] ?? 0)) {
+      toast(left === 0 ? "All units are rented out" : `Only ${left} available`, { description: itemName, duration: 2200 });
+      return;
+    }
     setCart((prev) => {
       const current = prev[id] ?? 0;
       const locked = baseQty[id] ?? 0;
@@ -886,6 +903,20 @@ const RentEquipment = () => {
                     {formatNaira(item.price)}
                     <span className="text-white/50 text-xs"> / day</span>
                   </p>
+                  {!item.comingSoon && item.stock !== undefined && (() => {
+                    const left = leftOf(item.id, item.stock)!;
+                    const rented = (rentedOut[item.id] ?? 0) > 0;
+                    return (
+                      <p className="text-[11px] text-white/60">
+                        {item.stock} at Light House
+                        {rented && (
+                          <span className={left === 0 ? "text-destructive" : "text-primary"}>
+                            {" · "}{left === 0 ? "all rented out" : `${left} left`}
+                          </span>
+                        )}
+                      </p>
+                    );
+                  })()}
                   <div className="mt-auto pt-1">
                     {item.comingSoon ? (
                       <span className="text-xs text-white/50">Not yet available</span>
