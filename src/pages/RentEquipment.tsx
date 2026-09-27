@@ -30,7 +30,12 @@ import BookingStatusCard, { type BookingLookup } from "@/components/rental/Booki
 import ManageBookingDialog from "@/components/rental/ManageBookingDialog";
 import PropsDialog from "@/components/rental/PropsDialog";
 import RentalTermsDialog from "@/components/rental/RentalTermsDialog";
-import { PERK_THRESHOLD, qualifiesForPerks } from "@/lib/rentalTerms";
+import {
+  OPERATOR_THRESHOLD,
+  PERK_THRESHOLD,
+  qualifiesForOperator,
+  qualifiesForPerks,
+} from "@/lib/rentalTerms";
 import EmailVerifyField from "@/components/rental/EmailVerifyField";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -553,6 +558,8 @@ const RentEquipment = () => {
   const kycValid = kycBaseValid && (returning === true || (Boolean(idType) && Boolean(idImage)));
   const perksUnlocked = qualifiesForPerks(total);
   const perkGap = Math.max(0, PERK_THRESHOLD - total);
+  const operatorUnlocked = qualifiesForOperator(total);
+  const operatorGap = Math.max(0, OPERATOR_THRESHOLD - total);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -678,9 +685,11 @@ const RentEquipment = () => {
                       </div>
                     </div>
                   ) : (
-                    <p className="mt-3 text-sm text-foreground/60">
-                      A lighting operator will be assigned and shared with you before your call time.
-                    </p>
+                      <p className="mt-3 text-sm text-foreground/60">
+                        {qualifiesForOperator(reservation.total)
+                          ? "A lighting operator will be assigned and shared with you before your call time."
+                          : `Rentals from ${formatNaira(OPERATOR_THRESHOLD)} include a lighting operator. This booking covers pick-up and monitoring only.`}
+                      </p>
                   )}
                 </div>
               </div>
@@ -1281,19 +1290,25 @@ const RentEquipment = () => {
                           : "border-border bg-[hsl(var(--surface))] text-foreground/65"
                       }`}
                     >
-                      {perksUnlocked ? (
+                      {operatorUnlocked && perksUnlocked ? (
                         <>
                           <span className="font-semibold text-[hsl(var(--ux-success))]">Perks unlocked.</span> A Lighting
                           Operator follows your gear to set, and props are free on this booking.
                         </>
+                      ) : perksUnlocked ? (
+                        <>
+                          <span className="font-semibold text-foreground">Free props unlocked.</span> Add{" "}
+                          {formatNaira(operatorGap)} more to have a Lighting Operator follow your gear — included on
+                          rentals from {formatNaira(OPERATOR_THRESHOLD)} up.
+                        </>
                       ) : (
                         <>
                           <span className="font-semibold text-foreground">
-                            Add {formatNaira(perkGap)} to unlock perks.
+                            Add {formatNaira(perkGap)} for free props
                           </span>{" "}
-                          A Lighting Operator only follows the gear — and props are only free — on rentals
-                          from {formatNaira(PERK_THRESHOLD)} up. Below that, pick-up and monitoring are yours
-                          to handle.
+                          or {formatNaira(operatorGap)} to include a Lighting Operator, who follows the gear on rentals
+                          from {formatNaira(OPERATOR_THRESHOLD)} up. Below that, pick-up and monitoring are yours to
+                          handle.
                         </>
                       )}
                     </div>
