@@ -240,7 +240,10 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
   ].map((a) => [norm(a.original_filename.replace(/\.(?:png|jpe?g|webp|avif)$/i, "").replace(/-\d+$/, "")), a.url])
 );
 
-OVERRIDES[norm("Octabox 90cm")] = octaDome90.url;
+OVERRIDES[norm("Octa Dome 90cm")] = octaDome90.url;
+OVERRIDES[norm("Octa dome 120cm")] = octabox65.url;
+OVERRIDES[norm("Parabolic Softbox 65cm")] = parabolic120.url;
+OVERRIDES[norm("Silver Light stand")] = lightStand13.url;
 OVERRIDES[norm("Suncrafter 10W Tube Light")] = suncrafterTl30.url;
 OVERRIDES[norm("Amaran Ace 25x")] = amaranAce25x.url;
 OVERRIDES[norm("Amaran Ray 60c")] = amaranRay60c.url;
@@ -416,21 +419,21 @@ const STOCK: Record<string, number> = Object.fromEntries(
       ["Amaran Halo 600x", 1],
       // Diffusers / softboxes
       ["Bulb Lantern Modifier 90cm", 2],
-      ["Parabolic Softbox 120cm", 1],
-      ["Octabox 90cm", 1],
+      ["Parabolic Softbox 65cm", 1],
+      ["Octa Dome 90cm", 1],
       // Reflectors & mounts
       ["5-in-1 Collapsible Reflector 120cm", 1],
       ["5-in-1 Collapsible Reflector 80cm", 1],
       ["Aputure Fresnel 2X Lens Mount", 1],
       // Stands
       ["C-Stand Heavy Duty 10.5 ft with Arm", 2],
-      ["Light Stand Heavy Duty 13 ft", 3],
+      ["Silver Light stand", 3],
     ] as [string, number][]
   ).map(([n, q]) => [norm(n), q])
 );
 
 /** Available but not stock-tracked. */
-const AVAILABLE_NAMES = new Set(["Octabox 65cm"].map(norm));
+const AVAILABLE_NAMES = new Set(["Octa dome 120cm"].map(norm));
 
 export const rentalCatalog: RentalItem[] = RAW.map(
   ([name, price, category, watts, comingSoon], i) => ({
@@ -467,7 +470,7 @@ const SUGGEST_UNDER_600 = [
   "C-Stand Heavy Duty 10.5 ft with Arm",
   "15 ft Extension Cable",
   "V-Mount Battery",
-  "Parabolic Softbox 120cm",
+  "Parabolic Softbox 65cm",
 ].map(norm);
 
 const SUGGEST_OVER_600 = [
@@ -485,7 +488,7 @@ const SUGGESTION_REASONS: Record<string, string> = {
   [norm("15 ft Extension Cable")]:
     "Wall sockets are never where you want them. This gives you room to place the light properly.",
   [norm("V-Mount Battery")]: "For when you shoot away from power, or outdoors.",
-  [norm("Parabolic Softbox 120cm")]:
+  [norm("Parabolic Softbox 65cm")]:
     "A COB light is bare and hard on skin. Soften it and faces instantly look kinder.",
   [norm("Parabolic Softbox 150cm")]:
     "Bigger light, bigger softbox. Beautiful soft wrap for portraits and interviews.",
