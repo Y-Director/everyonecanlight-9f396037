@@ -1,6 +1,6 @@
 import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors'
 import { createClient } from 'npm:@supabase/supabase-js@2'
-import { qualifiesForPerks } from '../_shared/rentalPerks.ts'
+import { qualifiesForOperator } from '../_shared/rentalPerks.ts'
 
 import { PRICES } from '../_shared/rentalPrices.ts'
 
@@ -81,9 +81,9 @@ Deno.serve(async (req) => {
       bookingCode = makeBookingCode()
     }
 
-    // Lighting Operators only follow the gear once the rental qualifies for perks.
+    // Lighting Operators only follow the gear on rentals from ₦100,000 up.
     let runnerId: string | null = null
-    if (qualifiesForPerks(total)) {
+    if (qualifiesForOperator(total)) {
       // Only assign operators that exist as active Lighting Operators in Team Members.
       const { data: operators } = await supabase
         .from('staff_members')
