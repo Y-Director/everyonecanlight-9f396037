@@ -685,9 +685,11 @@ const RentEquipment = () => {
                       </div>
                     </div>
                   ) : (
-                    <p className="mt-3 text-sm text-foreground/60">
-                      A lighting operator will be assigned and shared with you before your call time.
-                    </p>
+                      <p className="mt-3 text-sm text-foreground/60">
+                        {qualifiesForOperator(reservation.total)
+                          ? "A lighting operator will be assigned and shared with you before your call time."
+                          : `Rentals from ${formatNaira(OPERATOR_THRESHOLD)} include a lighting operator. This booking covers pick-up and monitoring only.`}
+                      </p>
                   )}
                 </div>
               </div>
