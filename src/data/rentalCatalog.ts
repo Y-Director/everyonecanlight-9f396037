@@ -220,7 +220,7 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
     cstand20,
     silverLightStand,
     gridClamp,
-    blackWrap,
+    blackWrapNew,
     godoxAd300Pro,
     godoxAd400Pro,
     godoxAd600Pro,
