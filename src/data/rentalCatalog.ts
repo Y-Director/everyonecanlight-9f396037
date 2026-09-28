@@ -334,7 +334,7 @@ const RAW: Raw[] = [
   ["Nanlite Pavobulb Set of 4", 40000, "Practical Lights", 10],
 
   // MODIFIERS
-  ["Aputure Fresnel 2X Lens Mount", 8000, "Modifiers"],
+  ["Amaran Fresnel 2X Lens Mount", 10000, "Modifiers"],
   ["Octa dome 120cm", 5000, "Modifiers"],
   ["Octa Dome 90cm", 5000, "Modifiers"],
   ["Parabolic Softbox 65cm", 5000, "Modifiers"],
@@ -424,7 +424,7 @@ const STOCK: Record<string, number> = Object.fromEntries(
       // Reflectors & mounts
       ["5-in-1 Collapsible Reflector 120cm", 1],
       ["5-in-1 Collapsible Reflector 80cm", 1],
-      ["Aputure Fresnel 2X Lens Mount", 1],
+      ["Amaran Fresnel 2X Lens Mount", 1],
       // Stands
       ["C-Stand Heavy Duty 10.5 ft with Arm", 2],
       ["Silver Light stand", 3],
