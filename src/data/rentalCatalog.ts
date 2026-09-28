@@ -427,7 +427,7 @@ const STOCK: Record<string, number> = Object.fromEntries(
       ["5-in-1 Collapsible Reflector 80cm", 1],
       ["Amaran Fresnel 2X Lens Mount", 1],
       // Stands
-      ["C-Stand Heavy Duty 10.5 ft with Arm", 2],
+      ["C-Stand Heavy Duty 10.5 ft with Arm", 3],
       ["Silver Light stand", 3],
     ] as [string, number][]
   ).map(([n, q]) => [norm(n), q])
