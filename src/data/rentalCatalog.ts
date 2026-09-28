@@ -84,7 +84,7 @@ import foamCoreBounce from "@/assets/rental/Foam_Core_White_Bounce_Board_Large_a
 import cstand20 from "@/assets/rental/C-Stand_Heavy_Duty_20_ft_with_Arm.png.asset.json";
 import silverLightStand from "@/assets/rental/Silver_Light_stand.webp.asset.json";
 import gridClamp from "@/assets/rental/Grid_Clamp_Matthellini_Clamp.png.asset.json";
-import blackWrap from "@/assets/rental/black-wrap-cinefoil.jpg.asset.json";
+import blackWrapNew from "@/assets/rental/Black_Wrap_Cinefoil-3.jpg.asset.json";
 import godoxAd300Pro from "@/assets/rental/Godox_AD300_Pro_TTL_Portable_Flash.png.asset.json";
 import godoxAd400Pro from "@/assets/rental/Godox_AD400_Pro_TTL_Portable_Flash.png.asset.json";
 import godoxAd600Pro from "@/assets/rental/Godox_AD600_Pro_TTL_Portable_Flash.png.asset.json";
