@@ -82,7 +82,7 @@ import scrim8Full from "@/assets/rental/8x8_ft_Scrim_Frame_Full_Diffusion.png.as
 import scrim8SilverGold from "@/assets/rental/8x8_ft_Scrim_Frame_Silver_Gold_Reflector.png.asset.json";
 import foamCoreBounce from "@/assets/rental/Foam_Core_White_Bounce_Board_Large_and_Small.png.asset.json";
 import cstand20 from "@/assets/rental/C-Stand_Heavy_Duty_20_ft_with_Arm.png.asset.json";
-import lightStand13 from "@/assets/rental/Light_Stand_Heavy_Duty_13_ft.png.asset.json";
+import silverLightStand from "@/assets/rental/Silver_Light_stand.webp.asset.json";
 import gridClamp from "@/assets/rental/Grid_Clamp_Matthellini_Clamp.png.asset.json";
 import blackWrap from "@/assets/rental/black-wrap-cinefoil.jpg.asset.json";
 import godoxAd300Pro from "@/assets/rental/Godox_AD300_Pro_TTL_Portable_Flash.png.asset.json";
@@ -218,7 +218,7 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
     scrim8SilverGold,
     foamCoreBounce,
     cstand20,
-    lightStand13,
+    silverLightStand,
     gridClamp,
     blackWrap,
     godoxAd300Pro,
@@ -243,7 +243,7 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
 OVERRIDES[norm("Octa Dome 90cm")] = octaDome90.url;
 OVERRIDES[norm("Octa dome 120cm")] = octabox65.url;
 OVERRIDES[norm("Parabolic Softbox 65cm")] = parabolic120.url;
-OVERRIDES[norm("Silver Light stand")] = lightStand13.url;
+OVERRIDES[norm("Silver Light stand")] = silverLightStand.url;
 OVERRIDES[norm("Suncrafter 10W Tube Light")] = suncrafterTl30.url;
 OVERRIDES[norm("Amaran Ace 25x")] = amaranAce25x.url;
 OVERRIDES[norm("Amaran Ray 60c")] = amaranRay60c.url;
