@@ -418,6 +418,7 @@ const STOCK: Record<string, number> = Object.fromEntries(
       ["Amaran SPOTLIGHT SE 19°", 1],
       ["Suncrafter 10W Tube Light", 1],
       ["Amaran Halo 600x", 1],
+      ["Colbor 220R", 1],
       // Diffusers / softboxes
       ["Bulb Lantern Modifier 90cm", 2],
       ["Parabolic Softbox 65cm", 1],
