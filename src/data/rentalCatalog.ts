@@ -218,7 +218,7 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
     scrim8SilverGold,
     foamCoreBounce,
     cstand20,
-    lightStand13,
+    silverLightStand,
     gridClamp,
     blackWrap,
     godoxAd300Pro,
