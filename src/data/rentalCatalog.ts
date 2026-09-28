@@ -250,8 +250,7 @@ OVERRIDES[norm("Amaran Ace 25x")] = amaranAce25x.url;
 OVERRIDES[norm("Amaran Ray 60c")] = amaranRay60c.url;
 OVERRIDES[norm("Amaran SPOTLIGHT SE 19°")] = amaranSpotlightSe19.url;
 OVERRIDES[norm("Amaran SPOTLIGHT SE 36°")] = amaranSpotlightSe36.url;
-OVERRIDES[norm("Black Wrap / Cinefoil Roll")] =
-  (await import("@/assets/rental/Black_Wrap_Cinefoil-3.jpg.asset.json")).url;
+OVERRIDES[norm("Black Wrap / Cinefoil Roll")] = blackWrapNew.url;
 
 const pickImage = (name: string, index: number) =>
   OVERRIDES[norm(name)] ??
