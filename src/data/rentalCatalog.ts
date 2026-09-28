@@ -61,7 +61,7 @@ import amaranT2c from "@/assets/rental/Amaran_T2c_RGBWW_Tube_Bar_2_ft.png.asset.
 import amaranT4c from "@/assets/rental/Amaran_T4c_RGBWW_Tube_Bar_4_ft.png.asset.json";
 import godoxTl30 from "@/assets/rental/Godox_TL30_RGB_Tube_Light.png.asset.json";
 import godoxTl60 from "@/assets/rental/Godox_TL60_RGB_Tube_Light.png.asset.json";
-import aputureFresnel2x from "@/assets/rental/Aputure_Fresnel_2X_Lens_Mount.png.asset.json";
+import amaranFresnel2x from "@/assets/rental/Amaran_Fresnel_2X_Lens_Mount.jpg.asset.json";
 import nanlitePavotubeT87c from "@/assets/rental/Nanlite_Pavotube_T8-7C_RGB_Tube_4_ft.png.asset.json";
 import amaranF21c from "@/assets/rental/Amaran_F21c_Mat_2x1_ft.png.asset.json";
 import amaranF22c from "@/assets/rental/Amaran_F22c_Mat_2x2_ft.png.asset.json";
