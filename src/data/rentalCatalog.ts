@@ -197,7 +197,7 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
     amaranT4c,
     godoxTl30,
     godoxTl60,
-    aputureFresnel2x,
+    amaranFresnel2x,
     nanlitePavotubeT87c,
     amaranF21c,
     amaranF22c,
@@ -240,6 +240,7 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
   ].map((a) => [norm(a.original_filename.replace(/\.(?:png|jpe?g|webp|avif)$/i, "").replace(/-\d+$/, "")), a.url])
 );
 
+OVERRIDES[norm("Amaran Fresnel 2X Lens Mount")] = amaranFresnel2x.url;
 OVERRIDES[norm("Octa Dome 90cm")] = octaDome90.url;
 OVERRIDES[norm("Octa dome 120cm")] = octabox65.url;
 OVERRIDES[norm("Parabolic Softbox 65cm")] = parabolic120.url;
