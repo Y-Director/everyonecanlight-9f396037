@@ -175,9 +175,9 @@ const BookingSummaryDialog = ({
               </div>
             ) : (
               <p className="mt-2 text-xs text-white/55">
-                {reservation.total >= 100000
+                {reservation.total >= 150000
                   ? "Assigned and shared with you before your pick up time."
-                  : "Rentals from ₦100,000 include a Lighting Operator."}
+                  : "Rentals from ₦150,000 include a Lighting Operator."}
               </p>
             )}
           </div>

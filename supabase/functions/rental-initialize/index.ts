@@ -81,7 +81,7 @@ Deno.serve(async (req) => {
       bookingCode = makeBookingCode()
     }
 
-    // Lighting Operators only follow the gear on rentals from ₦100,000 up.
+    // Lighting Operators only follow the gear on rentals from ₦150,000 up.
     let runnerId: string | null = null
     if (qualifiesForOperator(total)) {
       // Only assign operators that exist as active Lighting Operators in Team Members.
