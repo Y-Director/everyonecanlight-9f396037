@@ -136,7 +136,7 @@ const RentalsSection = ({ partnerOnly = false }: { partnerOnly?: boolean }) => {
       return;
     }
     setRows((data ?? []) as unknown as Row[]);
-  }, []);
+  }, [partnerOnly]);
 
   const loadIdentities = useCallback(async () => {
     setIdentitiesLoading(true);
