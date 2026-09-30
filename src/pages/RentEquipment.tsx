@@ -134,6 +134,7 @@ const RentEquipment = () => {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<"All Gear" | RentalCategory>("All Gear");
   const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const [suggestionsOpen, setSuggestionsOpen] = useState(false);
   const [cart, setCart] = useState<Cart>(() => {
     try {
       return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "{}");
@@ -851,8 +852,18 @@ const RentEquipment = () => {
                     Not sure what you need? Ask Starlight
                   </button>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => setSuggestionsOpen((v) => !v)}
+                  aria-expanded={suggestionsOpen}
+                  aria-label={suggestionsOpen ? "Hide Starlight suggestions" : "Show Starlight suggestions"}
+                  className="ml-auto flex shrink-0 items-center gap-1 rounded-full border border-border px-2 py-1 text-xs text-foreground/70 md:hidden"
+                >
+                  {suggestions.length}
+                  {suggestionsOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                </button>
               </div>
-              <div className="mt-3 flex gap-3 overflow-x-auto pb-1">
+              <div className={cn("mt-3 gap-3 overflow-x-auto pb-1 md:flex", suggestionsOpen ? "flex" : "hidden")}>
                 {suggestions.map((s) => (
                   <div
                     key={s.id}
