@@ -101,7 +101,7 @@ const statusStyle = (status: string) =>
       ? "bg-red-500/15 text-red-400 border-red-500/30"
       : "bg-amber-500/15 text-amber-400 border-amber-500/30";
 
-const RentalsSection = () => {
+const RentalsSection = ({ partnerOnly = false }: { partnerOnly?: boolean }) => {
   const [rows, setRows] = useState<Row[]>([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
@@ -121,11 +121,13 @@ const RentalsSection = () => {
 
   const load = useCallback(async () => {
     setLoading(true);
-    const { data, error } = await supabase
+    let query = supabase
       .from("rental_reservations")
       .select(
         "id, reference, booking_code, contact_name, contact_email, contact_phone, items, days, start_date, end_date, location, call_time, total, status, fulfilment_status, checked_out_at, returned_at, paid_at, created_at, runners(name, phone, avatar_url), rental_customers(full_name, email, phone, id_type, id_image_path, kyc_status)",
-      )
+      );
+    if (partnerOnly) query = query.eq("status", "confirmed");
+    const { data, error } = await query
       .order("created_at", { ascending: false })
       .limit(500);
     setLoading(false);
@@ -354,7 +356,7 @@ const RentalsSection = () => {
         </div>
 
         <div className="mt-8 flex gap-2 border-b border-foreground/10">
-          {(["bookings", "identity"] as const).map((t) => (
+          {(partnerOnly ? (["bookings"] as const) : (["bookings", "identity"] as const)).map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
