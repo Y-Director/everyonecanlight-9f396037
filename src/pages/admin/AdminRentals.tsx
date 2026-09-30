@@ -98,7 +98,8 @@ const AdminRentals = () => {
         t.key !== "admins" &&
         t.key !== "contributorAccounts" &&
         (t.key === "notifications" ||
-          account.sections.includes(t.key === "operators" ? "team" : t.key)),
+          account.sections.includes(t.key === "operators" ? "team" : t.key) ||
+          (t.key === "rentals" && account.sections.includes("rentals_partner"))),
     ).map((t) => t.key);
   }, [account]);
 
@@ -185,7 +186,11 @@ const AdminRentals = () => {
       </header>
 
       <div className="max-w-7xl mx-auto px-6 py-8">
-        {tab === "rentals" && <RentalsSection />}
+        {tab === "rentals" && (
+          <RentalsSection
+            partnerOnly={!!account && !account.is_super && !account.sections.includes("rentals") && account.sections.includes("rentals_partner")}
+          />
+        )}
         {tab === "masterclass" && <MasterclassSection />}
         {tab === "courses" && <CoursesSection />}
         {tab === "team" && <TeamSection view="team" />}

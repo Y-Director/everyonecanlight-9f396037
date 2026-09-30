@@ -47,13 +47,17 @@ export const logActivity = async (supabase: any, entry: ActivityEntry) => {
   try {
     const { data: admins } = await supabase
       .from('admin_accounts')
-      .select('email, is_super, status')
+      .select('email, is_super, status, sections')
       .eq('status', 'active')
 
-    const all = (admins ?? []) as { email: string; is_super: boolean }[]
+    const all = (admins ?? []) as { email: string; is_super: boolean; sections: string[] | null }[]
     const supers = all.filter((a) => a.is_super).map((a) => a.email.toLowerCase())
+    // Light House partners only hear about paid, confirmed rental bookings.
+    const partners = entry.category === 'rentals' && entry.event === 'booking_confirmed'
+      ? all.filter((a) => (a.sections ?? []).includes('rentals_partner')).map((a) => a.email.toLowerCase())
+      : []
     const actorIsAdmin = actor && all.some((a) => a.email.toLowerCase() === actor)
-    recipients = Array.from(new Set([...supers, ...(actorIsAdmin ? [actor as string] : [])]))
+    recipients = Array.from(new Set([...supers, ...partners, ...(actorIsAdmin ? [actor as string] : [])]))
   } catch (e) {
     console.error('logActivity: could not resolve admins', e)
   }
