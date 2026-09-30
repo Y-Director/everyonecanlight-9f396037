@@ -20,6 +20,7 @@ import {
   X,
   ShieldCheck,
   ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { matchesSearch } from "@/lib/searchMatch";
 import { toast } from "sonner";
