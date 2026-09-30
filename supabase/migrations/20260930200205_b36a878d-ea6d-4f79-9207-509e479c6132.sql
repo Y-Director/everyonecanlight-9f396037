@@ -1,0 +1,1 @@
+CREATE POLICY "Rental partners view paid reservations" ON public.rental_reservations FOR SELECT TO authenticated USING (status = 'confirmed' AND app_private.admin_has_section(auth.uid(), 'rentals_partner'));
