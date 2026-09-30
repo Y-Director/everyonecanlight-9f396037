@@ -587,7 +587,7 @@ const RentEquipment = () => {
             <div className="max-w-2xl">
               <h1 className="text-3xl md:text-4xl font-semibold">Light House</h1>
               <p className="mt-3 text-foreground/60 text-sm md:text-base">
-                Build your gear list, choose your dates, and get the lighting equipment you need for your production.
+                The most affordable rental house in Lagos city.
               </p>
             </div>
           </header>
