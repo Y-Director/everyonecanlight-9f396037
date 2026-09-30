@@ -1,11 +1,11 @@
 import termsPdf from "@/assets/docs/rental-terms.pdf.asset.json";
 
 /** Free props unlock at this subtotal. */
-export const PERK_THRESHOLD = 60000;
+export const PERK_THRESHOLD = 100000;
 export const qualifiesForPerks = (total: number) => (total ?? 0) >= PERK_THRESHOLD;
 
 /** A Lighting Operator follows the gear only on rentals from this subtotal up. */
-export const OPERATOR_THRESHOLD = 100000;
+export const OPERATOR_THRESHOLD = 150000;
 export const qualifiesForOperator = (total: number) => (total ?? 0) >= OPERATOR_THRESHOLD;
 
 /** Props given out free once the rental qualifies; extras are paid for. */
