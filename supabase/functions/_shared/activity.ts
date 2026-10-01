@@ -1,3 +1,6 @@
+import { createClient } from 'npm:@supabase/supabase-js@2'
+import { sendTemplateEmail } from './transactional-email-templates/send-email.ts'
+
 // Shared activity-log + admin notification helper used by edge functions.
 // Writes one row to public.activity_log and emails every active super admin
 // (plus the acting admin, when there is one) using the admin-activity template.
