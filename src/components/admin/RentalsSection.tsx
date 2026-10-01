@@ -233,18 +233,8 @@ const RentalsSection = ({ partnerOnly = false }: { partnerOnly?: boolean }) => {
       const to = String(row.contact_email ?? row.rental_customers?.email ?? "").trim().toLowerCase();
       if (to) {
         void supabase.functions
-          .invoke("send-transactional-email", {
-            body: {
-              templateName: "rental-returned",
-              recipientEmail: to,
-              idempotencyKey: `rental-returned-${row.id}`,
-              templateData: {
-                customerName: row.contact_name ?? row.rental_customers?.full_name ?? undefined,
-                bookingCode: row.booking_code ?? row.reference,
-                items: (Array.isArray(row.items) ? row.items : []).map((i: { name?: string; qty?: number }) => ({ name: i.name, qty: i.qty })),
-                returnedAt: new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }),
-              },
-            },
+          .invoke("rental-returned-email", {
+            body: { reservationId: row.id },
           })
           .then(({ error: e }) => {
             if (e) toast.error("Return saved, but the thank-you email could not be sent");

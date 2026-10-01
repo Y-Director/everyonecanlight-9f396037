@@ -1,3 +1,6 @@
+import { createClient } from 'npm:@supabase/supabase-js@2'
+import { sendTemplateEmail } from './transactional-email-templates/send-email.ts'
+
 // Shared activity-log + admin notification helper used by edge functions.
 // Writes one row to public.activity_log and emails every active super admin
 // (plus the acting admin, when there is one) using the admin-activity template.
@@ -26,16 +29,31 @@ export const sendTemplate = async (
   // deno-lint-ignore no-explicit-any
   templateData: Record<string, any>,
 ) => {
-  const res = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/send-transactional-email`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
-    },
-    body: JSON.stringify({ templateName, recipientEmail, idempotencyKey, templateData }),
-  })
-  if (!res.ok) console.error('email failed', templateName, recipientEmail, res.status, await res.text())
-  return res.ok
+  const db = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!)
+  const log = async (status: 'sent' | 'suppressed' | 'failed', error_message?: string) => {
+    const { error } = await db.from('email_send_log').insert({
+      message_id: null,
+      template_name: templateName,
+      recipient_email: recipientEmail,
+      status,
+      error_message: error_message ?? null,
+    })
+    if (error) console.error('email_send_log insert failed', error.code, error.message)
+  }
+  try {
+    const result = await sendTemplateEmail(templateName, recipientEmail, { templateData, idempotencyKey })
+    if (result.sent) {
+      await log('sent')
+      return true
+    }
+    await log('suppressed')
+    return false
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e)
+    console.error('email failed', templateName, msg)
+    await log('failed', msg.slice(0, 1000))
+    return false
+  }
 }
 
 // deno-lint-ignore no-explicit-any
