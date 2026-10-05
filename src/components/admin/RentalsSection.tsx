@@ -236,8 +236,8 @@ const RentalsSection = ({ partnerOnly = false }: { partnerOnly?: boolean }) => {
           .invoke("rental-returned-email", {
             body: { reservationId: row.id },
           })
-          .then(({ error: e }) => {
-            if (e) toast.error("Return saved, but the thank-you email could not be sent");
+          .then(({ data, error: e }) => {
+            if (e || !data?.sent) toast.error("Return saved, but the thank-you email could not be sent");
             else toast.success("Thank-you email sent to the renter");
           });
       }
