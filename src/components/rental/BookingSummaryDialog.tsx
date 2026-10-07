@@ -194,7 +194,7 @@ const BookingSummaryDialog = ({
           </div>
 
           <p className="mt-5 text-[10px] text-white/35">
-            everyonecanlight.com · Present this reference at pick up.
+            everyonecanlight.co · Present this reference at pick up.
           </p>
         </div>
 
