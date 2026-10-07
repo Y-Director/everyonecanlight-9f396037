@@ -129,6 +129,17 @@ const BookingSummaryDialog = ({
                 <p className="mt-1.5 text-white/60">
                   You are responsible for transporting the equipment to and from this location.
                 </p>
+                <div className="mt-3 space-y-1 text-white/80">
+                  <div className="font-medium text-amber-200">Customer support</div>
+                  <div>
+                    <a href="https://wa.me/2347015869630" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">
+                      +234 701 586 9630
+                    </a>{" "}(WhatsApp only)
+                  </div>
+                  <a href="mailto:hello@everyonecanlight.co" className="block break-all underline underline-offset-2">
+                    hello@everyonecanlight.co
+                  </a>
+                </div>
               </div>
             </div>
           </div>
