@@ -32,11 +32,14 @@ Deno.serve(async (req) => {
   const to = String(row.contact_email ?? cust?.email ?? '').trim().toLowerCase()
   if (!to) return json({ error: 'No renter email' }, 400)
 
-  const sent = await sendTemplate('rental-returned', to, `rental-returned-${row.id}`, {
+  const templateData = {
     customerName: row.contact_name ?? cust?.full_name ?? undefined,
     bookingCode: row.booking_code ?? row.reference,
     items: (Array.isArray(row.items) ? row.items : []).map((i: { name?: string; qty?: number }) => ({ name: i.name, qty: i.qty })),
     returnedAt: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
-  })
+  }
+  const sent = await sendTemplate('rental-returned', to, `rental-returned-${row.id}`, templateData)
+  // Always keep a copy for the team inbox.
+  await sendTemplate('rental-returned', 'everyonecanlight@gmail.com', `rental-returned-${row.id}-copy`, templateData)
   return json({ sent })
 })
