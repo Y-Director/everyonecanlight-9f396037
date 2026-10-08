@@ -270,52 +270,6 @@ const InventorySection = () => {
 
   return (
     <div>
-      {/* Light House catalogue tally — available gear only */}
-      <div className="mb-5 rounded-2xl border border-foreground/10 bg-[hsl(var(--surface))] overflow-hidden">
-        <button
-          onClick={() => setLightHouseOpen((o) => !o)}
-          className="w-full flex items-center gap-3 px-5 py-4 text-left hover:bg-foreground/5"
-        >
-          <ChevronDown
-            className={`w-4 h-4 text-foreground/50 transition-transform ${lightHouseOpen ? "" : "-rotate-90"}`}
-          />
-          <div>
-            <p className="font-medium">Light House — available gear</p>
-            <p className="text-xs text-foreground/50">
-              {lightHouse.items.length} item types · {lightHouse.trackedUnits} units at the Light House
-            </p>
-          </div>
-          <span className="ml-auto text-xs px-2.5 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/15 text-emerald-400">
-            {lightHouse.trackedUnits} units
-          </span>
-        </button>
-
-        {lightHouseOpen && (
-          <div className="border-t border-foreground/10 px-5 py-4 space-y-4">
-            {lightHouse.byCategory.map(([category, list]) => (
-              <div key={category}>
-                <p className="text-xs uppercase tracking-widest text-foreground/50 mb-2">
-                  {category}
-                </p>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
-                  {list.map((i) => (
-                    <div
-                      key={i.id}
-                      className="flex items-center justify-between gap-3 rounded-lg border border-foreground/10 bg-background/40 px-3 py-2"
-                    >
-                      <span className="text-sm truncate">{i.name}</span>
-                      <span className="text-xs font-medium text-foreground/70 whitespace-nowrap">
-                        {i.stock != null ? `× ${i.stock}` : "available"}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
       {/* Headline counters */}
       <div className="rounded-2xl border border-foreground/10 bg-[hsl(var(--surface))] p-6">
         <div className="flex flex-col lg:flex-row lg:items-end gap-6 justify-between">
@@ -518,6 +472,27 @@ const InventorySection = () => {
                           </td>
                           <td className="px-4 py-2">
                             <div className="flex justify-end gap-1">
+                              {i.location === "in_store" ? (
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="h-8 text-xs"
+                                  onClick={() => quickUpdate(i, { location: "rented_out" })}
+                                >
+                                  <Truck className="w-3.5 h-3.5 mr-1" />
+                                  Rent out
+                                </Button>
+                              ) : (
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="h-8 text-xs"
+                                  onClick={() => quickUpdate(i, { location: "in_store" })}
+                                >
+                                  <Warehouse className="w-3.5 h-3.5 mr-1" />
+                                  Return
+                                </Button>
+                              )}
                               <Button size="icon" variant="ghost" onClick={() => openEdit(i)}>
                                 <Pencil className="w-4 h-4" />
                               </Button>
