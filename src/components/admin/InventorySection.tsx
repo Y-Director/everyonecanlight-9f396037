@@ -100,7 +100,13 @@ const InventorySection = () => {
   const [draft, setDraft] = useState({ ...emptyDraft });
   const [saving, setSaving] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<Item | null>(null);
-  const [lightHouseOpen, setLightHouseOpen] = useState(true);
+
+  // Only gear that is available at the Light House belongs in this inventory.
+  const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+  const lightHouseAvailable = useMemo(
+    () => new Set(rentalCatalog.filter((i) => !i.comingSoon).map((i) => i.id)),
+    []
+  );
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -124,6 +130,7 @@ const InventorySection = () => {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return items.filter((i) => {
+      if (!lightHouseAvailable.has(norm(i.name))) return false;
       const matchQ =
         !q ||
         i.name.toLowerCase().includes(q) ||
