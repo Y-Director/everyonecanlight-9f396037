@@ -10,6 +10,7 @@ import {
   Warehouse,
   Truck,
   Wrench,
+  Globe,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -100,6 +101,26 @@ const InventorySection = () => {
   const [draft, setDraft] = useState({ ...emptyDraft });
   const [saving, setSaving] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<Item | null>(null);
+  const [syncing, setSyncing] = useState(false);
+
+  // Publishes the current rented-out counts to the Light House page.
+  const pushToWebsite = async () => {
+    setSyncing(true);
+    const { data, error } = await supabase.functions.invoke("sync-inventory-availability");
+    setSyncing(false);
+    if (error) {
+      toast.error("Could not update the website");
+      return;
+    }
+    toast.success("Website updated", {
+      description: `Availability pushed for ${(data as { synced?: number })?.synced ?? 0} item(s).`,
+    });
+    void logActivity({
+      category: "inventory",
+      event: "availability_pushed",
+      title: "Light House availability pushed to website",
+    });
+  };
 
   // Only gear that is available at the Light House belongs in this inventory.
   const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -397,6 +418,14 @@ const InventorySection = () => {
           <Button onClick={openAdd}>
             <Plus className="w-4 h-4 mr-2" />
             Add item
+          </Button>
+          <Button variant="outline" onClick={pushToWebsite} disabled={syncing}>
+            {syncing ? (
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+            ) : (
+              <Globe className="w-4 h-4 mr-2" />
+            )}
+            Push to website
           </Button>
         </div>
       </div>
