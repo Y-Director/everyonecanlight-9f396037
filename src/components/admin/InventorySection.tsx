@@ -120,7 +120,35 @@ const InventorySection = () => {
       toast.error("Could not load inventory");
       return;
     }
-    setItems((data ?? []) as Item[]);
+    let list = (data ?? []) as Item[];
+    // Make sure every available Light House item has its units in the inventory.
+    const counts = new Map<string, number>();
+    list.forEach((i) => counts.set(norm(i.name), (counts.get(norm(i.name)) ?? 0) + 1));
+    const today = new Date().toISOString().slice(0, 10);
+    const missing = rentalCatalog
+      .filter((c) => !c.comingSoon)
+      .flatMap((c) => {
+        const short = (c.stock ?? 1) - (counts.get(c.id) ?? 0);
+        return Array.from({ length: Math.max(0, short) }, () => ({
+          name: c.name,
+          manufacturer: c.name.split(" ")[0] || "Generic",
+          category: c.category,
+          location: "in_store",
+          status: "good",
+          notes: null,
+          serial_number: null,
+          date_added: today,
+        }));
+      });
+    if (missing.length) {
+      const { data: added, error: insErr } = await supabase
+        .from("inventory_items")
+        .insert(missing as never)
+        .select("id, name, manufacturer, category, serial_number, location, status, notes, date_added");
+      if (insErr) toast.error("Could not add Light House gear to inventory");
+      else list = [...list, ...((added ?? []) as Item[])];
+    }
+    setItems(list);
   }, []);
 
   useEffect(() => {
