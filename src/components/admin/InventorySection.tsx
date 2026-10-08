@@ -100,7 +100,13 @@ const InventorySection = () => {
   const [draft, setDraft] = useState({ ...emptyDraft });
   const [saving, setSaving] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<Item | null>(null);
-  const [lightHouseOpen, setLightHouseOpen] = useState(true);
+
+  // Only gear that is available at the Light House belongs in this inventory.
+  const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+  const lightHouseAvailable = useMemo(
+    () => new Set(rentalCatalog.filter((i) => !i.comingSoon).map((i) => i.id)),
+    []
+  );
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -124,6 +130,7 @@ const InventorySection = () => {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return items.filter((i) => {
+      if (!lightHouseAvailable.has(norm(i.name))) return false;
       const matchQ =
         !q ||
         i.name.toLowerCase().includes(q) ||
@@ -133,7 +140,7 @@ const InventorySection = () => {
       const matchS = statusFilter === "all" || i.status === statusFilter;
       return matchQ && matchL && matchS;
     });
-  }, [items, query, locationFilter, statusFilter]);
+  }, [items, query, locationFilter, statusFilter, lightHouseAvailable]);
 
   const groups = useMemo(() => {
     const map = new Map<string, Item[]>();
@@ -144,25 +151,11 @@ const InventorySection = () => {
     return [...map.entries()].sort((a, b) => a[0].localeCompare(b[0]));
   }, [filtered, groupBy]);
 
-  const total = items.length;
-  const inStore = items.filter((i) => i.location === "in_store").length;
+  const lightHouseItems = items.filter((i) => lightHouseAvailable.has(norm(i.name)));
+  const total = lightHouseItems.length;
+  const inStore = lightHouseItems.filter((i) => i.location === "in_store").length;
   const rentedOut = total - inStore;
-  const attention = items.filter((i) => i.status !== "good").length;
-
-  // Light House catalogue tally — available items only, with unit counts.
-  const lightHouse = useMemo(() => {
-    const available = rentalCatalog.filter((i) => !i.comingSoon);
-    const byCategory = new Map<string, typeof available>();
-    available.forEach((i) => {
-      byCategory.set(i.category, [...(byCategory.get(i.category) ?? []), i]);
-    });
-    const trackedUnits = available.reduce((s, i) => s + (i.stock ?? 0), 0);
-    return {
-      items: available,
-      byCategory: [...byCategory.entries()].sort((a, b) => a[0].localeCompare(b[0])),
-      trackedUnits,
-    };
-  }, []);
+  const attention = lightHouseItems.filter((i) => i.status !== "good").length;
 
   const openAdd = () => {
     setEditing(null);
@@ -278,52 +271,6 @@ const InventorySection = () => {
 
   return (
     <div>
-      {/* Light House catalogue tally — available gear only */}
-      <div className="mb-5 rounded-2xl border border-foreground/10 bg-[hsl(var(--surface))] overflow-hidden">
-        <button
-          onClick={() => setLightHouseOpen((o) => !o)}
-          className="w-full flex items-center gap-3 px-5 py-4 text-left hover:bg-foreground/5"
-        >
-          <ChevronDown
-            className={`w-4 h-4 text-foreground/50 transition-transform ${lightHouseOpen ? "" : "-rotate-90"}`}
-          />
-          <div>
-            <p className="font-medium">Light House — available gear</p>
-            <p className="text-xs text-foreground/50">
-              {lightHouse.items.length} item types · {lightHouse.trackedUnits} units at the Light House
-            </p>
-          </div>
-          <span className="ml-auto text-xs px-2.5 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/15 text-emerald-400">
-            {lightHouse.trackedUnits} units
-          </span>
-        </button>
-
-        {lightHouseOpen && (
-          <div className="border-t border-foreground/10 px-5 py-4 space-y-4">
-            {lightHouse.byCategory.map(([category, list]) => (
-              <div key={category}>
-                <p className="text-xs uppercase tracking-widest text-foreground/50 mb-2">
-                  {category}
-                </p>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
-                  {list.map((i) => (
-                    <div
-                      key={i.id}
-                      className="flex items-center justify-between gap-3 rounded-lg border border-foreground/10 bg-background/40 px-3 py-2"
-                    >
-                      <span className="text-sm truncate">{i.name}</span>
-                      <span className="text-xs font-medium text-foreground/70 whitespace-nowrap">
-                        {i.stock != null ? `× ${i.stock}` : "available"}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
       {/* Headline counters */}
       <div className="rounded-2xl border border-foreground/10 bg-[hsl(var(--surface))] p-6">
         <div className="flex flex-col lg:flex-row lg:items-end gap-6 justify-between">
@@ -526,6 +473,27 @@ const InventorySection = () => {
                           </td>
                           <td className="px-4 py-2">
                             <div className="flex justify-end gap-1">
+                              {i.location === "in_store" ? (
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="h-8 text-xs"
+                                  onClick={() => quickUpdate(i, { location: "rented_out" })}
+                                >
+                                  <Truck className="w-3.5 h-3.5 mr-1" />
+                                  Rent out
+                                </Button>
+                              ) : (
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="h-8 text-xs"
+                                  onClick={() => quickUpdate(i, { location: "in_store" })}
+                                >
+                                  <Warehouse className="w-3.5 h-3.5 mr-1" />
+                                  Return
+                                </Button>
+                              )}
                               <Button size="icon" variant="ghost" onClick={() => openEdit(i)}>
                                 <Pencil className="w-4 h-4" />
                               </Button>
