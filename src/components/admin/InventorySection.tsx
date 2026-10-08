@@ -100,6 +100,7 @@ const InventorySection = () => {
   const [draft, setDraft] = useState({ ...emptyDraft });
   const [saving, setSaving] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<Item | null>(null);
+  const [lightHouseOpen, setLightHouseOpen] = useState(true);
 
   const load = useCallback(async () => {
     setLoading(true);
