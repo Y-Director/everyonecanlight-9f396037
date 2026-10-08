@@ -344,9 +344,20 @@ const RentEquipment = () => {
 
   const [rentedOut, setRentedOut] = useState<Record<string, number>>({});
   useEffect(() => {
-    supabase.rpc("rental_rented_out_counts" as never).then(({ data }) => {
+    // Reservation-based counts plus manual counts pushed from the admin
+    // inventory ("Push to website"); take the higher of the two per item so
+    // the same rental is never double-counted.
+    Promise.all([
+      supabase.rpc("rental_rented_out_counts" as never),
+      supabase.from("light_house_availability" as never).select("item_id, rented_out"),
+    ]).then(([rpcRes, manualRes]) => {
       const map: Record<string, number> = {};
-      ((data as { item_id: string; qty: number }[] | null) ?? []).forEach((r) => (map[r.item_id] = r.qty));
+      ((rpcRes.data as { item_id: string; qty: number }[] | null) ?? []).forEach(
+        (r) => (map[r.item_id] = r.qty)
+      );
+      ((manualRes.data as { item_id: string; rented_out: number }[] | null) ?? []).forEach(
+        (r) => (map[r.item_id] = Math.max(map[r.item_id] ?? 0, r.rented_out))
+      );
       setRentedOut(map);
     });
   }, []);
