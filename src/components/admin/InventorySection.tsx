@@ -148,6 +148,21 @@ const InventorySection = () => {
   const rentedOut = total - inStore;
   const attention = items.filter((i) => i.status !== "good").length;
 
+  // Light House catalogue tally — available items only, with unit counts.
+  const lightHouse = useMemo(() => {
+    const available = rentalCatalog.filter((i) => !i.comingSoon);
+    const byCategory = new Map<string, typeof available>();
+    available.forEach((i) => {
+      byCategory.set(i.category, [...(byCategory.get(i.category) ?? []), i]);
+    });
+    const trackedUnits = available.reduce((s, i) => s + (i.stock ?? 0), 0);
+    return {
+      items: available,
+      byCategory: [...byCategory.entries()].sort((a, b) => a[0].localeCompare(b[0])),
+      trackedUnits,
+    };
+  }, []);
+
   const openAdd = () => {
     setEditing(null);
     setDraft({ ...emptyDraft });
