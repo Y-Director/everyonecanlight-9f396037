@@ -151,10 +151,11 @@ const InventorySection = () => {
     return [...map.entries()].sort((a, b) => a[0].localeCompare(b[0]));
   }, [filtered, groupBy]);
 
-  const total = items.length;
-  const inStore = items.filter((i) => i.location === "in_store").length;
+  const lightHouseItems = items.filter((i) => lightHouseAvailable.has(norm(i.name)));
+  const total = lightHouseItems.length;
+  const inStore = lightHouseItems.filter((i) => i.location === "in_store").length;
   const rentedOut = total - inStore;
-  const attention = items.filter((i) => i.status !== "good").length;
+  const attention = lightHouseItems.filter((i) => i.status !== "good").length;
 
   const openAdd = () => {
     setEditing(null);
