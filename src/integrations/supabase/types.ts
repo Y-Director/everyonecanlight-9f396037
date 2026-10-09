@@ -380,6 +380,24 @@ export type Database = {
         }
         Relationships: []
       }
+      light_house_availability: {
+        Row: {
+          item_id: string
+          rented_out: number
+          updated_at: string
+        }
+        Insert: {
+          item_id: string
+          rented_out?: number
+          updated_at?: string
+        }
+        Update: {
+          item_id?: string
+          rented_out?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       masterclass_registrations: {
         Row: {
           amount: number
