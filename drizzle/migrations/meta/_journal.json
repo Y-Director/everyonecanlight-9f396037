@@ -8,6 +8,13 @@
       "when": 1791532430613,
       "tag": "0000_grant_light_house_availability",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791621360608,
+      "tag": "0001_rental_next_available",
+      "breakpoints": true
     }
   ]
 }
