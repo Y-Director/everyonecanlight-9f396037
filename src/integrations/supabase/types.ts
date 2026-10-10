@@ -1053,6 +1053,13 @@ export type Database = {
       }
       increment_post_view: { Args: { _slug: string }; Returns: undefined }
       is_active_admin: { Args: never; Returns: boolean }
+      rental_next_available: {
+        Args: never
+        Returns: {
+          available_from: string
+          item_id: string
+        }[]
+      }
       rental_rented_out_counts: {
         Args: never
         Returns: {

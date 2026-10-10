@@ -360,7 +360,15 @@ const RentEquipment = () => {
       );
       setRentedOut(map);
     });
+    supabase.rpc("rental_next_available" as never).then(({ data }) => {
+      const m: Record<string, string> = {};
+      ((data as { item_id: string; available_from: string }[] | null) ?? []).forEach(
+        (r) => (m[r.item_id] = r.available_from)
+      );
+      setNextAvail(m);
+    });
   }, []);
+  const [nextAvail, setNextAvail] = useState<Record<string, string>>({});
   const leftOf = (id: string, stock?: number) =>
     stock === undefined ? undefined : Math.max(0, stock - (rentedOut[id] ?? 0));
 
@@ -943,7 +951,12 @@ const RentEquipment = () => {
                         {item.stock} at Light House
                         {rented && (
                           <span className={left === 0 ? "text-destructive" : "text-primary"}>
-                            {" · "}{left === 0 ? "all rented out" : `${left} left`}
+                            {" · "}{left === 0 ? "Rented out for today" : `${left} left`}
+                          </span>
+                        )}
+                        {rented && left === 0 && nextAvail[item.id] && (
+                          <span className="block text-primary">
+                            Available from {new Date(nextAvail[item.id] + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
                           </span>
                         )}
                       </p>
