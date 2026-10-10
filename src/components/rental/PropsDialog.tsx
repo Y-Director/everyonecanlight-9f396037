@@ -139,10 +139,10 @@ const PropsDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange: (o: 
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl max-h-[88vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Props — {FREE_PROP_LIMIT} free with your rental</DialogTitle>
+          <DialogTitle>Props: {FREE_PROP_LIMIT} free with your rental</DialogTitle>
           <DialogDescription>
             On rentals over ₦{PERK_THRESHOLD.toLocaleString("en-NG")} your first {FREE_PROP_LIMIT} props are free of
-            charge. Want more? Keep selecting — extra props are charged at the prices shown and paid for before they
+            charge. Want more? Keep selecting, extra props are charged at the prices shown and paid for before they
             are held for you.
           </DialogDescription>
         </DialogHeader>
@@ -234,7 +234,7 @@ const PropsDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange: (o: 
             ) : (
               <>
                 <p>
-                  {selected.length} prop{selected.length === 1 ? "" : "s"} selected —{" "}
+                  {selected.length} prop{selected.length === 1 ? "" : "s"} selected / 
                   {Math.min(selected.length, FREE_PROP_LIMIT)} free
                   {selected.length > FREE_PROP_LIMIT ? `, ${selected.length - FREE_PROP_LIMIT} paid` : ""}
                 </p>
