@@ -16,6 +16,7 @@ import trust6 from "@/assets/trust/trust-6.jpg.asset.json";
 import trust7 from "@/assets/trust/trust-7.jpg.asset.json";
 import trust8 from "@/assets/trust/trust-8.jpg.asset.json";
 import contributorBanner from "@/assets/contributors/contributor-banner.png.asset.json";
+import madamEp1 from "@/assets/madam/madam-episode-1.jpg.asset.json";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import BrandVideo from "@/components/BrandVideo";
@@ -145,14 +146,27 @@ const Index = () => {
           title="Learn Lighting. Find Gear. Create Better - Everyone Can Light"
           description="Learn lighting with practical guides, compare 250+ lights in our equipment database, find control apps and rent professional lighting gear in Lagos."
           path="/"
-          jsonLd={{
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            name: "Everyone Can Light",
-            url: "https://everyonecanlight.lovable.app/",
-            description:
-              "Lighting education, equipment database and gear rentals for filmmakers and creators.",
-          }}
+          jsonLd={[
+            {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "Everyone Can Light",
+              url: "https://everyonecanlight.lovable.app/",
+              description:
+                "Lighting education, equipment database and gear rentals for filmmakers and creators.",
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "VideoObject",
+              name: "MADAM Episode 1 - Everyone Can Light",
+              description: "Episode 1 of MADAM, the new YouTube series from Everyone Can Light.",
+              thumbnailUrl: "https://i.ytimg.com/vi/5H9CPGe7D6U/maxresdefault.jpg",
+              uploadDate: "2026-10-22",
+              contentUrl: "https://www.youtube.com/watch?v=5H9CPGe7D6U",
+              embedUrl: "https://www.youtube.com/embed/5H9CPGe7D6U",
+              partOfSeries: { "@type": "CreativeWorkSeries", name: "MADAM" },
+            },
+          ]}
         />
         <SiteNav />
 
@@ -223,6 +237,46 @@ const Index = () => {
             </div>
           ))}
         </section>
+
+        {/* MADAM YouTube series */}
+        <section
+          aria-labelledby="madam-heading"
+          className="px-8 max-w-[1400px] mx-auto w-full pb-16"
+        >
+          <div className="grid lg:grid-cols-2 gap-8 items-center rounded-2xl border border-foreground/10 bg-[hsl(var(--surface))] p-6 sm:p-8">
+            <a
+              href="https://youtu.be/5H9CPGe7D6U"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block overflow-hidden rounded-xl"
+            >
+              <img
+                src={madamEp1.url}
+                alt="MADAM Episode 1 thumbnail, a new lighting series by Everyone Can Light on YouTube"
+                loading="lazy"
+                className="w-full h-auto aspect-video object-cover hover:scale-[1.02] transition-transform"
+              />
+            </a>
+            <div>
+              <p className="text-sm text-[hsl(var(--accent-lime))]">New series on YouTube</p>
+              <h2 id="madam-heading" className="mt-2 text-3xl sm:text-4xl font-medium tracking-tight">
+                MADAM
+              </h2>
+              <p className="mt-4 text-sm text-foreground/55 leading-relaxed max-w-md">
+                Our new YouTube series from Everyone Can Light. Episode 1 is out now.
+              </p>
+              <a
+                href="https://youtu.be/5H9CPGe7D6U"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
+              >
+                Watch Episode 1
+              </a>
+            </div>
+          </div>
+        </section>
+
 
         {/* Trust */}
         <section className="px-8 py-20 border-t border-foreground/10 bg-[hsl(var(--surface))]">
