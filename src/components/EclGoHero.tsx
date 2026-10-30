@@ -63,13 +63,20 @@ const EclGoHero = () => {
             <h2 className="relative mt-4 text-3xl font-semibold leading-tight">{kit.name}</h2>
             <p className="relative mt-1 text-sm opacity-80">{kit.tagline}</p>
 
-            <div className="relative flex-1 flex items-center justify-center py-6">
-              <span className="flex h-24 w-24 items-center justify-center rounded-full bg-foreground text-background transition-transform group-hover:scale-110">
-                <ArrowRight className="h-8 w-8" />
+            <div className="relative mt-4 aspect-video overflow-hidden rounded-2xl ring-1 ring-background/25">
+              <img
+                src={kit.image}
+                alt={`${kit.name} lighting setup`}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <span className="absolute bottom-2 right-2 flex h-9 w-9 items-center justify-center rounded-full bg-foreground text-background shadow-lg transition-transform group-hover:scale-110">
+                <ArrowRight className="h-4.5 w-4.5" />
               </span>
             </div>
 
-            <ul className="relative text-xs space-y-0.5 opacity-90">
+            <ul className="relative mt-auto pt-4 text-xs space-y-0.5 opacity-90">
               {kit.items.map(([n, q]) => (
                 <li key={n}>
                   {q > 1 ? `${q}× ` : ""}
