@@ -222,6 +222,7 @@ Deno.serve(async (req) => {
             summary: `${row.contact_name ?? 'A customer'} paid NGN ${Number(row.total).toLocaleString('en-NG')}.`,
             entityType: 'rental_reservation',
             entityId: row.id,
+            metadata: { bookingDate: row.paid_at ?? row.created_at },
             lines: [
               { label: 'Booking reference', value: String(row.booking_code ?? reference) },
               { label: 'Customer', value: `${row.contact_name ?? '—'} · ${row.contact_email ?? '—'}` },
