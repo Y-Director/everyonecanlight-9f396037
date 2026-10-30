@@ -25,8 +25,8 @@ export const ECL_GO_KITS: EclGoKit[] = [
     slug: "podcast",
     name: "Podcast Go",
     tagline: "Multi-host setups, lit in minutes.",
-    from: "265 85% 62%",
-    to: "285 80% 45%",
+    from: "78 72% 91%",
+    to: "76 85% 73%",
     image: podcastImg.url,
     items: [
       ["Amaran Ray 360c", 1],
@@ -43,8 +43,8 @@ export const ECL_GO_KITS: EclGoKit[] = [
     slug: "talking-head",
     name: "Talking Head Go",
     tagline: "One face, perfectly lit.",
-    from: "75 95% 55%",
-    to: "95 80% 38%",
+    from: "76 88% 83%",
+    to: "74 95% 59%",
     image: talkingHeadImg.url,
     items: [
       ["Amaran Ray 360c", 1],
@@ -60,8 +60,8 @@ export const ECL_GO_KITS: EclGoKit[] = [
     slug: "interview",
     name: "Interview Go",
     tagline: "Key, fill, hair and stands, all in.",
-    from: "28 95% 55%",
-    to: "12 85% 45%",
+    from: "74 90% 77%",
+    to: "72 100% 51%",
     image: interviewImg.url,
     items: [
       ["Amaran Ray 360c", 1],
@@ -78,8 +78,8 @@ export const ECL_GO_KITS: EclGoKit[] = [
     slug: "product",
     name: "Product Go",
     tagline: "Shape, shine and detail for products.",
-    from: "52 95% 58%",
-    to: "38 95% 50%",
+    from: "80 66% 89%",
+    to: "78 82% 69%",
     image: productImg.url,
     items: [
       ["Amaran 300c", 1],
