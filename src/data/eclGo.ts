@@ -1,4 +1,8 @@
 import { getRentalItem } from "@/data/rentalCatalog";
+import podcastImg from "@/assets/eclgo/podcast.webp.asset.json";
+import talkingHeadImg from "@/assets/eclgo/talking-head.webp.asset.json";
+import interviewImg from "@/assets/eclgo/interview.webp.asset.json";
+import productImg from "@/assets/eclgo/product.webp.asset.json";
 
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
 
@@ -10,6 +14,8 @@ export type EclGoKit = {
   from: string;
   to: string;
   items: [name: string, qty: number][];
+  /** Photo shown inside the card */
+  image: string;
   /** Instructions / placement text, to be supplied later. */
   instructions?: string;
 };
@@ -21,6 +27,7 @@ export const ECL_GO_KITS: EclGoKit[] = [
     tagline: "Multi-host setups, lit in minutes.",
     from: "265 85% 62%",
     to: "285 80% 45%",
+    image: podcastImg.url,
     items: [
       ["Amaran Ray 360c", 1],
       ["Amaran 300c", 1],
@@ -36,6 +43,7 @@ export const ECL_GO_KITS: EclGoKit[] = [
     tagline: "One face, perfectly lit.",
     from: "75 95% 55%",
     to: "95 80% 38%",
+    image: talkingHeadImg.url,
     items: [
       ["Amaran Ray 360c", 1],
       ["Amaran Ray 120c", 1],
@@ -50,6 +58,7 @@ export const ECL_GO_KITS: EclGoKit[] = [
     tagline: "Key, fill, hair and stands, all in.",
     from: "28 95% 55%",
     to: "12 85% 45%",
+    image: interviewImg.url,
     items: [
       ["Amaran Ray 360c", 1],
       ["Amaran Ray 120c", 1],
@@ -67,6 +76,7 @@ export const ECL_GO_KITS: EclGoKit[] = [
     tagline: "Shape, shine and detail for products.",
     from: "52 95% 58%",
     to: "38 95% 50%",
+    image: productImg.url,
     items: [
       ["Amaran 300c", 1],
       ["Suncrafter 10W Tube Light", 1],
