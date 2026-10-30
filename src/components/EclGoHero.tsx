@@ -2,7 +2,7 @@ import { useState } from "react";
 import goBlack from "@/assets/eclgo/ecl-go-black.png.asset.json";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Info } from "lucide-react";
-import { ECL_GO_KITS, type EclGoKit, kitDailyTotal } from "@/data/eclGo";
+import { ECL_GO_KITS, type EclGoKit, kitDailyTotal, kitPieces } from "@/data/eclGo";
 import { formatNaira } from "@/data/rentalCatalog";
 import {
   Dialog,
@@ -76,15 +76,12 @@ const EclGoHero = () => {
               </span>
             </div>
 
-            <ul className="relative mt-4 text-xs space-y-0.5 opacity-90">
-              {kit.items.map(([n, q]) => (
-                <li key={n}>
-                  {q > 1 ? `${q}× ` : ""}
-                  {n}
-                </li>
-              ))}
-            </ul>
-            <p className="relative mt-3 text-sm font-semibold">{formatNaira(kitDailyTotal(kit))} / day</p>
+            <p className="relative mt-4 text-sm font-medium opacity-90">
+              {kitPieces(kit)}-piece kit setup
+            </p>
+            <p className="relative mt-1 text-lg font-semibold">
+              {formatNaira(kitDailyTotal(kit))} / day
+            </p>
           </div>
         ))}
       </div>
