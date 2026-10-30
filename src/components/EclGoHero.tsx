@@ -72,7 +72,7 @@ const EclGoHero = () => {
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <span className="absolute bottom-2 right-2 flex h-9 w-9 items-center justify-center rounded-full bg-foreground text-background shadow-lg transition-transform group-hover:scale-110">
-                <ArrowRight className="h-4.5 w-4.5" />
+                <ArrowRight className="h-5 w-5" />
               </span>
             </div>
 
