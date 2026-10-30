@@ -77,14 +77,16 @@ const EclGoHero = () => {
               </span>
             </div>
 
-            {/* footer: kit size + price */}
-            <div className="mt-auto flex items-end justify-between border-t border-background/15 pt-4">
-              <p className="text-sm font-medium opacity-90">
+            {/* footer: kit size + price, one baseline */}
+            <div className="mt-auto flex items-baseline justify-between gap-3 border-t border-background/15 pt-4">
+              <p className="text-[11px] font-medium uppercase tracking-wide opacity-70">
                 {kitPieces(kit)}-piece kit setup
               </p>
-              <p className="text-right text-lg font-semibold leading-none">
-                {formatNaira(kitDailyTotal(kit))}
-                <span className="block text-[11px] font-medium opacity-70">per day</span>
+              <p className="flex shrink-0 items-baseline gap-1.5 whitespace-nowrap">
+                <span className="text-base font-semibold leading-none tabular-nums">
+                  {formatNaira(kitDailyTotal(kit))}
+                </span>
+                <span className="text-[11px] font-medium leading-none opacity-70">per day</span>
               </p>
             </div>
           </div>
