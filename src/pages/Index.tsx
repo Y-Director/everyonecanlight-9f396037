@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import masterclassSection from "@/assets/landing/masterclass-section.png.asset.json";
-import heroStatsDesktop from "@/assets/landing/hero-stats-desktop.png.asset.json";
-import heroStatsMobile from "@/assets/landing/hero-stats-mobile.png.asset.json";
 import controlAppsIllustration from "@/assets/landing/control-apps-illustration.png.asset.json";
 import singleLightFood from "@/assets/landing/single-light-food.png.asset.json";
 import oneLightVideo from "@/assets/landing/one-light-food.mp4.asset.json";
@@ -174,37 +172,9 @@ const Index = () => {
         <EclGoHero />
 
         {/* Previous hero */}
-        <section className="px-8 max-w-[1400px] mx-auto w-full pt-6 pb-12 sm:pt-10 sm:pb-20 text-center">
-          <h2 className="font-medium tracking-tight leading-[1.05] text-[32px] sm:text-5xl lg:text-[64px] max-w-4xl mx-auto">
-            <span className="sm:hidden">
-              Everything a Creator
-              <br />
-              Needs for <span className="text-[hsl(var(--accent-lime))]">Lighting</span>
-            </span>
-            <span className="hidden sm:inline">
-              Everything You Need
-              <br />
-              For <span className="text-[hsl(var(--accent-lime))]">Lighting</span>
-            </span>
-          </h2>
-          <p className="mt-4 sm:mt-6 text-sm sm:text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
-            Learn lighting. Find the right gear. Rent what you need. Create better images.
-          </p>
+        <section className="px-8 max-w-[1400px] mx-auto w-full pt-0 pb-12 sm:pb-16 text-center">
 
-          {/* Desktop / tablet collage */}
-          <img
-            src={heroStatsDesktop.url}
-            alt="Lighting gear available to rent, lighting lessons and equipment explainers on Everyone Can Light"
-            className="hidden sm:block mt-10 w-full max-w-5xl mx-auto h-auto object-contain"
-          />
-          {/* Mobile collage */}
-          <img
-            src={heroStatsMobile.url}
-            alt="Lighting gear available to rent, lighting lessons and equipment explainers on Everyone Can Light"
-            className="sm:hidden mt-6 w-full max-w-xs mx-auto h-auto object-contain"
-          />
-
-          <div className="mt-7 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
               to="/light-house"
               className="w-full sm:w-auto rounded-md bg-[hsl(var(--cta))] text-[hsl(var(--cta-foreground))] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
