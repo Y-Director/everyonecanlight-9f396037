@@ -65,6 +65,7 @@ export type Database = {
           email: string
           id: string
           is_super: boolean
+          partner_since: string | null
           sections: string[]
           status: string
           updated_at: string
@@ -74,6 +75,7 @@ export type Database = {
           email: string
           id?: string
           is_super?: boolean
+          partner_since?: string | null
           sections?: string[]
           status?: string
           updated_at?: string
@@ -83,6 +85,7 @@ export type Database = {
           email?: string
           id?: string
           is_super?: boolean
+          partner_since?: string | null
           sections?: string[]
           status?: string
           updated_at?: string
