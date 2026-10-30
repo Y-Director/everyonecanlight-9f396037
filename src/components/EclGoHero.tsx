@@ -64,7 +64,7 @@ const EclGoHero = () => {
             </div>
 
             {/* photo */}
-            <div className="mt-5 aspect-[4/3] overflow-hidden rounded-2xl">
+            <div className="relative mt-5 aspect-[4/3] overflow-hidden rounded-2xl">
               <img
                 src={kit.image}
                 alt={`${kit.name} lighting setup`}
