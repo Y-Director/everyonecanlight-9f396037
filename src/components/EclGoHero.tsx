@@ -1,4 +1,5 @@
 import { useState } from "react";
+import goBlack from "@/assets/eclgo/ecl-go-black.png.asset.json";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Info } from "lucide-react";
 import { ECL_GO_KITS, type EclGoKit, kitDailyTotal } from "@/data/eclGo";
@@ -46,7 +47,7 @@ const EclGoHero = () => {
               className="absolute -right-16 top-1/3 w-64 h-64 rotate-45 rounded-3xl opacity-25 bg-background/40"
             />
             <div className="relative flex items-start justify-between">
-              <span className="text-xs font-semibold uppercase tracking-widest opacity-80">ECL Go</span>
+              <img src={goBlack.url} alt="ECL Go" className="h-5 w-auto object-contain" />
               <button
                 type="button"
                 aria-label={`${kit.name} instructions and placement`}
