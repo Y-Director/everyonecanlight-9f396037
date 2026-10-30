@@ -20,6 +20,7 @@ import madamEp1 from "@/assets/madam/madam-episode-1.jpg.asset.json";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import BrandVideo from "@/components/BrandVideo";
+import EclGoHero from "@/components/EclGoHero";
 
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -185,7 +186,7 @@ const Index = () => {
               <br />
               For <span className="text-[hsl(var(--accent-lime))]">Lighting</span>
             </span>
-          </h1>
+          </h2>
           <p className="mt-4 sm:mt-6 text-sm sm:text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
             Learn lighting. Find the right gear. Rent what you need. Create better images.
           </p>
