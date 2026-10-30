@@ -37,7 +37,7 @@ const EclGoHero = () => {
             tabIndex={0}
             onClick={() => navigate(`/light-house?go=${kit.slug}`)}
             onKeyDown={(e) => e.key === "Enter" && navigate(`/light-house?go=${kit.slug}`)}
-            className="group relative overflow-hidden rounded-3xl aspect-[3/4.4] p-6 text-left cursor-pointer flex flex-col transition-transform hover:-translate-y-1 text-background"
+            className="group relative overflow-hidden rounded-3xl min-h-[480px] p-6 text-left cursor-pointer flex flex-col transition-transform hover:-translate-y-1 text-background"
             style={{
               background: `linear-gradient(160deg, hsl(${kit.from}), hsl(${kit.to}))`,
             }}
@@ -64,7 +64,7 @@ const EclGoHero = () => {
             <h2 className="relative mt-4 text-3xl font-semibold leading-tight">{kit.name}</h2>
             <p className="relative mt-1 text-sm opacity-80">{kit.tagline}</p>
 
-            <div className="relative flex-1 flex items-center justify-center">
+            <div className="relative flex-1 flex items-center justify-center py-6">
               <span className="flex h-24 w-24 items-center justify-center rounded-full bg-foreground text-background transition-transform group-hover:scale-110">
                 <ArrowRight className="h-8 w-8" />
               </span>
