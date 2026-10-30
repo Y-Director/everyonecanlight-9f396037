@@ -35,6 +35,8 @@ export const ECL_GO_KITS: EclGoKit[] = [
       ["Colbor 220R", 1],
       ["Octa Dome 90cm", 1],
       ["Octa dome 120cm", 1],
+      ["C-Stand Heavy Duty 10.5 ft with Arm", 2],
+      ["Silver Light stand", 3],
     ],
   },
   {
@@ -50,6 +52,8 @@ export const ECL_GO_KITS: EclGoKit[] = [
       ["Colbor 220R", 1],
       ["Amaran SPOTLIGHT SE 19°", 1],
       ["Octa Dome 90cm", 1],
+      ["C-Stand Heavy Duty 10.5 ft with Arm", 2],
+      ["Silver Light stand", 1],
     ],
   },
   {
