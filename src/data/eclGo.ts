@@ -101,3 +101,6 @@ export const kitCart = (kit: EclGoKit): Record<string, number> => {
 
 export const kitDailyTotal = (kit: EclGoKit) =>
   kit.items.reduce((s, [name, qty]) => s + (getRentalItem(norm(name))?.price ?? 0) * qty, 0);
+
+/** Total number of individual pieces (units) in a kit. */
+export const kitPieces = (kit: EclGoKit) => kit.items.reduce((s, [, qty]) => s + qty, 0);
