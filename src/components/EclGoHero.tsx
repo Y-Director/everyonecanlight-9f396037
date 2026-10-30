@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Info } from "lucide-react";
-import goLogo from "@/assets/eclgo/ecl-go-logo.png.asset.json";
 import { ECL_GO_KITS, type EclGoKit, kitDailyTotal } from "@/data/eclGo";
 import { formatNaira } from "@/data/rentalCatalog";
 import {
@@ -18,8 +17,7 @@ const EclGoHero = () => {
 
   return (
     <section className="px-6 sm:px-8 max-w-[1400px] mx-auto w-full pt-6 pb-12 sm:pt-10 sm:pb-20 text-center">
-      <img src={goLogo.url} alt="ECL Go" className="mx-auto h-16 sm:h-20 w-auto object-contain" />
-      <h1 className="mt-2 font-medium tracking-tight leading-[1.05] text-[32px] sm:text-5xl lg:text-[60px] max-w-4xl mx-auto">
+      <h1 className="font-medium tracking-tight leading-[1.05] text-[32px] sm:text-5xl lg:text-[60px] max-w-4xl mx-auto">
         Hey, Creator.
         <br />
         What are you <span className="text-[hsl(var(--accent-lime))]">shooting</span> today?
