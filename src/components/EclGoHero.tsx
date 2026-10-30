@@ -36,17 +36,13 @@ const EclGoHero = () => {
             tabIndex={0}
             onClick={() => navigate(`/light-house?go=${kit.slug}`)}
             onKeyDown={(e) => e.key === "Enter" && navigate(`/light-house?go=${kit.slug}`)}
-            className="group relative overflow-hidden rounded-3xl min-h-[480px] p-6 text-left cursor-pointer flex flex-col transition-transform hover:-translate-y-1 text-background"
+            className="group relative flex min-h-[480px] flex-col overflow-hidden rounded-3xl p-6 text-left text-background transition-transform hover:-translate-y-1 cursor-pointer"
             style={{
               background: `linear-gradient(160deg, hsl(${kit.from}), hsl(${kit.to}))`,
             }}
           >
-            {/* geometric shape */}
-            <div
-              aria-hidden
-              className="absolute -right-16 top-1/3 w-64 h-64 rotate-45 rounded-3xl opacity-25 bg-background/40"
-            />
-            <div className="relative flex items-start justify-between">
+            {/* header: logo + placement */}
+            <div className="flex items-center justify-between">
               <img src={goBlack.url} alt="ECL Go" className="h-5 w-auto object-contain" />
               <button
                 type="button"
@@ -60,10 +56,15 @@ const EclGoHero = () => {
                 <Info className="h-3.5 w-3.5" /> Placement
               </button>
             </div>
-            <h2 className="relative mt-4 text-3xl font-semibold leading-tight">{kit.name}</h2>
-            <p className="relative mt-1 text-sm opacity-80 min-h-[2.5rem]">{kit.tagline}</p>
 
-            <div className="relative mt-2 aspect-[4/3] overflow-hidden rounded-2xl">
+            {/* title block — fixed height keeps every photo at the same line */}
+            <div className="mt-6 min-h-[92px]">
+              <h2 className="text-3xl font-semibold leading-tight">{kit.name}</h2>
+              <p className="mt-2 line-clamp-2 text-sm opacity-80">{kit.tagline}</p>
+            </div>
+
+            {/* photo */}
+            <div className="relative mt-5 aspect-[4/3] overflow-hidden rounded-2xl">
               <img
                 src={kit.image}
                 alt={`${kit.name} lighting setup`}
@@ -76,12 +77,16 @@ const EclGoHero = () => {
               </span>
             </div>
 
-            <p className="relative mt-4 text-sm font-medium opacity-90">
-              {kitPieces(kit)}-piece kit setup
-            </p>
-            <p className="relative mt-1 text-lg font-semibold">
-              {formatNaira(kitDailyTotal(kit))} / day
-            </p>
+            {/* footer: kit size + price */}
+            <div className="mt-auto flex items-end justify-between border-t border-background/15 pt-4">
+              <p className="text-sm font-medium opacity-90">
+                {kitPieces(kit)}-piece kit setup
+              </p>
+              <p className="text-right text-lg font-semibold leading-none">
+                {formatNaira(kitDailyTotal(kit))}
+                <span className="block text-[11px] font-medium opacity-70">per day</span>
+              </p>
+            </div>
           </div>
         ))}
       </div>
