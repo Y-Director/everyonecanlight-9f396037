@@ -55,6 +55,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Seo from "@/components/Seo";
 import starlightIcon from "@/assets/starlight.png.asset.json";
 import PrivacyPolicyDialog from "@/components/PrivacyPolicyDialog";
+import { getEclGoKit, kitCart } from "@/data/eclGo";
 import {
   RENTAL_CATEGORIES,
   formatNaira,
@@ -190,6 +191,22 @@ const RentEquipment = () => {
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
   }, [cart]);
+
+  // ECL Go: preload a kit and jump straight to date confirmation.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get("go");
+    if (!slug) return;
+    const kit = getEclGoKit(slug);
+    params.delete("go");
+    const qs = params.toString();
+    window.history.replaceState(null, "", window.location.pathname + (qs ? `?${qs}` : "") + window.location.hash);
+    if (!kit) return;
+    setCart(kitCart(kit));
+    setStep("details");
+    setSheetOpen(true);
+    toast(`${kit.name} added`, { description: "Confirm your dates, or add more lights before checkout.", duration: 3500 });
+  }, []);
 
   const clearGearList = () => {
     setCart({});

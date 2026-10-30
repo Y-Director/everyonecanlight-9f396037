@@ -170,9 +170,11 @@ const Index = () => {
         />
         <SiteNav />
 
-        {/* Hero */}
+        <EclGoHero />
+
+        {/* Previous hero */}
         <section className="px-8 max-w-[1400px] mx-auto w-full pt-6 pb-12 sm:pt-10 sm:pb-20 text-center">
-          <h1 className="font-medium tracking-tight leading-[1.05] text-[32px] sm:text-5xl lg:text-[64px] max-w-4xl mx-auto">
+          <h2 className="font-medium tracking-tight leading-[1.05] text-[32px] sm:text-5xl lg:text-[64px] max-w-4xl mx-auto">
             <span className="sm:hidden">
               Everything a Creator
               <br />
