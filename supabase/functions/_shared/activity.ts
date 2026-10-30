@@ -65,14 +65,32 @@ export const logActivity = async (supabase: any, entry: ActivityEntry) => {
   try {
     const { data: admins } = await supabase
       .from('admin_accounts')
-      .select('email, is_super, status, sections')
+      .select('email, is_super, status, sections, partner_since, created_at')
       .eq('status', 'active')
 
-    const all = (admins ?? []) as { email: string; is_super: boolean; sections: string[] | null }[]
+    const all = (admins ?? []) as {
+      email: string
+      is_super: boolean
+      sections: string[] | null
+      partner_since: string | null
+      created_at: string
+    }[]
     const supers = all.filter((a) => a.is_super).map((a) => a.email.toLowerCase())
-    // Light House partners only hear about paid, confirmed rental bookings.
+    // Light House partners only hear about paid, confirmed rental bookings,
+    // and only for bookings on/after their visibility cutoff (partner_since,
+    // falling back to when their admin account was added) so notifications
+    // tally with the rentals they can actually see.
+    const bookingDateRaw = entry.metadata?.bookingDate ?? entry.metadata?.booking_date
+    const bookingDate = bookingDateRaw ? new Date(String(bookingDateRaw)) : null
     const partners = entry.category === 'rentals' && entry.event === 'booking_confirmed'
-      ? all.filter((a) => (a.sections ?? []).includes('rentals_partner')).map((a) => a.email.toLowerCase())
+      ? all
+          .filter((a) => (a.sections ?? []).includes('rentals_partner'))
+          .filter((a) => {
+            if (!bookingDate || isNaN(bookingDate.getTime())) return true
+            const cutoff = a.partner_since ? new Date(a.partner_since) : new Date(a.created_at)
+            return bookingDate >= cutoff
+          })
+          .map((a) => a.email.toLowerCase())
       : []
     const actorIsAdmin = actor && all.some((a) => a.email.toLowerCase() === actor)
     recipients = Array.from(new Set([...supers, ...partners, ...(actorIsAdmin ? [actor as string] : [])]))
