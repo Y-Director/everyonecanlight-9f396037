@@ -61,9 +61,9 @@ const EclGoHero = () => {
               </button>
             </div>
             <h2 className="relative mt-4 text-3xl font-semibold leading-tight">{kit.name}</h2>
-            <p className="relative mt-1 text-sm opacity-80">{kit.tagline}</p>
+            <p className="relative mt-1 text-sm opacity-80 min-h-[2.5rem]">{kit.tagline}</p>
 
-            <div className="relative mt-4 aspect-video overflow-hidden rounded-2xl ring-1 ring-background/25">
+            <div className="relative mt-2 flex-1 min-h-[130px] overflow-hidden rounded-2xl ring-1 ring-background/25">
               <img
                 src={kit.image}
                 alt={`${kit.name} lighting setup`}
@@ -76,7 +76,7 @@ const EclGoHero = () => {
               </span>
             </div>
 
-            <ul className="relative mt-auto pt-4 text-xs space-y-0.5 opacity-90">
+            <ul className="relative mt-4 text-xs space-y-0.5 opacity-90">
               {kit.items.map(([n, q]) => (
                 <li key={n}>
                   {q > 1 ? `${q}× ` : ""}
