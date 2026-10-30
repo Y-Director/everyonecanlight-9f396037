@@ -20,6 +20,7 @@ import madamEp1 from "@/assets/madam/madam-episode-1.jpg.asset.json";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import BrandVideo from "@/components/BrandVideo";
+import EclGoHero from "@/components/EclGoHero";
 
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -170,9 +171,11 @@ const Index = () => {
         />
         <SiteNav />
 
-        {/* Hero */}
+        <EclGoHero />
+
+        {/* Previous hero */}
         <section className="px-8 max-w-[1400px] mx-auto w-full pt-6 pb-12 sm:pt-10 sm:pb-20 text-center">
-          <h1 className="font-medium tracking-tight leading-[1.05] text-[32px] sm:text-5xl lg:text-[64px] max-w-4xl mx-auto">
+          <h2 className="font-medium tracking-tight leading-[1.05] text-[32px] sm:text-5xl lg:text-[64px] max-w-4xl mx-auto">
             <span className="sm:hidden">
               Everything a Creator
               <br />
@@ -183,7 +186,7 @@ const Index = () => {
               <br />
               For <span className="text-[hsl(var(--accent-lime))]">Lighting</span>
             </span>
-          </h1>
+          </h2>
           <p className="mt-4 sm:mt-6 text-sm sm:text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
             Learn lighting. Find the right gear. Rent what you need. Create better images.
           </p>
