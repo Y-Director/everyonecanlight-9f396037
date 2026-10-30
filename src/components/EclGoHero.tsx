@@ -79,7 +79,7 @@ const EclGoHero = () => {
 
             {/* footer: kit size + price, one baseline */}
             <div className="mt-auto flex items-baseline justify-between gap-3 border-t border-background/15 pt-4">
-              <p className="text-[11px] font-medium uppercase tracking-wide opacity-70">
+              <p className="shrink-0 whitespace-nowrap text-[11px] font-medium opacity-70">
                 {kitPieces(kit)}-piece kit setup
               </p>
               <p className="flex shrink-0 items-baseline gap-1.5 whitespace-nowrap">
