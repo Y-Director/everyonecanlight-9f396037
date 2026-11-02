@@ -183,14 +183,14 @@ const Masterclass = () => {
     <div className="min-h-screen bg-background text-foreground">
       <div className="flex flex-col min-h-screen">
         <Seo
-          title="Shift The Light Masterclass 2026 — Lagos"
-          description="Join Shift The Light in Lagos this November: an immersive, hands-on lighting masterclass built around real production scenarios for creators and filmmakers."
+          title="Shift The Light Masterclass 2027 — Lagos"
+          description="Join Shift The Light in Lagos in 2027: an immersive, hands-on lighting masterclass built around real production scenarios for creators and filmmakers. Exact dates coming soon."
           path="/masterclass"
           jsonLd={{
             "@context": "https://schema.org",
             "@type": "Event",
             name: "Shift The Light 2 (Creator Residency)",
-            startDate: "2026-11",
+            startDate: "2027",
             eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
             location: { "@type": "Place", name: "Lagos, Nigeria", address: "Lagos, Nigeria" },
             organizer: { "@type": "Organization", name: "Everyone Can Light" },
@@ -221,7 +221,7 @@ const Masterclass = () => {
             <div className="absolute inset-0 flex items-center">
               <div className="w-full max-w-2xl px-5 py-8 sm:px-10 md:px-14">
                 <p className="text-xs md:text-sm uppercase tracking-[0.2em] text-foreground/70">
-                  November 2026 · Creator Residency
+                  2027 · Creator Residency · Exact dates coming soon
                 </p>
                 <h1 className="mt-4 text-4xl md:text-6xl font-medium text-foreground leading-[1.05]">
                   Shift The Light 2
@@ -232,7 +232,7 @@ const Masterclass = () => {
                 <p className="mt-5 text-sm md:text-base text-foreground/75 max-w-lg whitespace-pre-line">
                   {`A hands-on masterclass with Adeyinka Ibidapo for creators ready to master lighting for video, photo and studio work.
 
-NOV 19–21, 2026 · LAGOS
+EXACT DATES COMING SOON · LAGOS
 3 DAYS · 20 CREATORS · HANDS-ON
 ₦250,000 — Full Residency`}
                 </p>
@@ -420,7 +420,7 @@ NOV 19–21, 2026 · LAGOS
           <DialogHeader>
             <DialogTitle className="text-2xl">Register — Shift The Light 2</DialogTitle>
             <DialogDescription>
-              Creator Residency · Nov 19–21, 2026 · ₦250,000 (3 Days)
+              Creator Residency · Exact dates coming soon · ₦250,000 (3 Days)
             </DialogDescription>
           </DialogHeader>
 
@@ -539,7 +539,7 @@ NOV 19–21, 2026 · LAGOS
         <DialogContent className="max-w-3xl max-h-[92vh] overflow-y-auto bg-[hsl(var(--surface))] border-foreground/10">
           <DialogHeader>
             <DialogTitle className="text-2xl">
-              ShiftTheLight Masterclass 2026 — Official Blueprint
+              ShiftTheLight Masterclass 2027 — Official Blueprint
             </DialogTitle>
             <DialogDescription>
               A three-day intensive: transform from technical operator into intentional visual storyteller.
@@ -550,7 +550,7 @@ NOV 19–21, 2026 · LAGOS
             <section>
               <h3 className="text-base font-semibold text-foreground">Core Details</h3>
               <ul className="mt-2 space-y-1 list-disc list-inside">
-                <li><strong>Date:</strong> Nov 19 – Nov 21, 2026 (3 Days)</li>
+                <li><strong>Date:</strong> Exact dates coming soon (3 Days)</li>
                 <li><strong>Time:</strong> 8:45 AM – 6:00 PM Daily</li>
                 <li><strong>Location:</strong> Revealed after registration</li>
                 <li><strong>Audience:</strong> Videographers, content creators, filmmakers, gaffers, photographers</li>

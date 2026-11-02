@@ -292,7 +292,7 @@ const Index = () => {
                 <span className="text-[hsl(var(--accent-lime))]">actually lighting</span>
               </h2>
               <p className="text-sm text-foreground/60 leading-relaxed max-w-md">
-                Join us in Lagos for this year's Shift The Light Masterclass: an immersive, hands-on
+                Join us in Lagos for the 2027 Shift The Light Masterclass: an immersive, hands-on
                 lighting experience built around real production scenarios.
               </p>
               <Link
