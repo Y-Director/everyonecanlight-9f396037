@@ -613,7 +613,7 @@ const RentEquipment = () => {
             serviceType: "Lighting equipment rental",
             areaServed: "Lagos, Nigeria",
             provider: { "@type": "Organization", name: "Everyone Can Light" },
-            url: "https://everyonecanlight.lovable.app/light-house",
+            url: "https://everyonecanlight.co/light-house",
           }}
         />
         <SiteNav />

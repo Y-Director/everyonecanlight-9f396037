@@ -108,7 +108,7 @@ const LightingEquipment = () => {
             "@context": "https://schema.org",
             "@type": "CollectionPage",
             name: "Lighting Equipment Database",
-            url: "https://everyonecanlight.lovable.app/lighting-equipment",
+            url: "https://everyonecanlight.co/lighting-equipment",
           }}
         />
         <SiteNav />
