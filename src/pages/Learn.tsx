@@ -76,7 +76,7 @@ const Learn = () => {
             "@context": "https://schema.org",
             "@type": "CollectionPage",
             name: "Learn Lighting",
-            url: "https://everyonecanlight.lovable.app/learn",
+            url: "https://everyonecanlight.co/learn",
             about: "Lighting courses, guides and diagrams for filmmakers and creators",
           }}
         />

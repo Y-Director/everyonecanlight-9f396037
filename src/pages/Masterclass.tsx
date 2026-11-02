@@ -194,7 +194,7 @@ const Masterclass = () => {
             eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
             location: { "@type": "Place", name: "Lagos, Nigeria", address: "Lagos, Nigeria" },
             organizer: { "@type": "Organization", name: "Everyone Can Light" },
-            url: "https://everyonecanlight.lovable.app/masterclass",
+            url: "https://everyonecanlight.co/masterclass",
           }}
         />
         <SiteNav />

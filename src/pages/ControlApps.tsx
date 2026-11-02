@@ -116,7 +116,7 @@ const ControlApps = () => {
             "@context": "https://schema.org",
             "@type": "CollectionPage",
             name: "Lighting Control Apps",
-            url: "https://everyonecanlight.lovable.app/control-apps",
+            url: "https://everyonecanlight.co/control-apps",
           }}
         />
         <SiteNav />

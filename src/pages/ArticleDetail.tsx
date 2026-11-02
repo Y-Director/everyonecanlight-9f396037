@@ -64,7 +64,7 @@ const ArticleDetail = () => {
             datePublished: isoDate,
             author: article.authors.map((a) => ({ "@type": "Person", name: a.name })),
             publisher: { "@type": "Organization", name: "Everyone Can Light" },
-            mainEntityOfPage: `https://everyonecanlight.lovable.app/articles/${article.slug}`,
+            mainEntityOfPage: `https://everyonecanlight.co/articles/${article.slug}`,
           }}
         />
         <SiteNav />

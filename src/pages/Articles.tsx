@@ -39,7 +39,7 @@ const Articles = () => {
             "@context": "https://schema.org",
             "@type": "CollectionPage",
             name: "Lighting Guides and Articles",
-            url: "https://everyonecanlight.lovable.app/articles",
+            url: "https://everyonecanlight.co/articles",
           }}
         />
         <SiteNav />

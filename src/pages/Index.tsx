@@ -142,17 +142,17 @@ const Index = () => {
 
       <div className="relative z-10 flex flex-col min-h-screen">
         <Seo
-          title="Learn Lighting. Find Gear. Create Better - Everyone Can Light"
-          description="Learn lighting with practical guides, compare 250+ lights in our equipment database, find control apps and rent professional lighting gear in Lagos."
+          title="Affordable Light Rentals in Lagos | Podcast, Interview and Creator Lighting"
+          description="Affordable light rentals in Lagos: podcast lighting, interview lighting, talking head and content creator lighting. Rent professional lights by the day."
           path="/"
           jsonLd={[
             {
               "@context": "https://schema.org",
               "@type": "WebSite",
               name: "Everyone Can Light",
-              url: "https://everyonecanlight.lovable.app/",
+              url: "https://everyonecanlight.co/",
               description:
-                "Lighting education, equipment database and gear rentals for filmmakers and creators.",
+                "Affordable lighting gear rentals in Lagos, plus lighting education, an equipment database and control apps for filmmakers and creators.",
             },
             {
               "@context": "https://schema.org",

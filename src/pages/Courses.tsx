@@ -43,12 +43,12 @@ const Courses = () => {
             "@context": "https://schema.org",
             "@type": "CollectionPage",
             name: "Lighting Courses",
-            url: "https://everyonecanlight.lovable.app/courses",
+            url: "https://everyonecanlight.co/courses",
             hasPart: courseVideos.map((v) => ({
               "@type": "VideoObject",
               name: v.title,
               description: v.description,
-              url: `https://everyonecanlight.lovable.app/courses/${v.slug}`,
+              url: `https://everyonecanlight.co/courses/${v.slug}`,
             })),
           }}
         />

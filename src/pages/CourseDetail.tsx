@@ -115,7 +115,7 @@ const CourseDetail = () => {
             name: video.title,
             description: video.description,
             thumbnailUrl: posterFor(video),
-            url: `https://everyonecanlight.lovable.app/courses/${video.slug}`,
+            url: `https://everyonecanlight.co/courses/${video.slug}`,
           }}
         />
         <SiteNav />
