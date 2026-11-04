@@ -5,6 +5,7 @@ import fxTeam from "@/assets/articles/framexpo/team.webp.asset.json";
 import fxNova9 from "@/assets/articles/framexpo/nova9.webp.asset.json";
 import fxSidus from "@/assets/articles/framexpo/sidus-link-pro-demo.gif.asset.json";
 import fxXt52 from "@/assets/articles/framexpo/aputure-xt52.gif.asset.json";
+import fxSidusFour from "@/assets/articles/framexpo/sidus-four.webp.asset.json";
 import thumb from "@/assets/two-lights-thumb.png";
 import lightingEquipmentOptions from "@/assets/lighting-equipment-options.png";
 import differentTypesOfLightsCover from "@/assets/different-types-of-lights-cover.png";
@@ -88,6 +89,7 @@ export const articles: Article[] = [
       { type: "paragraph", text: "The growing integration of wireless control, lighting applications, and intelligent systems is changing the way lighting is designed and executed. We see Richard Chao demonstrate this tech using the Sidus Link Pro and the Aputure Sidus Four control hardware." },
       { type: "paragraph", text: "He also showed the ability to control fixtures, make adjustments remotely, and coordinate multiple lights within a unified workflow with the all in one Sidus Link Pro app which is redefining efficiency on set." },
       { type: "image", src: fxSidus.url, alt: "Richard Chao demonstrating the Sidus Link Pro app and Aputure control hardware at FramEXPO West Africa 2026" },
+      { type: "image", src: fxSidusFour.url, alt: "Aputure Sidus Four wireless lighting control node on display at FramEXPO West Africa 2026 in Lagos" },
       { type: "paragraph", text: "Lighting control is becoming an essential skill. It is definitely extending beyond the traditional understanding of operating individual fixtures to managing entire lighting environments." },
       { type: "heading", text: "3. More Possibilities for Different Levels of Production" },
       { type: "paragraph", text: "Another significant development is the continued expansion of lighting solutions across different production scales." },
