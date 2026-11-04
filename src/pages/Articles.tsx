@@ -47,14 +47,14 @@ const Articles = () => {
         {/* Content */}
         <main className="flex-1 px-8 max-w-[1400px] mx-auto w-full py-16">
           <header className="mb-12">
-            <h1 className="text-5xl md:text-6xl font-medium tracking-tight">Lighting Guides</h1>
-            <p className="mt-3 text-xs tracking-[0.2em] text-foreground/60 uppercase font-thin">For all creators</p>
+            <h1 className="text-5xl md:text-6xl font-medium tracking-tight">Lighting Updates</h1>
+            <p className="mt-3 text-xs tracking-[0.2em] text-foreground/60 uppercase">Tips and guides from real life experiences</p>
           </header>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {visibleUseful.map((a, i) => (
+            {articles.map((a, i) => (
               <Link
-                key={`${a.slug}-${i}`}
+                key={`guides-${a.slug}-${i}`}
                 to={`/articles/${a.slug}`}
                 className="group space-y-4 block focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/40 rounded-xl"
               >
@@ -80,25 +80,15 @@ const Articles = () => {
             ))}
           </div>
 
-          <div className="flex justify-center mt-10">
-            <button
-              type="button"
-              onClick={() => setExpanded((v) => !v)}
-              className="text-sm text-foreground underline underline-offset-4 decoration-[hsl(var(--cta))] decoration-2 hover:opacity-80 transition"
-            >
-              {expanded ? "Show Less" : "Read More"}
-            </button>
-          </div>
-
           <header className="mt-24 mb-12">
-            <h2 className="text-5xl md:text-6xl font-medium tracking-tight">Lighting Updates</h2>
-            <p className="mt-3 text-xs tracking-[0.2em] text-foreground/60 uppercase">Tips and guides from real life experiences</p>
+            <h2 className="text-5xl md:text-6xl font-medium tracking-tight">Lighting Guides</h2>
+            <p className="mt-3 text-xs tracking-[0.2em] text-foreground/60 uppercase font-thin">For all creators</p>
           </header>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {articles.map((a, i) => (
+            {visibleUseful.map((a, i) => (
               <Link
-                key={`guides-${a.slug}-${i}`}
+                key={`${a.slug}-${i}`}
                 to={`/articles/${a.slug}`}
                 className="group space-y-4 block focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/40 rounded-xl"
               >
@@ -122,6 +112,16 @@ const Articles = () => {
                 </article>
               </Link>
             ))}
+          </div>
+
+          <div className="flex justify-center mt-10">
+            <button
+              type="button"
+              onClick={() => setExpanded((v) => !v)}
+              className="text-sm text-foreground underline underline-offset-4 decoration-[hsl(var(--cta))] decoration-2 hover:opacity-80 transition"
+            >
+              {expanded ? "Show Less" : "Read More"}
+            </button>
           </div>
 
           {community.length > 0 && (
