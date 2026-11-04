@@ -16,6 +16,7 @@ import bestLights2026 from "@/assets/best-lights-2026.png";
 import authorFavour from "@/assets/author-favour.jpg";
 import authorAdeyinka from "@/assets/author-adeyinka.jpg";
 import authorAdeyinkaNew from "@/assets/author-adeyinka-new.jpg";
+import authorChibuzor from "@/assets/author-chibuzor.jpg.asset.json";
 import lightProlite from "@/assets/lights/prolite-pl150w.png";
 import lightKf from "@/assets/lights/kf-st150w.png";
 import lightGodoxVl150 from "@/assets/lights/godox-vl150.png";
@@ -68,7 +69,10 @@ export const articles: Article[] = [
     date: "November 4, 2026",
     tags: ["FramEXPO", "Events"],
     image: fxCover.url,
-    authors: [{ name: "Adeyinka Ibidapo", avatar: authorAdeyinkaNew }, { name: "Chibuzor Ossai" }],
+    authors: [
+      { name: "Adeyinka Ibidapo", avatar: authorAdeyinkaNew },
+      { name: "Chibuzor Ossai", avatar: authorChibuzor.url },
+    ],
     content: [
       { type: "paragraph", text: "From November 2 to 4, 2026, the creative technology industry converged at Oriental Hotel, Victoria Island, Lagos, for FramEXPO West Africa, a three-day gathering of manufacturers, technology distributors, filmmakers, broadcasters, content creators, and industry professionals exploring the future of film, broadcast, and media production." },
       { type: "paragraph", text: "For Everyone Can Light (ECL) and Light House, the experience was more than an exhibition. It was an opportunity to witness firsthand how rapidly lighting technology is evolving, engage with the innovations shaping modern production, and reaffirm a conviction that has always driven our work: the future of African creativity must be built on access to knowledge, technology, and the tools to create without limitations." },
