@@ -93,11 +93,13 @@ const AdminRentals = () => {
   const allowed = useMemo(() => {
     if (!account) return [] as TabKey[];
     if (account.is_super) return TABS.map((t) => t.key);
+    const partnerOnly =
+      account.sections.includes("rentals_partner") && !account.sections.includes("rentals");
     return TABS.filter(
       (t) =>
         t.key !== "admins" &&
         t.key !== "contributorAccounts" &&
-        (t.key === "notifications" ||
+        ((t.key === "notifications" && !partnerOnly) ||
           account.sections.includes(t.key === "operators" ? "team" : t.key) ||
           (t.key === "rentals" && account.sections.includes("rentals_partner"))),
     ).map((t) => t.key);

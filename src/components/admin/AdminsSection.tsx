@@ -55,7 +55,13 @@ const AdminsSection = () => {
     setSaving(true);
     const { error } = await supabase
       .from("admin_accounts")
-      .insert({ email: value, sections: newSections, status: "active", is_super: false });
+      .insert({
+        email: value,
+        sections: newSections,
+        status: "active",
+        is_super: false,
+        partner_since: new Date().toISOString().slice(0, 10),
+      });
     setSaving(false);
     if (error) {
       toast.error(error.message.includes("duplicate") ? "That admin already exists" : "Could not add this admin");
