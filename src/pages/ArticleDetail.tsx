@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import logo from "@/assets/logo.png";
 import SiteNav from "@/components/SiteNav";
 import Seo from "@/components/Seo";
+import { Helmet } from "react-helmet-async";
 import { getArticleBySlug } from "@/data/articles";
 import ContributorArticleDetail from "./ContributorArticleDetail";
 
@@ -65,8 +66,14 @@ const ArticleDetail = () => {
             author: article.authors.map((a) => ({ "@type": "Person", name: a.name })),
             publisher: { "@type": "Organization", name: "Everyone Can Light" },
             mainEntityOfPage: `https://everyonecanlight.co/articles/${article.slug}`,
+            ...(article.keywords ? { keywords: article.keywords.join(", "), about: article.keywords.map((k) => ({ "@type": "Thing", name: k })) } : {}),
           }}
         />
+        {article.keywords ? (
+          <Helmet>
+            <meta name="keywords" content={article.keywords.join(", ")} />
+          </Helmet>
+        ) : null}
         <SiteNav />
 
         <main className="flex-1 px-6 md:px-8 max-w-3xl mx-auto w-full py-12 md:py-16">

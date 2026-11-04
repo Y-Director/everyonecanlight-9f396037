@@ -60,6 +60,8 @@ export type Article = {
   image: string;
   authors: Author[];
   content: ArticleContentBlock[];
+  /** Extra search terms for meta keywords and Article JSON-LD. */
+  keywords?: string[];
 };
 
 export const articles: Article[] = [
@@ -68,6 +70,11 @@ export const articles: Article[] = [
     title: "FramEXPO West Africa 2026: The Future of Lighting Technology Is Here, and Everyone Can Light Is Paying Attention",
     date: "November 4, 2026",
     tags: ["FramEXPO", "Events"],
+    keywords: [
+      "FramEXPO", "FramEXPO West Africa 2026", "EXPO", "West Africa", "Lagos",
+      "Dearkol", "Aputure", "GoStream", "Hollyland", "Godox", "Amaran",
+      "Okey Japan", "Camera Joint", "Sidus Link Pro", "Sidus Four",
+    ],
     image: fxCover.url,
     authors: [
       { name: "Adeyinka Ibidapo", avatar: authorAdeyinkaNew },
