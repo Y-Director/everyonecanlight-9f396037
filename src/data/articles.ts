@@ -1,3 +1,8 @@
+import fxCover from "@/assets/articles/framexpo/cover.webp.asset.json";
+import fxDearkol from "@/assets/articles/framexpo/dearkol.webp.asset.json";
+import fxCs32 from "@/assets/articles/framexpo/cs32.webp.asset.json";
+import fxTeam from "@/assets/articles/framexpo/team.webp.asset.json";
+import fxNova9 from "@/assets/articles/framexpo/nova9.webp.asset.json";
 import thumb from "@/assets/two-lights-thumb.png";
 import lightingEquipmentOptions from "@/assets/lighting-equipment-options.png";
 import differentTypesOfLightsCover from "@/assets/different-types-of-lights-cover.png";
@@ -54,6 +59,65 @@ export type Article = {
 };
 
 export const articles: Article[] = [
+  {
+    slug: "framexpo-west-africa-2026-future-of-lighting-technology",
+    title: "FramEXPO West Africa 2026: The Future of Lighting Technology Is Here, and Everyone Can Light Is Paying Attention",
+    date: "November 4, 2026",
+    tags: ["FramEXPO", "Events"],
+    image: fxCover.url,
+    authors: [{ name: "Adeyinka Ibidapo", avatar: authorAdeyinkaNew }, { name: "Chibuzor Ossai" }],
+    content: [
+      { type: "paragraph", text: "From November 2 to 4, 2026, the creative technology industry converged at Oriental Hotel, Victoria Island, Lagos, for FramEXPO West Africa, a three-day gathering of manufacturers, technology distributors, filmmakers, broadcasters, content creators, and industry professionals exploring the future of film, broadcast, and media production." },
+      { type: "paragraph", text: "For Everyone Can Light (ECL) and Light House, the experience was more than an exhibition. It was an opportunity to witness firsthand how rapidly lighting technology is evolving, engage with the innovations shaping modern production, and reaffirm a conviction that has always driven our work: the future of African creativity must be built on access to knowledge, technology, and the tools to create without limitations." },
+      { type: "heading", text: "A New Era of Lighting Technology" },
+      { type: "paragraph", text: "One of the most exciting aspects of FramEXPO was the opportunity to encounter emerging technologies from some of the world's most influential manufacturers in lighting and production equipment." },
+      { type: "paragraph", text: "Brands including Aputure showcased innovations spanning professional cinema lighting, intelligent control systems, creative lighting solutions, and production technology led by Richard Chao." },
+      { type: "paragraph", text: "More standards are essentially being developed as we see top quality structured stands and grip supports from brands like Dearkol led by Julie." },
+      { type: "image", src: fxDearkol.url, alt: "Julie of Dearkol showcasing stands and grip supports at FramEXPO West Africa 2026" },
+      { type: "paragraph", text: "For lighting professionals, these developments represent more than new equipment. They represent new creative possibilities." },
+      { type: "paragraph", text: "Lighting technology is no longer simply about producing illumination. It is increasingly about precision, flexibility, control, colour science, integration, and the ability to translate creative vision into reality with greater efficiency." },
+      { type: "paragraph", text: "The modern lighting professional is expected to understand not just how a fixture performs, but how an entire lighting ecosystem works together." },
+      { type: "heading", text: "The Evolution of Professional Lighting" },
+      { type: "heading", text: "1. Beyond Brightness: The New Standard for Light Quality" },
+      { type: "paragraph", text: "The conversation around professional lighting continues to move beyond output alone. Colour accuracy, consistency while dimming, versatility, and the quality of light are becoming increasingly important considerations for cinematographers, gaffers, photographers, and content creators." },
+      { type: "paragraph", text: "Today's lighting systems offer greater creative control, giving professionals the ability to shape atmosphere, reproduce naturalistic lighting conditions, and experiment with colour in increasingly sophisticated ways with a major upgrade on the color science of Aputure, the BLAIR Engine and the BLAIR-CG Engine." },
+      { type: "paragraph", text: "For creators, this means more control over the visual language of their stories." },
+      { type: "heading", text: "2. Intelligent Lighting and Connected Workflows" },
+      { type: "paragraph", text: "The growing integration of wireless control, lighting applications, and intelligent systems is changing the way lighting is designed and executed. We see Richard Chao demonstrate this tech using the Sidus Link Pro and the Aputure Sidus Four control hardware." },
+      { type: "paragraph", text: "He also showed the ability to control fixtures, make adjustments remotely, and coordinate multiple lights within a unified workflow with the all in one Sidus Link Pro app which is redefining efficiency on set." },
+      { type: "paragraph", text: "Lighting control is becoming an essential skill. It is definitely extending beyond the traditional understanding of operating individual fixtures to managing entire lighting environments." },
+      { type: "heading", text: "3. More Possibilities for Different Levels of Production" },
+      { type: "paragraph", text: "Another significant development is the continued expansion of lighting solutions across different production scales." },
+      { type: "paragraph", text: "From compact fixtures like Aputure 80c, and Aputure Storm 400x including the Amaran Ray and Halo Series which is designed for independent creators and content studios to high-output systems like Aputure Nova 9, Aputure CS32, Aputure XT52 built for demanding film and commercial productions, the industry continues to develop tools that serve a broader range of creative needs." },
+      { type: "image", src: fxCs32.url, alt: "Aputure CS32 out of the box at FramEXPO West Africa 2026" },
+      { type: "image", src: fxNova9.url, alt: "Aputure Nova 9 on display at FramEXPO West Africa 2026 in Lagos" },
+      { type: "paragraph", text: "This expansion presents an important opportunity for African creators: the possibility of producing ambitious visual work with increasingly accessible and adaptable technology." },
+      { type: "heading", text: "4. The Convergence of Lighting, Film, and Broadcast Technology" },
+      { type: "paragraph", text: "FramEXPO also highlighted the growing relationship between lighting, camera systems, streaming, broadcast, and production infrastructure. Brands like Dearkol, Gostream, Sony, Hollyland are contributing actively to the production environment and making interconnecting relationships for the lighting and creative professionals." },
+      { type: "paragraph", text: "The future belongs to professionals who can combine creative thinking with technical knowledge." },
+      { type: "heading", text: "Why This Matters for Africa's Creative Industry" },
+      { type: "paragraph", text: "Africa is home to a growing community of filmmakers, cinematographers, photographers, content creators, production companies, and creative entrepreneurs." },
+      { type: "paragraph", text: "Yet access to professional lighting technology, structured education, technical support, and opportunities for hands-on experimentation remains an important challenge for many within the industry." },
+      { type: "paragraph", text: "The innovations showcased at FramEXPO reinforce the need for a stronger infrastructure around lighting in Africa, one that goes beyond the sale and distribution of equipment." },
+      { type: "paragraph", text: "We need an ecosystem that makes lighting knowledge accessible, connects creators to the right tools, develops technical competence, and encourages collaboration between manufacturers, professionals, and the next generation of creatives." },
+      { type: "paragraph", text: "This is the future we believe in." },
+      { type: "heading", text: "Everyone Can Light: Building Africa's Lighting Ecosystem" },
+      { type: "paragraph", text: "At Everyone Can Light and Light House, our mission extends beyond teaching people how to use lighting equipment." },
+      { type: "paragraph", text: "We are building a platform that connects lighting education, equipment access, creative experimentation, professional development, and community." },
+      { type: "paragraph", text: "Through our educational initiatives, equipment rental services, lighting consultations, and creative projects, we are working towards a future where lighting is no longer a barrier to creative expression but an opportunity for every creator to elevate their work." },
+      { type: "paragraph", text: "Our presence at FramEXPO reflects this commitment. Staying connected to manufacturers, emerging technologies, and industry developments is an essential part of ensuring that the African creative community has access to relevant knowledge and evolving tools." },
+      { type: "image", src: fxTeam.url, alt: "Adeyinka Ibidapo and Chibuzor Ossai of Everyone Can Light at FramEXPO West Africa 2026" },
+      { type: "paragraph", text: "We envision Everyone Can Light becoming Africa's biggest lighting ecosystem, a home for lighting knowledge, technology, equipment, and the people who bring stories to life." },
+      { type: "heading", text: "Looking Ahead" },
+      { type: "paragraph", text: "The technologies showcased at FramEXPO West Africa are a reminder that the future of creative production is already unfolding." },
+      { type: "paragraph", text: "But technology alone does not transform an industry. People do." },
+      { type: "paragraph", text: "The professionals who understand these tools, the educators who share their knowledge, the businesses that make equipment accessible, and the communities that create opportunities for learning and collaboration are what ultimately move the industry forward." },
+      { type: "paragraph", text: "At EveryoneCanLight and Light House, we remain committed to being part of that transformation." },
+      { type: "paragraph", text: "Because when creators have access to the right knowledge, the right tools, and the right community, there is no limit to the stories they can tell." },
+      { type: "paragraph", text: "Written by Adeyinka Ibidapo and Chibuzor Ossai." },
+      { type: "paragraph", text: "Everyone Can Light, and Africa's creative future deserves to shine." },
+    ],
+  },
   {
     slug: "softbox-vs-umbrella-which-should-i-buy-first",
     title: "Softbox vs Umbrella: Which should I buy first?",

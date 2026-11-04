@@ -12,6 +12,7 @@ interface SitemapEntry {
 }
 
 const articleSlugs = [
+  "framexpo-west-africa-2026-future-of-lighting-technology",
   "softbox-vs-umbrella-which-should-i-buy-first",
   "how-to-light-a-small-room-for-video-with-just-2-lights",
   "best-lights-for-content-creators-in-2026",
