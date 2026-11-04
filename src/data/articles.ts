@@ -86,7 +86,7 @@ export const articles: Article[] = [
       { type: "paragraph", text: "Today's lighting systems offer greater creative control, giving professionals the ability to shape atmosphere, reproduce naturalistic lighting conditions, and experiment with colour in increasingly sophisticated ways with a major upgrade on the color science of Aputure, the BLAIR Engine and the BLAIR-CG Engine." },
       { type: "paragraph", text: "For creators, this means more control over the visual language of their stories." },
       { type: "heading", text: "2. Intelligent Lighting and Connected Workflows" },
-      { type: "paragraph", text: "The growing integration of wireless control, lighting applications, and intelligent systems is changing the way lighting is designed and executed. We see Richard Chao demonstrate this tech using the Sidus Link Pro and the Aputure Sidus Four control hardware." },
+      { type: "paragraph", text: "The growing integration of wireless control, lighting applications, and intelligent systems is changing the way lighting is designed and executed. We see Richard Chen demonstrate this tech using the Sidus Link Pro and the Aputure Sidus Four control hardware." },
       { type: "paragraph", text: "He also showed the ability to control fixtures, make adjustments remotely, and coordinate multiple lights within a unified workflow with the all in one Sidus Link Pro app which is redefining efficiency on set." },
       { type: "image", src: fxSidus.url, alt: "Richard Chao demonstrating the Sidus Link Pro app and Aputure control hardware at FramEXPO West Africa 2026" },
       { type: "image", src: fxSidusFour.url, alt: "Aputure Sidus Four wireless lighting control node on display at FramEXPO West Africa 2026 in Lagos" },
