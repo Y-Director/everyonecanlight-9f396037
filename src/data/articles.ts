@@ -73,7 +73,7 @@ export const articles: Article[] = [
       { type: "paragraph", text: "For Everyone Can Light (ECL) and Light House, the experience was more than an exhibition. It was an opportunity to witness firsthand how rapidly lighting technology is evolving, engage with the innovations shaping modern production, and reaffirm a conviction that has always driven our work: the future of African creativity must be built on access to knowledge, technology, and the tools to create without limitations." },
       { type: "heading", text: "A New Era of Lighting Technology" },
       { type: "paragraph", text: "One of the most exciting aspects of FramEXPO was the opportunity to encounter emerging technologies from some of the world's most influential manufacturers in lighting and production equipment." },
-      { type: "paragraph", text: "Brands including Aputure showcased innovations spanning professional cinema lighting, intelligent control systems, creative lighting solutions, and production technology led by Richard Chao." },
+      { type: "paragraph", text: "Brands including Aputure showcased innovations spanning professional cinema lighting, intelligent control systems, creative lighting solutions, and production technology led by Richard Chen." },
       { type: "paragraph", text: "More standards are essentially being developed as we see top quality structured stands and grip supports from brands like Dearkol led by Julie." },
       { type: "image", src: fxDearkol.url, alt: "Julie of Dearkol showcasing stands and grip supports at FramEXPO West Africa 2026" },
       { type: "paragraph", text: "For lighting professionals, these developments represent more than new equipment. They represent new creative possibilities." },
