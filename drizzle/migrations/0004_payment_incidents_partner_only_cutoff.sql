@@ -1,0 +1,13 @@
+DROP POLICY "Admins can view payment incidents" ON public.payment_incidents;
+CREATE POLICY "Admins can view payment incidents" ON public.payment_incidents FOR SELECT USING (
+  EXISTS (
+    SELECT 1 FROM public.admin_accounts a
+    WHERE lower(a.email) = lower(coalesce(auth.jwt() ->> 'email', ''))
+      AND a.status = 'active'
+      AND (
+        a.is_super
+        OR NOT (a.sections @> ARRAY['rentals_partner']::text[])
+        OR (a.sections @> ARRAY['rentals']::text[])
+      )
+  )
+);

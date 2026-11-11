@@ -11,7 +11,7 @@ import { fetchPublishedPosts, type PublishedPost } from "@/lib/contributor";
 const Articles = () => {
   const [expanded, setExpanded] = useState(false);
   const [community, setCommunity] = useState<PublishedPost[]>([]);
-  const usefulArticles = [talkingHead1LightArticle, whatIsWattageArticle, articles[2], fixDarkVideosArticle, differentTypesArticle];
+  const usefulArticles = [talkingHead1LightArticle, whatIsWattageArticle, articles.find((a) => a.slug === "best-lights-for-content-creators-in-2026")!, fixDarkVideosArticle, differentTypesArticle];
   const visibleUseful = expanded ? usefulArticles.slice(0, 5) : usefulArticles.slice(0, 3);
 
   useEffect(() => {

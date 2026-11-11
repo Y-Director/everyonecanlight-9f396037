@@ -29,6 +29,13 @@
       "when": 1793350148219,
       "tag": "0003_partner_cutoff_payment_incidents",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794400618990,
+      "tag": "0004_payment_incidents_partner_only_cutoff",
+      "breakpoints": true
     }
   ]
 }
