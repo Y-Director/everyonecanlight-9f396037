@@ -46,7 +46,7 @@ import nanliteForza720b from "@/assets/rental/Nanlite_Forza_720B.png.asset.json"
 import nanlitePavobulb4 from "@/assets/rental/Nanlite_Pavobulb_Set_of_4.png.asset.json";
 import nanlitePavotube15c from "@/assets/rental/Nanlite_Pavotube_II_15C_RGB_Tube_1.5_ft.png.asset.json";
 import nanlitePavotube30c from "@/assets/rental/Nanlite_Pavotube_II_30C_RGB_Tube_3_ft.png.asset.json";
-import octaDome90 from "@/assets/rental/Octabox_90cm_dome.webp.asset.json";
+import octaDome90 from "@/assets/rental/Octa_Dome_90cm.webp.asset.json";
 import suncrafterTl30 from "@/assets/rental/Suncrafter_TL30.png.asset.json";
 import amaranAce25x from "@/assets/rental/Amaran_Ace_25x.webp.asset.json";
 import amaranRay60c from "@/assets/rental/Amaran_Ray_60c_new.webp.asset.json";
