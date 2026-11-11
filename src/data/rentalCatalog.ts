@@ -76,6 +76,7 @@ import spotlightSe26 from "@/assets/rental/Aputure_Spotlight_Mount_SE_26°_Lens.
 import spotlightSe36 from "@/assets/rental/Aputure_Spotlight_Mount_SE_36°_Lens.png.asset.json";
 import lantern90 from "@/assets/rental/Bulb_Lantern_Modifier_90cm.png.asset.json";
 import lantern120 from "@/assets/rental/Bulb_Lantern_Modifier_120cm.png.asset.json";
+import lightDome90 from "@/assets/rental/Light_Dome_90cm.webp.asset.json";
 import fresnelBowens from "@/assets/rental/Fresnel_Lens_Adapter_Bowens_Mount_Generic.png.asset.json";
 import scrim8Flag from "@/assets/rental/8x8_ft_Scrim_Frame_Black_Solid_Flag.png.asset.json";
 import scrim8Full from "@/assets/rental/8x8_ft_Scrim_Frame_Full_Diffusion.png.asset.json";
@@ -242,6 +243,7 @@ const OVERRIDES: Record<string, string> = Object.fromEntries(
 
 OVERRIDES[norm("Amaran Fresnel 2X Lens Mount")] = amaranFresnel2x.url;
 OVERRIDES[norm("Octa Dome 90cm")] = octaDome90.url;
+OVERRIDES[norm("Light Dome 90cm")] = lightDome90.url;
 OVERRIDES[norm("Octa dome 120cm")] = octabox65.url;
 OVERRIDES[norm("Parabolic Softbox 65cm")] = parabolic120.url;
 OVERRIDES[norm("Silver Light stand")] = silverLightStand.url;
@@ -339,6 +341,7 @@ const RAW: Raw[] = [
   ["Amaran Fresnel 2X Lens Mount", 10000, "Modifiers"],
   ["Octa dome 120cm", 5000, "Modifiers"],
   ["Octa Dome 90cm", 5000, "Modifiers"],
+  ["Light Dome 90cm", 5000, "Modifiers"],
   ["Parabolic Softbox 65cm", 5000, "Modifiers"],
   ["Parabolic Softbox 150cm", 5000, "Modifiers"],
   ["Bulb Lantern Modifier 90cm", 5000, "Modifiers"],
@@ -421,7 +424,8 @@ const STOCK: Record<string, number> = Object.fromEntries(
       ["Amaran Halo 600x", 1],
       ["Colbor 220R", 1],
       // Diffusers / softboxes
-      ["Bulb Lantern Modifier 90cm", 2],
+      ["Bulb Lantern Modifier 90cm", 1],
+      ["Light Dome 90cm", 1],
       ["Parabolic Softbox 65cm", 1],
       ["Octa Dome 90cm", 1],
       // Reflectors & mounts
